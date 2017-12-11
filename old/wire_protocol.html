@@ -1,0 +1,631 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Wire Protocol</title>
+<link rel="stylesheet" href="css/master.css"/>
+<link rel="stylesheet" href="css/handshake.css"/>
+</head>
+<body>
+<header>
+<div class="chap">Chapter <em>X</em></div>
+<h1>Wire Protocol</h1>
+</header>
+<main>
+
+<!--
+Discovery
+
+- Pubs/gossip
+- Local network
+    - UDP broadcast
+    - Sent on same port as listening on TCP?
+- Cache
+-->
+
+<h2>Handshake</h2>
+<p>Once a Scuttlebutt client has discovered the IP address and port number of a peer they connect via TCP to exchange messages. The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
+<p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
+<ul>
+<li>A man-in-the-middle cannot learn the public key of either peer.</li>
+<li>The client must know the server’s public key before connecting.</li>
+<li>Once the client has proven their identity the server can decide they don’t want to talk to this person and disconnect without confirming their own identity.</li>
+<li>Both peers need to know a key that represents the particular Scuttlebutt network they wish to connect to, however a man-in-the-middle can’t learn this key from the handshake. If the handshake succeeds then both ends have confirmed that they wish to use the same network.</li>
+<li>Past handshakes cannot be replayed. Attempting to replay a handshake will not allow an attacker to discover or confirm guesses about the participants’ public keys.</li>
+</ul>
+<p>Here “<em>client</em>” refers to the computer initiating the TCP connection and “<em>server</em>” refers to the computer receiving it. This asymmetry only exists during the handshake. Upon completing the handshake both peers become equal and there is no more distinction by who opened the TCP connection.</p>
+
+<!--
+initialize: make curve25519 key pair to use as ephemeral
+ephemeral keys get curvified at the beginning
+
+alice: → send challenge
+    concat(nacl_crypto_auth(message: alice_ephemeral_pk, key: app_key), alice_ephemeral_pk) : 64 bytes
+
+bob: → send challenge
+    concat(nacl_crypto_auth(message: bob_ephemeral_pk, key: app_key), bob_ephemeral_pk) : 64 bytes
+
+alice: → send auth
+    shared_secret = nacl_scalarmult(alice_ephemeral_sk, bob_ephemeral_pk)
+
+    a_bob = nacl_scalarmult(alice_ephemeral_sk, ed25519_to_curve25519(bob_longterm_pk))
+    secret2 = hash(concat(app_key, shared_secret, a_bob))
+
+    hello = concat(sign(concat(app_key, bob_longterm_pk, hash(shared_secret)), alice_longterm_sk), alice_longterm_pk)
+    nacl_box(message: hello, nonce, key: secret2) : 112 bytes
+
+bob: → send accept
+    shared_secret = nacl_scalarmult(bob_ephemeral_sk, alice_ephemeral_pk)
+
+    a_bob = nacl_scalarmult(ed25519_to_curve25519(bob_local_sk), alice_ephemeral_pk)
+    secret2 = hash(concat(app_key, shared_secret, a_bob))
+
+    remote_hello = unbox(data, nonce, secret2)
+
+    sig = remote_hello.slice(0, 64)
+    publicKey = remote_hello.slice(64, exports.client_auth_length)
+
+    signed = concat(app_key, bob_longterm_pk, hash(shared_secret))
+
+    b_alice = nacl_scalarmult(bob_ephemeral_sk, ed25519_to_curve25519(alice_longterm_pk))
+    secret3 = hash(concat(app_key, shared_secret, a_bob, b_alice))
+
+    nacl_box(message: sign(concat(app_key, hello_from_alice, hash(shared_secret)), bob_longterm_sk), nonce, key: secret3) : 80 bytes
+
+alice: ← compute shared secret
+    b_alice = nacl_scalarmult(ed25519_to_curve25519(alice_longterm_sk), bob_ephemeral_pk)
+    secret3 = hash(concat(app_key, shared_secret, a_bob, b_alice))
+-->
+
+<!--
+Todo
+
+Detatched signatures (explain/draw)
+Key colors (+explain)
+Figure out NaCl vs libsodium and make psuedocode consistent
+Split sends/verifies L/R
+Syntax highlighting
+difference from spec in message 2
+-->
+
+<figure>
+<div class="ladder">
+    <div class="side">
+        <div class="heading label">Client<br/>(A)</div>
+    </div>
+    <div class="mid"></div>
+    <div class="side">
+        <div class="heading">
+            <div class="heading label">Server<br/>(B)</div>
+        </div>
+    </div>
+</div>
+<div class="ladder">
+    <div class="side vline"></div>
+    <div class="mid">
+        <h3 style="margin-top: 1rem;">Starting keys</h3>
+        <div class="starting-keys">
+            <div class="kp l">
+                <img class="k1" src="img/key_bigA_secret.svg"/>
+                <div class="l1">secret</div>
+                <img class="k2" src="img/key_bigA_public.svg"/>
+                <div class="l2">public</div>
+            </div>
+            <p>Long term Ed25519 Scuttlebutt<br/> identity stored in <code>.ssb/secret</code></p>
+            <div class="kp r">
+                <img class="k1" src="img/key_bigB_secret.svg"/>
+                <div class="l1">secret</div>
+                <img class="k2" src="img/key_bigB_public.svg"/>
+                <div class="l2">public</div>
+            </div>
+        </div>
+        <div class="starting-keys">
+            <div class="kp l">
+                <img class="k1" src="img/key_a_secret.svg"/>
+                <div class="l1">secret</div>
+                <img class="k2" src="img/key_a_public.svg"/>
+                <div class="l2">public</div>
+            </div>
+            <p>Ephemeral Ed25519 key pairs<br/>generated for this handshake</p>
+                <div class="kp r">
+                <img class="k1" src="img/key_b_secret.svg"/>
+                <div class="l1">secret</div>
+                <img class="k2" src="img/key_b_public.svg"/>
+                <div class="l2">public</div>
+            </div>
+        </div>
+        <div class="starting-keys">
+            <div class="kp l">
+                <img class="k0" src="img/key_bigB_public.svg"/>
+            </div>
+            <p>Client already knows the server’s<br/>long-term public key from discovery</p>
+            <div class="kp r">
+            </div>
+        </div>
+        <div class="starting-keys">
+            <div class="kp l">
+                <img class="k0" src="img/key_bigN_secret.svg"/>
+            </div>
+            <p>Network identifier, most clients use a well-known key to join the main Scuttlebutt network</p>
+            <div class="kp r">
+                <img class="k0" src="img/key_bigN_secret.svg"/>
+            </div>
+        </div>
+        <h3>Client opens TCP connection</h3>
+    </div>
+    <div class="side vline"></div>
+</div>
+<div class="ladder">
+    <div class="lside vline"></div>
+    <div class="mid arrow">
+        <div class="mid"></div>
+        <div class="head r"></div>
+    </div>
+    <div class="rside vline"></div>
+</div>
+<div class="ladder">
+    <div class="side vline"></div>
+    <div class="mid">
+
+        <h3>Message 1</h3>
+        <div class="hbox concat wire-message">
+            <div class="hmac func vbox">
+                <div class="message"><img src="img/key_a_public.svg"/></div>
+                <div class="hbox">
+                    <div class="title">hmac</div>
+                    <div class="explain">verifiable<br/>using</div>
+                    <div class="key"><img src="img/key_bigN_secret.svg"/></div>
+                </div>
+            </div>
+            <img src="img/key_a_public.svg"/>
+        </div>
+    </div>
+    <div class="side vline"></div>
+</div>
+<div class="ladder">
+    <div class="lside vline"></div>
+    <div class="mid arrow">
+        <div class="mid"></div>
+        <div class="head r"></div>
+    </div>
+    <div class="rside vline"></div>
+</div>
+<div class="ladder">
+    <div class="side vline"></div>
+    <div class="mid">
+        <table class="wire-format">
+            <tr>
+                <td><div>Client sends:</div><div class="len">64 bytes</div></td>
+                <td><pre><code>msg1 = concat(
+    nacl_auth(
+        msg: client_ephemeral_pk,
+        key: network_identifier
+    ),
+    client_ephemeral_pk
+)</code></pre></td>
+            </tr>
+            <tr>
+                <td>Server verifies:</td>
+                <td><pre><code>assert(length(msg1) == 64)
+client_hmac = first_32_bytes(msg1)
+client_ephemeral_pk = last_32_bytes(msg1)
+assert_nacl_auth_verify(
+    authenticator: client_hmac,
+    msg: client_ephemeral_pk,
+    key: network_identifier
+)</code></pre></td>
+            </tr>
+            <tr>
+                <td>where:</td>
+                <td><pre class="defs"><code>network_identifier =
+    d4a1cb88a66f02f8db635ce26441cc5d
+    ac1b08420ceaac230839b755845a9ffb</code></pre></td>
+            </tr>
+        </table>
+        <p>First the client sends the server their generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
+        <p>The network identifier is a fixed 32-byte key. Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from the ciphertext, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
+        <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
+        <h3>Message 2</h3>
+        <div class="hbox concat wire-message">
+            <div class="hmac func vbox">
+                <div class="message"><img src="img/key_b_public.svg"/></div>
+                <div class="hbox">
+                    <div class="title">hmac</div>
+                    <div class="explain">verifiable<br/>using</div>
+                    <div class="key"><img src="img/key_bigN_secret.svg"/></div>
+                </div>
+            </div>
+            <img src="img/key_b_public.svg"/>
+        </div>
+    </div>
+    <div class="side vline"></div>
+</div>
+<div class="ladder">
+    <div class="lside vline"></div>
+    <div class="mid arrow">
+        <div class="head l"></div>
+        <div class="mid"></div>
+    </div>
+    <div class="rside vline"></div>
+</div>
+<div class="ladder">
+    <div class="side vline"></div>
+    <div class="mid">
+        <table class="wire-format">
+            <tr>
+                <td><div>Server sends:</div><div class="len">64 bytes</div></td>
+                <td><pre><code>msg2 = concat(
+    nacl_auth(
+        msg: server_ephemeral_pk,
+        key: network_identifier
+    ),
+    server_ephemeral_pk
+)</code></pre></td>
+            </tr>
+            <tr>
+                <td>Client verifies:</td>
+                <td><pre><code>assert(length(msg2) == 64)
+server_hmac = first_32_bytes(msg2)
+server_ephemeral_pk = last_32_bytes(msg2)
+assert_nacl_auth_verify(
+    authenticator: server_hmac,
+    msg: server_ephemeral_pk,
+    key: network_identifier
+)</code></pre></td>
+            </tr>
+        </table>
+        <p>The server responds with their own ephemeral public key and hmac. The client stores the key and verifies that they are also using the same network identifier.</p>
+        <h3>Shared secret derivation</h3>
+        <div class="key-derivation"/>
+            <div class="l">
+                <div class="kd">
+                    <img class="k1" src="img/key_a_secret.svg"/>
+                    <img class="k2" src="img/key_b_public.svg"/>
+                    <img class="k3" src="img/key_ab.svg"/>
+                </div>
+                <div class="kd">
+                    <img class="k1" src="img/key_a_secret.svg"/>
+                    <img class="k2" src="img/key_bigB_public.svg"/>
+                    <img class="k3" src="img/key_abigB.svg"/>
+                </div>
+            </div>
+            <div class="r">
+                <div class="kd">
+                    <img class="k1" src="img/key_a_public.svg"/>
+                    <img class="k2" src="img/key_b_secret.svg"/>
+                    <img class="k3" src="img/key_ab.svg"/>
+                </div>
+                <div class="kd">
+                    <img class="k1" src="img/key_a_public.svg"/>
+                    <img class="k2" src="img/key_bigB_secret.svg"/>
+                    <img class="k3" src="img/key_abigB.svg"/>
+                </div>
+            </div>
+        </div>
+        <div class="key-derivation-code"/>
+            <div class="l">
+                <div>
+                    <div class="label">Client computes:</div>
+                    <pre><code>shared_secret_ab = nacl_scalarmult(
+    sk_to_curve25519(client_ephemeral_sk),
+    pk_to_curve25519(server_ephemeral_pk)
+)
+shared_secret_aB = nacl_scalarmult(
+    sk_to_curve25519(client_ephemeral_sk),
+    pk_to_curve25519(server_longterm_pk)
+)</code></pre>
+                </div>
+            </div>
+            <div class="r">
+                <div>
+                    <div class="label">Server computes:</div>
+                    <pre><code>shared_secret_ab = nacl_scalarmult(
+    sk_to_curve25519(server_ephemeral_sk),
+    pk_to_curve25519(client_ephemeral_pk)
+)
+shared_secret_aB = nacl_scalarmult(
+    sk_to_curve25519(server_longterm_sk),
+    pk_to_curve25519(client_ephemeral_pk)
+)</code></pre>
+                </div>
+            </div>
+        </div>
+        <p>Now that ephemeral keys have been sent, both ends use them to derive a shared secret <em>a∙b</em> using scalar multiplication.</p>
+        <p>Scalar multiplication is a function which generates a shared secret using one secret key and one public key. The order of arguments matters. In the NaCl API the secret key is provided first. Note that the existing Ed25519 keys must be converted to Curve25519 keys when used in scalar multiplication.</p>
+        <p>The client and server each combine their own ephemeral secret key with the other’s ephemeral public key to produce the same shared secret on both ends. An eavesdropper doesn’t know either secret key so they can’t generate the shared secret. A man-in-the-middle could swap out the ephemeral keys in messages 1 and 2 for their own keys, so the shared secret <em>a∙b</em> alone is not enough for the client and server to know that they are talking to each other and not a man-in-the-middle.</p>
+        <p>Because the client already knows the server’s long term public key, both ends derive a second secret <em>a∙B</em> that will allow the client to send a message that only the real server can read and not a man-in-the-middle.</p>
+        <h3>Message 3</h3>
+        <div class="hbox wire-message">
+            <div class="secretbox func vbox">
+                <div class="message concat">
+                    <div class="sigbox a">
+                        <div class="message hbox concat">
+                            <div class="vbox vpack">
+                                <img src="img/key_bigN_secret.svg"/>
+                                <img src="img/key_bigB_public.svg"/>
+                            </div>
+
+                            <div class="hash func vbox">
+                                <div class="message"><img src="img/key_ab.svg"/></div>
+                                <div class="hbox">
+                                    <div class="title">hash</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="explain">signed by</div>
+                        <img class="seal" src="img/seal_A.svg"/>
+                    </div>
+                    <img src="img/key_bigA_public.svg"/>
+                </div>
+                <div class="hbox">
+                    <div class="title">secret box</div>
+                    <div class="explain">opens if you<br/>know all of</div>
+                    <div class="key">
+                        <img src="img/key_bigN_secret.svg"/>
+                        <img src="img/key_ab.svg"/>
+                        <img src="img/key_abigB.svg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="side vline"></div>
+</div>
+<div class="ladder">
+    <div class="lside vline"></div>
+    <div class="mid arrow">
+        <div class="mid"></div>
+        <div class="head r"></div>
+    </div>
+    <div class="rside vline"></div>
+</div>
+<div class="ladder">
+    <div class="side vline"></div>
+    <div class="mid">
+        <table class="wire-format">
+            <tr>
+                <td>Client computes:</td>
+                <td><pre><code>client_signature = nacl_sign_detached(
+    msg: concat(
+        network_identifier,
+        server_longterm_pk,
+        sha256(shared_secret_ab)
+    ),
+    key: client_longterm_sk
+)</code></pre></td>
+            </tr>
+            <tr>
+                <td><div>Client sends:</div><div class="len">112 bytes</div></td>
+                <td><pre><code>msg3 = nacl_secret_box(
+    msg: concat(
+        client_signature,
+        client_longterm_pk
+    ),
+    nonce: 24_bytes_of_zeros,
+    key: sha256(
+        concat(
+            network_identifier,
+            shared_secret_ab,
+            shared_secret_aB
+        )
+    )
+)</code></pre></td>
+            </tr>
+            <tr>
+                <td>Server verifies:</td>
+                <td><pre><code>msg3_plaintext = assert_nacl_secretbox_open(
+    ciphertext: msg3,
+    nonce: 24_bytes_of_zeros,
+    key: sha256(
+        concat(
+            network_identifier,
+            shared_secret_ab,
+            shared_secret_aB
+        )
+    )
+)
+assert(length(msg3_plaintext) == 96)
+client_signature = first_64_bytes(msg3_plaintext)
+client_longterm_pk = last_32_bytes(msg3_plaintext)
+assert_nacl_sign_verify_detached(
+    sig: client_signature,
+    msg: concat(
+        network_identifier,
+        server_longterm_pk,
+        sha256(shared_secret_ab)
+    ),
+    key: client_longterm_pk
+)
+</code></pre></td>
+            </tr>
+        </table>
+        <p>The client reveals their identity to the server by sending their long term public key. The client proves their identity and binds it to this handshake by signing keys that were used earlier in the handshake.</p>
+        <p>The client’s message is enclosed in a secret box to ensure that only the server can read it. Upon receiving it, the server opens the box, stores the client’s long term public key and verifies the signature.</p>
+        <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <em>sha256</em>(<em>concat</em>(<em>N</em>, <em>a∙b</em>, <em>a∙B</em>)).</p>
+        <h3>Shared secret derivation</h3>
+            <div class="key-derivation"/>
+            <div class="l">
+                <div class="kd">
+                    <img class="k1" src="img/key_bigA_secret.svg"/>
+                    <img class="k2" src="img/key_b_public.svg"/>
+                    <img class="k3" src="img/key_bigAb.svg"/>
+                </div>
+            </div>
+            <div class="r">
+                <div class="kd">
+                    <img class="k1" src="img/key_bigA_public.svg"/>
+                    <img class="k2" src="img/key_b_secret.svg"/>
+                    <img class="k3" src="img/key_bigAb.svg"/>
+                </div>
+            </div>
+        </div>
+        <div class="key-derivation-code"/>
+            <div class="l">
+                <div>
+                    <div class="label">Client computes:</div>
+                    <pre><code>shared_secret_Ab = nacl_scalarmult(
+    sk_to_curve25519(client_longterm_sk),
+    pk_to_curve25519(server_ephemeral_pk)
+)</code></pre>
+                </div>
+            </div>
+            <div class="r">
+                <div>
+                    <div class="label">Server computes:</div>
+                    <pre><code>shared_secret_Ab = nacl_scalarmult(
+    sk_to_curve25519(server_ephemeral_sk),
+    pk_to_curve25519(client_longterm_pk)
+)</code></pre>
+                </div>
+            </div>
+        </div>
+        <p>Now that the server knows the client’s long term public key, another shared secret <em>A∙b</em> is derived by both ends. The server uses this shared secret to send a message that only the real client can read and not a man-in-the-middle.</p>
+        <h3>Message 4</h3>
+        <div class="hbox wire-message">
+            <div class="secretbox func vbox">
+                <div class="message">
+                    <div class="sigbox b">
+                        <div class="message hbox concat">
+                            <img src="img/key_bigN_secret.svg"/>
+                            <div class="sigbox a">
+                                <div class="message hbox concat">
+                                    <div class="vbox vpack">
+                                        <img src="img/key_bigN_secret.svg"/>
+                                        <img src="img/key_bigB_public.svg"/>
+                                    </div>
+                                    <div class="hash func vbox">
+                                        <div class="message"><img src="img/key_ab.svg"/></div>
+                                        <div class="hbox">
+                                            <div class="title">hash</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="explain">signed by</div>
+                                <img class="seal" src="img/seal_A.svg"/>
+                            </div>
+                            <div class="hash func vbox" style="position: relative; top: -7px;">
+                                <div class="message"><img src="img/key_ab.svg"/></div>
+                                <div class="hbox">
+                                    <div class="title">hash</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="explain">signed by</div>
+                        <img class="seal" src="img/seal_B.svg"/>
+                    </div>
+                </div>
+                <div class="hbox">
+                    <div class="title">secret box</div>
+                    <div class="explain">opens if you<br/>know all of</div>
+                    <div class="key">
+                        <img src="img/key_bigN_secret.svg"/>
+                        <img src="img/key_ab.svg"/>
+                        <img src="img/key_abigB.svg"/>
+                        <img src="img/key_bigAb.svg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="side vline"></div>
+</div>
+<div class="ladder">
+    <div class="lside vline"></div>
+    <div class="mid arrow">
+        <div class="head l"></div>
+        <div class="mid"></div>
+    </div>
+    <div class="rside vline"></div>
+</div>
+<div class="ladder">
+    <div class="side vline"></div>
+    <div class="mid">
+        <table class="wire-format">
+            <tr>
+                <td>Server computes:</td>
+                <td><pre><code>server_signature = nacl_sign_detatched(
+    msg: concat(
+        network_identifier,
+        client_signature,
+        sha256(shared_secret_ab)
+    ),
+    key: server_longterm_sk
+)
+</pre></code></td>
+            </tr>
+            <tr>
+                <td><div>Server sends:</div><div class="len">80 bytes</div></td>
+                <td><pre><code>msg4 = nacl_secret_box(
+    msg: server_signature,
+    nonce: 24_bytes_of_zeros,
+    key: sha256(
+        concat(
+            network_identifier,
+            shared_secret_ab,
+            shared_secret_aB,
+            shared_secret_Ab
+        )
+    )
+)</code></pre></td>
+            </tr>
+            <tr>
+                <td>Client verifies:</td>
+                <td><pre><code>server_signature = assert_nacl_secretbox_open(
+    ciphertext: msg4,
+    nonce: 24_bytes_of_zeros,
+    key: sha256(
+        concat(
+            network_identifier,
+            shared_secret_ab,
+            shared_secret_aB,
+            shared_secret_Ab
+        )
+    )
+)
+assert_nacl_sign_verify_detached(
+    sig: server_signature,
+    msg: concat(
+        network_identifier,
+        client_signature,
+        sha256(shared_secret_ab)
+    ),
+    key: server_longterm_pk
+)
+</code></pre></td>
+            </tr>
+        </table>
+        <p>The server accepts the handshake by signing a message using their long term key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
+        <p>Upon receiving it, the client opens the box and verifies the server’s signature.</p>
+        <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <em>sha256</em>(<em>concat</em>(<em>N</em>, <em>a∙b</em>, <em>a∙B</em>, <em>A∙b</em>)). <em>(Note to self: check what box-stream uses.)</em></p>
+        <h3>Handshake complete</h3>
+        <div class="hbox pack wire-message">
+            <div>Shared secret:</div>
+            <img src="img/key_bigN_secret.svg"/>
+            <img src="img/key_ab.svg"/>
+            <img src="img/key_abigB.svg"/>
+            <img src="img/key_bigAb.svg"/>
+        </div>
+    </div>
+    <div class="side vline"></div>
+</div>
+<div class="ladder">
+    <div class="lside vline"></div>
+    <div class="mid arrow">
+        <div class="head l"></div>
+        <div class="mid"></div>
+        <div class="head r"></div>
+    </div>
+    <div class="rside vline"></div>
+</div>
+<div class="ladder">
+    <div class="side vline"></div>
+    <div class="mid">
+        <p>At this point the handshake has succeeded. The client and server have proven their identities to each other.</p>
+        <p>The shared secrets are combined and used in a bulk encryption cipher to provide a secure two-way channel for exchanging further messages.</p>
+    </div>
+    <div class="side vline"></div>
+</div>
+</figure>
+</main>
+</body>
+</html>

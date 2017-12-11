@@ -1,0 +1,83 @@
+.cal-container {
+    margin: 3em 0;
+}
+
+.calendar {
+    grid-column: 1/4;
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 1064px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.calendar th, .calendar td {
+    vertical-align: top;
+    padding: 6px 0;
+    border-left: 4px solid #fff;
+    border-right: 4px solid #fff;
+}
+
+.calendar th {
+    text-align: left;
+    font-weight: unset;
+}
+
+.calendar td {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    height: 120px;
+}
+
+.calendar tr:last-child td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+time {
+    display: block;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.calendar ul {
+    padding-left: 1.4em;
+}
+
+.calendar li {
+    padding-left: 0;
+}
+
+td.workworkwork {
+    background-color: #e5f8e5;
+}
+
+td.weekend {
+    background-color: #f4f4f4;
+}
+
+td.afk {
+    background: url(../img/diag_stripe.png);
+}
+
+div.afk, div.notice {
+    margin: 32px;
+    text-align: center;
+}
+
+div.afk span {
+    color: rgba(0, 0, 0, 0.4);
+    display: inline-block;
+    background-color: #fff;
+    padding: 2px 6px;
+}
+
+div.notice span {
+    color: #498449;
+}
+
+td.today {
+    border-top-color: #cc0f16;
+}
+
+td.today time {
+    color: #cc0f16;
+    font-weight: bold;
+}

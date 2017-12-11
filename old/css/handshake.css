@@ -1,0 +1,93 @@
+.ladder { display: flex; align-items: stretch; }
+.ladder > .side { width: 60px; }
+.ladder > .lside, .ladder > .rside { width: 31px; }
+.ladder > .mid { flex: 1; }
+.ladder .side .heading {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.ladder .vline { background: url(../img/vline.svg) repeat-y; }
+.ladder .vline.l { background-image: url(../img/vline_left.svg); }
+.ladder .vline.r { background-image: url(../img/vline_right.svg); }
+.ladder .side.vline { background-position: center; }
+.ladder .lside.vline { background-position: right; }
+.ladder .rside.vline { background-position: left; }
+.ladder .arrow { height: 9px; display: flex; }
+.ladder .arrow .head { width: 9px; }
+.ladder .arrow .mid { flex: 1; background: url(../img/arrow_mid.svg) repeat-x; }
+.ladder .arrow .head { background: url(../img/arrow_left.svg) no-repeat; }
+.ladder .arrow .head.r { transform: scaleX(-1); }
+.ladder h3 { text-align: center; }
+.ladder h3 { margin: 6rem 0 1rem; }
+.starting-keys, .key-derivation { display: flex; align-items: center; }
+.starting-keys p { flex: 1; margin: 30px 30px; text-align: center; }
+.key-derivation { justify-content: space-between; }
+.key-derivation > * { display: flex; }
+.key-derivation > .l .kd { margin-right: 20px; }
+.key-derivation > .r .kd { margin-left: 20px; }
+.key-derivation-code { margin: 40px 0 25px; }
+.key-derivation-code > div { display: flex; margin: 0 0 10px; }
+.key-derivation-code > .l { justify-content: flex-start; }
+.key-derivation-code > .r { justify-content: flex-end; }
+.key-derivation-code pre { margin: 5px 0; }
+.kp { position: relative; width: 150px; height: 65px; }
+.kp > * { position: absolute; }
+.kp.l .k1 { left: 0px; top: 0px; }
+.kp.l .k2 { left: 40px; top: 31px; }
+.kp.l .l1 { left: 72px; top: 5px; }
+.kp.l .l2 { left: 110px; top: 36px; }
+.kp.r .k1 { right: 0px; top: 0px; }
+.kp.r .k2 { right: 40px; top: 31px; }
+.kp.r .l1 { right: 72px; top: 5px; }
+.kp.r .l2 { right: 110px; top: 36px; }
+.kp .k0 { left: 40px; top: 15px; }
+.kd { position: relative; width: 89px; height: 114px; background: url(../img/derivation_arrows.svg) no-repeat; background-position: 16px 37px; }
+.kd > * { position: absolute; }
+.kd .k1 { left: 0px; top: 0px; }
+.kd .k2 { left: 25px; top: 15px; }
+.kd .k3 { left: 10px; top: 80px; }
+.hbox { display: flex; flex-direction: row; }
+.vbox { display: flex; flex-direction: column; }
+.func .title, .func .explain { font-size: 12px; line-height: 1; }
+.func > .hbox { align-items: start; }
+.hmac { width: 184px; height: 103px; }
+.func > .hbox > .title { padding: 6px 10px; }
+.func > .hbox > .explain { padding: 6px 8px 0 10px; }
+.func > .hbox > .key { padding: 4px 0 0 0; display: flex; }
+.func > .hbox > .key > * { margin-right: 6px; }
+.func > .hbox > .explain { text-align: right; display: flex; }
+.func > .message {
+    border: 4px solid;
+    min-height: 34px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.secretbox > .message, .sigbox > .message { padding: 12px; }
+.hmac > .hbox > .title { background-color: #ddb5dc; }
+.secretbox > .hbox > .title { background-color: #faf187; }
+.hash > .hbox > .title { background-color: #a5e195; }
+.hmac > .message { background: url(../img/bg_hmac.svg) #ddb5dc; border-color: #ddb5dc; }
+.secretbox > .message { background: url(../img/bg_secretbox.svg) #fefbdb; border-color: #faf187; }
+.hash > .message { background: url(../img/bg_hash.svg) #cdedc6; border-color: #a5e195; }
+.sigbox { position: relative; padding: 0 14px 14px 0; }
+.sigbox > .message { border: 4px solid; min-width: 80px; min-height: 40px; }
+.sigbox.a > .message { border-color: #ff7d01; }
+.sigbox.b > .message { border-color: #00459a; }
+.sigbox > .seal { position: absolute; right: 0px; bottom: 0px; }
+.sigbox > .explain { position: absolute; right: 34px; bottom: 0px; }
+.concat, .pack, .vpack { align-items: center; }
+.concat > * { margin: 0 15px; }
+.pack > * { margin: 0 5px; }
+.vpack > * { margin: 5px 0; }
+.wire-message { justify-content: center; align-items: center; margin: 15px 0; }
+.wire-format { margin: 25px auto; }
+.wire-format td { vertical-align: top; }
+.wire-format pre { margin: 0; }
+.wire-format td:first-child { padding-right: 10px; }
+.wire-format .len { font-size: 12px; font-style: italic; }
+.ladder pre { background: #eee; }
+.wire-format pre.defs { background: none; }
+

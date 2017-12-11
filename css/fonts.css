@@ -1,0 +1,135 @@
+@font-face {
+    font-family: Roboto;
+    font-weight: 100;
+    font-style: normal;
+    src: local(Roboto Thin), local(Roboto-Thin), url(../fonts/Roboto/Roboto-Thin.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 100;
+    font-style: italic;
+    src: local(Roboto Thin Italic), local(Roboto-ThinItalic), url(../fonts/Roboto/Roboto-ThinItalic.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 300;
+    font-style: normal;
+    src: local(Roboto Light), local(Roboto-Light), url(../fonts/Roboto/Roboto-Light.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 300;
+    font-style: italic;
+    src: local(Roboto Light Italic), local(Roboto-LightItalic), url(../fonts/Roboto/Roboto-LightItalic.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 400;
+    font-style: normal;
+    src: local(Roboto), local(Roboto-Regular), url(../fonts/Roboto/Roboto-Regular.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 400;
+    font-style: italic;
+    src: local(Roboto Italic), local(Roboto-Italic), url(../fonts/Roboto/Roboto-Italic.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 500;
+    font-style: normal;
+    src: local(Roboto Medium), local(Roboto-Medium), url(../fonts/Roboto/Roboto-Medium.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 500;
+    font-style: italic;
+    src: local(Roboto Medium Italic), local(Roboto-MediumItalic), url(../fonts/Roboto/Roboto-MediumItalic.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: Y;
+    font-style: normal;
+    src: local(Roboto X), local(Roboto-X), url(../fonts/Roboto/Roboto-X.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: Y;
+    font-style: italic;
+    src: local(Roboto X Italic), local(Roboto-XItalic), url(../fonts/Roboto/Roboto-XItalic.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 700;
+    font-style: normal;
+    src: local(Roboto Bold), local(Roboto-Bold), url(../fonts/Roboto/Roboto-Bold.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 700;
+    font-style: italic;
+    src: local(Roboto Bold Italic), local(Roboto-BoldItalic), url(../fonts/Roboto/Roboto-BoldItalic.ttf);
+}
+
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 900;
+    font-style: normal;
+    src: local(Roboto Black), local(Roboto-Black), url(../fonts/Roboto/Roboto-Black.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 900;
+    font-style: italic;
+    src: local(Roboto Black Italic), local(Roboto-BlackItalic), url(../fonts/Roboto/Roboto-BlackItalic.ttf);
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans Mono";
+    font-weight: normal;
+    font-style: normal;
+    src: local(DejaVu Sans Mono), url(../fonts/DejaVuSansMono/DejaVuSansMono.ttf);
+}
+
+@font-face {
+    font-family: "DejaVu Sans Mono";
+    font-weight: normal;
+    font-style: normal;
+    src: local(DejaVu Sans Mono), local(DejaVuSansMono-Regular), url(../fonts/DejaVuSansMono/DejaVuSansMono.ttf);
+}
+
+@font-face {
+    font-family: "DejaVu Sans Mono";
+    font-weight: normal;
+    font-style: italic;
+    src: local(DejaVu Sans Mono Oblique), local(DejaVuSansMono-Oblique), url(../fonts/DejaVuSansMono/DejaVuSansMono-Oblique.ttf);
+}
+
+@font-face {
+    font-family: "DejaVu Sans Mono";
+    font-weight: bold;
+    font-style: normal;
+    src: local(DejaVu Sans Mono Bold), local(DejaVuSansMono-Bold), url(../fonts/DejaVuSansMono/DejaVuSansMono-Bold.ttf);
+}
+
+@font-face {
+    font-family: "DejaVu Sans Mono";
+    font-weight: bold;
+    font-style: italic;
+    src: local(DejaVu Sans Mono Bold Oblique), local(DejaVuSansMono-BoldOblique), url(../fonts/DejaVuSansMono/DejaVuSansMono-BoldOblique.ttf);
+}
+

@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Scuttlebutt Protocol Guide</title>
+    <link rel="icon" href="favicon.png"/>
+    <link rel="stylesheet" href="css/fonts.css"/>
+    <link rel="stylesheet" href="css/guide.css"/>
+</head>
+<body>
+    <div class="block header">
+        <header>
+            <div class="title">
+                <a href="index.html">
+                    <div>
+                        <img src="logo.svg"/>
+                        <span>Scuttlebutt Protocol Guide</span>
+                    </div>
+                </a>
+            </div>
+            <nav>
+                <a href="https://github.com/vtduncan/scuttlebutt-protocol-guide"><div>Repo</div></a>
+                <a href="diary.html"><div>Dev Diary</div></a>
+                <a href="mailto:scuttlebuttprotocolguide@vltf.org"><div>Feedback</div></a>
+            </nav>
+        </header>
+    </div>
+    <div class="block">
+        <div class="main">
+            <h1>Scuttlebutt Protocol Guide</h1>
+            <p class="subtitle">How Scuttlebutt peers find and talk to each other</p>
+        </div>
+    </div>
+    <div class="block section">
+        <div class="main">
+            <h2 id="handshake">Handshake</h2>
+            <p>Once a Scuttlebutt client has discovered the IP address and port number of a peer they connect via TCP to exchange messages. The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
+            <img src="img/message_flow.svg"/>
+            <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
+            <ul>
+                <li>A man-in-the-middle cannot learn the public key of either peer.</li>
+                <li>The client must know the server’s public key before connecting.</li>
+                <li>Once the client has proven their identity the server can decide they don’t want to talk to this person and disconnect without confirming their own identity.</li>
+                <li>Both peers need to know a key that represents the particular Scuttlebutt network they wish to connect to, however a man-in-the-middle can’t learn this key from the handshake. If the handshake succeeds then both ends have confirmed that they wish to use the same network.</li>
+                <li>Past handshakes cannot be replayed. Attempting to replay a handshake will not allow an attacker to discover or confirm guesses about the participants’ public keys.</li>
+            </ul>
+            <p>Here “<em>client</em>” is the computer initiating the TCP connection and “<em>server</em>” is the computer receiving it. This asymmetry only exists during the handshake. Upon completing it this distinction goes away.</p>
+            <h3 id="starting-keys">Starting keys</h3>
+            <p>Upon starting the handshake, the client and server know these keys:</p>
+            <img src="img/starting_keys.svg"/>
+            <h3 id="client-hello"><span class="hnum">1.</span> Client hello</h3>
+            <h3 id="server-hello"><span class="hnum">2.</span> Server hello</h3>
+            <h3 id="shared-secret-derivation-1">Shared secret derivation</h3>
+            <h3 id="client-accept"><span class="hnum">3.</span> Client accept</h3>
+            <h3 id="shared-secret-derivation-2">Shared secret derivation</h3>
+            <h3 id="server-accept"><span class="hnum">4.</span> Server accept</h3>
+            <h3 id="handshake-complete">Handshake complete</h3>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+html {
+    font-family: Roboto;
+    font-size: 17px;
+    line-height: 1.68;
+    color: #1a1a1a;
+    min-width: 1104px;
+}
+
+body {
+    margin: 0 0 60px;
+}
+
+.block > * {
+    max-width: 1064px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.block.header {
+    background-color: #0f103d;
+}
+
+.block.section {
+    margin-top: 60px;
+    padding-top: 60px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+header {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 20px;
+    align-items: stretch;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    font-weight: 300;
+    height: 70px;
+}
+
+header .title {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: stretch;
+    justify-self: start;
+    font-size: 17px;
+}
+
+.title img {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+nav {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 24px;
+    align-items: stretch;
+    justify-self: end;
+    text-transform: uppercase;
+}
+
+a {
+    color: unset;
+    text-decoration: unset;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.4);
+}
+
+a:hover {
+    border-bottom-color: rgb(0, 0, 0, 0.8);
+}
+
+header a {
+    display: grid;
+    align-items: center;
+    border-bottom: none;
+}
+
+header a:hover {
+    color: #fff;
+}
+
+h1 {
+    font-size: 50px;
+    margin: 64px 0 8px;
+    color: #000;
+    line-height: 1.1;
+}
+
+h2 {
+    font-size: 36px;
+    margin: 32px 0 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    font-size: 20px;
+    margin: 40px 0 20px;
+}
+
+.subtitle {
+    font-size: 19px;
+    font-weight: 300;
+    color: #000;
+    margin: 0 0 20px;
+}
+
+p, ol, ul {
+    margin: 0 0 1em;
+}
+
+ol, ul {
+    padding-left: 2.5em;
+}
+
+li {
+    padding-left: 0.6em;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 150px 700px 150px;
+    grid-column-gap: 32px;
+}
+
+.main > * {
+    grid-column: 2;
+}
+
+.main img {
+    margin: 2em 0;
+}
+
+.main figure {
+    margin: 2em 0;
+    grid-column: 1 / 3;
+}
+
+figcaption {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.hnum {
+    display: inline-block;
+    min-width: 1em;
+}
