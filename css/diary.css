@@ -1,9 +1,9 @@
 .cal-container {
-    margin: 3em 0;
+    margin: 3em 0 1em;
 }
 
 .calendar {
-    grid-column: 1/4;
+    grid-column: 1 / 4;
     border-collapse: collapse;
     table-layout: fixed;
     width: 1064px;
@@ -45,7 +45,7 @@ time {
     padding-left: 0;
 }
 
-td.workworkwork {
+td.workworkwork, .key .workworkwork {
     background-color: #e5f8e5;
 }
 
@@ -81,3 +81,21 @@ td.today time {
     color: #cc0f16;
     font-weight: bold;
 }
+
+.key {
+    font-size: 13px;
+    margin-top: 2em;
+    grid-column: 1 / 4;
+    justify-self: end;
+    margin-right: 4px;
+}
+
+.key .workworkwork {
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    height: 1.2em;
+    width: 2em;
+    vertical-align: -3px;
+    margin-right: 0.2em;
+}
+
