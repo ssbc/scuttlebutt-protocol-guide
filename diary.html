@@ -200,11 +200,11 @@
         </div>
         <h2>Up next</h2>
         <ul>
-            <li>Port code snippets from old handshake docs</li>
+            <li>Port code snippets from old handshake docs.</li>
             <li>Research box-stream.</li>
         </ul>
         <h2>Recently finished</h2>
-        <h3>13 Dec</h3>
+        <h3>14 Dec</h3>
         <ul>
             <li>Ported existing prose from the old handshake docs to the new layout. Now they make use of asides and inline key images.</li>
             <li>Remade handshake figures to be less visually noisy. Detatched signatures from their message boxes to show that the message is not sent over the wire.</li>
@@ -217,28 +217,26 @@
         </ul>
     </main>
 
-<script>
+    <script>
+        function tzDate(date, offsetHours) {
+            let tzOffset = offsetHours * 3600 * 1000;
+            let userOffset = (new Date()).getTimezoneOffset() * 60 * 1000;
+            return new Date(date.getTime() + tzOffset + userOffset);
+        }
 
-function tzDate(date, offsetHours) {
-    let tzOffset = offsetHours * 3600 * 1000;
-    let userOffset = (new Date()).getTimezoneOffset() * 60 * 1000;
-    return new Date(date.getTime() + tzOffset + userOffset);
-}
+        function zpad(num) {
+            return ("00" + num).slice(-2);
+        }
 
-function zpad(num) {
-    return ("00" + num).slice(-2);
-}
+        function formatDate(date) {
+            return date.getFullYear() + "-" + zpad(date.getMonth() + 1) + "-" + zpad(date.getDate());
+        }
 
-function formatDate(date) {
-    return date.getFullYear() + "-" + zpad(date.getMonth() + 1) + "-" + zpad(date.getDate());
-}
-
-let formattedDate = formatDate(tzDate(new Date(), 13));
-let el = document.querySelector("time[datetime='" + formattedDate + "']");
-if (el != null) {
-    el.parentNode.classList.add("today");
-}
-
-</script>
+        let formattedDate = formatDate(tzDate(new Date(), 13));
+        let el = document.querySelector("time[datetime='" + formattedDate + "']");
+        if (el != null) {
+            el.parentNode.classList.add("today");
+        }
+    </script>
 </body>
 </html>
