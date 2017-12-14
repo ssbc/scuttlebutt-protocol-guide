@@ -431,7 +431,7 @@
      inkscape:cx="337.32375"
      inkscape:cy="72.878817"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1686"
      showgrid="true"
      units="px"
      inkscape:showpageshadow="false"
@@ -457,7 +457,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -534,7 +534,7 @@
          sodipodi:nodetypes="ssssssccccccccccsss"
          inkscape:connector-curvature="0"
          id="path1678"
-         d="m 268,304.16665 c -2.77,0 -5,2.23 -5,5 v 20 c 0,2.77 2.23,5 5,5 h 20 c 2.77,0 5,-2.23 5,-5 v -7 h 2 l 3,3 3,-3 3,3 3,-3 3,3 6,-6 -5,-5 h -18 v -5 c 0,-2.77 -2.23,-5 -5,-5 z"
+         d="m 268.5,304.66665 c -2.77,0 -5,2.23 -5,5 v 20 c 0,2.77 2.23,5 5,5 h 20 c 2.77,0 5,-2.23 5,-5 v -7 h 2 l 3,3 3,-3 3,3 3,-3 3,3 6,-6 -5,-5 h -18 v -5 c 0,-2.77 -2.23,-5 -5,-5 z"
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#ececec;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
       <path
          sodipodi:nodetypes="ssssssccccccccccsss"
@@ -572,7 +572,7 @@
          sodipodi:nodetypes="ssssssccccccccccsss"
          inkscape:connector-curvature="0"
          id="path4280"
-         d="m 23,424.16665 c -2.77,0 -5,2.23 -5,5 v 20 c 0,2.77 2.23,5 5,5 h 20 c 2.77,0 5,-2.23 5,-5 v -7 h 2 l 3,3 3,-3 3,3 3,-3 3,3 6,-6 -5,-5 h -18 v -5 c 0,-2.77 -2.23,-5 -5,-5 z"
+         d="m 23.5,424.66665 c -2.77,0 -5,2.23 -5,5 v 20 c 0,2.77 2.23,5 5,5 h 20 c 2.77,0 5,-2.23 5,-5 v -7 h 2 l 3,3 3,-3 3,3 3,-3 3,3 6,-6 -5,-5 h -18 v -5 c 0,-2.77 -2.23,-5 -5,-5 z"
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#ececec;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
       <path
          sodipodi:nodetypes="ssssssccccccccccsss"
@@ -597,7 +597,7 @@
        transform="translate(25.5,195.5)">
       <path
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#ececec;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
-         d="m 268,304.16665 c -2.77,0 -5,2.23 -5,5 v 20 c 0,2.77 2.23,5 5,5 h 20 c 2.77,0 5,-2.23 5,-5 v -7 h 2 l 3,3 3,-3 3,3 3,-3 3,3 6,-6 -5,-5 h -18 v -5 c 0,-2.77 -2.23,-5 -5,-5 z"
+         d="m 268.5,304.66665 c -2.77,0 -5,2.23 -5,5 v 20 c 0,2.77 2.23,5 5,5 h 20 c 2.77,0 5,-2.23 5,-5 v -7 h 2 l 3,3 3,-3 3,3 3,-3 3,3 6,-6 -5,-5 h -18 v -5 c 0,-2.77 -2.23,-5 -5,-5 z"
          id="path4286"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ssssssccccccccccsss" />
