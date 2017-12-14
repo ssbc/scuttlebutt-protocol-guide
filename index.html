@@ -63,8 +63,8 @@
             <h3 id="shared-secret-derivation-1">Shared secret derivation</h3>
             <img src="img/shared_secret_derivation_1.svg"/>
             <div>
-                <p>Now that ephemeral keys have been sent, both ends use them to derive a shared secret <img class="inline-key" src="img/key_little_a_little_b.svg"/> using scalar multiplication.</p>
-                <p>The client and server each combine their own ephemeral secret key with the other’s ephemeral public key to produce the same shared secret on both ends. An eavesdropper doesn’t know either secret key so they can’t generate the shared secret. A man-in-the-middle could swap out the ephemeral keys in messages 1 and 2 for their own keys, so the shared secret <img class="inline-key" src="img/key_little_a_little_b.svg"/> alone is not enough for the client and server to know that they are talking to each other and not a man-in-the-middle.</p>
+                <p>Now that ephemeral keys have been exchanged, both ends use them to derive a shared secret <img class="inline-key" src="img/key_little_a_little_b.svg"/> using scalar multiplication.</p>
+                <p>The client and server each combine their own ephemeral secret key with the other’s ephemeral public key to produce the same shared secret on both ends. An eavesdropper doesn’t know either secret key so they can’t generate the shared secret. A man-in-the-middle could swap out the ephemeral keys in Messages 1 and 2 for their own keys, so the shared secret <img class="inline-key" src="img/key_little_a_little_b.svg"/> alone is not enough for the client and server to know that they are talking to each other and not a man-in-the-middle.</p>
                 <p>Because the client already knows the <img class="inline-key" src="img/key_big_b_public.svg"/> server’s long term public key, both ends derive a second secret <img class="inline-key" src="img/key_little_a_big_b.svg"/> that will allow the client to send a message that only the real server can read and not a man-in-the-middle.</p>
             </div>
             <aside>
@@ -74,7 +74,7 @@
             <h3 id="client-accept">3. Client accept</h3>
             <img src="img/client_accept.svg"/>
             <div>
-                <p>The client reveals their identity to the server by sending their <img class="inline-key" src="img/key_big_a_public.svg"/> long term public key. The client proves their identity and binds it to this handshake by using their <img class="inline-key" src="img/key_big_a_secret.svg"/> long term secret key to sign the keys that were used earlier in the handshake.</p>
+                <p>The client reveals their identity to the server by sending their <img class="inline-key" src="img/key_big_a_public.svg"/> long term public key. The client also makes a signature using their <img class="inline-key" src="img/key_big_a_secret.svg"/> long term secret key. By signing the keys used earlier in the handshake the client proves their identity and confirms that they do indeed wish to be part of this handshake.</p>
                 <p>The client’s message is enclosed in a secret box to ensure that only the server can read it. Upon receiving it, the server opens the box, stores the client’s long term public key and verifies the signature.</p>
                 <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <span class="key-formula"><em>sha256</em>(<em>concat</em>( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>))</span>.</p>
             </div>
