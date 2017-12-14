@@ -52,17 +52,35 @@
             <img src="img/starting_keys.svg"/>
             <h3 id="client-hello">1. Client hello</h3>
             <img src="img/client_hello.svg"/>
+            <p>First the client sends the server their generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
+            <p>The network identifier is a fixed 32-byte key. Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from the ciphertext, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
+            <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
             <h3 id="server-hello">2. Server hello</h3>
             <img src="img/server_hello.svg"/>
+            <p>The server responds with their own ephemeral public key and hmac. The client stores the key and verifies that they are also using the same network identifier.</p>
             <h3 id="shared-secret-derivation-1">Shared secret derivation</h3>
             <img src="img/shared_secret_derivation_1.svg"/>
+            <p>Now that ephemeral keys have been sent, both ends use them to derive a shared secret <em>a∙b</em> using scalar multiplication.</p>
+            <p>Scalar multiplication is a function which generates a shared secret using one secret key and one public key. The order of arguments matters. In the NaCl API the secret key is provided first. Note that the existing Ed25519 keys must be converted to Curve25519 keys when used in scalar multiplication.</p>
+            <p>The client and server each combine their own ephemeral secret key with the other’s ephemeral public key to produce the same shared secret on both ends. An eavesdropper doesn’t know either secret key so they can’t generate the shared secret. A man-in-the-middle could swap out the ephemeral keys in messages 1 and 2 for their own keys, so the shared secret <em>a∙b</em> alone is not enough for the client and server to know that they are talking to each other and not a man-in-the-middle.</p>
+            <p>Because the client already knows the server’s long term public key, both ends derive a second secret <em>a∙B</em> that will allow the client to send a message that only the real server can read and not a man-in-the-middle.</p>
             <h3 id="client-accept">3. Client accept</h3>
             <img src="img/client_accept.svg"/>
+            <p>The client reveals their identity to the server by sending their long term public key. The client proves their identity and binds it to this handshake by signing keys that were used earlier in the handshake.</p>
+            <p>The client’s message is enclosed in a secret box to ensure that only the server can read it. Upon receiving it, the server opens the box, stores the client’s long term public key and verifies the signature.</p>
+            <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <em>sha256</em>(<em>concat</em>(<em>N</em>, <em>a∙b</em>, <em>a∙B</em>)).</p>
             <h3 id="shared-secret-derivation-2">Shared secret derivation</h3>
             <img src="img/shared_secret_derivation_2.svg"/>
+            <p>Now that the server knows the client’s long term public key, another shared secret <em>A∙b</em> is derived by both ends. The server uses this shared secret to send a message that only the real client can read and not a man-in-the-middle.</p>
             <h3 id="server-accept">4. Server accept</h3>
             <img src="img/server_accept.svg"/>
+            <p>The server accepts the handshake by signing a message using their long term key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
+            <p>Upon receiving it, the client opens the box and verifies the server’s signature.</p>
+            <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <em>sha256</em>(<em>concat</em>(<em>N</em>, <em>a∙b</em>, <em>a∙B</em>, <em>A∙b</em>)). <em>(Note to self: check what box-stream uses.)</em></p>
             <h3 id="handshake-complete">Handshake complete</h3>
+            <img src="img/final_shared_secret.svg"/>
+            <p>At this point the handshake has succeeded. The client and server have proven their identities to each other.</p>
+            <p>The shared secrets are combined and used in a bulk encryption cipher to provide a secure two-way channel for exchanging further messages.</p>
         </div>
     </div>
 </body>

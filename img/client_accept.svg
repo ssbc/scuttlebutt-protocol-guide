@@ -475,7 +475,7 @@
      inkscape:cx="236.17653"
      inkscape:cy="170.29987"
      inkscape:document-units="px"
-     inkscape:current-layer="g4405"
+     inkscape:current-layer="layer1"
      showgrid="true"
      units="px"
      inkscape:showpageshadow="false"
@@ -797,10 +797,10 @@
        transform="translate(-34.5,65.499987)">
       <rect
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#ececec;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
-         id="rect4061"
-         width="140"
+         id="rect882"
+         width="150"
          height="30"
-         x="263.5"
+         x="258.5"
          y="429.66666"
          rx="4.9999905"
          ry="4.99999" />
@@ -808,22 +808,22 @@
          ry="4.99999"
          rx="4.9999905"
          y="426.16666"
-         x="260"
+         x="255.00002"
          height="30"
-         width="140"
+         width="150"
          id="rect4039"
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#05507c;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
       <text
          id="text4043"
-         y="446.16666"
-         x="329.93018"
+         y="445.66666"
+         x="329.5"
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1;font-family:'Helvetica Neue';-inkscape-font-specification:'Helvetica Neue';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#05507c;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker:none;enable-background:accumulate"
          xml:space="preserve"><tspan
            id="tspan4041"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.20000005;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#05507c;fill-opacity:1"
-           y="446.16666"
-           x="329.93018"
-           sodipodi:role="line">detached signature</tspan></text>
+           y="445.66666"
+           x="329.5"
+           sodipodi:role="line">Detached Signature A</tspan></text>
     </g>
     <rect
        rx="4.9999933"
