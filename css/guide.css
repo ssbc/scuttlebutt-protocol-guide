@@ -7,78 +7,73 @@ html {
 }
 
 body {
-    margin: 0 0 60px;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0;
+    margin-bottom: 100px;
 }
 
-.block > * {
-    max-width: 1064px;
-    margin: auto;
-    padding: 0 20px;
+header, main {
+    display: grid;
+    grid-template-columns:
+        [screen-start] 1fr
+        [page-start kicker-start left-start] 60px [middle-start] 60px
+        [text-start kicker-end] 60px 60px 60px 60px
+        [left-end right-start] 60px 60px 60px 60px
+        [text-end gutter-start] 60px [middle-end] 60px 
+        [page-end gutter-end right-end] 1fr [screen-end];
+    grid-column-gap: 32px;
 }
 
-.block.header {
-    background-color: #0f103d;
-}
-
-.block.section {
-    margin-top: 60px;
-    padding-top: 60px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+main {
+    align-items: first baseline;
 }
 
 header {
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 20px;
-    align-items: stretch;
+    background-color: #0f103d;
     color: rgba(255, 255, 255, 0.8);
     font-size: 12px;
     font-weight: 300;
     height: 70px;
+    align-items: stretch;
 }
 
-header .title {
+.title {
+    font-size: 17px;
+    grid-column: left;
     display: grid;
     grid-auto-flow: column;
     align-items: stretch;
     justify-self: start;
-    font-size: 17px;
+}
+
+nav {
+    grid-column: right;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: stretch;
+    justify-self: end;
+    grid-gap: 24px;
+    text-transform: uppercase;
+}
+
+header a {
+    display: flex;
+    align-items: center;
+}
+
+header a:hover {
+    color: #fff;
 }
 
 .title img {
     width: 24px;
     height: 24px;
-    margin-right: 5px;
-    vertical-align: top;
+    margin: -4px 10px -2px 0;
 }
 
-nav {
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 24px;
-    align-items: stretch;
-    justify-self: end;
-    text-transform: uppercase;
-}
-
-a {
-    color: unset;
-    text-decoration: unset;
-    border-bottom: 1px solid rgb(0, 0, 0, 0.4);
-}
-
-a:hover {
-    border-bottom-color: rgb(0, 0, 0, 0.8);
-}
-
-header a {
-    display: grid;
-    align-items: center;
-    border-bottom: none;
-}
-
-header a:hover {
-    color: #fff;
+main > * {
+    grid-column: text;
 }
 
 h1 {
@@ -107,6 +102,31 @@ h3 {
     margin: 0 0 20px;
 }
 
+main > figure, main > img {
+    margin: 1em 0 3em 0;
+    justify-self: center;
+}
+
+aside {
+    grid-column: gutter;
+}
+
+figcaption, aside {
+    font-size: 13px;
+    line-height: 1.5em;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+a {
+    color: unset;
+    text-decoration: unset;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.4);
+}
+
+a:hover {
+    border-bottom-color: rgb(0, 0, 0, 0.8);
+}
+
 p, ol, ul {
     margin: 0 0 1em;
 }
@@ -119,15 +139,12 @@ li {
     padding-left: 0.6em;
 }
 
-.main {
-    display: grid;
-    grid-template-columns: 150px 700px 150px;
-    align-items: first baseline;
-    grid-column-gap: 32px;
-}
-
-.main > * {
-    grid-column: 2;
+hr {
+    grid-column: screen;
+    width: 100%;
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 60px 0;
 }
 
 img.inline-key {
@@ -137,18 +154,4 @@ img.inline-key {
 
 .key-formula {
     display: inline-block;
-}
-
-.main figure, .main > img {
-    margin: 3em 0;
-}
-
-.main aside {
-    grid-column: 3;
-}
-
-figcaption, .main aside {
-    font-size: 13px;
-    line-height: 1.5em;
-    color: rgba(0, 0, 0, 0.6);
 }

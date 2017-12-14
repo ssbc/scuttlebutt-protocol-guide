@@ -9,224 +9,213 @@
     <link rel="stylesheet" href="css/diary.css"/>
 </head>
 <body>
-    <div class="block header">
-        <header>
-            <div class="title">
-                <a href="index.html">
-                    <div>
-                        <img src="img/logo.svg"/>
-                        <span>Scuttlebutt Protocol Guide</span>
-                    </div>
-                </a>
-            </div>
-            <nav>
-                <a href="https://github.com/vtduncan/scuttlebutt-protocol-guide"><div>Repo</div></a>
-                <a href="diary.html"><div>Dev Diary</div></a>
-                <a href="mailto:scuttlebuttprotocolguide@vltf.org"><div>Feedback</div></a>
-            </nav>
-        </header>
-    </div>
-    <div class="block">
-        <div class="main">
-            <h1>Dev Diary</h1>
+    <header>
+        <div class="title">
+            <a href="index.html">
+                <img src="img/logo.svg"/>
+                <span>Scuttlebutt Protocol Guide</span>
+            </a>
         </div>
-    </div>
-    <div class="block cal-container">
-        <div class="main">
-            <table class="calendar">
-                <thead>
-                    <tr>
-                        <th>Mon</th>
-                        <th>Tue</th>
-                        <th>Wed</th>
-                        <th>Thu</th>
-                        <th>Fri</th>
-                        <th>Sat</th>
-                        <th>Sun</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <time datetime="2017-12-11">11 <strong>Dec</strong> 2017</time>
-                        </td>
-                        <td>
-                            <time datetime="2017-12-12">12</time>
-                            <ul>
-                                <li>Overhaul CSS</li>
-                                <li>Split big ladder figure</li>
-                                <li>Colorblind-friendly</li>
-                            </ul>
-                        </td>
-                        <td>
-                            <time datetime="2017-12-13">13</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2017-12-14">14</time>
-                            <ul>
-                                <li>Port handshake docs</li>
-                                <li>Redraw figures</li>
-                            </ul>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2017-12-15">15</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2017-12-16">16</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2017-12-17">17</time>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="workworkwork">
-                            <time datetime="2017-12-18">18</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2017-12-19">19</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2017-12-20">20</time>
-                        </td>
-                        <td class="afk">
-                            <time datetime="2017-12-21">21</time>
-                            <div class="afk"><span>AFK</span></div>
-                        </td>
-                        <td class="afk">
-                            <time datetime="2017-12-22">22</time>
-                            <div class="afk"><span>AFK</span></div>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2017-12-23">23</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2017-12-24">24</time>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="afk">
-                            <time datetime="2017-12-25">25</time>
-                            <div class="afk"><span>AFK</span></div>
-                        </td>
-                        <td class="afk">
-                            <time datetime="2017-12-26">26</time>
-                            <div class="afk"><span>AFK</span></div>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2017-12-27">27</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2017-12-28">28</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2017-12-29">29</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2017-12-30">30</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2017-12-31">31</time>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="afk">
-                            <time datetime="2018-01-01">1 <strong>Jan</strong> 2018</time>
-                            <div class="afk"><span>AFK</span></div>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-02">2</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-03">3</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-04">4</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-05">5</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2018-01-06">6</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2018-01-07">7</time>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-08">8</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-09">9</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-10">10</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-11">11</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-12">12</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2018-01-13">13</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2018-01-14">14</time>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-15">15</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-16">16</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-17">17</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-18">18</time>
-                        </td>
-                        <td class="workworkwork">
-                            <time datetime="2018-01-19">19</time>
-                            <div class="notice"><span>FINISH!</span></div>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2018-01-20">20</time>
-                        </td>
-                        <td class="weekend">
-                            <time datetime="2018-01-21">21</time>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="key">
-                <div><div class="workworkwork"></div> = time funded by grant</div>
-            </div>
+        <nav>
+            <a href="https://github.com/vtduncan/scuttlebutt-protocol-guide"><div>Repo</div></a>
+            <a href="diary.html"><div>Dev Diary</div></a>
+            <a href="mailto:scuttlebuttprotocolguide@vltf.org"><div>Feedback</div></a>
+        </nav>
+    </header>
+    <main>
+        <h1>Dev Diary</h1>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <time datetime="2017-12-11">11 <strong>Dec</strong> 2017</time>
+                    </td>
+                    <td>
+                        <time datetime="2017-12-12">12</time>
+                        <ul>
+                            <li>Overhaul CSS</li>
+                            <li>Split big ladder figure</li>
+                            <li>Colorblind-friendly</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <time datetime="2017-12-13">13</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2017-12-14">14</time>
+                        <ul>
+                            <li>Port handshake docs</li>
+                            <li>Redraw figures</li>
+                        </ul>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2017-12-15">15</time>
+                        <ul>
+                            <li>Simplify grid</li>
+                        </ul>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2017-12-16">16</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2017-12-17">17</time>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="workworkwork">
+                        <time datetime="2017-12-18">18</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2017-12-19">19</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2017-12-20">20</time>
+                    </td>
+                    <td class="afk">
+                        <time datetime="2017-12-21">21</time>
+                        <div class="afk"><span>AFK</span></div>
+                    </td>
+                    <td class="afk">
+                        <time datetime="2017-12-22">22</time>
+                        <div class="afk"><span>AFK</span></div>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2017-12-23">23</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2017-12-24">24</time>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="afk">
+                        <time datetime="2017-12-25">25</time>
+                        <div class="afk"><span>AFK</span></div>
+                    </td>
+                    <td class="afk">
+                        <time datetime="2017-12-26">26</time>
+                        <div class="afk"><span>AFK</span></div>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2017-12-27">27</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2017-12-28">28</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2017-12-29">29</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2017-12-30">30</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2017-12-31">31</time>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="afk">
+                        <time datetime="2018-01-01">1 <strong>Jan</strong> 2018</time>
+                        <div class="afk"><span>AFK</span></div>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-02">2</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-03">3</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-04">4</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-05">5</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2018-01-06">6</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2018-01-07">7</time>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-08">8</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-09">9</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-10">10</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-11">11</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-12">12</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2018-01-13">13</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2018-01-14">14</time>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-15">15</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-16">16</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-17">17</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-18">18</time>
+                    </td>
+                    <td class="workworkwork">
+                        <time datetime="2018-01-19">19</time>
+                        <div class="notice"><span>FINISH!</span></div>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2018-01-20">20</time>
+                    </td>
+                    <td class="weekend">
+                        <time datetime="2018-01-21">21</time>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="key">
+            <div><div class="workworkwork"></div> = time funded by grant</div>
         </div>
-    </div>
-    <div class="block">
-        <div class="main">
-            <h2>Up next</h2>
-            <ul>
-                <li>Port code snippets from old handshake docs</li>
-                <li>Research box-stream.</li>
-            </ul>
-            <h2>Recently finished</h2>
-            <h3>13 Dec</h3>
-            <ul>
-                <li>Ported existing prose from the old handshake docs to the new layout. Now they make use of asides and inline key images.</li>
-                <li>Remade handshake figures to be less visually noisy. Detatched signatures from their message boxes to show that the message is not sent over the wire.</li>
-            </ul>
-            <h3>12 Dec</h3>
-            <ul>
-                <li>Yank styles from <a href="https://distill.pub">Distill</a>. Make CSS layout handle wide figures and asides. Embed fonts, bigger paragraph text.</li>
-                <li>Split up the big handshake ladder figure into an overview figure followed by explanations of each message. Too much stuff was crammed between each message in the old figure.</li>
-                <li>Swap out colors to avoid illegible combinations with black. Set up a deuter/prot/tritanopia-friendly color palette. Note to self: use fewer colors when remaking remaining figures. Explain what solids and outlines mean.</li>
-            </ul>
-        </div>
-    </div>
+        <h2>Up next</h2>
+        <ul>
+            <li>Port code snippets from old handshake docs</li>
+            <li>Research box-stream.</li>
+        </ul>
+        <h2>Recently finished</h2>
+        <h3>13 Dec</h3>
+        <ul>
+            <li>Ported existing prose from the old handshake docs to the new layout. Now they make use of asides and inline key images.</li>
+            <li>Remade handshake figures to be less visually noisy. Detatched signatures from their message boxes to show that the message is not sent over the wire.</li>
+        </ul>
+        <h3>12 Dec</h3>
+        <ul>
+            <li>Yank styles from <a href="https://distill.pub">Distill</a>. Make CSS layout handle wide figures and asides. Embed fonts, bigger paragraph text.</li>
+            <li>Split up the big handshake ladder figure into an overview figure followed by explanations of each message. Too much stuff was crammed between each message in the old figure.</li>
+            <li>Swap out colors to avoid illegible combinations with black. Set up a deuter/prot/tritanopia-friendly color palette. Note to self: use fewer colors when remaking remaining figures. Explain what solids and outlines mean.</li>
+        </ul>
+    </main>
 
 <script>
 

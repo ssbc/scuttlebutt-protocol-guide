@@ -1,12 +1,9 @@
-.cal-container {
-    margin: 3em 0 1em;
-}
-
 .calendar {
-    grid-column: 1 / 4;
+    margin-top: 3em;
+    grid-column: page;
     border-collapse: collapse;
     table-layout: fixed;
-    width: 1064px;
+    width: 1072px;
     font-size: 13px;
     line-height: 1.4;
 }
@@ -85,9 +82,10 @@ td.today time {
 .key {
     font-size: 13px;
     margin-top: 2em;
-    grid-column: 1 / 4;
+    grid-column: page;
     justify-self: end;
     margin-right: 4px;
+    margin-bottom: 1em;
 }
 
 .key .workworkwork {
