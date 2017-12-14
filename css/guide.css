@@ -7,10 +7,7 @@ html {
 }
 
 body {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin: 0;
-    margin-bottom: 100px;
+    margin: 0 0 100px 0;
 }
 
 header, main {
@@ -95,6 +92,23 @@ h3 {
     margin: 40px 0 20px;
 }
 
+h4 {
+    font-size: 13px;
+    margin: 1em 0 0.2em;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+pre, code {
+    font-family: "DejaVu Sans Mono";
+    font-size: 12px;
+}
+
+pre {
+    line-height: 1.3;
+    background-color: #f4f4f4;
+    padding: 6px 10px;
+}
+
 .subtitle {
     font-size: 19px;
     font-weight: 300;
@@ -103,7 +117,7 @@ h3 {
 }
 
 main > figure, main > img {
-    margin: 1em 0 3em 0;
+    margin: 1em 0 2em 0;
     justify-self: center;
 }
 
@@ -127,7 +141,7 @@ a:hover {
     border-bottom-color: rgb(0, 0, 0, 0.8);
 }
 
-p, ol, ul {
+p, ol, ul, pre {
     margin: 0 0 1em;
 }
 
@@ -154,4 +168,21 @@ img.inline-key {
 
 .key-formula {
     display: inline-block;
+}
+
+.cs {
+    margin-bottom: 2em;
+}
+
+.cs.left {
+    grid-column: left;
+}
+
+.cs.right {
+    grid-column: right;
+}
+
+.msgsize {
+    font-weight: normal;
+    font-style: italic;
 }
