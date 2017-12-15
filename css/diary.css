@@ -36,6 +36,7 @@ time {
 
 .calendar ul {
     padding-left: 1.4em;
+    margin: 0;
 }
 
 .calendar li {
