@@ -48,23 +48,18 @@
 
         <h3 id="client-hello">1. Client hello</h3>
         <img src="img/client_hello.svg"/>
-        <div class="cs left">
-            <h4>Client sends <span class="msgsize">(64 bytes)</span></h4>
-            <pre><code>concat(
+
+        <figure class="left-right-code">
+            <h4 class="left">Client sends <span class="msgsize">(64 bytes)</span></h4>
+            <h4 class="right">Server verifies</h4>
+            <pre class="left"><code>concat(
     nacl_auth(
         msg: client_ephemeral_pk,
         key: network_identifier
     ),
     client_ephemeral_pk
 )</code></pre>
-            <h4>where</h4>
-            <pre class="defs"><code>network_identifier =
-    d4a1cb88a66f02f8db635ce26441cc5d
-    ac1b08420ceaac230839b755845a9ffb</code></pre>
-        </div>
-        <div class="cs right">
-            <h4>Server verifies</h4>
-            <pre><code>assert(length(msg1) == 64)
+            <pre class="right"><code>assert(length(msg1) == 64)
 
 client_hmac = first_32_bytes(msg1)
 client_ephemeral_pk = last_32_bytes(msg1)
@@ -74,16 +69,21 @@ assert_nacl_auth_verify(
     msg: client_ephemeral_pk,
     key: network_identifier
 )</code></pre>
-        </div>
+        </figure>
+
         <p>First the client sends their <img class="inline-key" src="img/key_little_a_public.svg"/> generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
-        <p>The <img class="inline-key" src="img/key_big_n.svg"/> network identifier is a fixed 32-byte key. Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from what is sent over the wire, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
+        <p>The <img class="inline-key" src="img/key_big_n.svg"/> network identifier is a fixed 32-byte key. On the main Scuttlebutt network it is:</p>
+        <pre><code>d4a1cb88a66f02f8db635ce26441cc5dac1b08420ceaac230839b755845a9ffb</code></pre>
+        <p>Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from what is sent over the wire, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
         <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
 
         <h3 id="server-hello">2. Server hello</h3>
         <img src="img/server_hello.svg"/>
-        <div class="cs left">
-            <h4>Client verifies</h4>
-            <pre><code>assert(length(msg2) == 64)
+
+        <figure class="left-right-code">
+            <h4 class="left">Client verifies</h4>
+            <h4 class="right">Server sends <span class="msgsize">(64 bytes)</span></h4>
+            <pre class="left"><code>assert(length(msg2) == 64)
 
 server_hmac = first_32_bytes(msg2)
 server_ephemeral_pk = last_32_bytes(msg2)
@@ -93,24 +93,24 @@ assert_nacl_auth_verify(
     msg: server_ephemeral_pk,
     key: network_identifier
 )</code></pre>
-        </div>
-        <div class="cs right">
-            <h4>Server sends <span class="msgsize">(64 bytes)</span></h4>
-            <pre><code>concat(
+            <pre class="right"><code>concat(
     nacl_auth(
         msg: server_ephemeral_pk,
         key: network_identifier
     ),
     server_ephemeral_pk
 )</code></pre>
-        </div>
+        </figure>
+
         <p>The server responds with their own <img class="inline-key" src="img/key_little_b_public.svg"/> ephemeral public key and hmac. The client stores the key and verifies that they are also using the same network identifier.</p>
 
         <h3 id="shared-secret-derivation-1">Shared secret derivation</h3>
         <img src="img/shared_secret_derivation_1.svg"/>
-        <div class="cs left">
-            <h4>Client computes</h4>
-            <pre><code>shared_secret_ab = nacl_scalarmult(
+
+        <figure class="left-right-code">
+            <h4 class="left">Client computes</h4>
+            <h4 class="right">Server computes</h4>
+            <pre class="left"><code>shared_secret_ab = nacl_scalarmult(
     sk_to_curve25519(client_ephemeral_sk),
     pk_to_curve25519(server_ephemeral_pk)
 )
@@ -119,10 +119,7 @@ shared_secret_aB = nacl_scalarmult(
     sk_to_curve25519(client_ephemeral_sk),
     pk_to_curve25519(server_longterm_pk)
 )</code></pre>
-        </div>
-        <div class="cs right">
-            <h4>Server computes</h4>
-            <pre><code>shared_secret_ab = nacl_scalarmult(
+            <pre class="right"><code>shared_secret_ab = nacl_scalarmult(
     sk_to_curve25519(server_ephemeral_sk),
     pk_to_curve25519(client_ephemeral_pk)
 )
@@ -131,7 +128,8 @@ shared_secret_aB = nacl_scalarmult(
     sk_to_curve25519(server_longterm_sk),
     pk_to_curve25519(client_ephemeral_pk)
 )</code></pre>
-        </div>
+        </figure>
+
         <div>
             <p>Now that ephemeral keys have been exchanged, both ends use them to derive a shared secret <img class="inline-key" src="img/key_little_a_little_b.svg"/> using scalar multiplication.</p>
             <p>The client and server each combine their own ephemeral secret key with the other’s ephemeral public key to produce the same shared secret on both ends. An eavesdropper doesn’t know either secret key so they can’t generate the shared secret. A man-in-the-middle could swap out the ephemeral keys in Messages 1 and 2 for their own keys, so the shared secret <img class="inline-key" src="img/key_little_a_little_b.svg"/> alone is not enough for the client and server to know that they are talking to each other and not a man-in-the-middle.</p>
@@ -144,9 +142,11 @@ shared_secret_aB = nacl_scalarmult(
 
         <h3 id="client-accept">3. Client accept</h3>
         <img src="img/client_accept.svg"/>
-        <div class="cs left">
-            <h4>Client computes</h4>
-            <pre><code>detached_signature_A = nacl_sign_detached(
+
+        <figure class="left-right-code">
+            <h4 class="left">Client computes</h4>
+            <h4 class="right">Server verifies</h4>
+            <pre class="left"><code>detached_signature_A = nacl_sign_detached(
     msg: concat(
         network_identifier,
         server_longterm_pk,
@@ -154,25 +154,7 @@ shared_secret_aB = nacl_scalarmult(
     ),
     key: client_longterm_sk
 )</code></pre>
-            <h4>Client sends <span class="msgsize">(112 bytes)</span></h4>
-            <pre><code>nacl_secret_box(
-    msg: concat(
-        detached_signature_A,
-        client_longterm_pk
-    ),
-    nonce: 24_bytes_of_zeros,
-    key: sha256(
-        concat(
-            network_identifier,
-            shared_secret_ab,
-            shared_secret_aB
-        )
-    )
-)</code></pre>
-        </div>
-        <div class="cs right">
-            <h4>Server verifies</h4>
-            <pre><code>msg3_plaintext = assert_nacl_secretbox_open(
+            <pre class="right" style="grid-row: span 3"><code>msg3_plaintext = assert_nacl_secretbox_open(
     ciphertext: msg3,
     nonce: 24_bytes_of_zeros,
     key: sha256(
@@ -198,7 +180,23 @@ assert_nacl_sign_verify_detached(
     ),
     key: client_longterm_pk
 )</code></pre>
-        </div>
+            <h4 class="left">Client sends <span class="msgsize">(112 bytes)</span></h4>
+            <pre class="left"><code>nacl_secret_box(
+    msg: concat(
+        detached_signature_A,
+        client_longterm_pk
+    ),
+    nonce: 24_bytes_of_zeros,
+    key: sha256(
+        concat(
+            network_identifier,
+            shared_secret_ab,
+            shared_secret_aB
+        )
+    )
+)</code></pre>
+        </figure>
+
         <div>
             <p>The client reveals their identity to the server by sending their <img class="inline-key" src="img/key_big_a_public.svg"/> long term public key. The client also makes a signature using their <img class="inline-key" src="img/key_big_a_secret.svg"/> long term secret key. By signing the keys used earlier in the handshake the client proves their identity and confirms that they do indeed wish to be part of this handshake.</p>
             <p>The client’s message is enclosed in a secret box to ensure that only the server can read it. Upon receiving it, the server opens the box, stores the client’s long term public key and verifies the signature.</p>
@@ -211,27 +209,29 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="shared-secret-derivation-2">Shared secret derivation</h3>
         <img src="img/shared_secret_derivation_2.svg"/>
-        <div class="cs left">
-            <h4>Client computes</h4>
-            <pre><code>shared_secret_Ab = nacl_scalarmult(
+
+        <figure class="left-right-code">
+            <h4 class="left">Client computes</h4>
+            <h4 class="right">Server computes</h4>
+            <pre class="left"><code>shared_secret_Ab = nacl_scalarmult(
     sk_to_curve25519(client_longterm_sk),
     pk_to_curve25519(server_ephemeral_pk)
 )</code></pre>
-        </div>
-        <div class="cs right">
-            <h4>Server computes</h4>
-            <pre><code>shared_secret_Ab = nacl_scalarmult(
+            <pre class="right"><code>shared_secret_Ab = nacl_scalarmult(
     sk_to_curve25519(server_ephemeral_sk),
     pk_to_curve25519(client_longterm_pk)
 )</code></pre>
-        </div>
+        </figure>
+
         <p>Now that the server knows the <img class="inline-key" src="img/key_big_a_public.svg"/> client’s long term public key, another shared secret <img class="inline-key" src="img/key_big_a_little_b.svg"/> is derived by both ends. The server uses this shared secret to send a message that only the real client can read and not a man-in-the-middle.</p>
 
         <h3 id="server-accept">4. Server accept</h3>
         <img src="img/server_accept.svg"/>
-        <div class="cs left">
-            <h4>Client verifies</h4>
-            <pre><code>detached_signature_B = assert_nacl_secretbox_open(
+
+        <figure class="left-right-code">
+            <h4 class="left">Client verifies</h4>
+            <h4 class="right">Server computes</h4>
+            <pre class="left" style="grid-row: span 3"><code>detached_signature_B = assert_nacl_secretbox_open(
     ciphertext: msg4,
     nonce: 24_bytes_of_zeros,
     key: sha256(
@@ -253,10 +253,7 @@ assert_nacl_sign_verify_detached(
     ),
     key: server_longterm_pk
 )</code></pre>
-        </div>
-        <div class="cs right">
-            <h4>Server computes</h4>
-            <pre><code>detached_signature_B = nacl_sign_detatched(
+            <pre class="right"><code>detached_signature_B = nacl_sign_detatched(
     msg: concat(
         network_identifier,
         detached_signature_A,
@@ -264,8 +261,8 @@ assert_nacl_sign_verify_detached(
     ),
     key: server_longterm_sk
 )</code></pre>
-            <h4>Server sends <span class="msgsize">(80 bytes)</span></h4>
-            <pre><code>nacl_secret_box(
+            <h4 class="right">Server sends <span class="msgsize">(80 bytes)</span></h4>
+            <pre class="right"><code>nacl_secret_box(
     msg: detached_signature_B,
     nonce: 24_bytes_of_zeros,
     key: sha256(
@@ -277,7 +274,7 @@ assert_nacl_sign_verify_detached(
         )
     )
 )</code></pre>
-        </div>
+        </figure>
         <p>The server accepts the handshake by signing a message using their <img class="inline-key" src="img/key_big_b_secret.svg"/> long term secret key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
         <p>Upon receiving it, the client opens the box and verifies the server’s signature.</p>
         <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula"><em>sha256</em>(<em>concat</em>( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>, <img class="inline-key" src="img/key_big_a_little_b.svg"/>))</span>. <em>(Note to self: check what box-stream uses.)</em></p>

@@ -10,7 +10,7 @@ body {
     margin: 0 0 100px 0;
 }
 
-header, main {
+header, main, .left-right-code {
     display: grid;
     grid-template-columns:
         [screen-start] 1fr
@@ -94,7 +94,7 @@ h3 {
 
 h4 {
     font-size: 13px;
-    margin: 1em 0 0.2em;
+    margin: 1rem 0 0.2rem;
     color: rgba(0, 0, 0, 0.6);
 }
 
@@ -117,7 +117,7 @@ pre {
 }
 
 main > figure, main > img {
-    margin: 1em 0 2em 0;
+    margin: 1rem 0 2rem 0;
     justify-self: center;
 }
 
@@ -127,7 +127,7 @@ aside {
 
 figcaption, aside {
     font-size: 13px;
-    line-height: 1.5em;
+    line-height: 1.5;
     color: rgba(0, 0, 0, 0.6);
 }
 
@@ -142,15 +142,15 @@ a:hover {
 }
 
 p, ol, ul, pre {
-    margin: 0 0 1em;
+    margin: 0 0 1rem;
 }
 
 ol, ul {
-    padding-left: 2.5em;
+    padding-left: 2.5rem;
 }
 
 li {
-    padding-left: 0.6em;
+    padding-left: 0.6rem;
 }
 
 hr {
@@ -170,16 +170,26 @@ img.inline-key {
     display: inline-block;
 }
 
-.cs {
-    margin-bottom: 2em;
+.left-right-code {
+    grid-column: screen;
+    margin: 1rem 0 4rem;
 }
 
-.cs.left {
+.left-right-code .left {
     grid-column: left;
 }
 
-.cs.right {
+.left-right-code .right {
     grid-column: right;
+}
+
+.left-right-code h4 {
+    align-self: end;
+    margin: 0.5rem 0 0.2rem;
+}
+
+.left-right-code pre {
+    margin: 0;
 }
 
 .msgsize {
