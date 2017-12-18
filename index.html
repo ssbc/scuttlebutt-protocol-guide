@@ -25,7 +25,7 @@
         <h1>Scuttlebutt Protocol Guide</h1>
         <p class="subtitle">How Scuttlebutt peers find and talk to each other</p>
         <hr/>
-        <h2 id="handshake">Handshake</h2>
+        <h2 id="handshake" class="first">Handshake</h2>
         <p>Once a Scuttlebutt client has discovered the IP address and port number of a peer they connect via TCP to exchange messages. The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
         <img src="img/message_flow.svg"/>
         <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
@@ -277,12 +277,24 @@ assert_nacl_sign_verify_detached(
         </figure>
         <p>The server accepts the handshake by signing a message using their <img class="inline-key" src="img/key_big_b_secret.svg"/> long term secret key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
         <p>Upon receiving it, the client opens the box and verifies the server’s signature.</p>
-        <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula"><em>sha256</em>(<em>concat</em>( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>, <img class="inline-key" src="img/key_big_a_little_b.svg"/>))</span>. <em>(Note to self: check what box-stream uses.)</em></p>
+        <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula"><em>sha256</em>(<em>concat</em>( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>, <img class="inline-key" src="img/key_big_a_little_b.svg"/>))</span>.</p>
 
         <h3 id="handshake-complete">Handshake complete</h3>
         <img src="img/final_shared_secret.svg"/>
         <p>At this point the handshake has succeeded. The client and server have proven their identities to each other.</p>
         <p>The shared secrets are combined and used in a bulk encryption cipher to provide a secure two-way channel for exchanging further messages.</p>
+
+        <h2 id="box-stream">Box Stream</h2>
+        <img src="img/box_stream_overview.svg"/>
+
+        <h3 id="sending">Sending</h3>
+        <img src="img/box_stream_send.svg"/>
+
+        <h3 id="receiving">Receiving</h3>
+        <img src="img/box_stream_receive.svg"/>
+
+        <h3 id="keys-and-nonces">Keys and nonces</h3>
+        <img src="img/box_stream_params.svg" class="pagewidth"/>
     </main>
 </body>
 </html>

@@ -774,19 +774,19 @@
          id="tspan4087">secret box</tspan></text>
     <text
        xml:space="preserve"
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1;font-family:'Helvetica Neue';-inkscape-font-specification:'Helvetica Neue';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker:none;enable-background:accumulate"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.13;font-family:'Helvetica Neue';-inkscape-font-specification:'Helvetica Neue';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker:none;enable-background:accumulate"
        x="302.72607"
        y="566.66663"
        id="text1710"><tspan
          sodipodi:role="line"
          x="302.72607"
          y="566.66663"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:end;text-anchor:end;fill:#666666;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.13;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:end;text-anchor:end;fill:#666666;fill-opacity:1"
          id="tspan1712">opens if you</tspan><tspan
          sodipodi:role="line"
          x="302.72607"
-         y="579.94281"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:end;text-anchor:end;fill:#666666;fill-opacity:1"
+         y="581.63281"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.13;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:end;text-anchor:end;fill:#666666;fill-opacity:1"
          id="tspan4255">know all of</tspan></text>
     <g
        transform="translate(297.5,135.5)"
@@ -980,15 +980,15 @@
        id="text6175"
        y="206.16666"
        x="347"
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.39999998;font-family:'Helvetica Neue';-inkscape-font-specification:'Helvetica Neue';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker:none;enable-background:accumulate"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:'Helvetica Neue';-inkscape-font-specification:'Helvetica Neue';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker:none;enable-background:accumulate"
        xml:space="preserve"><tspan
          id="tspan6173"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.39999998;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#666666;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#666666;fill-opacity:1"
          y="206.16666"
          x="347"
          sodipodi:role="line">Signature received from</tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.39999998;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#666666;fill-opacity:1"
-         y="224.64285"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#666666;fill-opacity:1"
+         y="225.55286"
          x="347"
          sodipodi:role="line"
          id="tspan6177">client in Message 3</tspan></text>

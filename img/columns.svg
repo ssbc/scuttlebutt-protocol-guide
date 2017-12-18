@@ -516,7 +516,10 @@
        type="xygrid"
        id="grid826"
        originx="0"
-       originy="0" />
+       originy="0"
+       spacingx="4"
+       spacingy="10"
+       empspacing="1" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -772,7 +775,7 @@
        id="rect1378"
        width="336"
        height="40"
-       x="215.99998"
+       x="216"
        y="501.16666" />
     <rect
        y="501.16666"
@@ -846,7 +849,7 @@
        y="401.16666" />
     <rect
        y="351.16666"
-       x="32.000004"
+       x="32"
        height="40"
        width="1072"
        id="rect1424"
