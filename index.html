@@ -282,22 +282,30 @@ assert_nacl_sign_verify_detached(
         <h3 id="handshake-complete">Handshake complete</h3>
         <img src="img/final_shared_secret.svg"/>
         <p>At this point the handshake has succeeded. The client and server have proven their identities to each other.</p>
-        <p>The shared secrets are combined and used in a bulk encryption cipher to provide a secure two-way channel for exchanging further messages.</p>
+        <p>The shared secrets established during the handshake are used to set up a pair of box streams for securely exchanging further messages.</p>
 
-        <h2 id="box-stream">Box Stream</h2>
+        <h2 id="box-stream">Box stream</h2>
+        <p>Box stream is the bulk encryption protocol used to exchange messages following the handshake until the connection ends. It is designed to protect messages from being read or modified by a man-in-the-middle.</p>
+        <p>Each message in a box stream has a header and body. The header is always 34 bytes long and says how long the body will be.</p>
         <img src="img/box_stream_overview.svg"/>
 
         <h3 id="sending">Sending</h3>
+        <p>Sending a message involves encrypting the body of the message and preparing a header for it. Two secret boxes are used; one to protect the header and another to protect the body.</p>
         <img src="img/box_stream_send.svg" class="pagewidth"/>
 
         <h3 id="receiving">Receiving</h3>
+        <p>Receiving a message involves reading the header to find out how long the body is then reassembling and opening the body secret box.</p>
         <img src="img/box_stream_receive.svg" class="pagewidth"/>
 
         <h3 id="goodbye">Goodbye</h3>
+        <p>The stream ends with a special “goodbye” header. Because the goodbye header is authenticated it allows a receiver to tell the difference between the connection genuinely being finished and a man-in-the-middle forcibly resetting the underlying TCP connection.</p>
         <img src="img/box_stream_goodbye.svg" class="pagewidth"/>
+        <p>When a receiver opens a header and finds that it contains all zeros then they will know that the connection is finished.</p>
 
         <h3 id="keys-and-nonces">Keys and nonces</h3>
+        <p>When Scuttlebutt peers communicate two box streams are used at the same time. One is for client-to-server messages and the other is for server-to-client messages. The two streams use different keys and starting nonces for their secret boxes.</p>
         <img src="img/box_stream_params.svg" class="pagewidth"/>
+        <p>The starting nonce is used for the first header in the stream (“secret box 1” in the above figures), then incremented for the first body (“secret box 2”), then incremented for the next header and so on.</p>
     </main>
 </body>
 </html>
