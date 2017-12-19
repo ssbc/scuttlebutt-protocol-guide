@@ -303,7 +303,7 @@ assert_nacl_sign_verify_detached(
         <p>When a receiver opens a header and finds that it contains all zeros then they will know that the connection is finished.</p>
 
         <h3 id="keys-and-nonces">Keys and nonces</h3>
-        <p>When Scuttlebutt peers communicate two box streams are used at the same time. One is for client-to-server messages and the other is for server-to-client messages. The two streams use different keys and starting nonces for their secret boxes.</p>
+        <p>Two box streams are used at the same time when Scuttlebutt peers communicate. One is for client-to-server messages and the other is for server-to-client messages. The two streams use different keys and starting nonces for their secret boxes.</p>
         <img src="img/box_stream_params.svg" class="pagewidth"/>
         <p>The starting nonce is used for the first header in the stream (“secret box 1” in the above figures), then incremented for the first body (“secret box 2”), then incremented for the next header and so on.</p>
     </main>
