@@ -700,7 +700,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#666666;fill-opacity:1"
          y="196.16666"
          x="352"
-         sodipodi:role="line">Ephemeral Ed25519 key pairs</tspan><tspan
+         sodipodi:role="line">Ephemeral Curve25519 key pairs</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#666666;fill-opacity:1"
          y="215.55286"
          x="352"

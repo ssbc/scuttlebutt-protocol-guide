@@ -111,22 +111,22 @@ assert_nacl_auth_verify(
             <h4 class="left">Client computes</h4>
             <h4 class="right">Server computes</h4>
             <pre class="left"><code>shared_secret_ab = nacl_scalarmult(
-    sk_to_curve25519(client_ephemeral_sk),
-    pk_to_curve25519(server_ephemeral_pk)
+    client_ephemeral_sk,
+    server_ephemeral_pk
 )
 
 shared_secret_aB = nacl_scalarmult(
-    sk_to_curve25519(client_ephemeral_sk),
+    client_ephemeral_sk,
     pk_to_curve25519(server_longterm_pk)
 )</code></pre>
             <pre class="right"><code>shared_secret_ab = nacl_scalarmult(
-    sk_to_curve25519(server_ephemeral_sk),
-    pk_to_curve25519(client_ephemeral_pk)
+    server_ephemeral_sk,
+    client_ephemeral_pk
 )
 
 shared_secret_aB = nacl_scalarmult(
     sk_to_curve25519(server_longterm_sk),
-    pk_to_curve25519(client_ephemeral_pk)
+    client_ephemeral_pk
 )</code></pre>
         </figure>
 
@@ -136,8 +136,9 @@ shared_secret_aB = nacl_scalarmult(
             <p>Because the client already knows the <img class="inline-key" src="img/key_big_b_public.svg"/> server’s long term public key, both ends derive a second secret <img class="inline-key" src="img/key_little_a_big_b.svg"/> that will allow the client to send a message that only the real server can read and not a man-in-the-middle.</p>
         </div>
         <aside>
-            <p><strong>Scalar multiplication</strong> is a function for deriving shared secrets from a secret key and a public key.</p>
-            <p>The order of arguments matters. In the NaCl API the secret key is provided first. Note that the existing Ed25519 keys must first be converted to Curve25519 keys.</p>
+            <p><strong>Scalar multiplication</strong> is a function for deriving shared secrets from a pair of secret and public Curve25519 keys.</p>
+            <p>The order of arguments matters. In the NaCl API the secret key is provided first.</p>
+            <p>Note that long term keys are Ed25519 and must first be converted to Curve25519.</p>
         </aside>
 
         <h3 id="client-accept">3. Client accept</h3>
@@ -215,10 +216,10 @@ assert_nacl_sign_verify_detached(
             <h4 class="right">Server computes</h4>
             <pre class="left"><code>shared_secret_Ab = nacl_scalarmult(
     sk_to_curve25519(client_longterm_sk),
-    pk_to_curve25519(server_ephemeral_pk)
+    server_ephemeral_pk
 )</code></pre>
             <pre class="right"><code>shared_secret_Ab = nacl_scalarmult(
-    sk_to_curve25519(server_ephemeral_sk),
+    server_ephemeral_sk,
     pk_to_curve25519(client_longterm_pk)
 )</code></pre>
         </figure>
