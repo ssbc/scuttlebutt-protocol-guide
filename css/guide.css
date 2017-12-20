@@ -10,7 +10,7 @@ body {
     margin: 0 0 100px 0;
 }
 
-header, main, .left-right-code {
+header, main, .left-right.code {
     display: grid;
     grid-template-columns:
         [screen-start] 1fr
@@ -126,7 +126,6 @@ pre {
 
 main > figure, main > img {
     margin: 1rem 0 2rem 0;
-    justify-self: center;
 }
 
 aside {
@@ -178,25 +177,28 @@ img.inline-key {
     display: inline-block;
 }
 
-.left-right-code {
-    grid-column: screen;
+.code {
     margin: 1rem 0 4rem;
 }
 
-.left-right-code .left {
+.left-right.code {
+    grid-column: screen;
+}
+
+.left {
     grid-column: left;
 }
 
-.left-right-code .right {
+.right {
     grid-column: right;
 }
 
-.left-right-code h4 {
+.code h4 {
     align-self: end;
     margin: 0.5rem 0 0.2rem;
 }
 
-.left-right-code pre {
+.code pre {
     margin: 0;
 }
 
