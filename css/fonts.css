@@ -56,20 +56,6 @@
 
 @font-face {
     font-family: Roboto;
-    font-weight: Y;
-    font-style: normal;
-    src: local(Roboto X), local(Roboto-X), url(../fonts/Roboto/Roboto-X.ttf);
-}
-
-@font-face {
-    font-family: Roboto;
-    font-weight: Y;
-    font-style: italic;
-    src: local(Roboto X Italic), local(Roboto-XItalic), url(../fonts/Roboto/Roboto-XItalic.ttf);
-}
-
-@font-face {
-    font-family: Roboto;
     font-weight: 700;
     font-style: normal;
     src: local(Roboto Bold), local(Roboto-Bold), url(../fonts/Roboto/Roboto-Bold.ttf);
