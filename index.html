@@ -309,6 +309,27 @@ assert_nacl_sign_verify_detached(
         <p>Two box streams are used at the same time when Scuttlebutt peers communicate. One is for client-to-server messages and the other is for server-to-client messages. The two streams use different keys and starting nonces for their secret boxes.</p>
         <img src="img/box_stream_params.svg" class="pagewidth"/>
         <p>The starting nonce is used for the first header in the stream (“secret box 1” in the above figures), then incremented for the first body (“secret box 2”), then incremented for the next header and so on.</p>
+
+        <h2 id="rpc-protocol">RPC protocol</h2>
+        <div>
+            <p>Scuttlebutt peers make requests from each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
+            <p>The RPC protocol can interleave multiple requests so that a slow request doesn’t block following ones. It also handles long-running asynchronous requests for notifying when an event occurs and streaming responses that deliver multiple values.</p>
+            <p>Similar to the box stream protocol, the RPC protocol consists of fixed-length headers followed by variable-length bodies. There is also a goodbye message which is just a zeroed out header.</p>
+        </div>
+        <aside>
+            <p><strong>Remote procedure calls</strong> involve a server exposing a set of procedures that a client can call.</p>
+            <p>The client tells the server the name of the procedure they wish to call along with any arguments. The server performs the action and returns a value back to the client.</p>
+        </aside>
+        <img src="img/rpc_overview.svg"/>
+        <p>The RPC protocol takes place inside the box stream to protect it from eavesdropping or tampering.</p>
+        <img src="img/rpc_alignment.svg"/>
+        <aside style="margin-top:36px">
+            <p>RPC messages are not necessarily aligned to box stream boxes.</p>
+            <p>Multiple RPC messages may be put inside one box or a single RPC message may be split over several boxes.</p>
+        </aside>
+        <h3 id="header-structure">Header structure</h3>
+        <p>RPC headers contain a set of flags to say what type of message it is, a field specifying its length and a request number which allows matching requests with their responses when there are several active at the same time.</p>
+        <img src="img/rpc_header.svg"/>
     </main>
 </body>
 </html>
