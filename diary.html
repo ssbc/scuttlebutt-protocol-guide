@@ -121,6 +121,9 @@
                     </td>
                     <td class="workworkwork">
                         <time datetime="2017-12-27">27</time>
+                        <ul>
+                            <li>Read muxrpc and packet-stream</li>
+                        </ul>
                     </td>
                     <td class="workworkwork">
                         <time datetime="2017-12-28">28</time>
@@ -213,9 +216,16 @@
         </div>
         <h2>Up next</h2>
         <ul>
-            <li>Read muxrpc implementations to find out what it is and how it works.</li>
+            <li>Figure out when the end/error and stream flags are set in RPC messages.</li>
+            <li>Confirm that history stream and blob-related RPC methods are the only publicly available ones.</li>
+            <li>Draw diagrams for muxrpc.</li>
         </ul>
         <h2>Recent</h2>
+        <h3>27 Dec</h3>
+        <ul>
+            <li>Read source code for muxrpc and packet-stream.</li>
+            <li>Test whether scuttlebot requires RPC messages to be aligned to box stream boundaries.</li>
+        </ul>
         <h3>20 Dec</h3>
         <ul>
             <li>Tracked down and fixed errors in the handshake docs where scuttlebot works differently to what was described.</li>
@@ -252,6 +262,8 @@
     </main>
 
     <script>
+        // Highlight today on the calendar (in my timezone)
+
         function tzDate(date, offsetHours) {
             let tzOffset = offsetHours * 3600 * 1000;
             let userOffset = (new Date()).getTimezoneOffset() * 60 * 1000;
