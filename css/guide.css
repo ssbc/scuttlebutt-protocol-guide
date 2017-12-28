@@ -79,7 +79,7 @@ main > * {
 
 h1 {
     font-size: 50px;
-    margin: 64px 0 8px;
+    margin: 60px 0 8px;
     color: #000;
     line-height: 1.1;
 }
@@ -103,7 +103,7 @@ h4 {
 }
 
 h2.first {
-    margin-top: 24px;
+    margin-top: 60px;
 }
 
 pre, code {
@@ -121,7 +121,39 @@ pre {
     font-size: 19px;
     font-weight: 300;
     color: #000;
-    margin: 0 0 20px;
+    margin: 0 0 60px;
+}
+
+.toc {
+    margin: 24px 0 28px;
+    line-height: 23px;
+}
+
+.toc h2 {
+    font-size: 9.6px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+}
+
+.toc ol {
+    list-style: none;
+    padding-left: 0;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.toc li {
+    padding-left: 0;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.toc a {
+    border-bottom: none;
 }
 
 main > figure, main > img {
@@ -165,7 +197,7 @@ hr {
     width: 100%;
     border: none;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin: 60px 0;
+    margin: 0;
 }
 
 img.inline-key {

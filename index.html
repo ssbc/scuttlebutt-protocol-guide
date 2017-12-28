@@ -25,6 +25,15 @@
         <h1>Scuttlebutt Protocol Guide</h1>
         <p class="subtitle">How Scuttlebutt peers find and talk to each other</p>
         <hr/>
+        <div class="toc">
+            <h2>Contents</h2>
+            <ol>
+                <li><a href="#handshake">Handshake</a></li>
+                <li><a href="#box-stream">Box stream</a></li>
+                <li><a href="#rpc-protocol">RPC protocol</a></li>
+            </ol>
+        </div>
+        <hr/>
         <h2 id="handshake" class="first">Handshake</h2>
         <p>Once a Scuttlebutt client has discovered the IP address and port number of a peer they connect via TCP to exchange messages. The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
         <img src="img/message_flow.svg"/>
