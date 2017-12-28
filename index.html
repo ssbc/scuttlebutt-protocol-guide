@@ -336,9 +336,41 @@ assert_nacl_sign_verify_detached(
             <p>RPC messages are not necessarily aligned to box stream boxes.</p>
             <p>Multiple RPC messages may be put inside one box or a single RPC message may be split over several boxes.</p>
         </aside>
+
         <h3 id="header-structure">Header structure</h3>
         <p>RPC headers contain a set of flags to say what type of message it is, a field specifying its length and a request number which allows matching requests with their responses when there are several active at the same time.</p>
         <img src="img/rpc_header.svg"/>
+
+        <h3 id="request-format">Request format</h3>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["createHistoryStream"],
+    "type": "source",
+    "args": [
+        {
+            "id": "@2956euUf6KS5DipxjWAfV5GO4R/FTR9nE31AOPWlv+g=.ed25519"
+        }
+    ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+            </div>
+        </figure>
     </main>
 </body>
 </html>

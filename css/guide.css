@@ -22,6 +22,15 @@ header, main, .left-right.code {
     grid-column-gap: 32px;
 }
 
+.request-response {
+    display: grid;
+    grid-template-columns:
+        [request-start response-gutter-start] 60px
+        [response-gutter-end response-start] 60px 60px 60px 60px 60px 60px
+        [request-end request-gutter-start] 60px [request-gutter-end response-end];
+    grid-column-gap: 32px;
+}
+
 main {
     align-items: first baseline;
 }
@@ -223,6 +232,76 @@ img.inline-key {
 
 .right {
     grid-column: right;
+}
+
+.request, .response {
+    min-height: 100px;
+}
+
+.request, .response, .request-arrow, .response-arrow {
+    margin-bottom: 24px;
+}
+
+.request-response .header {
+    color: #fff;
+    font-size: 13px;
+    padding: 0 6px;
+}
+
+.request-response .key {
+    margin-right: 5px;
+}
+
+.request-response .key::after {
+    content: ':';
+}
+
+.request-response .value {
+    font-weight: 700;
+    margin-right: 25px;
+}
+
+.request {
+    grid-column: request;
+    background-color: #d2e9f8;
+}
+
+.response {
+    grid-column: response;
+    background-color: #fcf3e4;
+}
+
+.request .header {
+    background-color: #5fb2e6;
+}
+
+.response .header {
+    background-color: #e79f27;
+}
+
+.request-response pre {
+    background: none;
+    font-family: "DejaVu Sans Mono";
+    margin: 0;
+    padding: 10px;
+}
+
+.request-arrow, .response-arrow {
+    align-self: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+}
+
+.request-arrow {
+    grid-column: request-gutter;
+}
+
+.response-arrow {
+    grid-column: response-gutter;
+    transform: scaleX(-1);
 }
 
 .code h4 {
