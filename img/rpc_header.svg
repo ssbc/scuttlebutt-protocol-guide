@@ -990,11 +990,11 @@
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path2580"
-       d="m 220.5,291.16665 v 125.5"
+       d="m 220.5,291.16665 v 125"
        style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:0.8;stroke:#808080;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
     <path
        style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:0.8;stroke:#808080;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
-       d="m 180.5,291.16665 v 220.5"
+       d="m 180.5,291.16665 v 220"
        id="path2582"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />

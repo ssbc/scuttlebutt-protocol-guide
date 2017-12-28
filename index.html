@@ -312,16 +312,16 @@ assert_nacl_sign_verify_detached(
 
         <h2 id="rpc-protocol">RPC protocol</h2>
         <div>
-            <p>Scuttlebutt peers make requests from each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
-            <p>The RPC protocol can interleave multiple requests so that a slow request doesn’t block following ones. It also handles long-running asynchronous requests for notifying when an event occurs and streaming responses that deliver multiple values.</p>
+            <p>Scuttlebutt peers make requests to each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
+            <p>The RPC protocol can interleave multiple requests so that a slow request doesn’t block following ones. It also handles long-running asynchronous requests for notifying when an event occurs and streams that deliver multiple responses over time.</p>
             <p>Similar to the box stream protocol, the RPC protocol consists of fixed-length headers followed by variable-length bodies. There is also a goodbye message which is just a zeroed out header.</p>
+            <img src="img/rpc_overview.svg"/>
         </div>
         <aside>
-            <p><strong>Remote procedure calls</strong> involve a server exposing a set of procedures that a client can call.</p>
-            <p>The client tells the server the name of the procedure they wish to call along with any arguments. The server performs the action and returns a value back to the client.</p>
+            <p><strong>Remote procedure calls</strong> are where a computer exposes a set of procedures that another computer can call over the network.</p>
+            <p>The requester tells the responder the name of the procedure they wish to call along with any arguments. The responder performs the action and returns a value back to the requester.</p>
         </aside>
-        <img src="img/rpc_overview.svg"/>
-        <p>The RPC protocol takes place inside the box stream to protect it from eavesdropping or tampering.</p>
+        <p>Both peers make requests to each other at the same time using the pair of box streams that have been established. The box streams protect the RPC protocol from eavesdropping and tampering.</p>
         <img src="img/rpc_alignment.svg"/>
         <aside style="margin-top:36px">
             <p>RPC messages are not necessarily aligned to box stream boxes.</p>
