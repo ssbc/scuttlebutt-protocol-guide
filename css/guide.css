@@ -128,10 +128,15 @@ pre {
 
 code {
     font-size: 15px;
+    background-color: #f4f4f4;
+    padding: 1px 2px;
+    border-radius: 3px;
 }
 
 pre code {
     font-size: 12px;
+    background: none;
+    padding: 0;
 }
 
 .subtitle {
@@ -179,6 +184,10 @@ main > figure, main > img {
 
 aside {
     grid-column: gutter;
+}
+
+aside.kicker {
+    grid-column: kicker;
 }
 
 figcaption, aside {
@@ -242,12 +251,8 @@ img.inline-key {
     grid-column: right;
 }
 
-.request, .response {
-    min-height: 100px;
-}
-
 .request, .response, .request-arrow, .response-arrow {
-    margin-bottom: 24px;
+    margin: 12px 0;
 }
 
 .request-response .header {

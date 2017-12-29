@@ -164,7 +164,7 @@ shared_secret_aB = nacl_scalarmult(
     ),
     key: client_longterm_sk
 )</code></pre>
-            <pre class="right" style="grid-row: span 3"><code>msg3_plaintext = assert_nacl_secretbox_open(
+            <pre class="right" style="grid-row: span 3;"><code>msg3_plaintext = assert_nacl_secretbox_open(
     ciphertext: msg3,
     nonce: 24_bytes_of_zeros,
     key: sha256(
@@ -241,7 +241,7 @@ assert_nacl_sign_verify_detached(
         <figure class="left-right code">
             <h4 class="left">Client verifies</h4>
             <h4 class="right">Server computes</h4>
-            <pre class="left" style="grid-row: span 3"><code>detached_signature_B = assert_nacl_secretbox_open(
+            <pre class="left" style="grid-row: span 3;"><code>detached_signature_B = assert_nacl_secretbox_open(
     ciphertext: msg4,
     nonce: 24_bytes_of_zeros,
     key: sha256(
@@ -332,7 +332,7 @@ assert_nacl_sign_verify_detached(
         </aside>
         <p>Both peers make requests to each other at the same time using the pair of box streams that have been established. The box streams protect the RPC protocol from eavesdropping and tampering.</p>
         <img src="img/rpc_alignment.svg"/>
-        <aside style="margin-top:36px">
+        <aside style="position: relative; top: 36px;">
             <p>RPC messages are not necessarily aligned to box stream boxes.</p>
             <p>Multiple RPC messages may be put inside one box or a single RPC message may be split over several boxes.</p>
         </aside>
@@ -342,11 +342,26 @@ assert_nacl_sign_verify_detached(
         <img src="img/rpc_header.svg"/>
 
         <h3 id="request-format">Request format</h3>
+        <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of method and any arguments.</p>
+        <p>The name is a list of strings. For a top-level procedure like <em>createHistoryStream</em> the list only has one element: <code>["createHistoryStream"]</code>. Procedures relating to blobs are grouped in the blobs namespace, for example to use <em>blobs.get</em> send the list: <code>["blobs", "get"]</code>.</p>
+        <p>There are two types of procedure used when Scuttlebutt peers talk to each other:</p>
+        <ul>
+            <li><em>Source</em> procedures return multiple responses over time and are used for streaming data or continually notifying when new events occur. When making one of these requests, the stream flag in the RPC header must be set.</li>
+            <li><em>Async</em> procedures return a single response. Async responses can arrive quickly or arrive much later in response to a one-off event.</li>
+        </ul>
+        <p>For each procedure in the RPC protocol you must already know whether it is async or source and correctly specify this in the request body.</p>
+
+        <h3 id="source-example">Source example</h3>
+        <p>This RPC message shows an example of a <em>createHistoryStream</em> request:</p>
+
+        <aside class="kicker" style="position: relative; top: 30px;">
+            <p>JSON messages don’t have indentation or whitespace when sent over the wire.</p>
+        </aside>
         <figure class="request-response">
             <div class="request">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">1</span>
-                    <span class="key">Type</span><span class="value">JSON</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
                     <span class="key">Stream</span><span class="value">Yes</span>
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
@@ -355,22 +370,93 @@ assert_nacl_sign_verify_detached(
     "type": "source",
     "args": [
         {
-            "id": "@2956euUf6KS5DipxjWAfV5GO4R/FTR9nE31AOPWlv+g=.ed25519"
+            "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"
         }
     ]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
+        </figure>
+
+        <p><em>createHistoryStream</em> is how Scuttlebutt peers ask each other for a list of messages posted by a particular feed. It has one argument that is a JSON dictionary specifying more options about the request. <em>id</em> is the only required option and says which feed you are interested in.</p>
+        <p>To convert a long term Scuttlebutt public key into a feed ID, base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Then put an <code>@</code> sign on the front and <code>.ed25519</code> on the end.</p>
+        <p>Because this is the first RPC request, the request number is 1. The next request made by this peer will be numbered 2. The other peer will also use request number 1 for their first request, but the peers can tell these apart because they know whether they sent or received each request.</p>
+        <p>Now the responder begins streaming back responses:</p>
+
+        <figure class="request-response">
             <img class="response-arrow" src="img/arrow.svg"/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Type</span><span class="value">JSON</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
                     <span class="key">Stream</span><span class="value">Yes</span>
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
+                <pre><code>{
+    "key": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+    "value": {
+        "previous": null,
+        "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+        "sequence": 1,
+        "timestamp": 1514517067954,
+        "hash": "sha256",
+        "content": {
+            "type": "post",
+            "text": "This is the first post!"
+        },
+        "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                      Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+    },
+    "timestamp": 1514517067956
+}</code></pre>
+            </div>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "key": "%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256",
+    "value": {
+        "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+        "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+        "sequence": 2,
+        "timestamp": 1514517078157,
+        "hash": "sha256",
+        "content": {
+            "type": "post",
+            "text": "Second post!"
+        },
+        "signature": "z7W1ERg9UYZjNfE72ZwEuJF79khG+eOHWFp6iF+KLuSrw8Lqa6
+                      IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
+    },
+    "timestamp": 1514517078160
+}</code></pre>
             </div>
         </figure>
+        <aside style="align-self: start; position: relative; top: 29px;">
+            <p>Because the responses are part of a stream, their RPC headers have the stream flag set.</p>
+            <p>All responses use the same request number as the original request but negative.</p>
+        </aside>
+
+        <p>This feed only contains two messages. To signal the end of the stream, the responder sends an RPC message with both the stream and end/err flags set and a JSON body of <code>true</code>.</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+        </figure>
+
     </main>
 </body>
 </html>
