@@ -206,7 +206,7 @@ a:hover {
     border-bottom-color: rgb(0, 0, 0, 0.8);
 }
 
-p, ol, ul, pre {
+p, ol, ul, pre, table {
     margin: 0 0 1rem;
 }
 
@@ -233,6 +233,32 @@ img.inline-key {
 
 .key-formula {
     display: inline-block;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    vertical-align: top;
+}
+
+table.defs {
+    margin: 1rem 0;
+    background-color: #f4f4f4;
+}
+
+table.defs tr {
+    border-top: 1px solid #fff;
+}
+
+table.defs td {
+    padding: 0.4rem 0.7rem;
+}
+
+table.defs td:first-child {
+    font-weight: 500;
+    padding-right: 1rem;
 }
 
 .code {

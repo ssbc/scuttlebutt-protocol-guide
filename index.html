@@ -544,12 +544,73 @@ assert_nacl_sign_verify_detached(
 
         <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
 
-        <h3>getHistoryStream</h3>
-        <h3>blobs.get</h3>
-        <h3>blobs.getSlice</h3>
-        <h3>blobs.has</h3>
-        <h3>blobs.changes</h3>
-        <h3>blobs.createWants</h3>
+        <h3 id="createHistoryStream">createHistoryStream</h3>
+        <p>As shown above, <em>createHistoryStream</em> asks a peer for a list of messages posted in a particular feed.</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["createHistoryStream"],
+    "type": "source",
+    "args": [
+        {
+            "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+            "sequence": 2,
+            "limit": 1,
+            "live": false,
+            "old": true,
+            "sync": true,
+            "keys": true
+        }
+    ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+        </figure>
+
+        <p><em>createHistoryStream</em> takes one argument which is a dictionary of additional options that controls how the feed is returned. Valid options are:</p>
+        <table class="defs">
+            <tr>
+                <td>id</td>
+                <td>ID of the feed to return messages from. Required.</td>
+            </tr>
+            <tr>
+                <td>sequence</td>
+                <td>Only return messages later than this sequence number. If not specified then start from the very beginning of the feed.</td>
+            </tr>
+            <tr>
+                <td>limit</td>
+                <td>Maximum number of messages to return. If the limit is exceeded only the earliest messages are returned. Default: unlimited.</td>
+            </tr>
+            <tr>
+                <td>live</td>
+                <td>If true, keep the stream alive and send new messages as they are posted. If false, end the stream after messages are sent and don’t wait for new ones. Default: false.</td>
+            </tr>
+            <tr>
+                <td>old</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>sync</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>keys</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <h3 id="blobs.get">blobs.get</h3>
+        <h3 id="blobs.getSlice">blobs.getSlice</h3>
+        <h3 id="blobs.has">blobs.has</h3>
+        <h3 id="blobs.changes">blobs.changes</h3>
+        <h3 id="blobs.createWants">blobs.createWants</h3>
     </main>
 </body>
 </html>
