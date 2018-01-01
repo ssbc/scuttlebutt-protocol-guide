@@ -31,6 +31,7 @@
                 <li><a href="#handshake">Handshake</a></li>
                 <li><a href="#box-stream">Box stream</a></li>
                 <li><a href="#rpc-protocol">RPC protocol</a></li>
+                <li><a href="#list-of-rpc-procedures">List of RPC procedures</a></li>
             </ol>
         </div>
         <hr/>
@@ -353,7 +354,7 @@ assert_nacl_sign_verify_detached(
             <p>For each procedure in the RPC protocol you must already know whether it is async or source and correctly specify this in the request body.</p>
         </div>
         <aside>
-            <p>The original Scuttlebot implementation also has other <strong>internal procedures</strong> and procedure types which are used by graphical user interfaces like Patchwork.</p>
+            <p>The original Scuttlebot implementation also has other internal procedures and procedure types which are used by graphical user interfaces like Patchwork.</p>
             <p>This guide only covers the procedures that are publicly available to other Scuttlebutt peers.</p>
         </aside>
 
@@ -467,9 +468,88 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h3>Async example</h3>
-        <p>The only public async procedure is <em>blobs.has</em>, which peers use to inform each other that they have a particular blob.</p>
+        <h3 id="async-example">Async example</h3>
+        <p>The only public async procedure is <em>blobs.has</em>, which peers use to ask each other whether they have a particular blob.</p>
+        <p>In this example the requester is asking the responder if they have blob <code>&amp;WWw4tQJ6…</code>:</p>
 
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["blobs", "has"],
+    "type": "async",
+    "args": ["&amp;WWw4tQJ6ZrM7o3gA8lOEAcO4zmyqXqb/3bmIKTLQepo=.sha256"]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+        </figure>
+
+        <p>The responder does in fact have this blob so they respond with <code>true</code>. Because this is an async procedure and not a stream, there is only one response and no need to close the stream afterwards:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+        </figure>
+
+        <h3 id="error-example">Error example</h3>
+
+        <p>Let’s take the previous example and introduce a programming mistake to see how the RPC protocol handles errors:</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">3</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["blobs", "has"],
+    "type": "async",
+    "args": ["<strong>this was a mistake</strong>"]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-3</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>{
+    "name": "Error",
+    "message": "invalid hash:this was a mistake",
+    "stack": "…"
+}</code></pre>
+            </div>
+        </figure>
+
+        <p>Most importantly, the response has the end/err flag set to indicate that an error occurred. The original Scuttlebot implementation also includes an error message and a JavaScript stack trace.</p>
+        <p>For source type procedures an error will also end the stream because the end/err flag has the dual purpose of ending streams and indicating that an error occurred.</p>
+
+        <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
+
+        <h3>getHistoryStream</h3>
+        <h3>blobs.get</h3>
+        <h3>blobs.getSlice</h3>
+        <h3>blobs.has</h3>
+        <h3>blobs.changes</h3>
+        <h3>blobs.createWants</h3>
     </main>
 </body>
 </html>
