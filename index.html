@@ -344,12 +344,18 @@ assert_nacl_sign_verify_detached(
         <h3 id="request-format">Request format</h3>
         <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of method and any arguments.</p>
         <p>The name is a list of strings. For a top-level procedure like <em>createHistoryStream</em> the list only has one element: <code>["createHistoryStream"]</code>. Procedures relating to blobs are grouped in the blobs namespace, for example to use <em>blobs.get</em> send the list: <code>["blobs", "get"]</code>.</p>
-        <p>There are two types of procedure used when Scuttlebutt peers talk to each other:</p>
-        <ul>
-            <li><em>Source</em> procedures return multiple responses over time and are used for streaming data or continually notifying when new events occur. When making one of these requests, the stream flag in the RPC header must be set.</li>
-            <li><em>Async</em> procedures return a single response. Async responses can arrive quickly or arrive much later in response to a one-off event.</li>
-        </ul>
-        <p>For each procedure in the RPC protocol you must already know whether it is async or source and correctly specify this in the request body.</p>
+        <div>
+            <p>There are two types of procedure used when Scuttlebutt peers talk to each other:</p>
+            <ul>
+                <li><em>Source</em> procedures return multiple responses over time and are used for streaming data or continually notifying when new events occur. When making one of these requests, the stream flag in the RPC header must be set.</li>
+                <li><em>Async</em> procedures return a single response. Async responses can arrive quickly or arrive much later in response to a one-off event.</li>
+            </ul>
+            <p>For each procedure in the RPC protocol you must already know whether it is async or source and correctly specify this in the request body.</p>
+        </div>
+        <aside>
+            <p>The original Scuttlebot implementation also has other <strong>internal procedures</strong> and procedure types which are used by graphical user interfaces like Patchwork.</p>
+            <p>This guide only covers the procedures that are publicly available to other Scuttlebutt peers.</p>
+        </aside>
 
         <h3 id="source-example">Source example</h3>
         <p>This RPC message shows an example of a <em>createHistoryStream</em> request:</p>
@@ -378,9 +384,13 @@ assert_nacl_sign_verify_detached(
             <img class="request-arrow" src="img/arrow.svg"/>
         </figure>
 
-        <p><em>createHistoryStream</em> is how Scuttlebutt peers ask each other for a list of messages posted by a particular feed. It has one argument that is a JSON dictionary specifying more options about the request. <em>id</em> is the only required option and says which feed you are interested in.</p>
-        <p>To convert a long term Scuttlebutt public key into a feed ID, base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Then put an <code>@</code> sign on the front and <code>.ed25519</code> on the end.</p>
-        <p>Because this is the first RPC request, the request number is 1. The next request made by this peer will be numbered 2. The other peer will also use request number 1 for their first request, but the peers can tell these apart because they know whether they sent or received each request.</p>
+        <div>
+            <p><em>createHistoryStream</em> is how Scuttlebutt peers ask each other for a list of messages posted by a particular feed. It has one argument that is a JSON dictionary specifying more options about the request. <em>id</em> is the only required option and says which feed you are interested in.</p>
+            <p>Because this is the first RPC request, the request number is 1. The next request made by this peer will be numbered 2. The other peer will also use request number 1 for their first request, but the peers can tell these apart because they know whether they sent or received each request.</p>
+        </div>
+        <aside>
+            <p>To convert a long term Scuttlebutt public key into a feed ID, base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Then put an <code>@</code> sign on the front and <code>.ed25519</code> on the end.</p>
+        </aside>
         <p>Now the responder begins streaming back responses:</p>
 
         <figure class="request-response">
@@ -442,7 +452,7 @@ assert_nacl_sign_verify_detached(
             <p>All responses use the same request number as the original request but negative.</p>
         </aside>
 
-        <p>This feed only contains two messages. To signal the end of the stream, the responder sends an RPC message with both the stream and end/err flags set and a JSON body of <code>true</code>.</p>
+        <p>Each message posted by the feed is sent back in its own response. This feed only contains two messages. To signal the end of the stream, the responder sends an RPC message with both the stream and end/err flags set and a JSON body of <code>true</code>.</p>
 
         <figure class="request-response">
             <img class="response-arrow" src="img/arrow.svg"/>
@@ -456,6 +466,9 @@ assert_nacl_sign_verify_detached(
                 <pre><code>true</code></pre>
             </div>
         </figure>
+
+        <h3>Async example</h3>
+        <p>The only public async procedure is <em>blobs.has</em>, which peers use to inform each other that they have a particular blob.</p>
 
     </main>
 </body>
