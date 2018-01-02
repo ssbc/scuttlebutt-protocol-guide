@@ -343,7 +343,7 @@ assert_nacl_sign_verify_detached(
         <img src="img/rpc_header.svg"/>
 
         <h3 id="request-format">Request format</h3>
-        <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of method and any arguments.</p>
+        <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of procedure and any arguments.</p>
         <p>The name is a list of strings. For a top-level procedure like <em>createHistoryStream</em> the list only has one element: <code>["createHistoryStream"]</code>. Procedures relating to blobs are grouped in the blobs namespace, for example to use <em>blobs.get</em> send the list: <code>["blobs", "get"]</code>.</p>
         <div>
             <p>There are two types of procedure used when Scuttlebutt peers talk to each other:</p>
@@ -565,7 +565,7 @@ assert_nacl_sign_verify_detached(
             "limit": 1,
             "live": false,
             "old": true,
-            "sync": true,
+            "sync": false,
             "keys": true
         }
     ]
@@ -594,17 +594,109 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>old</td>
-                <td></td>
+                <td>Used together with <em>live</em>. If false, don’t send existing messages posted by this feed, only send new messages as they arrive. If true, start by sending existing messages already posted by this feed. Default: true.</td>
             </tr>
             <tr>
                 <td>sync</td>
-                <td></td>
+                <td>?</td>
             </tr>
             <tr>
                 <td>keys</td>
-                <td></td>
+                <td>If true, also include message IDs and timestamps of when each message was received by this peer. If false, just send the messages themselves. Default: true.</td>
             </tr>
         </table>
+
+        <p>Here is a comparison of <em>createHistoryStream</em> responses with <em>keys</em> set to true and false:</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["createHistoryStream"],
+    "type": "source",
+    "args": [
+        {
+            "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+            "keys": <strong>true</strong>
+        }
+    ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "key": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+    "value": {
+        "previous": null,
+        "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+        "sequence": 1,
+        "timestamp": 1514517067954,
+        "hash": "sha256",
+        "content": {
+            "type": "post",
+            "text": "This is the first post!"
+        },
+        "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                      Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+    },
+    "timestamp": 1514517067956
+}</code></pre>
+            </div>
+            <hr class="mini"/>
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["createHistoryStream"],
+    "type": "source",
+    "args": [
+        {
+            "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+            "keys": <strong>false</strong>
+        }
+    ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "previous": null,
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 1,
+    "timestamp": 1514517067954,
+    "hash": "sha256",
+    "content": {
+        "type": "post",
+        "text": "This is the first post!"
+    },
+    "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                  Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+}</code></pre>
+            </div>
+        </figure>
 
         <h3 id="blobs.get">blobs.get</h3>
         <h3 id="blobs.getSlice">blobs.getSlice</h3>

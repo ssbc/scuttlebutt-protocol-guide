@@ -25,9 +25,9 @@ header, main, .left-right.code {
 .request-response {
     display: grid;
     grid-template-columns:
-        [request-start response-gutter-start] 60px
+        [page-start request-start response-gutter-start] 60px
         [response-gutter-end response-start] 60px 60px 60px 60px 60px 60px
-        [request-end request-gutter-start] 60px [request-gutter-end response-end];
+        [request-end request-gutter-start] 60px [page-end request-gutter-end response-end];
     grid-column-gap: 32px;
 }
 
@@ -244,7 +244,7 @@ tr {
 }
 
 table.defs {
-    margin: 1rem 0;
+    margin: 1rem 0 2rem;
     background-color: #f4f4f4;
 }
 
@@ -298,6 +298,14 @@ table.defs td:first-child {
 .request-response .value {
     font-weight: 700;
     margin-right: 25px;
+}
+
+.request-response hr.mini {
+    grid-column: page;
+    justify-self: center;
+    border-color: #cccccc;
+    width: 100px;
+    margin: 20px 0;
 }
 
 .request {
