@@ -351,7 +351,7 @@ assert_nacl_sign_verify_detached(
                 <li><em>Source</em> procedures return multiple responses over time and are used for streaming data or continually notifying when new events occur. When making one of these requests, the stream flag in the RPC header must be set.</li>
                 <li><em>Async</em> procedures return a single response. Async responses can arrive quickly or arrive much later in response to a one-off event.</li>
             </ul>
-            <p>For each procedure in the RPC protocol you must already know whether it is async or source and correctly specify this in the request body.</p>
+            <p>For each procedure in the RPC protocol you must already know whether it is source or async and correctly specify this in the request body.</p>
         </div>
         <aside>
             <p>The original Scuttlebot implementation also has other internal procedures and procedure types which are used by graphical user interfaces like Patchwork.</p>
