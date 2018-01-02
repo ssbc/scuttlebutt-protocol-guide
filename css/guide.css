@@ -340,6 +340,7 @@ table.defs td:first-child {
 .request-response .binary {
     display: grid;
     grid-template-columns: repeat(24, 1fr);
+    position: relative;
 }
 
 .request-response .binary code {
@@ -349,15 +350,6 @@ table.defs td:first-child {
     padding: 4px;
     justify-self: stretch;
     text-align: center;
-}
-
-.request-response .more {
-    font-size: 12px;
-    font-style: italic;
-    grid-column: span 5;
-    padding: 4px 10px;
-    justify-self: stretch;
-    text-align: right;
 }
 
 .request-arrow, .response-arrow {
@@ -376,6 +368,21 @@ table.defs td:first-child {
 .response-arrow {
     grid-column: response-gutter;
     transform: scaleX(-1);
+}
+
+.fadeout {
+    background: linear-gradient(to bottom, #ffffff00, #ffffffff 90%);
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    font-size: 12px;
+    font-style: italic;
+    padding: 4px 10px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
 }
 
 .code h4 {
