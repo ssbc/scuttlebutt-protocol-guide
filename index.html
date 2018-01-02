@@ -597,10 +597,6 @@ assert_nacl_sign_verify_detached(
                 <td>Used together with <em>live</em>. If false, don’t send existing messages posted by this feed, only send new messages as they arrive. If true, start by sending existing messages already posted by this feed. Default: true.</td>
             </tr>
             <tr>
-                <td>sync</td>
-                <td>?</td>
-            </tr>
-            <tr>
                 <td>keys</td>
                 <td>If true, also include message IDs and timestamps of when each message was received by this peer. If false, just send the messages themselves. Default: true.</td>
             </tr>
@@ -637,7 +633,7 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "key": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+    "<strong>key</strong>": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
     "value": {
         "previous": null,
         "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
@@ -651,7 +647,7 @@ assert_nacl_sign_verify_detached(
         "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
                       Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
     },
-    "timestamp": 1514517067956
+    "<strong>timestamp</strong>": 1514517067956
 }</code></pre>
             </div>
             <hr class="mini"/>
@@ -699,6 +695,90 @@ assert_nacl_sign_verify_detached(
         </figure>
 
         <h3 id="blobs.get">blobs.get</h3>
+        <p><em>blobs.get</em> asks a peer to send you the contents of a blob. There is one argument which is the blob ID:</p>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["blobs", "get"],
+    "type": "source",
+    "args": ["&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256"]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+        </figure>
+        
+        <p>Blobs are referenced by the hash of their contents. The blob ID format is similar to that of feed IDs, but with <code>&amp;</code> on the front and <code>.sha256</code> on the end.</p>
+        <p>Now the responder begins streaming back the contents of the blob. Each response has a body type of binary and contains a piece of the blob, starting from the beginning.</p>
+        <p>This particular blob is 161,699 bytes long and the responder has decided to send it in pieces of 65,536 bytes each. That means two full pieces of 65,536 bytes will be sent and a final piece with the remaining 30,627 bytes.</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <code style="background:#e79f2755">ff</code><code style="background:#e79f2748">d8</code><code style="background:#e79f2755">ff</code><code style="background:#e79f274a">e0</code><code style="background:#e79f2700">00</code><code style="background:#e79f2705">10</code><code style="background:#e79f2718">4a</code><code style="background:#e79f2717">46</code><code style="background:#e79f2718">49</code><code style="background:#e79f2717">46</code><code style="background:#e79f2700">00</code><code style="background:#e79f2700">01</code><code style="background:#e79f2700">02</code><code style="background:#e79f2700">00</code><code style="background:#e79f2700">00</code><code style="background:#e79f2700">01</code><code style="background:#e79f2700">00</code><code style="background:#e79f2700">01</code><code style="background:#e79f2700">00</code><code style="background:#e79f2700">00</code><code style="background:#e79f2755">ff</code><code style="background:#e79f2749">db</code><code style="background:#e79f2700">00</code><code style="background:#e79f2716">43</code>
+                    <code style="background:#e79f2700">00</code><code style="background:#e79f2702">08</code><code style="background:#e79f2702">06</code><code style="background:#e79f2702">06</code><code style="background:#e79f2702">07</code><code style="background:#e79f2702">06</code><code style="background:#e79f2701">05</code><code style="background:#e79f2702">08</code><code style="background:#e79f2702">07</code><code style="background:#e79f2702">07</code><code style="background:#e79f2702">07</code><code style="background:#e79f2703">09</code><code style="background:#e79f2703">09</code><code style="background:#e79f2702">08</code><code style="background:#e79f2703">0a</code><code style="background:#e79f2704">0c</code><code style="background:#e79f2706">14</code><code style="background:#e79f2704">0d</code><code style="background:#e79f2704">0c</code><code style="background:#e79f2703">0b</code><code style="background:#e79f2703">0b</code><code style="background:#e79f2704">0c</code><code style="background:#e79f2708">19</code><code style="background:#e79f2706">12</code>
+                    <code style="background:#e79f2706">13</code><code style="background:#e79f2705">0f</code><code style="background:#e79f2706">14</code><code style="background:#e79f2709">1d</code><code style="background:#e79f2708">1a</code><code style="background:#e79f270a">1f</code><code style="background:#e79f270a">1e</code><code style="background:#e79f2709">1d</code><code style="background:#e79f2708">1a</code><code style="background:#e79f2709">1c</code><code style="background:#e79f2709">1c</code><code style="background:#e79f270a">20</code><code style="background:#e79f270c">24</code><code style="background:#e79f270f">2e</code><code style="background:#e79f270d">27</code><code style="background:#e79f270a">20</code><code style="background:#e79f270b">22</code><code style="background:#e79f270e">2c</code><code style="background:#e79f270b">23</code><div class="more">…65536 bytes total</div>
+                </div>
+            </div>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <code style="background:#e79f273e">ba</code><code style="background:#e79f274c">e4</code><code style="background:#e79f2730">92</code><code style="background:#e79f2710">31</code><code style="background:#e79f2744">ce</code><code style="background:#e79f2722">68</code><code style="background:#e79f2726">74</code><code style="background:#e79f2745">d0</code><code style="background:#e79f2746">d4</code><code style="background:#e79f2733">99</code><code style="background:#e79f2734">9e</code><code style="background:#e79f2722">66</code><code style="background:#e79f273d">b9</code><code style="background:#e79f2751">f3</code><code style="background:#e79f2707">17</code><code style="background:#e79f274f">ef</code><code style="background:#e79f270e">2b</code><code style="background:#e79f270a">20</code><code style="background:#e79f2749">dc</code><code style="background:#e79f2702">07</code><code style="background:#e79f2738">a8</code><code style="background:#e79f274f">ef</code><code style="background:#e79f272e">8a</code><code style="background:#e79f2746">d3</code>
+                    <code style="background:#e79f273c">b5</code><code style="background:#e79f273d">b9</code><code style="background:#e79f2711">33</code><code style="background:#e79f2705">0f</code><code style="background:#e79f2711">34</code><code style="background:#e79f2730">90</code><code style="background:#e79f271d">57</code><code style="background:#e79f2737">a7</code><code style="background:#e79f270b">23</code><code style="background:#e79f2738">a9</code><code style="background:#e79f2752">f6</code><code style="background:#e79f2711">35</code><code style="background:#e79f2731">93</code><code style="background:#e79f270d">29</code><code style="background:#e79f273d">b8</code><code style="background:#e79f2730">92</code><code style="background:#e79f271b">52</code><code style="background:#e79f2746">d2</code><code style="background:#e79f2720">61</code><code style="background:#e79f2718">49</code><code style="background:#e79f2708">18</code><code style="background:#e79f271c">55</code><code style="background:#e79f2709">1d</code><code style="background:#e79f2714">3e</code>
+                    <code style="background:#e79f273c">b4</code><code style="background:#e79f2730">91</code><code style="background:#e79f271e">5b</code><code style="background:#e79f273b">b2</code><code style="background:#e79f2735">a1</code><code style="background:#e79f270e">2c</code><code style="background:#e79f274b">e1</code><code style="background:#e79f2717">46</code><code style="background:#e79f2729">7b</code><code style="background:#e79f2727">77</code><code style="background:#e79f2711">35</code><code style="background:#e79f270a">1e</code><code style="background:#e79f2743">ca</code><code style="background:#e79f2741">c5</code><code style="background:#e79f2751">f3</code><code style="background:#e79f2749">dc</code><code style="background:#e79f274d">e8</code><code style="background:#e79f2707">16</code><code style="background:#e79f271e">5b</code><div class="more">…65536 bytes total</div>
+                </div>
+            </div>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <code style="background:#e79f2743">ca</code><code style="background:#e79f2751">f5</code><code style="background:#e79f2702">07</code><code style="background:#e79f2739">ad</code><code style="background:#e79f2712">37</code><code style="background:#e79f2721">63</code><code style="background:#e79f2721">64</code><code style="background:#e79f273a">af</code><code style="background:#e79f2743">ca</code><code style="background:#e79f2729">7d</code><code style="background:#e79f2751">f3</code><code style="background:#e79f2741">c5</code><code style="background:#e79f271d">58</code><code style="background:#e79f274c">e4</code><code style="background:#e79f272f">8e</code><code style="background:#e79f2702">07</code><code style="background:#e79f2743">cb</code><code style="background:#e79f274d">e9</code><code style="background:#e79f2747">d6</code><code style="background:#e79f272a">80</code><code style="background:#e79f2717">47</code><code style="background:#e79f2752">f7</code><code style="background:#e79f2728">78</code><code style="background:#e79f2752">f6</code>
+                    <code style="background:#e79f2735">a0</code><code style="background:#e79f271d">57</code><code style="background:#e79f270b">22</code><code style="background:#e79f2703">0a</code><code style="background:#e79f2712">36</code><code style="background:#e79f274a">e0</code><code style="background:#e79f272e">8c</code><code style="background:#e79f2708">1a</code><code style="background:#e79f2728">79</code><code style="background:#e79f272d">88</code><code style="background:#e79f2706">14</code><code style="background:#e79f2712">38</code><code style="background:#e79f274f">ed</code><code style="background:#e79f274d">e9</code><code style="background:#e79f271a">4e</code><code style="background:#e79f2742">c8</code><code style="background:#e79f2714">3d</code><code style="background:#e79f2702">07</code><code style="background:#e79f2718">4a</code><code style="background:#e79f2725">70</code><code style="background:#e79f271b">51</code><code style="background:#e79f2734">9c</code><code style="background:#e79f272b">83</code><code style="background:#e79f2717">45</code>
+                    <code style="background:#e79f272b">83</code><code style="background:#e79f2732">98</code><code style="background:#e79f272c">85</code><code style="background:#e79f2736">a2</code><code style="background:#e79f271f">5e</code><code style="background:#e79f2710">31</code><code style="background:#e79f2744">cd</code><code style="background:#e79f2713">39</code><code style="background:#e79f271b">53</code><code style="background:#e79f2723">6a</code><code style="background:#e79f273a">ae</code><code style="background:#e79f271d">57</code><code style="background:#e79f2714">3d</code><code style="background:#e79f2742">c7</code><code style="background:#e79f2737">a5</code><code style="background:#e79f2719">4b</code><code style="background:#e79f2734">9c</code><code style="background:#e79f270a">1e</code><code style="background:#e79f2711">33</code><div class="more">…30627 bytes total</div>
+                </div>
+            </div>
+        </figure>
+
+        <p>Finally, the stream ends with a JSON message of <code>true</code> with the end/err flag set:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+        </figure>
+
+        <p>Upon receiving the blob the requester should check that what they received matches the sha256 checksum they asked for.</p>
+
         <h3 id="blobs.getSlice">blobs.getSlice</h3>
         <h3 id="blobs.has">blobs.has</h3>
         <h3 id="blobs.changes">blobs.changes</h3>

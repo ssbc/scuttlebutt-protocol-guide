@@ -127,7 +127,7 @@ pre {
 }
 
 code {
-    font-size: 0.9em;
+    font-size: 15px;
     background-color: #f4f4f4;
     padding: 1px 2px;
     border-radius: 3px;
@@ -194,6 +194,10 @@ figcaption, aside {
     font-size: 13px;
     line-height: 1.5;
     color: rgba(0, 0, 0, 0.6);
+}
+
+figcaption code, aside code {
+    font-size: 12px;
 }
 
 a {
@@ -331,6 +335,29 @@ table.defs td:first-child {
     font-family: "DejaVu Sans Mono";
     margin: 0;
     padding: 10px;
+}
+
+.request-response .binary {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+}
+
+.request-response .binary code {
+    background: #e79f2755;
+    border-radius: 0;
+    font-size: 12px;
+    padding: 4px;
+    justify-self: stretch;
+    text-align: center;
+}
+
+.request-response .more {
+    font-size: 12px;
+    font-style: italic;
+    grid-column: span 5;
+    padding: 4px 10px;
+    justify-self: stretch;
+    text-align: right;
 }
 
 .request-arrow, .response-arrow {
