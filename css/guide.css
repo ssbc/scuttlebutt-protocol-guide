@@ -22,7 +22,7 @@ header, main, .left-right.code {
     grid-column-gap: 32px;
 }
 
-.request-response {
+.request-response, .toc {
     display: grid;
     grid-template-columns:
         [page-start request-start response-gutter-start] 60px
@@ -101,14 +101,18 @@ h2 {
 }
 
 h3 {
-    font-size: 20px;
+    font-size: 26px;
     margin: 40px 0 20px;
 }
 
 h4 {
+    font-size: 17px;
+    margin: 40px 0 20px;
+}
+
+h5 {
     font-size: 13px;
-    margin: 1rem 0 0.2rem;
-    color: rgba(0, 0, 0, 0.6);
+    margin: 17px 0 4px;
 }
 
 h2.first {
@@ -146,36 +150,49 @@ pre code {
     margin: 0 0 60px;
 }
 
-.toc {
-    margin: 24px 0 28px;
-    line-height: 23px;
-}
-
-.toc h2 {
-    font-size: 9.6px;
-    font-weight: normal;
+.section-kicker h2 {
+    font-size: 15px;
+    font-weight: 500;
     margin: 0;
     padding: 0;
     border-bottom: none;
-    color: rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.65);
 }
 
-.toc ol {
-    list-style: none;
-    padding-left: 0;
+.toc {
+    margin: 24px 0 16px;
     font-size: 13px;
-    margin-bottom: 0;
 }
 
-.toc li {
-    padding-left: 0;
+.toc .col {
+    grid-column: span 2;
+}
+
+.toc .section, .toc .col > .s1 {
+    margin-bottom: 10px;
+}
+
+.toc .s1 {
     font-weight: 500;
     color: rgba(0, 0, 0, 0.8);
 }
 
+.toc .s2 {
+    color: rgba(0, 0, 0, 0.6);
+    margin-left: 16px;
+}
+
 .toc a {
     border-bottom: none;
+}
+
+a.tbw {
+    cursor: default;
+    opacity: 0.4;
+}
+
+a.tbw:hover {
+    text-decoration: line-through;
 }
 
 main > figure, main > img {
@@ -385,7 +402,8 @@ table.defs td:first-child {
     align-items: end;
 }
 
-.code h4 {
+.code h5 {
+    color: rgba(0, 0, 0, 0.6);
     align-self: end;
     margin: 0.5rem 0 0.2rem;
 }

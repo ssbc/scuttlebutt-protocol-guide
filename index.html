@@ -25,17 +25,59 @@
         <h1>Scuttlebutt Protocol Guide</h1>
         <p class="subtitle">How Scuttlebutt peers find and talk to each other</p>
         <hr/>
-        <div class="toc">
+        <aside class="kicker section-kicker">
             <h2>Contents</h2>
-            <ol>
-                <li><a href="#handshake">Handshake</a></li>
-                <li><a href="#box-stream">Box stream</a></li>
-                <li><a href="#rpc-protocol">RPC protocol</a></li>
-                <li><a href="#list-of-rpc-procedures">List of RPC procedures</a></li>
-            </ol>
+        </aside>
+        <div class="toc">
+            <div class="col">
+                <a class="s1 tbw">Introduction</a>
+                <div class="section">
+                    <a class="s1 tbw">Discovery</a>
+                    <div class="s2">
+                        <div><a class="tbw">Local network</a></div>
+                        <div><a class="tbw">Pub message</a></div>
+                        <div><a class="tbw">Invite code</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="section">
+                    <a class="s1" href="#peer-connections">Peer connections</a>
+                    <div class="s2">
+                        <div><a href="#handshake">Handshake</a></div>
+                        <div><a href="#box-stream">Box stream</a></div>
+                        <div><a href="#rpc-protocol">RPC protocol</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="section">
+                    <a class="s1 tbw">Feeds</a>
+                    <div class="s2">
+                        <div><a class="tbw">Structure</a></div>
+                        <div><a class="tbw">createHistoryStream</a></div>
+                        <div><a class="tbw">Message format</a></div>
+                        <div><a class="tbw">Replication strategy</a></div>
+                        <div><a class="tbw">Pubs and invites</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="section">
+                    <a class="s1 tbw">Blobs</a>
+                    <div class="s2">
+                        <div><a class="tbw">Fetching</a></div>
+                        <div><a class="tbw">Want and have</a></div>
+                    </div>
+                </div>
+                <a class="s1 tbw">Implementations</a>
+            </div>
         </div>
         <hr/>
-        <h2 id="handshake" class="first">Handshake</h2>
+    
+        <h2 id="peer-connections">Peer connections</h2>
+
+        <h3 id="handshake" class="first">Handshake</h3>
         <p>Once a Scuttlebutt client has discovered the IP address and port number of a peer they connect via TCP to exchange messages. The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
         <img src="img/message_flow.svg"/>
         <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
@@ -52,16 +94,16 @@
             <p><strong>Client</strong> is the computer initiating the TCP connection and <strong>server</strong> is the computer receiving it. Once the handshake is complete this distinction goes away.</p>
         </aside>
 
-        <h3 id="starting-keys">Starting keys</h3>
+        <h4 id="starting-keys">Starting keys</h4>
         <p>Upon starting the handshake, the client and server know these keys:</p>
         <img src="img/starting_keys.svg"/>
 
-        <h3 id="client-hello">1. Client hello</h3>
+        <h4 id="client-hello">1. Client hello</h4>
         <img src="img/client_hello.svg"/>
 
         <figure class="left-right code">
-            <h4 class="left">Client sends <span class="msgsize">(64 bytes)</span></h4>
-            <h4 class="right">Server verifies</h4>
+            <h5 class="left">Client sends <span class="msgsize">(64 bytes)</span></h5>
+            <h5 class="right">Server verifies</h5>
             <pre class="left"><code>concat(
     nacl_auth(
         msg: client_ephemeral_pk,
@@ -87,12 +129,12 @@ assert_nacl_auth_verify(
         <p>Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from what is sent over the wire, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
         <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
 
-        <h3 id="server-hello">2. Server hello</h3>
+        <h4 id="server-hello">2. Server hello</h4>
         <img src="img/server_hello.svg"/>
 
         <figure class="left-right code">
-            <h4 class="left">Client verifies</h4>
-            <h4 class="right">Server sends <span class="msgsize">(64 bytes)</span></h4>
+            <h5 class="left">Client verifies</h5>
+            <h5 class="right">Server sends <span class="msgsize">(64 bytes)</span></h5>
             <pre class="left"><code>assert(length(msg2) == 64)
 
 server_hmac = first_32_bytes(msg2)
@@ -114,12 +156,12 @@ assert_nacl_auth_verify(
 
         <p>The server responds with their own <img class="inline-key" src="img/key_little_b_public.svg"/> ephemeral public key and hmac. The client stores the key and verifies that they are also using the same network identifier.</p>
 
-        <h3 id="shared-secret-derivation-1">Shared secret derivation</h3>
+        <h4 id="shared-secret-derivation-1">Shared secret derivation</h4>
         <img src="img/shared_secret_derivation_1.svg"/>
 
         <figure class="left-right code">
-            <h4 class="left">Client computes</h4>
-            <h4 class="right">Server computes</h4>
+            <h5 class="left">Client computes</h5>
+            <h5 class="right">Server computes</h5>
             <pre class="left"><code>shared_secret_ab = nacl_scalarmult(
     client_ephemeral_sk,
     server_ephemeral_pk
@@ -151,12 +193,12 @@ shared_secret_aB = nacl_scalarmult(
             <p>Note that long term keys are Ed25519 and must first be converted to Curve25519.</p>
         </aside>
 
-        <h3 id="client-accept">3. Client accept</h3>
+        <h4 id="client-accept">3. Client accept</h4>
         <img src="img/client_accept.svg"/>
 
         <figure class="left-right code">
-            <h4 class="left">Client computes</h4>
-            <h4 class="right">Server verifies</h4>
+            <h5 class="left">Client computes</h5>
+            <h5 class="right">Server verifies</h5>
             <pre class="left"><code>detached_signature_A = nacl_sign_detached(
     msg: concat(
         network_identifier,
@@ -191,7 +233,7 @@ assert_nacl_sign_verify_detached(
     ),
     key: client_longterm_pk
 )</code></pre>
-            <h4 class="left">Client sends <span class="msgsize">(112 bytes)</span></h4>
+            <h5 class="left">Client sends <span class="msgsize">(112 bytes)</span></h5>
             <pre class="left"><code>nacl_secret_box(
     msg: concat(
         detached_signature_A,
@@ -218,12 +260,12 @@ assert_nacl_sign_verify_detached(
             <p>Here it is okay because the server knows all the information needed to reconstruct the message that the client signed.</p>
         </aside>
 
-        <h3 id="shared-secret-derivation-2">Shared secret derivation</h3>
+        <h4 id="shared-secret-derivation-2">Shared secret derivation</h4>
         <img src="img/shared_secret_derivation_2.svg"/>
 
         <figure class="left-right code">
-            <h4 class="left">Client computes</h4>
-            <h4 class="right">Server computes</h4>
+            <h5 class="left">Client computes</h5>
+            <h5 class="right">Server computes</h5>
             <pre class="left"><code>shared_secret_Ab = nacl_scalarmult(
     sk_to_curve25519(client_longterm_sk),
     server_ephemeral_pk
@@ -236,12 +278,12 @@ assert_nacl_sign_verify_detached(
 
         <p>Now that the server knows the <img class="inline-key" src="img/key_big_a_public.svg"/> client’s long term public key, another shared secret <img class="inline-key" src="img/key_big_a_little_b.svg"/> is derived by both ends. The server uses this shared secret to send a message that only the real client can read and not a man-in-the-middle.</p>
 
-        <h3 id="server-accept">4. Server accept</h3>
+        <h4 id="server-accept">4. Server accept</h4>
         <img src="img/server_accept.svg"/>
 
         <figure class="left-right code">
-            <h4 class="left">Client verifies</h4>
-            <h4 class="right">Server computes</h4>
+            <h5 class="left">Client verifies</h5>
+            <h5 class="right">Server computes</h5>
             <pre class="left" style="grid-row: span 3;"><code>detached_signature_B = assert_nacl_secretbox_open(
     ciphertext: msg4,
     nonce: 24_bytes_of_zeros,
@@ -274,7 +316,7 @@ assert_nacl_sign_verify_detached(
     ),
     key: server_longterm_sk
 )</code></pre>
-            <h4 class="right">Server sends <span class="msgsize">(80 bytes)</span></h4>
+            <h5 class="right">Server sends <span class="msgsize">(80 bytes)</span></h5>
             <pre class="right"><code>nacl_secret_box(
     msg: detached_signature_B,
     nonce: 24_bytes_of_zeros,
@@ -292,35 +334,35 @@ assert_nacl_sign_verify_detached(
         <p>Upon receiving it, the client opens the box and verifies the server’s signature.</p>
         <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula"><em>sha256</em>(<em>concat</em>( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>, <img class="inline-key" src="img/key_big_a_little_b.svg"/>))</span>.</p>
 
-        <h3 id="handshake-complete">Handshake complete</h3>
+        <h4 id="handshake-complete">Handshake complete</h4>
         <img src="img/final_shared_secret.svg"/>
         <p>At this point the handshake has succeeded. The client and server have proven their identities to each other.</p>
         <p>The shared secrets established during the handshake are used to set up a pair of box streams for securely exchanging further messages.</p>
 
-        <h2 id="box-stream">Box stream</h2>
+        <h3 id="box-stream">Box stream</h3>
         <p>Box stream is the bulk encryption protocol used to exchange messages following the handshake until the connection ends. It is designed to protect messages from being read or modified by a man-in-the-middle.</p>
         <p>Each message in a box stream has a header and body. The header is always 34 bytes long and says how long the body will be.</p>
         <img src="img/box_stream_overview.svg"/>
 
-        <h3 id="sending">Sending</h3>
+        <h4 id="sending">Sending</h4>
         <p>Sending a message involves encrypting the body of the message and preparing a header for it. Two secret boxes are used; one to protect the header and another to protect the body.</p>
         <img src="img/box_stream_send.svg" class="pagewidth"/>
 
-        <h3 id="receiving">Receiving</h3>
+        <h4 id="receiving">Receiving</h4>
         <p>Receiving a message involves reading the header to find out how long the body is then reassembling and opening the body secret box.</p>
         <img src="img/box_stream_receive.svg" class="pagewidth"/>
 
-        <h3 id="goodbye">Goodbye</h3>
+        <h4 id="goodbye">Goodbye</h4>
         <p>The stream ends with a special “goodbye” header. Because the goodbye header is authenticated it allows a receiver to tell the difference between the connection genuinely being finished and a man-in-the-middle forcibly resetting the underlying TCP connection.</p>
         <img src="img/box_stream_goodbye.svg" class="pagewidth"/>
         <p>When a receiver opens a header and finds that it contains all zeros then they will know that the connection is finished.</p>
 
-        <h3 id="keys-and-nonces">Keys and nonces</h3>
+        <h4 id="keys-and-nonces">Keys and nonces</h4>
         <p>Two box streams are used at the same time when Scuttlebutt peers communicate. One is for client-to-server messages and the other is for server-to-client messages. The two streams use different keys and starting nonces for their secret boxes.</p>
         <img src="img/box_stream_params.svg" class="pagewidth"/>
         <p>The starting nonce is used for the first header in the stream (“secret box 1” in the above figures), then incremented for the first body (“secret box 2”), then incremented for the next header and so on.</p>
 
-        <h2 id="rpc-protocol">RPC protocol</h2>
+        <h3 id="rpc-protocol">RPC protocol</h3>
         <div>
             <p>Scuttlebutt peers make requests to each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
             <p>The RPC protocol can interleave multiple requests so that a slow request doesn’t block following ones. It also handles long-running asynchronous requests for notifying when an event occurs and streams that deliver multiple responses over time.</p>
@@ -338,11 +380,11 @@ assert_nacl_sign_verify_detached(
             <p>Multiple RPC messages may be put inside one box or a single RPC message may be split over several boxes.</p>
         </aside>
 
-        <h3 id="header-structure">Header structure</h3>
+        <h4 id="header-structure">Header structure</h4>
         <p>RPC headers contain a set of flags to say what type of message it is, a field specifying its length and a request number which allows matching requests with their responses when there are several active at the same time.</p>
         <img src="img/rpc_header.svg"/>
 
-        <h3 id="request-format">Request format</h3>
+        <h4 id="request-format">Request format</h4>
         <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of procedure and any arguments.</p>
         <p>The name is a list of strings. For a top-level procedure like <em>createHistoryStream</em> the list only has one element: <code>["createHistoryStream"]</code>. Procedures relating to blobs are grouped in the blobs namespace, for example to use <em>blobs.get</em> send the list: <code>["blobs", "get"]</code>.</p>
         <div>
@@ -358,7 +400,7 @@ assert_nacl_sign_verify_detached(
             <p>This guide only covers the procedures that are publicly available to other Scuttlebutt peers.</p>
         </aside>
 
-        <h3 id="source-example">Source example</h3>
+        <h4 id="source-example">Source example</h4>
         <p>This RPC message shows an example of a <em>createHistoryStream</em> request:</p>
 
         <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
@@ -468,7 +510,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h3 id="async-example">Async example</h3>
+        <h4 id="async-example">Async example</h4>
         <p>The only public async procedure is <em>blobs.has</em>, which peers use to ask each other whether they have a particular blob.</p>
         <p>In this example the requester is asking the responder if they have blob <code>&amp;WWw4tQJ6…</code>:</p>
 
@@ -504,7 +546,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h3 id="error-example">Error example</h3>
+        <h4 id="error-example">Error example</h4>
 
         <p>Let’s take the previous example and introduce a programming mistake to see how the RPC protocol handles errors:</p>
 
@@ -542,9 +584,9 @@ assert_nacl_sign_verify_detached(
         <p>Most importantly, the response has the end/err flag set to indicate that an error occurred. The original Scuttlebot implementation also includes an error message and a JavaScript stack trace.</p>
         <p>For source type procedures an error will also end the stream because the end/err flag has the dual purpose of ending streams and indicating that an error occurred.</p>
 
-        <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
+        <h3 id="list-of-rpc-procedures">List of RPC procedures</h3>
 
-        <h3 id="createHistoryStream">createHistoryStream</h3>
+        <h4 id="createHistoryStream">createHistoryStream</h4>
         <p>As shown above, <em>createHistoryStream</em> asks a peer for a list of messages posted in a particular feed.</p>
 
         <figure class="request-response">
@@ -694,7 +736,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h3 id="blobs.get">blobs.get</h3>
+        <h4 id="blobs.get">blobs.get</h4>
         <p><em>blobs.get</em> asks a peer to send you the contents of a blob. There is one argument which is the blob ID:</p>
         <figure class="request-response">
             <div class="request">
@@ -827,7 +869,7 @@ assert_nacl_sign_verify_detached(
         </table>
         <p>This form allows the receiver to reject the request if the blob is not the expected size or too large. When a request is rejected the responder sends back a single message with the end/err flag set containing a JSON error message.</p>
 
-        <h3 id="blobs.getSlice">blobs.getSlice</h3>
+        <h4 id="blobs.getSlice">blobs.getSlice</h4>
         <p><em>blobs.getSlice</em> works like <em>blobs.get</em> but rather than receiving the entire blob, the requester specifies a start and end point and the responder only sends back bytes within that range:</p>
         <figure class="request-response">
             <div class="request">
@@ -880,7 +922,7 @@ assert_nacl_sign_verify_detached(
         <p>Specifying <em>start</em> = 0 means start from the beginning of the blob. Specifying <em>end</em> = <em>size of the blob</em> means keep going all the way to the end of the blob.</p>
         <p><em>blobs.getSlice</em> also accepts the <em>size</em> and <em>max</em> options, which work the same as in <em>blobs.get</em>. These two options refer to the size of the entire blob, not the range requested.</p>
 
-        <h3 id="blobs.has">blobs.has</h3>
+        <h4 id="blobs.has">blobs.has</h4>
         <p><em>blobs.has</em> is how you ask a peer whether they have a particular blob:</p>
         <figure class="request-response">
             <div class="request">
@@ -948,7 +990,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h3 id="blobs.changes">blobs.changes</h3>
+        <h4 id="blobs.changes">blobs.changes</h4>
         <p><em>blobs.changes</em> notifies the requester every time the responder acquires a new blob.</p>
         <figure class="request-response">
             <div class="request">
@@ -1024,7 +1066,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h3 id="blobs.createWants">blobs.createWants</h3>
+        <h4 id="blobs.createWants">blobs.createWants</h4>
         <p><em>blobs.createWants</em> asks a peer to tell you which blobs they want, and also allows the peer to tell you which blobs they have (like <em>blobs.changes</em>).</p>
 
         <figure class="request-response">
