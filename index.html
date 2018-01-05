@@ -30,7 +30,8 @@
         </aside>
         <div class="toc">
             <div class="col">
-                <a class="s1 tbw">Introduction</a>
+                <div><a class="s1" href="#introduction">Introduction</a></div>
+                <div><a class="s1 tbw">Keys and identities</a></div>
                 <div class="section">
                     <a class="s1 tbw">Discovery</a>
                     <div class="s2">
@@ -42,7 +43,7 @@
             </div>
             <div class="col">
                 <div class="section">
-                    <a class="s1" href="#peer-connections">Peer connections</a>
+                    <div><a class="s1" href="#peer-connections">Peer connections</a></div>
                     <div class="s2">
                         <div><a href="#handshake">Handshake</a></div>
                         <div><a href="#box-stream">Box stream</a></div>
@@ -52,7 +53,7 @@
             </div>
             <div class="col">
                 <div class="section">
-                    <a class="s1 tbw">Feeds</a>
+                    <div><a class="s1 tbw">Feeds</a></div>
                     <div class="s2">
                         <div><a class="tbw">Structure</a></div>
                         <div><a class="tbw">createHistoryStream</a></div>
@@ -70,14 +71,17 @@
                         <div><a class="tbw">Want and have</a></div>
                     </div>
                 </div>
-                <a class="s1 tbw">Implementations</a>
+                <div><a class="s1 tbw">Implementations</a></div>
             </div>
         </div>
         <hr/>
     
+        <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a> is a protocol for building decentralized applications that work well offline and that no one person can control. Because there is no central server, Scuttlebutt clients connect directly with their peers to exchange information. This guide describes the protocols used to communicate within the Scuttlebutt network.</p>
+        <p>Scuttlebutt is a flexible protocol, capable of supporting many different types of applications. One of its first applications was as a social network, and it has also become one of the most compelling because of the friendly humans that hang out there. This guide has a slight focus on how to use Scuttlebutt for social networking, but many of the explanations will still be useful if want to use it for something completely different, or are just curious how it works. Especially if you are just curious.</p>
+
         <h2 id="peer-connections">Peer connections</h2>
 
-        <h3 id="handshake" class="first">Handshake</h3>
+        <h3 id="handshake">Handshake</h3>
         <p>Once a Scuttlebutt client has discovered the IP address and port number of a peer they connect via TCP to exchange messages. The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
         <img src="img/message_flow.svg"/>
         <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
