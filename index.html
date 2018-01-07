@@ -33,7 +33,7 @@
                 <div><a class="s1" href="#introduction">Introduction</a></div>
                 <div><a class="s1 tbw">Keys and identities</a></div>
                 <div class="section">
-                    <a class="s1 tbw">Discovery</a>
+                    <div><a class="s1 tbw">Discovery</a></div>
                     <div class="s2">
                         <div><a class="tbw">Local network</a></div>
                         <div><a class="tbw">Pub message</a></div>
@@ -72,6 +72,24 @@
                     </div>
                 </div>
                 <div><a class="s1 tbw">Implementations</a></div>
+            </div>
+        </div>
+        <hr/>
+        <aside class="kicker section-kicker">
+            <h2>Awaiting rework</h2>
+        </aside>
+        <div class="toc">
+            <div class="col">
+                <div class="section">
+                    <div><a class="s1" href="#list-of-rpc-procedures">List of RPC procedures</a></div>
+                    <div class="s2">
+                        <div><a href="#createHistoryStream">createHistoryStream</a></div>
+                        <div><a href="#blobs.get">blobs.get</a></div>
+                        <div><a href="#blobs.has">blobs.has</a></div>
+                        <div><a href="#blobs.changes">blobs.changes</a></div>
+                        <div><a href="#blobs.createWants">blobs.createWants</a></div>
+                    </div>
+                </div>
             </div>
         </div>
         <hr/>
@@ -588,9 +606,10 @@ assert_nacl_sign_verify_detached(
         <p>Most importantly, the response has the end/err flag set to indicate that an error occurred. The original Scuttlebot implementation also includes an error message and a JavaScript stack trace.</p>
         <p>For source type procedures an error will also end the stream because the end/err flag has the dual purpose of ending streams and indicating that an error occurred.</p>
 
-        <h3 id="list-of-rpc-procedures">List of RPC procedures</h3>
+        <hr style="margin: 60px 0 10px"/>
+        <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
 
-        <h4 id="createHistoryStream">createHistoryStream</h4>
+        <h3 id="createHistoryStream">createHistoryStream</h3>
         <p>As shown above, <em>createHistoryStream</em> asks a peer for a list of messages posted in a particular feed.</p>
 
         <figure class="request-response">
@@ -740,7 +759,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h4 id="blobs.get">blobs.get</h4>
+        <h3 id="blobs.get">blobs.get</h3>
         <p><em>blobs.get</em> asks a peer to send you the contents of a blob. There is one argument which is the blob ID:</p>
         <figure class="request-response">
             <div class="request">
@@ -873,7 +892,7 @@ assert_nacl_sign_verify_detached(
         </table>
         <p>This form allows the receiver to reject the request if the blob is not the expected size or too large. When a request is rejected the responder sends back a single message with the end/err flag set containing a JSON error message.</p>
 
-        <h4 id="blobs.getSlice">blobs.getSlice</h4>
+        <h3 id="blobs.getSlice">blobs.getSlice</h3>
         <p><em>blobs.getSlice</em> works like <em>blobs.get</em> but rather than receiving the entire blob, the requester specifies a start and end point and the responder only sends back bytes within that range:</p>
         <figure class="request-response">
             <div class="request">
@@ -926,7 +945,7 @@ assert_nacl_sign_verify_detached(
         <p>Specifying <em>start</em> = 0 means start from the beginning of the blob. Specifying <em>end</em> = <em>size of the blob</em> means keep going all the way to the end of the blob.</p>
         <p><em>blobs.getSlice</em> also accepts the <em>size</em> and <em>max</em> options, which work the same as in <em>blobs.get</em>. These two options refer to the size of the entire blob, not the range requested.</p>
 
-        <h4 id="blobs.has">blobs.has</h4>
+        <h3 id="blobs.has">blobs.has</h3>
         <p><em>blobs.has</em> is how you ask a peer whether they have a particular blob:</p>
         <figure class="request-response">
             <div class="request">
@@ -994,7 +1013,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h4 id="blobs.changes">blobs.changes</h4>
+        <h3 id="blobs.changes">blobs.changes</h3>
         <p><em>blobs.changes</em> notifies the requester every time the responder acquires a new blob.</p>
         <figure class="request-response">
             <div class="request">
@@ -1070,7 +1089,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h4 id="blobs.createWants">blobs.createWants</h4>
+        <h3 id="blobs.createWants">blobs.createWants</h3>
         <p><em>blobs.createWants</em> asks a peer to tell you which blobs they want, and also allows the peer to tell you which blobs they have (like <em>blobs.changes</em>).</p>
 
         <figure class="request-response">
