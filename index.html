@@ -102,16 +102,17 @@
         <p>Upon starting for the first time, Scuttlebutt clients will automatically generate an Ed25519 key pair and save it in the user’s home folder under <code>.ssb/secret</code>.</p>
         <img src="img/identity_keypair.svg"/>
         <p>Because identities are long and random, no coordination or permission is required to create a new one, which is essential to the network’s design.</p>
-        <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it compromised they will need to generate a new identity and tell people to use their new one instead.</p>
+        <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it stolen they will need to generate a new identity and tell people to use their new one instead.</p>
         <p>Identities are presented to users and transmitted in some parts of the network protocol using this format:</p>
         <pre class="center"><code>@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519</code></pre>
         <p>Begin with an <code>@</code> sign, then base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Finally put <code>.ed25519</code> on the end.</p>
         <p>Each identity has an associated feed, which is an immutable list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
 
         <h2 id="peer-connections">Peer connections</h2>
+        <p>Once a Scuttlebutt client has discovered the IP address, port number and identity of a peer they can connect via TCP to ask for updates and exchange messages.</p>
 
         <h3 id="handshake">Handshake</h3>
-        <p>Once a Scuttlebutt client has discovered the IP address and port number of a peer they connect via TCP to exchange messages. The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
+        <p>The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
         <img src="img/message_flow.svg"/>
         <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
         <ul>
@@ -122,6 +123,7 @@
             <li>A man-in-the-middle cannot learn the public key of either peer.</li>
             <li>Both peers need to know a key that represents the particular Scuttlebutt network they wish to connect to, however a man-in-the-middle can’t learn this key from the handshake. If the handshake succeeds then both ends have confirmed that they wish to use the same network.</li>
             <li>Past handshakes cannot be replayed. Attempting to replay a handshake will not allow an attacker to discover or confirm guesses about the participants’ public keys.</li>
+            <li>Forward secrecy. Recording a user’s network traffic and then later stealing their secret key will not allow an attacker to decrypt their past handshakes.</li>
         </ul>
         <aside>
             <p><strong>Client</strong> is the computer initiating the TCP connection and <strong>server</strong> is the computer receiving it. Once the handshake is complete this distinction goes away.</p>
@@ -429,7 +431,7 @@ assert_nacl_sign_verify_detached(
             <p>For each procedure in the RPC protocol you must already know whether it is source or async and correctly specify this in the request body.</p>
         </div>
         <aside>
-            <p>The original Scuttlebot implementation also has other internal procedures and procedure types which are used by graphical user interfaces like Patchwork.</p>
+            <p>The reference Scuttlebot implementation also has other internal procedures and procedure types which are used by graphical user interfaces like Patchwork.</p>
             <p>This guide only covers the procedures that are publicly available to other Scuttlebutt peers.</p>
         </aside>
 
@@ -540,6 +542,31 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
+        <p>Alternatively, to cancel a stream early the requester can send another request using the same request number, with the stream and end/err flags both set and a JSON body of <code>true</code>.</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+        </figure>
+
         <h4 id="async-example">Async example</h4>
         <p>The only public async procedure is <em>blobs.has</em>, which peers use to ask each other whether they have a particular blob.</p>
         <p>In this example the requester is asking the responder if they have blob <code>&amp;WWw4tQJ6…</code>:</p>
@@ -611,7 +638,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <p>Most importantly, the response has the end/err flag set to indicate that an error occurred. The original Scuttlebot implementation also includes an error message and a JavaScript stack trace.</p>
+        <p>Most importantly, the response has the end/err flag set to indicate that an error occurred. The reference Scuttlebot implementation also includes an error message and a JavaScript stack trace.</p>
         <p>For source type procedures an error will also end the stream because the end/err flag has the dual purpose of ending streams and indicating that an error occurred.</p>
 
         <hr style="margin: 60px 0 10px"/>
