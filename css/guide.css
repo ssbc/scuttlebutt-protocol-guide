@@ -124,10 +124,14 @@ pre, code {
 }
 
 pre {
-    font-size: 12px;
+    font-size: 15px;
     line-height: 1.3;
     background-color: #f4f4f4;
     padding: 6px 10px;
+}
+
+pre.center {
+    text-align: center;
 }
 
 code {
@@ -138,7 +142,7 @@ code {
 }
 
 pre code {
-    font-size: 12px;
+    font-size: 15px;
     background: none;
     padding: 0;
 }
@@ -288,6 +292,10 @@ table.defs td:first-child {
 
 .left-right.code {
     grid-column: screen;
+}
+
+.left-right.code pre, .left-right.code pre code, .request-response pre, .request-response pre code {
+    font-size: 12px;
 }
 
 .left {

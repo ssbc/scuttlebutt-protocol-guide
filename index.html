@@ -31,7 +31,7 @@
         <div class="toc">
             <div class="col">
                 <div><a class="s1" href="#introduction">Introduction</a></div>
-                <div><a class="s1 tbw">Keys and identities</a></div>
+                <div><a class="s1" href="#keys-and-identities">Keys and identities</a></div>
                 <div class="section">
                     <div><a class="s1 tbw">Discovery</a></div>
                     <div class="s2">
@@ -97,6 +97,17 @@
         <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a> is a protocol for building decentralized applications that work well offline and that no one person can control. Because there is no central server, Scuttlebutt clients connect directly with their peers to exchange information. This guide describes the protocols used to communicate within the Scuttlebutt network.</p>
         <p>Scuttlebutt is a flexible protocol, capable of supporting many different types of applications. One of its first applications was as a social network, and it has also become one of the most compelling because of the friendly humans that hang out there. This guide has a slight focus on how to use Scuttlebutt for social networking, but many of the explanations will still be useful if want to use it for something completely different, or are just curious how it works. Especially if you are just curious.</p>
 
+        <h2 id="keys-and-identities">Keys and identities</h2>
+        <p>The first thing a user needs to participate in Scuttlebutt is an identity. An identity is an Ed25519 key pair and typically represents a person, a device, a server or a bot. It’s normal for a person to have several Scuttlebutt identities.</p>
+        <p>Upon starting for the first time, Scuttlebutt clients will automatically generate an Ed25519 key pair and save it in the user’s home folder under <code>.ssb/secret</code>.</p>
+        <img src="img/identity_keypair.svg"/>
+        <p>Because identities are long and random, no coordination or permission is required to create a new one, which is essential to the network’s design.</p>
+        <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it compromised they will need to generate a new identity and tell people to use their new one instead.</p>
+        <p>Identities are presented to users and transmitted in some parts of the network protocol using this format:</p>
+        <pre class="center"><code>@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519</code></pre>
+        <p>Begin with an <code>@</code> sign, then base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Finally put <code>.ed25519</code> on the end.</p>
+        <p>Each identity has an associated feed, which is an immutable list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
+
         <h2 id="peer-connections">Peer connections</h2>
 
         <h3 id="handshake">Handshake</h3>
@@ -147,7 +158,7 @@ assert_nacl_auth_verify(
 
         <p>First the client sends their <img class="inline-key" src="img/key_little_a_public.svg"/> generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
         <p>The <img class="inline-key" src="img/key_big_n.svg"/> network identifier is a fixed 32-byte key. On the main Scuttlebutt network it is:</p>
-        <pre><code>d4a1cb88a66f02f8db635ce26441cc5dac1b08420ceaac230839b755845a9ffb</code></pre>
+        <pre class="center"><code>d4a1cb88a66f02f8db635ce26441cc5dac1b08420ceaac230839b755845a9ffb</code></pre>
         <p>Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from what is sent over the wire, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
         <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
 
@@ -453,9 +464,6 @@ assert_nacl_sign_verify_detached(
             <p><em>createHistoryStream</em> is how Scuttlebutt peers ask each other for a list of messages posted by a particular feed. It has one argument that is a JSON dictionary specifying more options about the request. <em>id</em> is the only required option and says which feed you are interested in.</p>
             <p>Because this is the first RPC request, the request number is 1. The next request made by this peer will be numbered 2. The other peer will also use request number 1 for their first request, but the peers can tell these apart because they know whether they sent or received each request.</p>
         </div>
-        <aside>
-            <p>To convert a long term Scuttlebutt public key into a feed ID, base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Then put an <code>@</code> sign on the front and <code>.ed25519</code> on the end.</p>
-        </aside>
         <p>Now the responder begins streaming back responses:</p>
 
         <figure class="request-response">
