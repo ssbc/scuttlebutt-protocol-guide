@@ -649,29 +649,91 @@ assert_nacl_sign_verify_detached(
         <img src="img/sigchain.svg" class="pagewidth"/>
 
         <h3 id="message-format">Message format</h3>
-        <p>Here is an example of what a message looks like as JSON:</p>
+        <p>To create a message to post in a feed, start by filling out the following fields:</p>
         <pre><code>{
-    "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
-    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-    "sequence": 2,
-    "timestamp": 1514517078157,
-    "hash": "sha256",
-    "content": {
-        "type": "post",
-        "text": "Second post!"
-    },
-    "signature": "z7W1ERg9UYZjNfE72ZwEuJF79khG+eOHWFp6iF+KLuSrw8Lqa6
-                  IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
+  "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "sequence": 2,
+  "timestamp": 1514517078157,
+  "hash": "sha256",
+  "content": {
+    "type": "post",
+    "text": "Second post!"
+  }
 }
 </code></pre>
-        <aside>
-            <p>The <strong>sequence number</strong> begins at 1 for the first message in the feed and is incremented by 1 for every message after that.</p>
-            <p>The <strong>timestamp</strong> says when the message was created, in milliseconds since 1 January 1970 00:00 UTC.
-        </aside>
+        <table class="defs">
+            <tr>
+                <td>previous</td>
+                <td>Message ID of the latest message posted in the feed. If this is the very first message then use <code>null</code>. See below for how to calculate a message’s ID.</td>
+            </tr>
+            <tr>
+                <td>author</td>
+                <td>ID of the feed that the message will be posted in.</td>
+            </tr>
+            <tr>
+                <td>sequence</td>
+                <td>1 for the first message in a feed, 2 for the second and so on.</td>
+            </tr>
+            <tr>
+                <td>timestamp</td>
+                <td>Time the message was created. Number of milliseconds since 1 January 1970 00:00 UTC.</td>
+            </tr>
+            <tr>
+                <td>hash</td>
+                <td>The fixed string <code>sha256</code>, which is used to calculate the message ID.</td>
+            </tr>
+            <tr>
+                <td>content</td>
+                <td>Free-form JSON. It is up to applications to interpret what it means. It’s polite to specify a <em>type</em> field so that applications can easily filter out message types they don’t understand.</td>
+            </tr>
+        </table>
 
-        <p>To calculate the ID of a message…</p>
-        <p>To make a signature for a message…</p>
-        <p>The <em>content</em> field of each message is free-form JSON and it is up to applications to interpret what it means. It’s good form to specify a <em>type</em> field so that applications can easily filter out message types they don’t understand.</p>
+        <h4 id="signature">Signature</h4>
+        <p>All messages in a feed are signed by that feed’s long-term secret key. This enables recipients to verify that a message was really posted by a particular identity and not tampered with as it gets gossiped and replicated throughout the Scuttlebutt network.</p>
+        <p>Before signing a message it must be formatted as JSON as shown above. The formatting rules are:</p>
+        <ul>
+            <li>Two spaces for indentation.</li>
+            <li>Dictionary entries and list elements each on their own line.</li>
+            <li>One space after the colon <code>:</code> for dictionary keys.</li>
+            <li>No trailing newline.</li>
+        </ul>
+        <aside>
+            <p>Dictionary keys can appear in any order you choose, however the order needs to be remembered for later.</p>
+        </aside>
+        <p>Then sign the message by computing:</p>
+        <pre><code>signature = nacl_sign_detached(
+    msg: formatted_json_message,
+    key: authors_longterm_sk
+)</code></pre>
+        <p>Base64 encode the signature and put <code>.sig.ed25519</code> on the end. Finally, add the signature to the message itself:</p>
+        <pre><code>{
+  "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "sequence": 2,
+  "timestamp": 1514517078157,
+  "hash": "sha256",
+  "content": {
+    "type": "post",
+    "text": "Second post!"
+  },
+  "<strong>signature</strong>": "z7W1ERg9UYZjNfE72ZwEuJF79khG+eOHWFp6iF+KLuSrw8Lqa6
+                IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
+}</code></pre>
+
+        <p>To verify the signature, first remove the signature field from the message. Make sure the remaining message is formatted as JSON using the same formatting rules. Here the order of dictionary keys matters; the keys must be in the same order that you received them.</p>
+        <p>Then verify the signature with:</p>
+        <pre><code>nacl_sign_verify_detached(
+    sig: base64_decode(remove_suffix(signature, ".sig.ed25519")),
+    msg: formatted_json_message,
+    key: authors_longterm_pk
+)</code></pre>
+
+        <h4 id="message-id">Message ID</h4>
+        <p>A message ID is a hash of the message including signature. Messages can refer to other messages by their ID.</p>
+        <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key should appear last as shown above (but without wrapping the line).</p>
+        <p>Then hash the message using sha256 and base64 encode it, put a <code>%</code> sign on the front and <code>.sha256</code> on the end. The above message has an ID of:</p>
+        <pre class="center">%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256<code></code></pre>
 
         <!-- ---- -->
 

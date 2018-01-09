@@ -1393,9 +1393,9 @@
          id="tspan6835">prevent tampering as the message is</tspan><tspan
          sodipodi:role="line"
          x="765"
-         y="-15.060944"
+         y="-15.060945"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#666666;fill-opacity:1"
-         id="tspan6837">gossiped around the network.</tspan></text>
+         id="tspan6837">replicated among peers.</tspan></text>
     <path
        inkscape:connector-curvature="0"
        id="path1495"
