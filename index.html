@@ -53,11 +53,11 @@
             </div>
             <div class="col">
                 <div class="section">
-                    <div><a class="s1 tbw">Feeds</a></div>
+                    <div><a class="s1" href="#feeds">Feeds</a></div>
                     <div class="s2">
-                        <div><a class="tbw">Structure</a></div>
+                        <div><a href="#structure">Structure</a></div>
+                        <div><a href="#message-format">Message format</a></div>
                         <div><a class="tbw">createHistoryStream</a></div>
-                        <div><a class="tbw">Message format</a></div>
                         <div><a class="tbw">Replication strategy</a></div>
                         <div><a class="tbw">Pubs and invites</a></div>
                     </div>
@@ -106,7 +106,7 @@
         <p>Identities are presented to users and transmitted in some parts of the network protocol using this format:</p>
         <pre class="center"><code>@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519</code></pre>
         <p>Begin with an <code>@</code> sign, then base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Finally put <code>.ed25519</code> on the end.</p>
-        <p>Each identity has an associated feed, which is an immutable list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
+        <p>Each identity has an associated feed, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
 
         <h2 id="peer-connections">Peer connections</h2>
         <p>Once a Scuttlebutt client has discovered the IP address, port number and identity of a peer they can connect via TCP to ask for updates and exchange messages.</p>
@@ -640,6 +640,40 @@ assert_nacl_sign_verify_detached(
 
         <p>Most importantly, the response has the end/err flag set to indicate that an error occurred. The reference Scuttlebot implementation also includes an error message and a JavaScript stack trace.</p>
         <p>For source type procedures an error will also end the stream because the end/err flag has the dual purpose of ending streams and indicating that an error occurred.</p>
+
+        <h2 id="feeds">Feeds</h2>
+        <p>A Scuttlebutt feed is a list of all the messages posted by a particular identity. When a user writes a message in a Scuttlebutt client and posts it, that message is put onto the end of their feed.</p>
+
+        <h3 id="structure">Structure</h3>
+        <p>The messages in a feed form an append-only log, meaning that once a message is posted it cannot be modified. Each message (except the first one) references the ID of the previous message, allowing a chain to be constructed back to the first message in the feed.</p>
+        <img src="img/sigchain.svg" class="pagewidth"/>
+
+        <h3 id="message-format">Message format</h3>
+        <p>Here is an example of what a message looks like as JSON:</p>
+        <pre><code>{
+    "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 2,
+    "timestamp": 1514517078157,
+    "hash": "sha256",
+    "content": {
+        "type": "post",
+        "text": "Second post!"
+    },
+    "signature": "z7W1ERg9UYZjNfE72ZwEuJF79khG+eOHWFp6iF+KLuSrw8Lqa6
+                  IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
+}
+</code></pre>
+        <aside>
+            <p>The <strong>sequence number</strong> begins at 1 for the first message in the feed and is incremented by 1 for every message after that.</p>
+            <p>The <strong>timestamp</strong> says when the message was created, in milliseconds since 1 January 1970 00:00 UTC.
+        </aside>
+
+        <p>To calculate the ID of a message…</p>
+        <p>To make a signature for a message…</p>
+        <p>The <em>content</em> field of each message is free-form JSON and it is up to applications to interpret what it means. It’s good form to specify a <em>type</em> field so that applications can easily filter out message types they don’t understand.</p>
+
+        <!-- ---- -->
 
         <hr style="margin: 60px 0 10px"/>
         <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
