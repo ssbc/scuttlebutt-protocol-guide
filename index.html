@@ -57,9 +57,7 @@
                     <div class="s2">
                         <div><a href="#structure">Structure</a></div>
                         <div><a href="#message-format">Message format</a></div>
-                        <div><a class="tbw">createHistoryStream</a></div>
-                        <div><a class="tbw">Replication strategy</a></div>
-                        <div><a class="tbw">Pubs and invites</a></div>
+                        <div><a href="#createHistoryStream">createHistoryStream</a></div>
                     </div>
                 </div>
             </div>
@@ -71,6 +69,7 @@
                         <div><a class="tbw">Want and have</a></div>
                     </div>
                 </div>
+                <div><a class="s1 tbw">Pubs and invites</a></div>
                 <div><a class="s1 tbw">Implementations</a></div>
             </div>
         </div>
@@ -83,7 +82,6 @@
                 <div class="section">
                     <div><a class="s1" href="#list-of-rpc-procedures">List of RPC procedures</a></div>
                     <div class="s2">
-                        <div><a href="#createHistoryStream">createHistoryStream</a></div>
                         <div><a href="#blobs.get">blobs.get</a></div>
                         <div><a href="#blobs.has">blobs.has</a></div>
                         <div><a href="#blobs.changes">blobs.changes</a></div>
@@ -649,7 +647,7 @@ assert_nacl_sign_verify_detached(
         <img src="img/sigchain.svg" class="pagewidth"/>
 
         <h3 id="message-format">Message format</h3>
-        <p>To create a message to post in a feed, start by filling out the following fields:</p>
+        <p>To create a message to post in a feed, start by filling out these fields:</p>
         <pre><code>{
   "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
   "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
@@ -731,17 +729,13 @@ assert_nacl_sign_verify_detached(
 
         <h4 id="message-id">Message ID</h4>
         <p>A message ID is a hash of the message including signature. Messages can refer to other messages by their ID.</p>
-        <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key should appear last as shown above (but without wrapping the line).</p>
-        <p>Then hash the message using sha256 and base64 encode it, put a <code>%</code> sign on the front and <code>.sha256</code> on the end. The above message has an ID of:</p>
+        <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key must appear last as shown above (but without wrapping the line).</p>
+        <p>Then hash the message using sha256 and base64 encode it, put a <code>%</code> sign on the front and <code>.sha256</code> on the end. The ID of the above message is:</p>
         <pre class="center">%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256<code></code></pre>
 
-        <!-- ---- -->
-
-        <hr style="margin: 60px 0 10px"/>
-        <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
-
         <h3 id="createHistoryStream">createHistoryStream</h3>
-        <p>As shown above, <em>createHistoryStream</em> asks a peer for a list of messages posted in a particular feed.</p>
+        <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to, for example. When peers connect one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
+        <p>The RPC procedure <em>createHistoryStream</em> is how peers ask each other for a list of messages in a particular feed.</p>
 
         <figure class="request-response">
             <div class="request">
@@ -889,6 +883,12 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
+
+        <!-- ---- -->
+
+        <hr style="margin: 60px 0 10px"/>
+        <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
+
 
         <h3 id="blobs.get">blobs.get</h3>
         <p><em>blobs.get</em> asks a peer to send you the contents of a blob. There is one argument which is the blob ID:</p>
