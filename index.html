@@ -63,7 +63,7 @@
             </div>
             <div class="col">
                 <div class="section">
-                    <a class="s1 tbw">Blobs</a>
+                    <div><a class="s1" href="#blobs">Blobs</a></div>
                     <div class="s2">
                         <div><a class="tbw">Fetching</a></div>
                         <div><a class="tbw">Want and have</a></div>
@@ -734,7 +734,7 @@ assert_nacl_sign_verify_detached(
         <pre class="center">%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256<code></code></pre>
 
         <h3 id="createHistoryStream">createHistoryStream</h3>
-        <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to, for example. When peers connect one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
+        <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to. When peers connect, one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
         <p>The RPC procedure <em>createHistoryStream</em> is how peers ask each other for a list of messages in a particular feed.</p>
 
         <figure class="request-response">
@@ -755,7 +755,6 @@ assert_nacl_sign_verify_detached(
             "limit": 1,
             "live": false,
             "old": true,
-            "sync": false,
             "keys": true
         }
     ]
@@ -784,7 +783,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>old</td>
-                <td>Used together with <em>live</em>. If false, don’t send existing messages posted by this feed, only send new messages as they arrive. If true, start by sending existing messages already posted by this feed. Default: true.</td>
+                <td>Used together with <em>live</em>. If true, start by sending existing messages already posted by this feed. If false, don’t send existing messages posted by this feed, only send new messages as they arrive. Default: true.</td>
             </tr>
             <tr>
                 <td>keys</td>
@@ -883,6 +882,26 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
+
+        <h2 id="blobs">Blobs</h2>
+        <p>A blob is binary data that is referred to from a Scuttlebutt message and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
+        <p>Blobs are just a sequence of bytes and can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages. This is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
+
+        <!--
+{
+    "previous": null,
+    "author": "@Wbmkx0zKN/zFC1Li7Mz3IEQlcnHT7gAQ38i3hRCqyp4=.ed25519",
+    "sequence": 1,
+    "timestamp": 1491556437730,
+    "hash": "sha256",
+    "content": {
+        "type": "about",
+        "about": "@Wbmkx0zKN/zFC1Li7Mz3IEQlcnHT7gAQ38i3hRCqyp4=.ed25519",
+        "image": "&amp;9PQ83tMoOQ81BzA6H9EpKHnCLPggGgpGjROh64S7wno=.sha256",
+        "name": "vtduncan"
+    }
+}
+        -->
 
         <!-- ---- -->
 
