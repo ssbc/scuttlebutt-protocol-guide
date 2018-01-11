@@ -65,8 +65,8 @@
                 <div class="section">
                     <div><a class="s1" href="#blobs">Blobs</a></div>
                     <div class="s2">
-                        <div><a class="tbw">Fetching</a></div>
-                        <div><a class="tbw">Want and have</a></div>
+                        <div><a href="#fetching">Fetching</a></div>
+                        <div><a href="#want-and-have">Want and have</a></div>
                     </div>
                 </div>
                 <div><a class="s1 tbw">Pubs and invites</a></div>
@@ -82,10 +82,8 @@
                 <div class="section">
                     <div><a class="s1" href="#list-of-rpc-procedures">List of RPC procedures</a></div>
                     <div class="s2">
-                        <div><a href="#blobs.get">blobs.get</a></div>
                         <div><a href="#blobs.has">blobs.has</a></div>
                         <div><a href="#blobs.changes">blobs.changes</a></div>
-                        <div><a href="#blobs.createWants">blobs.createWants</a></div>
                     </div>
                 </div>
             </div>
@@ -884,32 +882,17 @@ assert_nacl_sign_verify_detached(
         </figure>
 
         <h2 id="blobs">Blobs</h2>
-        <p>A blob is binary data that is referred to from a Scuttlebutt message and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
-        <p>Blobs are just a sequence of bytes and can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages. This is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
+        <p>A blob is binary data. Blobs are referred to from Scuttlebutt messages and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
+        <p>Being just a sequence of bytes, blobs can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages, which is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
+        <p>Blobs are referred to by their blob ID. To compute this, hash the contents of the blob with sha256, then base64 encode it and put an <code>&amp;</code> symbol on the front and <code>.sha256</code> on the end:</p>
+        <pre class="center"><code>&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256</code></pre>
+        <p>Blobs are immutable because their ID contains a hash of their contents. This allows peers to fetch blobs from anyone in the network and know they haven’t been tampered with.</p>
+        <p>When a Scuttlebutt implementation receives a new message and sees that it references a blob, it might be a good time to fetch that blob so that the complete message will be available to show the user.</p>
 
-        <!--
-{
-    "previous": null,
-    "author": "@Wbmkx0zKN/zFC1Li7Mz3IEQlcnHT7gAQ38i3hRCqyp4=.ed25519",
-    "sequence": 1,
-    "timestamp": 1491556437730,
-    "hash": "sha256",
-    "content": {
-        "type": "about",
-        "about": "@Wbmkx0zKN/zFC1Li7Mz3IEQlcnHT7gAQ38i3hRCqyp4=.ed25519",
-        "image": "&amp;9PQ83tMoOQ81BzA6H9EpKHnCLPggGgpGjROh64S7wno=.sha256",
-        "name": "vtduncan"
-    }
-}
-        -->
-
-        <!-- ---- -->
-
-        <hr style="margin: 60px 0 10px"/>
-        <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
-
-
-        <h3 id="blobs.get">blobs.get</h3>
+        <h3 id="fetching">Fetching</h3>
+        <p>There are two RPC methods for fetching blobs. To get an entire blob use <em>blobs.get</em>, or for only part of the blob use <em>blobs.getSlice</em>.</p>
+    
+        <h4 id="blobs.get">blobs.get</h4>
         <p><em>blobs.get</em> asks a peer to send you the contents of a blob. There is one argument which is the blob ID:</p>
         <figure class="request-response">
             <div class="request">
@@ -928,7 +911,6 @@ assert_nacl_sign_verify_detached(
             <img class="request-arrow" src="img/arrow.svg"/>
         </figure>
         
-        <p>Blobs are referenced by the hash of their contents. The blob ID format is similar to that of feed IDs, but with <code>&amp;</code> on the front and <code>.sha256</code> on the end.</p>
         <p>Now the responder begins streaming back the contents of the blob. Each response has a body type of binary and contains a piece of the blob, starting from the beginning.</p>
         <p>This particular blob is 161,699 bytes long and the responder has decided to send it in pieces of 65,536 bytes each. That means two full pieces of 65,536 bytes will be sent and a final piece with the remaining 30,627 bytes.</p>
 
@@ -1040,10 +1022,12 @@ assert_nacl_sign_verify_detached(
                 <td>Maximum size of the blob in bytes. If the blob is larger then reject the request. Only makes sense to specify <em>max</em> if you don’t already know <em>size</em>. Optional.</td>
             </tr>
         </table>
-        <p>This form allows the receiver to reject the request if the blob is not the expected size or too large. When a request is rejected the responder sends back a single message with the end/err flag set containing a JSON error message.</p>
+        <p>This form allows the responder to reject the request if the blob is not the expected size or too large. When a request is rejected the responder sends back a single message with the end/err flag set containing a JSON error message.</p>
 
-        <h3 id="blobs.getSlice">blobs.getSlice</h3>
-        <p><em>blobs.getSlice</em> works like <em>blobs.get</em> but rather than receiving the entire blob, the requester specifies a start and end point and the responder only sends back bytes within that range:</p>
+        <h4 id="blobs.getSlice">blobs.getSlice</h4>
+        <p><em>blobs.getSlice</em> works like <em>blobs.get</em> but rather than receiving the entire blob, the requester specifies a start and end point and the responder only sends back bytes within that range.</p>
+        <p>Reasons for using <em>blobs.getSlice</em> could be to download a blob in pieces from many peers at once, to resume a partially-completed download or to fetch the first part of a video to show a preview.</p>
+
         <figure class="request-response">
             <div class="request">
                 <div class="header">
@@ -1094,6 +1078,87 @@ assert_nacl_sign_verify_detached(
         <img src="img/blobs_get_slice.svg"/>
         <p>Specifying <em>start</em> = 0 means start from the beginning of the blob. Specifying <em>end</em> = <em>size of the blob</em> means keep going all the way to the end of the blob.</p>
         <p><em>blobs.getSlice</em> also accepts the <em>size</em> and <em>max</em> options, which work the same as in <em>blobs.get</em>. These two options refer to the size of the entire blob, not the range requested.</p>
+
+        <h3 id="want-and-have">Want and have</h3>
+        <p>Peers signal to each other which blobs they want and have. This lets peers know who they can fetch a particular blob from. It also allows requests for blobs to propagate through the network until a peer that has the blob is found.</p>
+        <p>Upon connecting, peers typically invoke the RPC method <em>blobs.createWants</em> on each other. <em>blobs.createWants</em> asks a peer to tell you which blobs they want, and also allows the peer to tell you which blobs they have.</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["blobs", "createWants"],
+    "type": "source",
+    "args": []
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{}</code></pre>
+            </div>
+        </figure>
+
+        <p>Responding with an empty dictionary <code>{}</code> means they don’t currently want any blobs. Later, when they want a particular blob the responder will send another response back:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{"&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256": -1}</code></pre>
+            </div>
+        </figure>
+        <aside style="align-self: start; position: relative; top: 19px;">
+            <p>Only one blob is allowed per response. Send multiple responses if you want more than one blob.</p>
+        </aside>
+
+        <p>The <code>-1</code> means the responder wants this blob themselves. <code>-2</code> means they know someone who wants the blob. <code>-3</code> means they know someone who knows someone who wants the blob, and so on.</p>
+        <p>If a peer tells you that they want a blob and you don’t have it yourself then you can forward the want to other peers you are connected to. When forwarding a request, remember to subtract one from the number so that the request does not keep propagating through the network in an infinite loop.</p>
+        <p>Implementations can pick a limit and ignore blob requests that come from further out than their threshold. The reference implementation forwards requests with <code>-1</code> or <code>-2</code>, but does not forward requests with <code>-3</code> or further out.</p>
+        <p>If the responder does in fact have the blob, they can respond with its size in bytes:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{"&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256": 161699}</code></pre>
+            </div>
+        </figure>
+        <aside style="align-self: start; position: relative; top: 18px;">
+            <p><em>Have</em> and <em>want</em> messages can be distinguished because <em>have</em> messages use a positive number whereas <em>want</em> messages use a negative number.</p>
+        </aside>
+
+        <p>Now the requester knows they can retrieve the blob from this peer with <em>blobs.get</em> or <em>blobs.getSlice</em>.
+        <aside class="kicker" style="position: relative; top: 48px;">
+            <p>By fetching blobs on behalf of one another, Scuttlebutt peers can reach blobs beyond who they are immediately connected to.</p>
+        </aside>
+        <img src="img/blobs_fetch.svg"/>
+
+        <!-- ---- -->
+
+        <hr style="margin: 60px 0 10px"/>
+        <h2 id="list-of-rpc-procedures">List of RPC procedures</h2>
 
         <h3 id="blobs.has">blobs.has</h3>
         <p><em>blobs.has</em> is how you ask a peer whether they have a particular blob:</p>
@@ -1239,103 +1304,6 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <h3 id="blobs.createWants">blobs.createWants</h3>
-        <p><em>blobs.createWants</em> asks a peer to tell you which blobs they want, and also allows the peer to tell you which blobs they have (like <em>blobs.changes</em>).</p>
-
-        <figure class="request-response">
-            <div class="request">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{
-    "name": ["blobs", "createWants"],
-    "type": "source",
-    "args": []
-}</code></pre>
-            </div>
-            <img class="request-arrow" src="img/arrow.svg"/>
-            <img class="response-arrow" src="img/arrow.svg"/>
-            <div class="response">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{}</code></pre>
-            </div>
-        </figure>
-
-        <p>Responding with an empty dictionary <code>{}</code> means they don’t currently want any blobs. Later, when they want a particular blob the responder will send another response back:</p>
-
-        <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.svg"/>
-            <div class="response">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{"&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256": -1}</code></pre>
-            </div>
-        </figure>
-        <aside style="align-self: start; position: relative; top: 19px;">
-            <p>Only one blob is allowed per response. Send multiple responses if you want more than one blob.</p>
-        </aside>
-
-        <p>The <code>-1</code> means the responder wants this blob themselves. <code>-2</code> means they know someone who wants the blob. <code>-3</code> means they know someone who knows someone who wants the blob, and so on.</p>
-        <p>Implementations can pick a limit and ignore blob requests that come from further out than their threshold. The reference implementation forwards requests with <code>-1</code> or <code>-2</code> to peers it is currently connected to, but does not forward requests with <code>-3</code> or further out. When forwarding a request, remember to subtract one from the number so that the request does not keep propagating through the network in an infinite loop.</p>
-        <p>The responder can also say that they now have a particular blob, and its size in bytes:</p>
-
-        <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.svg"/>
-            <div class="response">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{"&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256": 161699}</code></pre>
-            </div>
-        </figure>
-        <aside style="align-self: start; position: relative; top: 18px;">
-            <p><em>Have</em> and <em>want</em> messages can be distinguished because <em>have</em> messages use a positive number whereas <em>want</em> messages use a negative number.</p>
-        </aside>
-
-        <p>If the requester wishes to cancel the stream, they can do so with:</p>
-        <figure class="request-response">
-            <div class="request">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">Yes</span>
-                </div>
-                <pre><code>true</code></pre>
-            </div>
-            <img class="request-arrow" src="img/arrow.svg"/>
-            <img class="response-arrow" src="img/arrow.svg"/>
-            <div class="response">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">Yes</span>
-                </div>
-                <pre><code>true</code></pre>
-            </div>
-        </figure>
-
-        <p>When Scuttlebutt peers connect, they usually set up a pair of <em>blobs.createWants</em> streams to let each other know which blobs they want and have. When a peer sees that they have a blob that their partner (or someone they know) wants, they will send a <em>have</em> message via their <em>blobs.createWants</em> stream and their partner can retrieve it with <em>blobs.get</em> or <em>blobs.getSlice</em>.</p>
-        <aside class="kicker" style="position: relative; top: 48px;">
-            <p>By fetching blobs on behalf of one another, Scuttlebutt peers can reach blobs beyond who they are immediately connected to.</p>
-        </aside>
-        <img src="img/blobs_fetch.svg"/>
 
     </main>
 </body>
