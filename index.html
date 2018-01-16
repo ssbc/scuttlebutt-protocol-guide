@@ -75,7 +75,12 @@
                         <div><a href="#follow-graph">Follow graph</a></div>
                     </div>
                 </div>
-                <div><a class="s1 tbw">Pubs and invites</a></div>
+                <div class="section">
+                    <div><a class="s1" href="#pubs">Pubs</a></div>
+                    <div class="s2">
+                        <div><a href="#invites">Invites</a></div>
+                    </div>
+                </div>
                 <div><a class="s1 tbw">Implementations</a></div>
             </div>
         </div>
@@ -555,7 +560,7 @@ assert_nacl_sign_verify_detached(
         </figure>
 
         <h4 id="async-example">Async example</h4>
-        <p>The only public async procedure is <em>blobs.has</em>, which peers use to ask each other whether they have a particular blob.</p>
+        <p>One of the few public async procedures is <em>blobs.has</em>, which peers use to ask each other whether they have a particular blob.</p>
         <p>In this example the requester is asking the responder if they have blob <code>&amp;WWw4tQJ6…</code>:</p>
 
         <figure class="request-response">
@@ -1150,11 +1155,15 @@ assert_nacl_sign_verify_detached(
         <p>Feeds can follow other feeds. Following is a way of saying “I am interested in the messages posted by this feed”.</p>
         <p>Following is an optional part of Scuttlebutt, however current clients do implement it because it enables interesting social dynamics, such as introducing people that otherwise wouldn’t have found each other and allowing trust to be built within human networks. Following is what enables Scuttlebutt to be a social network rather than a group messenger.</p>
 
-        <p>When a user indicates that they wish to follow another feed, their client will post a message to their own feed with contents like:</p>
-        <pre><code>"content": {
-    "type": "contact",
-    "contact": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-    "following": true
+        <p>When a user wants to follow another feed their client will post a message to their own feed that looks like:</p>
+        <pre><code>{
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "content": {
+        "type": "contact",
+        "contact": "@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519",
+        "following": true
+    },
+    …
 }</code></pre>
         <p>The <em>contact</em> field is the ID of the feed they wish to follow. Later, if the user decides to unfollow this feed, their client can post another message with <em>following</em> set to <code>false</code>.</p>
         <p>When two feeds follow each other current user interfaces will call them “friends”, however this is just a cosmetic touch and for everything else they are still treated as individual follows in each direction.</p>
@@ -1165,6 +1174,116 @@ assert_nacl_sign_verify_detached(
         <p>Clients may want to use the follow graph to decide which feeds to display to the user and which to replicate. If the user explicitly follows a feed that is a strong signal that the user wants to see messages posted by that feed.</p>
         <p>One implementation, Patchwork, shows messages up to 2 hops out by default. Messages from feeds 3 hops out are replicated to help keep them available for others, but not directly shown in the user interface. A benefit of replicating at a greater range is that for discussion threads with lots of participants it’s more likely that the client will be able to fill in gaps where a user posted who was further than 2 hops out.</p>
         <p>Clients could also let users configure how far the visibility and replication ranges are, or a client could use an entirely different method of deciding which feeds to show and replicate that is not based on follow range.</p>
+
+        <h2 id="pubs">Pubs</h2>
+        <p>A pub is a publicly-accessible Scuttlebutt peer. Pubs have a social and a technical purpose:</p>
+        <ul>
+            <li>Pubs serve as a gathering point for new users to find other people and for existing users to welcome people who have just joined.</li>
+            <li>Pubs have a stable IP address and allow incoming TCP connections, which enables users to connect even if their internet service provider lacks dedicated IP addresses or refuses incoming connections.</li>
+        </ul>
+        <p>Pubs speak the same protocol as regular peers and behave like regular peers except that they are normally run on servers so that they are always online.</p>
+        <p>Joining a pub means following it and having it follow you back. After a new user joins a pub they will be able to see posts by the pub’s other members, and crucially the other members will be able to see the new member. This works because everyone is now within 2 hops of each other:</p>
+        <img src="img/follow_perspective.svg" class="pagewidth"/>
+        <p>After joining a pub, a user may decide to follow some of its members directly, in which case the pub is no longer needed for feed visibility but is still useful for accepting TCP connections and replicating messages.</p>
+
+        <h3 id="invites">Invites</h3>
+        <p>Any user can follow a pub by posting a follow message, but to get the pub to follow you back you need an invite.</p>
+        <div>
+            <p>How the pub hands out invites is for its operator to decide. Some pubs have a web page that anybody can visit to generate an invite code. Some pubs have a pre-generated list of invite codes that the operator distributes. Invite codes can be single-use-only, have a maximum number of uses before they expire, or keep working indefinitely. A single user can use several invites if they wish to join several different pubs.</p>
+            <p>Invite codes use this format:</p>
+        </div>
+        <aside>
+            <p>If you want to run a pub that caters to an existing community, you could generate invite codes and give them out to current members. That way everyone who joins will be able to see the other members.</p>
+        </aside>
+        <img src="img/format_invite.svg"/>
+        <p>To make a new invite code, a pub generates a new Ed25519 key pair. The secret key goes into the invite code, which is given to either a new user or the pub operator to distribute. The public key is remembered by the pub along with any extra conditions such as the number of remaining uses or expiry date.</p>
+
+        <h4 id="redeeming-invites">Redeeming invites</h4>
+        <p>To redeem an invite, a user enters the invite code into their Scuttlebutt client. The client opens a new TCP connection to the domain and port contained in the invite and proceeds to set up a peer connection, starting with the handshake.</p>
+        <p>However, unlike a regular handshake, the client uses the secret key in the invite as their long-term identity key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
+        <p>Handshaking with the invite key allows the client to call a special RPC method <em>invite.use</em>:</p>
+
+        <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
+            <p><em>invite.use</em> has a single argument which is the feed ID of the user who wants to join the pub.</p>
+        </aside>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "name": ["invite", "use"],
+    "type": "async",
+    "args": [{"feed": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"}]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
+        </figure>
+        <p>The pub checks the key used in the handshake against its list of unredeemed invites. If the invite code is valid and has not expired, the pub follows the feed ID specified by the requester and responds with its new follow message:</p>
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.svg"/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+    "key": "%+7u6Fa0s1cE6tS9BtKUijDV3QBYQEINH7gLSIkDqRMM=.sha256",
+    "value": {
+        "previous": "%S1v8a0gQkaNNzNOrWuQUomZvFrDO+XARfd6z35OmCb4=.sha256",
+        "author": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519",
+        "sequence": 14,
+        "timestamp": 1516094092985,
+        "hash": "sha256",
+        "content": {
+            "type": "contact",
+            "contact": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+            "following": true,
+            <strong>"pub": true</strong>
+        },
+        "signature":"zckFCb4XAJxNVy4tcm38o2GoFIWj25ZKa6EOaBYQA7DH/zNeWp
+                     hHuJBCCEWK6XRl4VENZWXHxPNHEBCBXDq6CA==.sig.ed25519"
+    }
+}</code></pre>
+            </div>
+        </figure>
+        <aside style="align-self: start; position: relative; top: 215px;">
+            <p>This message contains <code>"pub": true</code> to distinguish it from a normal follow.</p>
+        </aside>
+
+        <p>Because this a pub, it is probably connected to a few other peers already. The pub will notify its peers of its new follow message using the normal <em>createHistoryStream</em> mechanism, at which point other users of the pub may decide that they are now interested in this new user’s feed and fetch it.</p>
+        <p>Now that the pub has followed the new user, the new user should reciprocate by following the pub back. Clients automatically handle this on behalf of the user when they enter an invite code. The client posts a message to the user’s feed that follows the pub back:</p>
+        <pre><code>{
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "content": {
+        "type": "contact",
+        "contact": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519",
+        "following": true
+    },
+    …
+}</code></pre>
+        <aside>
+            <p>This message doesn’t contain <code>"pub": true</code>.</p>
+        </aside>
+        <p>The client also posts a message of type <em>pub</em> to the user’s feed:</p>
+        <pre><code>{
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "content": {
+        "type": "pub",
+        "address": {
+            "host": "one.butt.nz",
+            "port": 8008,
+            "key": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+        }
+    },
+    …
+}</code></pre>
+        <p>These messages help peers discover new pubs where they might be able to fetch new messages from. Clients can maintain a list of pubs they have seen so that they know of alternative places to fetch messages from in case a pub goes offline.</p>
 
     </main>
 </body>
