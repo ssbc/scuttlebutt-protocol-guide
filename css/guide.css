@@ -199,7 +199,7 @@ a.tbw:hover {
     text-decoration: line-through;
 }
 
-main > figure, main > img {
+main figure, main > img {
     margin: 1rem 0 2rem 0;
 }
 
@@ -294,7 +294,7 @@ table.defs td:first-child {
     grid-column: screen;
 }
 
-.left-right.code pre, .left-right.code pre, .request-response pre, .request-response pre {
+.left-right.code pre, .request-response pre, .packet pre {
     font-size: 12px;
 }
 
@@ -310,21 +310,21 @@ table.defs td:first-child {
     margin: 12px 0;
 }
 
-.request-response .header {
+.request-response .header, .packet .header {
     color: #fff;
     font-size: 13px;
     padding: 0 6px;
 }
 
-.request-response .key {
+.request-response .key, .packet .key {
     margin-right: 5px;
 }
 
-.request-response .key::after {
+.request-response .key::after, .packet .key::after {
     content: ':';
 }
 
-.request-response .value {
+.request-response .value, .packet .value {
     font-weight: 700;
     margin-right: 25px;
 }
@@ -347,6 +347,10 @@ table.defs td:first-child {
     background-color: #fcf3e4;
 }
 
+.packet {
+    background-color: #f4f4f4;
+}
+
 .request .header {
     background-color: #5fb2e6;
 }
@@ -355,7 +359,11 @@ table.defs td:first-child {
     background-color: #e79f27;
 }
 
-.request-response pre {
+.packet .header {
+    background-color: #808080;
+}
+
+.request-response pre, .packet pre {
     background: none;
     font-family: "DejaVu Sans Mono";
     margin: 0;

@@ -33,11 +33,11 @@
                 <div><a class="s1" href="#introduction">Introduction</a></div>
                 <div><a class="s1" href="#keys-and-identities">Keys and identities</a></div>
                 <div class="section">
-                    <div><a class="s1 tbw">Discovery</a></div>
+                    <div><a class="s1" href="#discovery">Discovery</a></div>
                     <div class="s2">
-                        <div><a class="tbw">Local network</a></div>
-                        <div><a class="tbw">Pub message</a></div>
-                        <div><a class="tbw">Invite code</a></div>
+                        <div><a href="#local-network">Local network</a></div>
+                        <div><a href="#invite-code">Invite code</a></div>
+                        <div><a href="#pub-message">Pub message</a></div>
                     </div>
                 </div>
             </div>
@@ -81,13 +81,14 @@
                         <div><a href="#invites">Invites</a></div>
                     </div>
                 </div>
+                <div><a class="s1 tbw">Private messages</a></div>
                 <div><a class="s1 tbw">Implementations</a></div>
             </div>
         </div>
         <hr/>
     
-        <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a> is a protocol for building decentralized applications that work well offline and that no one person can control. Because there is no central server, Scuttlebutt clients connect directly with their peers to exchange information. This guide describes the protocols used to communicate within the Scuttlebutt network.</p>
-        <p>Scuttlebutt is a flexible protocol, capable of supporting many different types of applications. One of its first applications was as a social network, and it has also become one of the most compelling because of the friendly humans that hang out there. This guide has a slight focus on how to use Scuttlebutt for social networking, but many of the explanations will still be useful if want to use it for something completely different, or are just curious how it works. Especially if you are just curious.</p>
+        <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a> is a protocol for building decentralized applications that work well offline and that no one person can control. Because there is no central server, Scuttlebutt clients connect to their peers to exchange information. This guide describes the protocols used to communicate within the Scuttlebutt network.</p>
+        <p>Scuttlebutt is a flexible protocol, capable of supporting many different types of applications. One of its first applications was as a social network, and it has also become one of the most compelling because the people who hang out there are not jerks. This guide has a slight focus on how to use Scuttlebutt for social networking, but many of the explanations will still be useful if want to use it for something completely different, or are just curious how it works.</p>
 
         <h2 id="keys-and-identities">Keys and identities</h2>
         <p>The first thing a user needs to participate in Scuttlebutt is an identity. An identity is an Ed25519 key pair and typically represents a person, a device, a server or a bot. It’s normal for a person to have several Scuttlebutt identities.</p>
@@ -99,6 +100,55 @@
         <pre class="center"><code>@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519</code></pre>
         <p>Begin with an <code>@</code> sign, then base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Finally put <code>.ed25519</code> on the end.</p>
         <p>Each identity has an associated feed, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
+
+        <h2 id="discovery">Discovery</h2>
+        <p>After a user has generated their identity they need to find some peers to connect to. To connect to a peer you need to know its IP address, port number and public key. The Scuttlebutt protocol currently has three methods for peers to discover each other.</p>
+
+        <h3 id="local-network">Local network</h3>
+        <p>Peers constantly broadcast UDP packets on their local network advertising their presence. The body of each packet is a string containing the peer’s IP address, port and base64-encoded public key (without <code>@</code> or <code>.ed25519</code>):</p>
+
+        <div>
+            <figure class="packets">
+                <div class="packet">
+                    <div class="header">
+                        <span class="key">Source IP</span><span class="value">192.168.1.123</span>
+                        <span class="key">Source port</span><span class="value">8008</span>
+                        <span class="key">Destination IP</span><span class="value">255.255.255.255</span>
+                        <span class="key">Destination port</span><span class="value">8008</span>
+                    </div>
+                    <pre><code>net:192.168.1.123:8008~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=</code></pre>
+                </div>
+            </figure>
+            <p>Current implementations broadcast one of these packets every second. When a peer sees another peer’s broadcast packet they can connect to exchange messages, or even show nearby peers in the user interface so that the user can see other people on the same network as them.</p>
+        </div>
+        <aside>
+            <p>UDP source and destination ports are set to the same port number that the peer is listening on TCP for peer connections (normally 8008).</p>
+        </aside>
+
+        <h3 id="invite-code">Invite code</h3>
+        <p><a href="#invites">Invite codes</a> help new users get connected to their first <a href="#pubs">pub</a>, which is a which is a Scuttlebutt peer that is publicly accessible over the internet. An invite code contains a pub’s domain name, port and public key.</p>
+        <p>They also contain a secret key that the user can <a href="#redeeming-invites">redeem</a> to make the pub <a href="#following">follow</a> them back. This lets the new user see messages posted by other members of the pub and share their own messages. Invite codes are the most common way for new users to get started on Scuttlebutt.</p>
+        <p>Pub operators can distribute invite codes any way they see fit, for example by posting them on existing social networks. Some pubs have a web page that anybody can visit to generate an invite code.</p>
+
+        <h3 id="pub-message">Pub message</h3>
+        <p>Users can post a message to their own <a href="#feeds">feed</a> advertising a pub:</p>
+        <aside class="kicker">
+            <p>Here the user <code>@FCX/ts…</code> is advertising that they know of pub <code>@VJM7w1…</code> along with the pub’s domain name and port.</p>
+        </aside>
+        <pre><code>{
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "content": {
+        "type": "pub",
+        "address": {
+            "host": "one.butt.nz",
+            "port": 8008,
+            "key": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+        }
+    },
+    …
+}</code></pre>
+        <p>When others see this message they can make a note that this pub exists and connect to it in the future.</p>
+        <p>Pub messages are a useful way to find additional peers if you already know a few. Obviously this doesn’t work for new users who don’t know anyone else yet and therefore can’t see any pub messages.</p>
 
         <h2 id="peer-connections">Peer connections</h2>
         <p>Once a Scuttlebutt client has discovered the IP address, port number and identity of a peer they can connect via TCP to ask for updates and exchange messages.</p>
@@ -280,7 +330,7 @@ assert_nacl_sign_verify_detached(
         <div>
             <p>The client reveals their identity to the server by sending their <img class="inline-key" src="img/key_big_a_public.svg"/> long term public key. The client also makes a signature using their <img class="inline-key" src="img/key_big_a_secret.svg"/> long term secret key. By signing the keys used earlier in the handshake the client proves their identity and confirms that they do indeed wish to be part of this handshake.</p>
             <p>The client’s message is enclosed in a secret box to ensure that only the server can read it. Upon receiving it, the server opens the box, stores the client’s long term public key and verifies the signature.</p>
-            <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <span class="key-formula"><em>sha256</em>(<em>concat</em>( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>))</span>.</p>
+            <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>))</span>.</p>
         </div>
         <aside>
             <p><strong>Detached signatures</strong> do not contain a copy of the message that was signed, only a tag that allows verifying the signature if you already know the message.</p>
@@ -359,7 +409,7 @@ assert_nacl_sign_verify_detached(
         </figure>
         <p>The server accepts the handshake by signing a message using their <img class="inline-key" src="img/key_big_b_secret.svg"/> long term secret key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
         <p>Upon receiving it, the client opens the box and verifies the server’s signature.</p>
-        <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula"><em>sha256</em>(<em>concat</em>( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>, <img class="inline-key" src="img/key_big_a_little_b.svg"/>))</span>.</p>
+        <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>, <img class="inline-key" src="img/key_big_a_little_b.svg"/>))</span>.</p>
 
         <h4 id="handshake-complete">Handshake complete</h4>
         <img src="img/final_shared_secret.svg"/>
@@ -1200,7 +1250,7 @@ assert_nacl_sign_verify_detached(
 
         <h4 id="redeeming-invites">Redeeming invites</h4>
         <p>To redeem an invite, a user enters the invite code into their Scuttlebutt client. The client opens a new TCP connection to the domain and port contained in the invite and proceeds to set up a peer connection, starting with the handshake.</p>
-        <p>However, unlike a regular handshake, the client uses the secret key in the invite as their long-term identity key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
+        <p>However, unlike a regular handshake, the client uses the secret key in the invite as their <img class="inline-key" src="img/key_big_a_secret.svg"/> long term secret key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
         <p>Handshaking with the invite key allows the client to call a special RPC method <em>invite.use</em>:</p>
 
         <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
