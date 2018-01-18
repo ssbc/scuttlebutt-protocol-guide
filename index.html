@@ -50,8 +50,6 @@
                         <div><a href="#rpc-protocol">RPC protocol</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#feeds">Feeds</a></div>
                     <div class="s2">
@@ -60,6 +58,8 @@
                         <div><a href="#createHistoryStream">createHistoryStream</a></div>
                     </div>
                 </div>
+            </div>
+            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#blobs">Blobs</a></div>
                     <div class="s2">
@@ -67,8 +67,6 @@
                         <div><a href="#want-and-have">Want and have</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#following">Following</a></div>
                     <div class="s2">
@@ -81,7 +79,15 @@
                         <div><a href="#invites">Invites</a></div>
                     </div>
                 </div>
-                <div><a class="s1 tbw">Private messages</a></div>
+            </div>
+            <div class="col">
+                <div class="section">
+                    <div><a class="s1" href="#private-messages">Private messages</a></div>
+                    <div class="s2">
+                        <div><a href="#encrypting">Encrypting</a></div>
+                        <div><a href="#decrypting">Decrypting</a></div>
+                    </div>
+                </div>
                 <div><a class="s1 tbw">Implementations</a></div>
             </div>
         </div>
@@ -1334,6 +1340,55 @@ assert_nacl_sign_verify_detached(
     …
 }</code></pre>
         <p>These messages help peers discover new pubs where they might be able to fetch new messages from. Clients can maintain a list of pubs they have seen so that they know of alternative places to fetch messages from in case a pub goes offline.</p>
+
+        <h2 id="private-messages">Private messages</h2>
+        <p>Private messages are encrypted so that only certain recipients can read them. They are posted to the sender’s Scuttlebutt feed like normal messages.</p>
+        <p>Anyone can see the fact that a feed posted a private message, who sent it (the feed it was posted to), when it was sent and its size. However the list of recipients, number of recipients and message body is concealed.</p>
+        <p>Given the user wants to post these message contents:</p>
+        <pre><code>{
+    "type": "post",
+    "text": "Don’t tell anybody about this one weird trick…",
+    "recps": [
+        "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+        "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+    ]
+}</code></pre>
+        <aside>
+            <p>Private messages don’t reveal to recipients who the other recipients are. If you want them to know the full list of recipients then include it in the message (<em>recps</em>) as shown here.</p>
+        </aside>
+
+        <p>This is how it would appear as a private message when posted to the user’s feed:</p>
+        <pre><code>{
+    "previous": "%+7u6Fa0s1cE6tS9BtKUijDV3QBYQEINH7gLSIkDqRMM=.sha256",
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 15,
+    "timestamp": 1516222868742,
+    "hash": "sha256",
+
+    "content": "ilDLCLIPRruIQPuqOq1uKnkMh0VNmxD8q+DXKCbgThoAR4XvotMSbMYnodhEkgUQuEEbxjR/MHTa77
+                DQKY5QiGbFusUU564iDx1g/tP0qNqwir6eB0LGEna+K5QDj4CtNsHwnmDv7C0p/9n8lq/WtXlKptrO
+                /A6riL+8EfhIWck1KCQGIZNxZz84DtpDXdN1z88rvslDNoPPzQoeGIgkt/RrGsoysuMZoJyN8LZb3X
+                uczoSn+FhS0nWKIYnCy+CtmNiqw+9lATZgXM4+FOY8N3+L+j25hQQI191NNIdFVyMwoxkPL81byqLx
+                ABJDLpMDSOXnWjvyzCJ68UOUwciS16/QdXE647xJ4NSC7u6uMreFIdtHTkQcP556PlZyBFwArJXbwx
+                TUq84f5rTUt3uoG3fOllxFjRs/PPLkIcD1ihxJoSmoTTbFePclRYAV5FptRTJVHg==.box",
+
+    "signature": "6EQTBQbBhAxeE3w7kyg/7xWHUR8tXP7jUl7bWnEQVz8RxbCYgb
+                  TRUnfX/2v68xfSG5xyLAqDJ1Dh3+d+pmRvAw==.sig.ed25519"
+}</code></pre>
+
+        <p>When a client sees a message where the content is a string ending in <code>.box</code> it will know that it is a private message. Because clients can’t see who the message is addressed to, they will attempt to decrypt every private message they come across in case it is for them.</p>
+
+        <h3 id="encrypting">Encrypting</h3>
+        <p>To encrypt a private message, the sender starts with these keys:</p>
+        <img src="img/private_message_starting_keys.svg"/>
+        <p>Next, the sender uses scalar multiplication to derive a shared secret for each recipient:</p>
+        <img src="img/private_message_secret_derivation.svg"/>
+        <p>The sender constructs the encrypted message by first enclosing the message content in a secret box, then enclosing the key needed to open it into a series of additional secret boxes, one to each recipient:</p>
+        <img src="img/private_message_encrypt.svg" class="pagewidth"/>
+
+        <h3 id="decrypting">Decrypting</h3>
+        <p>To decrypt a private message, scan through the series of header secret boxes to see if any of them open using your long-term secret key. If one of them opens, take out the body secret key and use it to open the secret box holding the message content:</p>
+        <img src="img/private_message_decrypt.svg" class="pagewidth"/>
 
     </main>
 </body>

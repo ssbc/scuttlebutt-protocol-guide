@@ -246,7 +246,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -689,7 +689,7 @@
          x="352"
          y="115.55286"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#666666;fill-opacity:1"
-         id="tspan4614">identity stored in .ssb/secret</tspan></text>
+         id="tspan4614">identity stored in .ssb/secret.</tspan></text>
     <text
        id="text4634"
        y="196.16666"
@@ -705,7 +705,7 @@
          y="215.55286"
          x="352"
          sodipodi:role="line"
-         id="tspan4640">generated for this handshake</tspan></text>
+         id="tspan4640">generated for this handshake.</tspan></text>
     <text
        xml:space="preserve"
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:'Helvetica Neue';-inkscape-font-specification:'Helvetica Neue';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker:none;enable-background:accumulate"
@@ -721,7 +721,7 @@
          x="352"
          y="315.55286"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#666666;fill-opacity:1"
-         id="tspan4652">long-term public key from discovery</tspan></text>
+         id="tspan4652">long-term public key from discovery.</tspan></text>
     <text
        id="text4658"
        y="396.16663"
@@ -737,7 +737,7 @@
          y="415.55283"
          x="352"
          sodipodi:role="line"
-         id="tspan4664">key to join the main Scuttlebutt network</tspan></text>
+         id="tspan4664">key to join the main Scuttlebutt network.</tspan></text>
     <text
        xml:space="preserve"
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1;font-family:'Helvetica Neue';-inkscape-font-specification:'Helvetica Neue';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker:none;enable-background:accumulate"
@@ -748,7 +748,7 @@
          sodipodi:role="line"
          x="357.5"
          y="530.16663"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.39999998;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#666666;fill-opacity:1">secret keys are shown as solid colors</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.39999998;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#666666;fill-opacity:1">secret keys are shown as solid colors.</tspan></text>
     <text
        id="text4686"
        y="570.16663"
@@ -759,7 +759,7 @@
          y="570.16663"
          x="357.5"
          sodipodi:role="line"
-         id="tspan4684">public keys are shown as outlines</tspan></text>
+         id="tspan4684">public keys are shown as outlines.</tspan></text>
     <text
        id="text4690"
        y="530.16663"

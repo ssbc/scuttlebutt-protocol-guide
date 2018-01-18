@@ -564,7 +564,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1013,27 +1013,6 @@
        id="path2582"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
-    <g
-       id="g2667"
-       transform="translate(-520,70)">
-      <rect
-         y="1.1666489"
-         x="10"
-         height="40"
-         width="450"
-         id="rect2661"
-         style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#00a074;fill-opacity:1;stroke:none;stroke-width:1.33333337;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
-      <path
-         style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2, 2;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
-         d="m 60,1.16665 v 40"
-         id="path2663"
-         inkscape:connector-curvature="0" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path2665"
-         d="m 260,1.16665 v 40"
-         style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2, 2;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
-    </g>
     <text
        id="text2874"
        y="31.166649"
@@ -1334,30 +1313,26 @@
          x="205"
          sodipodi:role="line"
          id="tspan3105">= message is part of a stream</tspan></text>
-    <g
-       id="g2870"
-       transform="translate(-10,70.000001)">
-      <rect
-         style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#00a074;fill-opacity:1;stroke:none;stroke-width:1.33333337;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
-         id="rect1836"
-         width="50"
-         height="40"
-         x="10"
-         y="1.1666489" />
-      <rect
-         y="1.1666489"
-         x="260"
-         height="40"
-         width="200"
-         id="rect2672"
-         style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#fae6be;fill-opacity:1;stroke:none;stroke-width:1.33333325;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
-      <rect
-         style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cc7aa8;fill-opacity:1;stroke:none;stroke-width:1.33333337;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
-         id="rect2674"
-         width="200"
-         height="40"
-         x="60"
-         y="1.1666501" />
-    </g>
+    <rect
+       y="71.166649"
+       x="0"
+       height="40"
+       width="50"
+       id="rect1836"
+       style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#00a074;fill-opacity:1;stroke:none;stroke-width:1.33333337;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
+    <rect
+       style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#fae6be;fill-opacity:1;stroke:none;stroke-width:1.33333325;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
+       id="rect2672"
+       width="200"
+       height="40"
+       x="250"
+       y="71.166649" />
+    <rect
+       y="71.166649"
+       x="50"
+       height="40"
+       width="200"
+       id="rect2674"
+       style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cc7aa8;fill-opacity:1;stroke:none;stroke-width:1.33333337;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke" />
   </g>
 </svg>
