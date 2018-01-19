@@ -88,7 +88,7 @@
                         <div><a href="#decrypting">Decrypting</a></div>
                     </div>
                 </div>
-                <div><a class="s1 tbw">Implementations</a></div>
+                <div><a class="s1" href="#implementations">Implementations</a></div>
             </div>
         </div>
         <hr/>
@@ -1387,9 +1387,146 @@ assert_nacl_sign_verify_detached(
         <img src="img/private_message_encrypt.svg" class="pagewidth"/>
 
         <h3 id="decrypting">Decrypting</h3>
-        <p>To decrypt a private message, scan through the series of header secret boxes to see if any of them open using your long-term secret key. If one of them opens, take out the body secret key and use it to open the secret box holding the message content:</p>
+        <p>Decrypting a private message involves scanning through the series of header secret boxes to see if any of them open using your long-term secret key. Then, if one of them opens, taking out the body secret key and using it to open the secret box holding the message content:</p>
         <img src="img/private_message_decrypt.svg" class="pagewidth"/>
 
+        <h2 id="implementations">Implementations</h2>
+        <p>Scuttlebutt was first implemented in JavaScript with additional implementations currently being written in several other programming languages. Use this table to compare how different authors have implemented each part of the protocol:</p>
+
+        <table class="pagewidth impls">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>JavaScript</th>
+                    <th>Python</th>
+                    <th>Go</th>
+                    <th>C</th>
+                </tr>
+                <tr class="byline">
+                    <th></th>
+                    <th>by dominictarr and contributors</th>
+                    <th>by pferreir</th>
+                    <th>by cryptix and keks</th>
+                    <th>by AljoschaMeyer</th>
+                </tr>
+            </thead>
+
+
+            <!--
+                    <td>
+                        <div><a href=""></a></div>
+                    </td>
+            -->
+
+            <tbody>
+                <tr>
+                    <td>Keys and identities</td>
+                    <td>
+                        <div><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Discovery</td>
+                    <td>
+                        <div><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
+                        <div><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/local.js">scuttlebot/local.js</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Handshake</td>
+                    <td>
+                        <div><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/protocol.js">secret-stack/protocol.js</a></div>
+                        <div><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/crypto.js">secret-stack/crypto.js</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/pferreir/PySecretHandshake/blob/master/secret_handshake/crypto.py">crypto.py</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/cryptix/secretstream/blob/master/secrethandshake/state.go">state.go</a></div>
+                        <div><a href="https://github.com/cryptix/secretstream/blob/master/secrethandshake/conn.go">conn.go</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/AljoschaMeyer/shs1-c/blob/master/src/shs1.c">shs1.c</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Box stream</td>
+                    <td>
+                        <div><a href="https://github.com/dominictarr/pull-box-stream/blob/master/index.js">pull-box-stream</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/pferreir/PySecretHandshake/blob/master/secret_handshake/boxstream.py">boxstream.py</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/cryptix/secretstream/blob/master/boxstream/box.go">box.go</a></div>
+                        <div><a href="https://github.com/cryptix/secretstream/blob/master/boxstream/unbox.go">unbox.go</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/AljoschaMeyer/box-stream-c/blob/master/src/box-stream.c">box-stream.c</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>RPC protocol</td>
+                    <td>
+                        <div><a href="https://github.com/dominictarr/packet-stream-codec/blob/master/index.js">packet-stream-codec</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/pferreir/pyssb/blob/master/ssb/packet_stream.py">packet_stream.py</a></div>
+                        <div><a href="https://github.com/pferreir/pyssb/blob/master/ssb/muxrpc.py">muxrpc.py</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/cryptix/go-muxrpc/blob/master/client.go">client.go</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Message signing</td>
+                    <td>
+                        <div><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
+                        <div><a href="https://github.com/ssbc/ssb-feed/blob/master/validator.js">ssb-feed/validator.js</a></div>
+                    </td>
+                    <td>
+                        <div><a href="https://github.com/pferreir/pyssb/blob/master/ssb/feed.py">feed.py</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>createHistoryStream</td>
+                    <td>
+                        <div><a href="https://github.com/ssbc/secure-scuttlebutt/blob/master/indexes/clock.js">secure-scuttlebutt/clock.js</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>blobs.get / blobs.getSlice</td>
+                    <td>
+                        <div><a href="https://github.com/ssbc/multiblob/blob/master/index.js">multiblob</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>blobs.createWants</td>
+                    <td>
+                        <div><a href="https://github.com/ssbc/ssb-blobs/blob/master/inject.js">ssb-blobs/inject.js</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Following</td>
+                    <td>
+                        <div><a href="https://github.com/ssbc/ssb-friends/blob/master/alg.js">ssb-friends/alg.js</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Invites</td>
+                    <td>
+                        <div><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/invite.js">scuttlebot/invite.js</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Private messages</td>
+                    <td>
+                        <div><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
+                        <div><a href="https://github.com/auditdrivencrypto/private-box/blob/master/index.js">private-box</a></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </main>
 </body>
 </html>

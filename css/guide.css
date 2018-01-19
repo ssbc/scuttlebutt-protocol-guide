@@ -286,6 +286,57 @@ table.defs td:first-child {
     padding-right: 1rem;
 }
 
+table.impls {
+    margin: 2rem 0 2rem;
+    font-size: 13px;
+    line-height: 1.5;
+    width: 1072px;
+    table-layout: fixed;
+}
+
+table.impls thead {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+table.impls tbody {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+table.impls thead tr:first-child th {
+    padding: 8px 5px 0 0;
+}
+
+table.impls thead tr:last-child th {
+    padding: 0 5px 8px 0;
+}
+
+table.impls th, table.impls td {
+    padding: 6px 5px 6px 0;
+}
+
+table.impls th:first-child {
+    width: calc(184px - 5px);
+}
+
+table.impls th {
+    text-align: left;
+    width: calc((1072px - 184px) / 4 - 5px);
+}
+
+table.impls .byline th {
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+table.impls a {
+    border-bottom: none;
+}
+
+table.impls a:hover {
+    border-bottom: 1px solid rgb(0, 0, 0, 0.8);
+}
+
 .code {
     margin: 1rem 0 4rem;
 }
