@@ -294,37 +294,29 @@ table.impls {
     table-layout: fixed;
 }
 
-table.impls thead {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-table.impls tbody {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-table.impls thead tr:first-child th {
-    padding: 8px 5px 0 0;
-}
-
-table.impls thead tr:last-child th {
-    padding: 0 5px 8px 0;
+table.impls tr:nth-child(even) {
+    background-color: #f4f4f4;
 }
 
 table.impls th, table.impls td {
-    padding: 6px 5px 6px 0;
+    padding: 6px;
+    box-sizing: border-box;
 }
 
 table.impls th:first-child {
-    width: calc(184px - 5px);
+    width: calc(184px - 6px);
+}
+
+table.impls tr {
+    height: 55px;
 }
 
 table.impls th {
     text-align: left;
-    width: calc((1072px - 184px) / 4 - 5px);
+    width: calc((1072px - 184px - 6px) / 4);
 }
 
-table.impls .byline th {
+table.impls .byline {
     font-weight: normal;
     color: rgba(0, 0, 0, 0.6);
 }
