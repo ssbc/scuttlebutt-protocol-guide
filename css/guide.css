@@ -190,15 +190,6 @@ pre code {
     border-bottom: none;
 }
 
-a.tbw {
-    cursor: default;
-    opacity: 0.4;
-}
-
-a.tbw:hover {
-    text-decoration: line-through;
-}
-
 main figure, main > img {
     margin: 1rem 0 2rem 0;
 }
