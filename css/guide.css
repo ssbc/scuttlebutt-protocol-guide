@@ -448,10 +448,8 @@ table.impls a:hover {
     bottom: 0;
     font-size: 12px;
     font-style: italic;
-    padding: 4px 10px;
-    display: flex;
-    justify-content: end;
-    align-items: end;
+    padding: 16px 10px 0;
+    text-align: right;
 }
 
 .code h5 {
