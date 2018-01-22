@@ -141,16 +141,16 @@
             <p>Here the user <code>@FCX/ts…</code> is advertising that they know of pub <code>@VJM7w1…</code> along with the pub’s domain name and port.</p>
         </aside>
         <pre><code>{
-    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-    "content": {
-        "type": "pub",
-        "address": {
-            "host": "one.butt.nz",
-            "port": 8008,
-            "key": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
-        }
-    },
-    …
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "content": {
+    "type": "pub",
+    "address": {
+      "host": "one.butt.nz",
+      "port": 8008,
+      "key": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+    }
+  },
+  …
 }</code></pre>
         <p>When others see this message they can make a note that this pub exists and connect to it in the future.</p>
         <p>Pub messages are a useful way to find additional peers if you already know a few. Obviously this doesn’t work for new users who don’t know anyone else yet and therefore can’t see any pub messages.</p>
@@ -170,7 +170,7 @@
             <li>A man-in-the-middle cannot learn the public key of either peer.</li>
             <li>Both peers need to know a key that represents the particular Scuttlebutt network they wish to connect to, however a man-in-the-middle can’t learn this key from the handshake. If the handshake succeeds then both ends have confirmed that they wish to use the same network.</li>
             <li>Past handshakes cannot be replayed. Attempting to replay a handshake will not allow an attacker to discover or confirm guesses about the participants’ public keys.</li>
-            <li>Forward secrecy. Recording a user’s network traffic and then later stealing their secret key will not allow an attacker to decrypt their past handshakes.</li>
+            <li>Handshakes provide forward secrecy. Recording a user’s network traffic and then later stealing their secret key will not allow an attacker to decrypt their past handshakes.</li>
         </ul>
         <aside>
             <p><strong>Client</strong> is the computer initiating the TCP connection and <strong>server</strong> is the computer receiving it. Once the handshake is complete this distinction goes away.</p>
@@ -187,11 +187,11 @@
             <h5 class="left">Client sends <span class="msgsize">(64 bytes)</span></h5>
             <h5 class="right">Server verifies</h5>
             <pre class="left"><code>concat(
-    nacl_auth(
-        msg: client_ephemeral_pk,
-        key: network_identifier
-    ),
-    client_ephemeral_pk
+  nacl_auth(
+    msg: client_ephemeral_pk,
+    key: network_identifier
+  ),
+  client_ephemeral_pk
 )</code></pre>
             <pre class="right"><code>assert(length(msg1) == 64)
 
@@ -199,9 +199,9 @@ client_hmac = first_32_bytes(msg1)
 client_ephemeral_pk = last_32_bytes(msg1)
 
 assert_nacl_auth_verify(
-    authenticator: client_hmac,
-    msg: client_ephemeral_pk,
-    key: network_identifier
+  authenticator: client_hmac,
+  msg: client_ephemeral_pk,
+  key: network_identifier
 )</code></pre>
         </figure>
 
@@ -223,16 +223,16 @@ server_hmac = first_32_bytes(msg2)
 server_ephemeral_pk = last_32_bytes(msg2)
 
 assert_nacl_auth_verify(
-    authenticator: server_hmac,
-    msg: server_ephemeral_pk,
-    key: network_identifier
+  authenticator: server_hmac,
+  msg: server_ephemeral_pk,
+  key: network_identifier
 )</code></pre>
             <pre class="right"><code>concat(
-    nacl_auth(
-        msg: server_ephemeral_pk,
-        key: network_identifier
-    ),
-    server_ephemeral_pk
+  nacl_auth(
+    msg: server_ephemeral_pk,
+    key: network_identifier
+  ),
+  server_ephemeral_pk
 )</code></pre>
         </figure>
 
@@ -245,22 +245,22 @@ assert_nacl_auth_verify(
             <h5 class="left">Client computes</h5>
             <h5 class="right">Server computes</h5>
             <pre class="left"><code>shared_secret_ab = nacl_scalarmult(
-    client_ephemeral_sk,
-    server_ephemeral_pk
+  client_ephemeral_sk,
+  server_ephemeral_pk
 )
 
 shared_secret_aB = nacl_scalarmult(
-    client_ephemeral_sk,
-    pk_to_curve25519(server_longterm_pk)
+  client_ephemeral_sk,
+  pk_to_curve25519(server_longterm_pk)
 )</code></pre>
             <pre class="right"><code>shared_secret_ab = nacl_scalarmult(
-    server_ephemeral_sk,
-    client_ephemeral_pk
+  server_ephemeral_sk,
+  client_ephemeral_pk
 )
 
 shared_secret_aB = nacl_scalarmult(
-    sk_to_curve25519(server_longterm_sk),
-    client_ephemeral_pk
+  sk_to_curve25519(server_longterm_sk),
+  client_ephemeral_pk
 )</code></pre>
         </figure>
 
@@ -282,23 +282,23 @@ shared_secret_aB = nacl_scalarmult(
             <h5 class="left">Client computes</h5>
             <h5 class="right">Server verifies</h5>
             <pre class="left"><code>detached_signature_A = nacl_sign_detached(
-    msg: concat(
-        network_identifier,
-        server_longterm_pk,
-        sha256(shared_secret_ab)
-    ),
-    key: client_longterm_sk
+  msg: concat(
+    network_identifier,
+    server_longterm_pk,
+    sha256(shared_secret_ab)
+  ),
+  key: client_longterm_sk
 )</code></pre>
             <pre class="right" style="grid-row: span 3;"><code>msg3_plaintext = assert_nacl_secretbox_open(
-    ciphertext: msg3,
-    nonce: 24_bytes_of_zeros,
-    key: sha256(
-        concat(
-            network_identifier,
-            shared_secret_ab,
-            shared_secret_aB
-        )
+  ciphertext: msg3,
+  nonce: 24_bytes_of_zeros,
+  key: sha256(
+    concat(
+      network_identifier,
+      shared_secret_ab,
+      shared_secret_aB
     )
+  )
 )
 
 assert(length(msg3_plaintext) == 96)
@@ -307,28 +307,28 @@ detached_signature_A = first_64_bytes(msg3_plaintext)
 client_longterm_pk = last_32_bytes(msg3_plaintext)
 
 assert_nacl_sign_verify_detached(
-    sig: detached_signature_A,
-    msg: concat(
-        network_identifier,
-        server_longterm_pk,
-        sha256(shared_secret_ab)
-    ),
-    key: client_longterm_pk
+  sig: detached_signature_A,
+  msg: concat(
+    network_identifier,
+    server_longterm_pk,
+    sha256(shared_secret_ab)
+  ),
+  key: client_longterm_pk
 )</code></pre>
             <h5 class="left">Client sends <span class="msgsize">(112 bytes)</span></h5>
             <pre class="left"><code>nacl_secret_box(
-    msg: concat(
-        detached_signature_A,
-        client_longterm_pk
-    ),
-    nonce: 24_bytes_of_zeros,
-    key: sha256(
-        concat(
-            network_identifier,
-            shared_secret_ab,
-            shared_secret_aB
-        )
+  msg: concat(
+    detached_signature_A,
+    client_longterm_pk
+  ),
+  nonce: 24_bytes_of_zeros,
+  key: sha256(
+    concat(
+      network_identifier,
+      shared_secret_ab,
+      shared_secret_aB
     )
+  )
 )</code></pre>
         </figure>
 
@@ -349,12 +349,12 @@ assert_nacl_sign_verify_detached(
             <h5 class="left">Client computes</h5>
             <h5 class="right">Server computes</h5>
             <pre class="left"><code>shared_secret_Ab = nacl_scalarmult(
-    sk_to_curve25519(client_longterm_sk),
-    server_ephemeral_pk
+  sk_to_curve25519(client_longterm_sk),
+  server_ephemeral_pk
 )</code></pre>
             <pre class="right"><code>shared_secret_Ab = nacl_scalarmult(
-    server_ephemeral_sk,
-    pk_to_curve25519(client_longterm_pk)
+  server_ephemeral_sk,
+  pk_to_curve25519(client_longterm_pk)
 )</code></pre>
         </figure>
 
@@ -367,49 +367,49 @@ assert_nacl_sign_verify_detached(
             <h5 class="left">Client verifies</h5>
             <h5 class="right">Server computes</h5>
             <pre class="left" style="grid-row: span 3;"><code>detached_signature_B = assert_nacl_secretbox_open(
-    ciphertext: msg4,
-    nonce: 24_bytes_of_zeros,
-    key: sha256(
-        concat(
-            network_identifier,
-            shared_secret_ab,
-            shared_secret_aB,
-            shared_secret_Ab
-        )
+  ciphertext: msg4,
+  nonce: 24_bytes_of_zeros,
+  key: sha256(
+    concat(
+      network_identifier,
+      shared_secret_ab,
+      shared_secret_aB,
+      shared_secret_Ab
     )
+  )
 )
 
 assert_nacl_sign_verify_detached(
-    sig: detached_signature_B,
-    msg: concat(
-        network_identifier,
-        detached_signature_A,
-        client_longterm_pk,
-        sha256(shared_secret_ab)
-    ),
-    key: server_longterm_pk
+  sig: detached_signature_B,
+  msg: concat(
+    network_identifier,
+    detached_signature_A,
+    client_longterm_pk,
+    sha256(shared_secret_ab)
+  ),
+  key: server_longterm_pk
 )</code></pre>
             <pre class="right"><code>detached_signature_B = nacl_sign_detatched(
-    msg: concat(
-        network_identifier,
-        detached_signature_A,
-        client_longterm_pk,
-        sha256(shared_secret_ab)
-    ),
-    key: server_longterm_sk
+  msg: concat(
+    network_identifier,
+    detached_signature_A,
+    client_longterm_pk,
+    sha256(shared_secret_ab)
+  ),
+  key: server_longterm_sk
 )</code></pre>
             <h5 class="right">Server sends <span class="msgsize">(80 bytes)</span></h5>
             <pre class="right"><code>nacl_secret_box(
-    msg: detached_signature_B,
-    nonce: 24_bytes_of_zeros,
-    key: sha256(
-        concat(
-            network_identifier,
-            shared_secret_ab,
-            shared_secret_aB,
-            shared_secret_Ab
-        )
+  msg: detached_signature_B,
+  nonce: 24_bytes_of_zeros,
+  key: sha256(
+    concat(
+      network_identifier,
+      shared_secret_ab,
+      shared_secret_aB,
+      shared_secret_Ab
     )
+  )
 )</code></pre>
         </figure>
         <p>The server accepts the handshake by signing a message using their <img class="inline-key" src="img/key_big_b_secret.svg"/> long term secret key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
@@ -497,13 +497,9 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["createHistoryStream"],
-    "type": "source",
-    "args": [
-        {
-            "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"
-        }
-    ]
+  "name": ["createHistoryStream"],
+  "type": "source",
+  "args": [{"id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"}]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -525,21 +521,21 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "key": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
-    "value": {
-        "previous": null,
-        "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-        "sequence": 1,
-        "timestamp": 1514517067954,
-        "hash": "sha256",
-        "content": {
-            "type": "post",
-            "text": "This is the first post!"
-        },
-        "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
-                      Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+  "key": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+  "value": {
+    "previous": null,
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 1,
+    "timestamp": 1514517067954,
+    "hash": "sha256",
+    "content": {
+      "type": "post",
+      "text": "This is the first post!"
     },
-    "timestamp": 1514517067956
+    "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                  Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+  },
+  "timestamp": 1514517067956
 }</code></pre>
             </div>
             <img class="response-arrow" src="img/arrow.svg"/>
@@ -551,21 +547,21 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "key": "%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256",
-    "value": {
-        "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
-        "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-        "sequence": 2,
-        "timestamp": 1514517078157,
-        "hash": "sha256",
-        "content": {
-            "type": "post",
-            "text": "Second post!"
-        },
-        "signature": "z7W1ERg9UYZjNfE72ZwEuJF79khG+eOHWFp6iF+KLuSrw8Lqa6
-                      IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
+  "key": "%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256",
+  "value": {
+    "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 2,
+    "timestamp": 1514517078157,
+    "hash": "sha256",
+    "content": {
+      "type": "post",
+      "text": "Second post!"
     },
-    "timestamp": 1514517078160
+    "signature": "z7W1ERg9UYZjNfE72ZwEuJF79khG+eOHWFp6iF+KLuSrw8Lqa6
+                  IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
+  },
+  "timestamp": 1514517078160
 }</code></pre>
             </div>
         </figure>
@@ -627,9 +623,9 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["blobs", "has"],
-    "type": "async",
-    "args": ["&amp;WWw4tQJ6ZrM7o3gA8lOEAcO4zmyqXqb/3bmIKTLQepo=.sha256"]
+  "name": ["blobs", "has"],
+  "type": "async",
+  "args": ["&amp;WWw4tQJ6ZrM7o3gA8lOEAcO4zmyqXqb/3bmIKTLQepo=.sha256"]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -663,9 +659,9 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["blobs", "has"],
-    "type": "async",
-    "args": ["<strong>this was a mistake</strong>"]
+  "name": ["blobs", "has"],
+  "type": "async",
+  "args": ["<strong>this was a mistake</strong>"]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -678,9 +674,9 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">Yes</span>
                 </div>
                 <pre><code>{
-    "name": "Error",
-    "message": "invalid hash:this was a mistake",
-    "stack": "…"
+  "name": "Error",
+  "message": "invalid hash:this was a mistake",
+  "stack": "…"
 }</code></pre>
             </div>
         </figure>
@@ -712,7 +708,7 @@ assert_nacl_sign_verify_detached(
         <table class="defs">
             <tr>
                 <td>previous</td>
-                <td>Message ID of the latest message posted in the feed. If this is the very first message then use <code>null</code>. See below for how to calculate a message’s ID.</td>
+                <td>Message ID of the latest message posted in the feed. If this is the very first message then use <code>null</code>. See below for how to compute a message’s ID.</td>
             </tr>
             <tr>
                 <td>author</td>
@@ -728,7 +724,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>hash</td>
-                <td>The fixed string <code>sha256</code>, which is used to calculate the message ID.</td>
+                <td>The fixed string <code>sha256</code>, which is the hashing function used to compute the message ID.</td>
             </tr>
             <tr>
                 <td>content</td>
@@ -750,8 +746,8 @@ assert_nacl_sign_verify_detached(
         </aside>
         <p>Then sign the message by computing:</p>
         <pre><code>signature = nacl_sign_detached(
-    msg: formatted_json_message,
-    key: authors_longterm_sk
+  msg: formatted_json_message,
+  key: authors_longterm_sk
 )</code></pre>
         <p>Base64 encode the signature and put <code>.sig.ed25519</code> on the end. Finally, add the signature to the message itself:</p>
         <pre><code>{
@@ -769,11 +765,11 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
 
         <p>To verify the signature, first remove the signature field from the message. Make sure the remaining message is formatted as JSON using the same formatting rules. Here the order of dictionary keys matters; the keys must be in the same order that you received them.</p>
-        <p>Then verify the signature with:</p>
+        <p>Then remove the <code>.sig.ed25519</code> suffix from the signature, base64 decode it and verify with:</p>
         <pre><code>nacl_sign_verify_detached(
-    sig: base64_decode(remove_suffix(signature, ".sig.ed25519")),
-    msg: formatted_json_message,
-    key: authors_longterm_pk
+  sig: signature,
+  msg: formatted_json_message,
+  key: authors_longterm_pk
 )</code></pre>
 
         <h4 id="message-id">Message ID</h4>
@@ -781,6 +777,7 @@ assert_nacl_sign_verify_detached(
         <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key must appear last as shown above (but without wrapping the line).</p>
         <p>Then hash the message using sha256 and base64 encode it, put a <code>%</code> sign on the front and <code>.sha256</code> on the end. The ID of the above message is:</p>
         <pre class="center">%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256<code></code></pre>
+        <p>Currently all IDs are computed using sha256. However the protocol includes the name of the hashing function in message IDs and the messages themselves to allow migrating to a different hashing function if needed in the future.</p>
 
         <h3 id="createHistoryStream">createHistoryStream</h3>
         <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to. When peers connect, one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
@@ -795,18 +792,18 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["createHistoryStream"],
-    "type": "source",
-    "args": [
-        {
-            "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-            "sequence": 2,
-            "limit": 1,
-            "live": false,
-            "old": true,
-            "keys": true
-        }
-    ]
+  "name": ["createHistoryStream"],
+  "type": "source",
+  "args": [
+    {
+      "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "sequence": 2,
+      "limit": 1,
+      "live": false,
+      "old": true,
+      "keys": true
+    }
+  ]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -851,14 +848,14 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["createHistoryStream"],
-    "type": "source",
-    "args": [
-        {
-            "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-            "keys": <strong>true</strong>
-        }
-    ]
+  "name": ["createHistoryStream"],
+  "type": "source",
+  "args": [
+    {
+      "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "keys": <strong>true</strong>
+    }
+  ]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -871,21 +868,21 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "<strong>key</strong>": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
-    "value": {
-        "previous": null,
-        "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-        "sequence": 1,
-        "timestamp": 1514517067954,
-        "hash": "sha256",
-        "content": {
-            "type": "post",
-            "text": "This is the first post!"
-        },
-        "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
-                      Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+  "<strong>key</strong>": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+  "value": {
+    "previous": null,
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 1,
+    "timestamp": 1514517067954,
+    "hash": "sha256",
+    "content": {
+      "type": "post",
+      "text": "This is the first post!"
     },
-    "<strong>timestamp</strong>": 1514517067956
+    "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                  Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+  },
+  "<strong>timestamp</strong>": 1514517067956
 }</code></pre>
             </div>
             <hr class="mini"/>
@@ -897,14 +894,14 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["createHistoryStream"],
-    "type": "source",
-    "args": [
-        {
-            "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-            "keys": <strong>false</strong>
-        }
-    ]
+  "name": ["createHistoryStream"],
+  "type": "source",
+  "args": [
+    {
+      "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "keys": <strong>false</strong>
+    }
+  ]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -917,17 +914,17 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "previous": null,
-    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-    "sequence": 1,
-    "timestamp": 1514517067954,
-    "hash": "sha256",
-    "content": {
-        "type": "post",
-        "text": "This is the first post!"
-    },
-    "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
-                  Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+  "previous": null,
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "sequence": 1,
+  "timestamp": 1514517067954,
+  "hash": "sha256",
+  "content": {
+    "type": "post",
+    "text": "This is the first post!"
+  },
+  "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
 }</code></pre>
             </div>
         </figure>
@@ -954,9 +951,9 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["blobs", "get"],
-    "type": "source",
-    "args": ["&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256"]
+  "name": ["blobs", "get"],
+  "type": "source",
+  "args": ["&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256"]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -1044,15 +1041,15 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["blobs", "get"],
-    "type": "source",
-    "args": [
-        {
-            "hash": "&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256",
-            "size": 161699,
-            "max": 200000
-        }
-    ]
+  "name": ["blobs", "get"],
+  "type": "source",
+  "args": [
+    {
+      "hash": "&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256",
+      "size": 161699,
+      "max": 200000
+    }
+  ]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -1088,15 +1085,15 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["blobs", "getSlice"],
-    "type": "source",
-    "args": [
-        {
-            "hash": "&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256",
-            "start": 65536,
-            "end": 65584
-        }
-    ]
+  "name": ["blobs", "getSlice"],
+  "type": "source",
+  "args": [
+    {
+      "hash": "&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256",
+      "start": 65536,
+      "end": 65584
+    }
+  ]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -1143,9 +1140,9 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["blobs", "createWants"],
-    "type": "source",
-    "args": []
+  "name": ["blobs", "createWants"],
+  "type": "source",
+  "args": []
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -1212,13 +1209,13 @@ assert_nacl_sign_verify_detached(
 
         <p>When a user wants to follow another feed their client will post a message to their own feed that looks like:</p>
         <pre><code>{
-    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-    "content": {
-        "type": "contact",
-        "contact": "@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519",
-        "following": true
-    },
-    …
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "content": {
+    "type": "contact",
+    "contact": "@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519",
+    "following": true
+  },
+  …
 }</code></pre>
         <p>The <em>contact</em> field is the ID of the feed they wish to follow. Later, if the user decides to unfollow this feed, their client can post another message with <em>following</em> set to <code>false</code>.</p>
         <p>When two feeds follow each other current user interfaces will call them “friends”, however this is just a cosmetic touch and for everything else they are still treated as individual follows in each direction.</p>
@@ -1270,9 +1267,9 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "name": ["invite", "use"],
-    "type": "async",
-    "args": [{"feed": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"}]
+  "name": ["invite", "use"],
+  "type": "async",
+  "args": [{"feed": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"}]
 }</code></pre>
             </div>
             <img class="request-arrow" src="img/arrow.svg"/>
@@ -1288,22 +1285,22 @@ assert_nacl_sign_verify_detached(
                     <span class="key">End/err</span><span class="value">No</span>
                 </div>
                 <pre><code>{
-    "key": "%+7u6Fa0s1cE6tS9BtKUijDV3QBYQEINH7gLSIkDqRMM=.sha256",
-    "value": {
-        "previous": "%S1v8a0gQkaNNzNOrWuQUomZvFrDO+XARfd6z35OmCb4=.sha256",
-        "author": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519",
-        "sequence": 14,
-        "timestamp": 1516094092985,
-        "hash": "sha256",
-        "content": {
-            "type": "contact",
-            "contact": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-            "following": true,
-            <strong>"pub": true</strong>
-        },
-        "signature":"zckFCb4XAJxNVy4tcm38o2GoFIWj25ZKa6EOaBYQA7DH/zNeWp
-                     hHuJBCCEWK6XRl4VENZWXHxPNHEBCBXDq6CA==.sig.ed25519"
-    }
+  "key": "%+7u6Fa0s1cE6tS9BtKUijDV3QBYQEINH7gLSIkDqRMM=.sha256",
+  "value": {
+    "previous": "%S1v8a0gQkaNNzNOrWuQUomZvFrDO+XARfd6z35OmCb4=.sha256",
+    "author": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519",
+    "sequence": 14,
+    "timestamp": 1516094092985,
+    "hash": "sha256",
+    "content": {
+      "type": "contact",
+      "contact": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "following": true,
+      <strong>"pub": true</strong>
+    },
+    "signature":"zckFCb4XAJxNVy4tcm38o2GoFIWj25ZKa6EOaBYQA7DH/zNeWp
+                 hHuJBCCEWK6XRl4VENZWXHxPNHEBCBXDq6CA==.sig.ed25519"
+  }
 }</code></pre>
             </div>
         </figure>
@@ -1314,29 +1311,29 @@ assert_nacl_sign_verify_detached(
         <p>Because this a pub, it is probably connected to a few other peers already. The pub will notify its peers of its new follow message using the normal <em>createHistoryStream</em> mechanism, at which point other users of the pub may decide that they are now interested in this new user’s feed and fetch it.</p>
         <p>Now that the pub has followed the new user, the new user should reciprocate by following the pub back. Clients automatically handle this on behalf of the user when they enter an invite code. The client posts a message to the user’s feed that follows the pub back:</p>
         <pre><code>{
-    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-    "content": {
-        "type": "contact",
-        "contact": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519",
-        "following": true
-    },
-    …
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "content": {
+    "type": "contact",
+    "contact": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519",
+    "following": true
+  },
+  …
 }</code></pre>
         <aside>
             <p>This message doesn’t contain <code>"pub": true</code>.</p>
         </aside>
         <p>The client also posts a message of type <em>pub</em> to the user’s feed:</p>
         <pre><code>{
-    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-    "content": {
-        "type": "pub",
-        "address": {
-            "host": "one.butt.nz",
-            "port": 8008,
-            "key": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
-        }
-    },
-    …
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "content": {
+    "type": "pub",
+    "address": {
+      "host": "one.butt.nz",
+      "port": 8008,
+      "key": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+    }
+  },
+  …
 }</code></pre>
         <p>These messages help peers discover new pubs where they might be able to fetch new messages from. Clients can maintain a list of pubs they have seen so that they know of alternative places to fetch messages from in case a pub goes offline.</p>
 
@@ -1345,12 +1342,12 @@ assert_nacl_sign_verify_detached(
         <p>Anyone can see the fact that a feed posted a private message, who sent it (the feed it was posted to), when it was sent and its size. However the list of recipients, number of recipients and message body is concealed.</p>
         <p>Given the user wants to post these message contents:</p>
         <pre><code>{
-    "type": "post",
-    "text": "Don’t tell anybody about this one weird trick…",
-    "recps": [
-        "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-        "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
-    ]
+  "type": "post",
+  "text": "Don’t tell anybody about this one weird trick…",
+  "recps": [
+    "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+  ]
 }</code></pre>
         <aside>
             <p>Private messages don’t reveal to recipients who the other recipients are. If you want them to know the full list of recipients then include it in the message (<em>recps</em>) as shown here.</p>
@@ -1358,21 +1355,21 @@ assert_nacl_sign_verify_detached(
 
         <p>This is how it would appear as a private message when posted to the user’s feed:</p>
         <pre><code>{
-    "previous": "%+7u6Fa0s1cE6tS9BtKUijDV3QBYQEINH7gLSIkDqRMM=.sha256",
-    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-    "sequence": 15,
-    "timestamp": 1516222868742,
-    "hash": "sha256",
+  "previous": "%+7u6Fa0s1cE6tS9BtKUijDV3QBYQEINH7gLSIkDqRMM=.sha256",
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "sequence": 15,
+  "timestamp": 1516222868742,
+  "hash": "sha256",
 
-    "content": "ilDLCLIPRruIQPuqOq1uKnkMh0VNmxD8q+DXKCbgThoAR4XvotMSbMYnodhEkgUQuEEbxjR/MHTa77
-                DQKY5QiGbFusUU564iDx1g/tP0qNqwir6eB0LGEna+K5QDj4CtNsHwnmDv7C0p/9n8lq/WtXlKptrO
-                /A6riL+8EfhIWck1KCQGIZNxZz84DtpDXdN1z88rvslDNoPPzQoeGIgkt/RrGsoysuMZoJyN8LZb3X
-                uczoSn+FhS0nWKIYnCy+CtmNiqw+9lATZgXM4+FOY8N3+L+j25hQQI191NNIdFVyMwoxkPL81byqLx
-                ABJDLpMDSOXnWjvyzCJ68UOUwciS16/QdXE647xJ4NSC7u6uMreFIdtHTkQcP556PlZyBFwArJXbwx
-                TUq84f5rTUt3uoG3fOllxFjRs/PPLkIcD1ihxJoSmoTTbFePclRYAV5FptRTJVHg==.box",
+  "content": "ilDLCLIPRruIQPuqOq1uKnkMh0VNmxD8q+DXKCbgThoAR4XvotMSbMYnodhEkgUQuEEbxjR/MHTa77
+              DQKY5QiGbFusUU564iDx1g/tP0qNqwir6eB0LGEna+K5QDj4CtNsHwnmDv7C0p/9n8lq/WtXlKptrO
+              /A6riL+8EfhIWck1KCQGIZNxZz84DtpDXdN1z88rvslDNoPPzQoeGIgkt/RrGsoysuMZoJyN8LZb3X
+              uczoSn+FhS0nWKIYnCy+CtmNiqw+9lATZgXM4+FOY8N3+L+j25hQQI191NNIdFVyMwoxkPL81byqLx
+              ABJDLpMDSOXnWjvyzCJ68UOUwciS16/QdXE647xJ4NSC7u6uMreFIdtHTkQcP556PlZyBFwArJXbwx
+              TUq84f5rTUt3uoG3fOllxFjRs/PPLkIcD1ihxJoSmoTTbFePclRYAV5FptRTJVHg==.box",
 
-    "signature": "6EQTBQbBhAxeE3w7kyg/7xWHUR8tXP7jUl7bWnEQVz8RxbCYgb
-                  TRUnfX/2v68xfSG5xyLAqDJ1Dh3+d+pmRvAw==.sig.ed25519"
+  "signature": "6EQTBQbBhAxeE3w7kyg/7xWHUR8tXP7jUl7bWnEQVz8RxbCYgb
+                TRUnfX/2v68xfSG5xyLAqDJ1Dh3+d+pmRvAw==.sig.ed25519"
 }</code></pre>
 
         <p>When a client sees a message where the content is a string ending in <code>.box</code> it will know that it is a private message. Because clients can’t see who the message is addressed to, they will attempt to decrypt every private message they come across in case it is for them.</p>
