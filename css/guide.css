@@ -215,11 +215,11 @@ figcaption code, aside code {
 a {
     color: unset;
     text-decoration: unset;
-    border-bottom: 1px solid rgb(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 a:hover {
-    border-bottom-color: rgb(0, 0, 0, 0.8);
+    border-bottom-color: rgba(0, 0, 0, 0.8);
 }
 
 p, ol, ul, pre, table {
@@ -319,7 +319,7 @@ table.impls a {
 }
 
 table.impls a:hover {
-    border-bottom: 1px solid rgb(0, 0, 0, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 .code {
