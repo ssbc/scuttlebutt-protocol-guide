@@ -664,7 +664,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1657,7 +1657,7 @@
          y="106.1667"
          x="835"
          sodipodi:role="line"
-         id="tspan994">Prepare a message that contains </tspan><tspan
+         id="tspan994">Prepare a header that contains </tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#666666;fill-opacity:1"
          y="125.5529"
          x="835"
@@ -1678,7 +1678,7 @@
          x="835"
          y="326.16669"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.47000003;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#666666;fill-opacity:1"
-         id="tspan4898">Enclose a copy of the message into</tspan><tspan
+         id="tspan4898">Enclose a copy of the header into</tspan><tspan
          sodipodi:role="line"
          x="835"
          y="345.55289"

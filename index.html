@@ -342,7 +342,7 @@ assert_nacl_sign_verify_detached(
         <div>
             <p>The client reveals their identity to the server by sending their <img class="inline-key" src="img/key_big_a_public.svg"/> long term public key. The client also makes a signature using their <img class="inline-key" src="img/key_big_a_secret.svg"/> long term secret key. By signing the keys used earlier in the handshake the client proves their identity and confirms that they do indeed wish to be part of this handshake.</p>
             <p>The client’s message is enclosed in a secret box to ensure that only the server can read it. Upon receiving it, the server opens the box, stores the client’s long term public key and verifies the signature.</p>
-            <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>))</span>.</p>
+            <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. It’s important to get this detail right because reusing a nonce will allow an attacker to recover the key and encrypt or decrypt any secret boxes using that key. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>))</span>.</p>
         </div>
         <aside>
             <p><strong>Detached signatures</strong> do not contain a copy of the message that was signed, only a tag that allows verifying the signature if you already know the message.</p>
@@ -731,7 +731,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>hash</td>
-                <td>The fixed string <code>sha256</code>, which is the hashing function used to compute the message ID.</td>
+                <td>The fixed string <code>sha256</code>, which is the hash function used to compute the message ID.</td>
             </tr>
             <tr>
                 <td>content</td>
@@ -784,7 +784,7 @@ assert_nacl_sign_verify_detached(
         <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key must appear last as shown above (but without wrapping the line).</p>
         <p>Then hash the message using sha256 and base64 encode it, put a <code>%</code> sign on the front and <code>.sha256</code> on the end. The ID of the above message is:</p>
         <pre class="center">%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256<code></code></pre>
-        <p>Currently all IDs are computed using sha256. However the protocol includes the name of the hashing function in message IDs and the messages themselves to allow migrating to a different hashing function if needed in the future.</p>
+        <p>Currently all IDs are computed using sha256. However the protocol includes the name of the hash function in message IDs and the messages themselves to allow migrating to a different one if needed in the future.</p>
 
         <h3 id="createHistoryStream">createHistoryStream</h3>
         <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to. When peers connect, one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
@@ -1081,7 +1081,7 @@ assert_nacl_sign_verify_detached(
 
         <h4 id="blobs.getSlice">blobs.getSlice</h4>
         <p><em>blobs.getSlice</em> works like <em>blobs.get</em> but rather than receiving the entire blob, the requester specifies a start and end point and the responder only sends back bytes within that range.</p>
-        <p>Reasons for using <em>blobs.getSlice</em> could be to download a blob in pieces from many peers at once, to resume a partially-completed download or to fetch the first part of a video to show a preview.</p>
+        <p>Reasons for using <em>blobs.getSlice</em> could be to download a blob in pieces from many peers at once, to resume a partially-completed download or to fetch the first part of a video to show a preview. Though beware that if you only fetch part of a blob you cannot be sure that it hasn’t been tampered with. You need the whole blob to verify its integrity.</p>
 
         <figure class="request-response">
             <div class="request">
@@ -1349,7 +1349,7 @@ assert_nacl_sign_verify_detached(
 
         <h2 id="private-messages">Private messages</h2>
         <p>Private messages are encrypted so that only certain recipients can read them. They are posted to the sender’s Scuttlebutt feed like normal messages.</p>
-        <p>Anyone can see the fact that a feed posted a private message, who sent it (the feed it was posted to), when it was sent and its size. However the list of recipients, number of recipients and message body is concealed.</p>
+        <p>Anyone can see the fact that a feed posted a private message, who sent it (the feed that posted it), when it was sent and its size. However the list of recipients, number of recipients and message body is concealed.</p>
         <p>Given the user wants to post these message contents:</p>
         <pre><code>{
   "type": "post",

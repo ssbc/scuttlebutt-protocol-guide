@@ -626,7 +626,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -705,7 +705,7 @@
          sodipodi:nodetypes="scsssscs"
          inkscape:connector-curvature="0"
          id="rect1714"
-         d="m 175.0632,51.166665 35.00001,-1e-5 v 15.00001 c 0,2.77 -2.23,5 -4.99999,5 h -30.00002 c -2.76999,0 -4.99999,-2.23 -4.99999,-5 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
+         d="m 175.0632,51.166665 50.00001,-1e-5 v 15.00001 c 0,2.77 -2.23,5 -4.99999,5 h -45.00002 c -2.76999,0 -4.99999,-2.23 -4.99999,-5 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke" />
       <text
          xml:space="preserve"
@@ -717,7 +717,7 @@
            x="175.99998"
            y="66.166649"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.20000005;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#1a1a1a;fill-opacity:1"
-           id="tspan1704">hash</tspan></text>
+           id="tspan1704">sha256</tspan></text>
       <g
          transform="translate(-21.500015,-6.4999998)"
          id="g6218">
@@ -869,7 +869,7 @@
          rx="4.9999933" />
       <path
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
-         d="m 164.99995,81.166636 35.00001,-1e-5 v 15.000014 c 0,2.77 -2.23,4.99999 -4.99999,4.99999 h -30.00002 c -2.76999,0 -4.99999,-2.22999 -4.99999,-4.99999 v -20.000014 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
+         d="m 164.99995,81.166636 50.00001,-1e-5 v 15.000014 c 0,2.77 -2.23,4.99999 -4.99999,4.99999 h -45.00002 c -2.76999,0 -4.99999,-2.22999 -4.99999,-4.99999 v -20.000014 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
          id="path6245"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="scsssscs" />
@@ -883,7 +883,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.20000005;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#1a1a1a;fill-opacity:1"
            y="96.166618"
            x="165.93674"
-           sodipodi:role="line">hash</tspan></text>
+           sodipodi:role="line">sha256</tspan></text>
       <rect
          rx="4.9999928"
          ry="4.9999933"
@@ -897,7 +897,7 @@
          sodipodi:nodetypes="scsssscs"
          inkscape:connector-curvature="0"
          id="path6253"
-         d="m 154.99997,111.16666 35.00001,-10e-6 v 15.00001 c 0,2.77 -2.23,4.99999 -4.99999,4.99999 h -30.00002 c -2.76999,0 -4.99999,-2.22999 -4.99999,-4.99999 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
+         d="m 154.99997,111.16666 50.00001,-10e-6 v 15.00001 c 0,2.77 -2.23,4.99999 -4.99999,4.99999 h -45.00002 c -2.76999,0 -4.99999,-2.22999 -4.99999,-4.99999 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke" />
       <text
          xml:space="preserve"
@@ -909,7 +909,7 @@
            x="155.93675"
            y="126.16664"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.20000005;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#1a1a1a;fill-opacity:1"
-           id="tspan6255">hash</tspan></text>
+           id="tspan6255">sha256</tspan></text>
       <g
          transform="translate(265.06323,-329.99997)"
          id="g4336">
@@ -1063,7 +1063,7 @@
          rx="4.9999933" />
       <path
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
-         d="m 175.0632,51.166665 35.00001,-1e-5 v 15.00001 c 0,2.77 -2.23,5 -4.99999,5 h -30.00002 c -2.76999,0 -4.99999,-2.23 -4.99999,-5 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
+         d="m 175.0632,51.166665 50.00001,-1e-5 v 15.00001 c 0,2.77 -2.23,5 -4.99999,5 h -45.00002 c -2.76999,0 -4.99999,-2.23 -4.99999,-5 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
          id="path2028"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="scsssscs" />
@@ -1077,7 +1077,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.20000005;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#1a1a1a;fill-opacity:1"
            y="66.166649"
            x="175.99998"
-           sodipodi:role="line">hash</tspan></text>
+           sodipodi:role="line">sha256</tspan></text>
       <g
          id="g2080"
          transform="translate(-21.500015,-6.4999998)">
@@ -1231,7 +1231,7 @@
          sodipodi:nodetypes="scsssscs"
          inkscape:connector-curvature="0"
          id="path2084"
-         d="m 164.99995,81.166636 35.00001,-1e-5 v 15.000014 c 0,2.77 -2.23,4.99999 -4.99999,4.99999 h -30.00002 c -2.76999,0 -4.99999,-2.22999 -4.99999,-4.99999 v -20.000014 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
+         d="m 164.99995,81.166636 50.00001,-1e-5 v 15.000014 c 0,2.77 -2.23,4.99999 -4.99999,4.99999 h -45.00002 c -2.76999,0 -4.99999,-2.22999 -4.99999,-4.99999 v -20.000014 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke" />
       <text
          xml:space="preserve"
@@ -1243,7 +1243,7 @@
            x="165.93674"
            y="96.166618"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.20000005;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#1a1a1a;fill-opacity:1"
-           id="tspan2086">hash</tspan></text>
+           id="tspan2086">sha256</tspan></text>
       <rect
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#ececec;fill-opacity:0;stroke:#cccccc;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
          id="rect2090"
@@ -1255,7 +1255,7 @@
          rx="4.9999928" />
       <path
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
-         d="m 154.99997,111.16666 35.00001,-10e-6 v 15.00001 c 0,2.77 -2.23,4.99999 -4.99999,4.99999 h -30.00002 c -2.76999,0 -4.99999,-2.22999 -4.99999,-4.99999 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
+         d="m 154.99997,111.16666 50.00001,-10e-6 v 15.00001 c 0,2.77 -2.23,4.99999 -4.99999,4.99999 h -45.00002 c -2.76999,0 -4.99999,-2.22999 -4.99999,-4.99999 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
          id="path2092"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="scsssscs" />
@@ -1269,7 +1269,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.20000005;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#1a1a1a;fill-opacity:1"
            y="126.16664"
            x="155.93675"
-           sodipodi:role="line">hash</tspan></text>
+           sodipodi:role="line">sha256</tspan></text>
       <g
          id="g4330"
          transform="translate(265.06323,-269.99997)">

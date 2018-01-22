@@ -494,7 +494,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g836"
      showgrid="true"
      units="px"
      inkscape:showpageshadow="false"
@@ -852,7 +852,7 @@
          sodipodi:nodetypes="scsssscs"
          inkscape:connector-curvature="0"
          id="rect1714"
-         d="m 482.49999,342.66661 35.00001,-10e-6 v 15.00001 c 0,2.77 -2.23,5 -4.99999,5 h -30.00002 c -2.76999,0 -4.99999,-2.23 -4.99999,-5 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
+         d="m 482.49999,342.66661 50.00001,-10e-6 v 15.00001 c 0,2.77 -2.23,5 -4.99999,5 h -45.00002 c -2.76999,0 -4.99999,-2.23 -4.99999,-5 v -20.00001 c 0,2.77001 2.23,5.00001 4.99999,5.00001 z"
          style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke" />
       <text
          xml:space="preserve"
@@ -864,7 +864,7 @@
            x="483.43677"
            y="357.66663"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13px;line-height:1.20000005;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;fill:#1a1a1a;fill-opacity:1"
-           id="tspan1704">hash</tspan></text>
+           id="tspan1704">sha256</tspan></text>
       <g
          transform="translate(142.5,1.499972)"
          id="g4476">
