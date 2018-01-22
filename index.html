@@ -205,11 +205,18 @@ assert_nacl_auth_verify(
 )</code></pre>
         </figure>
 
-        <p>First the client sends their <img class="inline-key" src="img/key_little_a_public.svg"/> generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
-        <p>The <img class="inline-key" src="img/key_big_n.svg"/> network identifier is a fixed 32-byte key. On the main Scuttlebutt network it is:</p>
-        <pre class="center"><code>d4a1cb88a66f02f8db635ce26441cc5dac1b08420ceaac230839b755845a9ffb</code></pre>
-        <p>Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from what is sent over the wire, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
-        <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
+        <div>
+            <p>First the client sends their <img class="inline-key" src="img/key_little_a_public.svg"/> generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
+            <p>The <img class="inline-key" src="img/key_big_n.svg"/> network identifier is a fixed 32-byte key. On the main Scuttlebutt network it is:</p>
+            <pre class="center"><code>d4a1cb88a66f02f8db635ce26441cc5dac1b08420ceaac230839b755845a9ffb</code></pre>
+            <p>Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from what is sent over the wire, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
+            <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
+        </div>
+        <aside>
+            <p><strong>hmac</strong> is a function that allows verifying that a message came from someone who knows the secret key. In this case the network identifier is used as the secret key.</p>
+            <p>Both the message creator and verifier have to know the same message and secret key for the verification to succeed, but the secret key is not revealed to an eavesdropper. </p>
+            <p>Throughout the protocol, all instances of hmac use HMAC-SHA-512-256.</p>
+        </aside>
 
         <h4 id="server-hello">2. Server hello</h4>
         <img src="img/server_hello.svg"/>
@@ -1208,6 +1215,9 @@ assert_nacl_sign_verify_detached(
         <p>Following is an optional part of Scuttlebutt, however current clients do implement it because it enables interesting social dynamics, such as introducing people that otherwise wouldn’t have found each other and allowing trust to be built within human networks. Following is what enables Scuttlebutt to be a social network rather than a group messenger.</p>
 
         <p>When a user wants to follow another feed their client will post a message to their own feed that looks like:</p>
+        <aside class="kicker">
+            <p>In this message <code>@FCX/ts…</code> is saying that they are following <code>@sxlUkN…</code>.</p>
+        </aside>
         <pre><code>{
   "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
   "content": {
@@ -1217,14 +1227,14 @@ assert_nacl_sign_verify_detached(
   },
   …
 }</code></pre>
-        <p>The <em>contact</em> field is the ID of the feed they wish to follow. Later, if the user decides to unfollow this feed, their client can post another message with <em>following</em> set to <code>false</code>.</p>
+        <p>Later, if the user decides to unfollow this feed, their client can post another message with <em>following</em> set to <code>false</code>.</p>
         <p>When two feeds follow each other current user interfaces will call them “friends”, however this is just a cosmetic touch and for everything else they are still treated as individual follows in each direction.</p>
 
         <h3 id="follow-graph">Follow graph</h3>
         <p>Because each feed publicly announces which feeds it is following, clients can arrange feeds into a graph of who follows who:</p>
         <img src="img/follow_graph.svg" class="pagewidth"/>
         <p>Clients may want to use the follow graph to decide which feeds to display to the user and which to replicate. If the user explicitly follows a feed that is a strong signal that the user wants to see messages posted by that feed.</p>
-        <p>One implementation, Patchwork, shows messages up to 2 hops out by default. Messages from feeds 3 hops out are replicated to help keep them available for others, but not directly shown in the user interface. A benefit of replicating at a greater range is that for discussion threads with lots of participants it’s more likely that the client will be able to fill in gaps where a user posted who was further than 2 hops out.</p>
+        <p>One implementation, Patchwork, shows messages up to 2 hops out by default. Messages from feeds 3 hops out are replicated to help keep them available for others, but not directly shown in the user interface. A benefit of replicating at a greater range is that for discussion threads with lots of participants it’s more likely that the client will be able to fill in gaps where someone posted who was further than 2 hops out.</p>
         <p>Clients could also let users configure how far the visibility and replication ranges are, or a client could use an entirely different method of deciding which feeds to show and replicate that is not based on follow range.</p>
 
         <h2 id="pubs">Pubs</h2>
