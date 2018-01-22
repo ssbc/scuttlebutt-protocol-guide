@@ -101,7 +101,7 @@
         <img src="img/identity_keypair.svg"/>
         <p>Because identities are long and random, no coordination or permission is required to create a new one, which is essential to the network’s design.</p>
         <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it stolen they will need to generate a new identity and tell people to use their new one instead.</p>
-        <p>Identities are presented to users and transmitted in some parts of the network protocol using this format:</p>
+        <p>The public key of an identity is presented to users and transmitted in some parts of the network protocol using this format:</p>
         <pre class="center"><code>@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519</code></pre>
         <p>Begin with an <code>@</code> sign, then base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Finally put <code>.ed25519</code> on the end.</p>
         <p>Each identity has an associated feed, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
@@ -124,7 +124,7 @@
                     <pre><code>net:192.168.1.123:8008~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=</code></pre>
                 </div>
             </figure>
-            <p>Current implementations broadcast one of these packets every second. When a peer sees another peer’s broadcast packet they can connect to exchange messages, or even show nearby peers in the user interface so that the user can see other people on the same network as them.</p>
+            <p>Current implementations broadcast one of these packets every second. When a peer sees another peer’s broadcast packet they can connect to exchange messages. Some clients show nearby peers in the user interface so that the user can see other people on the same network as them.</p>
         </div>
         <aside>
             <p>UDP source and destination ports are set to the same port number that the peer is listening on TCP for peer connections (normally 8008).</p>
@@ -156,7 +156,7 @@
         <p>Pub messages are a useful way to find additional peers if you already know a few. Obviously this doesn’t work for new users who don’t know anyone else yet and therefore can’t see any pub messages.</p>
 
         <h2 id="peer-connections">Peer connections</h2>
-        <p>Once a Scuttlebutt client has discovered the IP address, port number and identity of a peer they can connect via TCP to ask for updates and exchange messages.</p>
+        <p>Once a Scuttlebutt client has discovered the IP address, port number and public key of a peer they can connect via TCP to ask for updates and exchange messages.</p>
 
         <h3 id="handshake">Handshake</h3>
         <p>The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
@@ -719,7 +719,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>author</td>
-                <td>ID of the feed that the message will be posted in.</td>
+                <td>Public key of the feed that the message will be posted in.</td>
             </tr>
             <tr>
                 <td>sequence</td>
@@ -820,7 +820,7 @@ assert_nacl_sign_verify_detached(
         <table class="defs">
             <tr>
                 <td>id</td>
-                <td>ID of the feed to return messages from. Required.</td>
+                <td>Public key of the feed to return messages from. Required.</td>
             </tr>
             <tr>
                 <td>sequence</td>
