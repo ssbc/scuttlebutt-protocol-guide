@@ -98,7 +98,7 @@
         <h2 id="keys-and-identities">Keys and identities</h2>
         <p>The first thing a user needs to participate in Scuttlebutt is an identity. An identity is an Ed25519 key pair and typically represents a person, a device, a server or a bot. It’s normal for a person to have several Scuttlebutt identities.</p>
         <p>Upon starting for the first time, Scuttlebutt clients will automatically generate an Ed25519 key pair and save it in the user’s home folder under <code>.ssb/secret</code>.</p>
-        <img src="img/identity_keypair.svg"/>
+        <img src="img/identity_keypair.svg" style="height: 80px;"/>
         <p>Because identities are long and random, no coordination or permission is required to create a new one, which is essential to the network’s design.</p>
         <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it stolen they will need to generate a new identity and tell people to use their new one instead.</p>
         <p>The public key of an identity is presented to users and transmitted in some parts of the network protocol using this format:</p>
@@ -160,7 +160,7 @@
 
         <h3 id="handshake">Handshake</h3>
         <p>The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
-        <img src="img/message_flow.svg"/>
+        <img src="img/message_flow.svg" style="height: 350px;"/>
         <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
         <ul>
             <li>After a successful handshake the peers have verified each other’s public keys.</li>
@@ -178,10 +178,10 @@
 
         <h4 id="starting-keys">Starting keys</h4>
         <p>Upon starting the handshake, the client and server know these keys:</p>
-        <img src="img/starting_keys.svg"/>
+        <img src="img/starting_keys.svg" style="height: 590px;"/>
 
         <h4 id="client-hello">1. Client hello</h4>
-        <img src="img/client_hello.svg"/>
+        <img src="img/client_hello.svg" style="height: 120px;"/>
 
         <figure class="left-right code">
             <h5 class="left">Client sends <span class="msgsize">(64 bytes)</span></h5>
@@ -219,7 +219,7 @@ assert_nacl_auth_verify(
         </aside>
 
         <h4 id="server-hello">2. Server hello</h4>
-        <img src="img/server_hello.svg"/>
+        <img src="img/server_hello.svg" style="height: 120px;"/>
 
         <figure class="left-right code">
             <h5 class="left">Client verifies</h5>
@@ -246,7 +246,7 @@ assert_nacl_auth_verify(
         <p>The server responds with their own <img class="inline-key" src="img/key_little_b_public.svg"/> ephemeral public key and hmac. The client stores the key and verifies that they are also using the same network identifier.</p>
 
         <h4 id="shared-secret-derivation-1">Shared secret derivation</h4>
-        <img src="img/shared_secret_derivation_1.svg"/>
+        <img src="img/shared_secret_derivation_1.svg" style="height: 220px;"/>
 
         <figure class="left-right code">
             <h5 class="left">Client computes</h5>
@@ -283,7 +283,7 @@ shared_secret_aB = nacl_scalarmult(
         </aside>
 
         <h4 id="client-accept">3. Client accept</h4>
-        <img src="img/client_accept.svg"/>
+        <img src="img/client_accept.svg" style="height: 330px;"/>
 
         <figure class="left-right code">
             <h5 class="left">Client computes</h5>
@@ -350,7 +350,7 @@ assert_nacl_sign_verify_detached(
         </aside>
 
         <h4 id="shared-secret-derivation-2">Shared secret derivation</h4>
-        <img src="img/shared_secret_derivation_2.svg"/>
+        <img src="img/shared_secret_derivation_2.svg" style="height: 220px;"/>
 
         <figure class="left-right code">
             <h5 class="left">Client computes</h5>
@@ -368,7 +368,7 @@ assert_nacl_sign_verify_detached(
         <p>Now that the server knows the <img class="inline-key" src="img/key_big_a_public.svg"/> client’s long term public key, another shared secret <img class="inline-key" src="img/key_big_a_little_b.svg"/> is derived by both ends. The server uses this shared secret to send a message that only the real client can read and not a man-in-the-middle.</p>
 
         <h4 id="server-accept">4. Server accept</h4>
-        <img src="img/server_accept.svg"/>
+        <img src="img/server_accept.svg" style="height: 400px;"/>
 
         <figure class="left-right code">
             <h5 class="left">Client verifies</h5>
@@ -424,31 +424,31 @@ assert_nacl_sign_verify_detached(
         <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.svg"/>, <img class="inline-key" src="img/key_little_a_little_b.svg"/>, <img class="inline-key" src="img/key_little_a_big_b.svg"/>, <img class="inline-key" src="img/key_big_a_little_b.svg"/>))</span>.</p>
 
         <h4 id="handshake-complete">Handshake complete</h4>
-        <img src="img/final_shared_secret.svg"/>
+        <img src="img/final_shared_secret.svg" style="height: 40px;"/>
         <p>At this point the handshake has succeeded. The client and server have proven their identities to each other.</p>
         <p>The shared secrets established during the handshake are used to set up a pair of box streams for securely exchanging further messages.</p>
 
         <h3 id="box-stream">Box stream</h3>
         <p>Box stream is the bulk encryption protocol used to exchange messages following the handshake until the connection ends. It is designed to protect messages from being read or modified by a man-in-the-middle.</p>
         <p>Each message in a box stream has a header and body. The header is always 34 bytes long and says how long the body will be.</p>
-        <img src="img/box_stream_overview.svg"/>
+        <img src="img/box_stream_overview.svg" style="height: 140px;"/>
 
         <h4 id="sending">Sending</h4>
         <p>Sending a message involves encrypting the body of the message and preparing a header for it. Two secret boxes are used; one to protect the header and another to protect the body.</p>
-        <img src="img/box_stream_send.svg" class="pagewidth"/>
+        <img src="img/box_stream_send.svg" class="pagewidth" style="height: 670px;"/>
 
         <h4 id="receiving">Receiving</h4>
         <p>Receiving a message involves reading the header to find out how long the body is then reassembling and opening the body secret box.</p>
-        <img src="img/box_stream_receive.svg" class="pagewidth"/>
+        <img src="img/box_stream_receive.svg" class="pagewidth" style="height: 560px;"/>
 
         <h4 id="goodbye">Goodbye</h4>
         <p>The stream ends with a special “goodbye” header. Because the goodbye header is authenticated it allows a receiver to tell the difference between the connection genuinely being finished and a man-in-the-middle forcibly resetting the underlying TCP connection.</p>
-        <img src="img/box_stream_goodbye.svg" class="pagewidth"/>
+        <img src="img/box_stream_goodbye.svg" class="pagewidth" style="height: 230px;"/>
         <p>When a receiver opens a header and finds that it contains all zeros then they will know that the connection is finished.</p>
 
         <h4 id="keys-and-nonces">Keys and nonces</h4>
         <p>Two box streams are used at the same time when Scuttlebutt peers communicate. One is for client-to-server messages and the other is for server-to-client messages. The two streams use different keys and starting nonces for their secret boxes.</p>
-        <img src="img/box_stream_params.svg" class="pagewidth"/>
+        <img src="img/box_stream_params.svg" class="pagewidth" style="height: 400px;"/>
         <p>The starting nonce is used for the first header in the stream (“secret box 1” in the above figures), then incremented for the first body (“secret box 2”), then incremented for the next header and so on.</p>
 
         <h3 id="rpc-protocol">RPC protocol</h3>
@@ -456,14 +456,14 @@ assert_nacl_sign_verify_detached(
             <p>Scuttlebutt peers make requests to each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
             <p>The RPC protocol can interleave multiple requests so that a slow request doesn’t block following ones. It also handles long-running asynchronous requests for notifying when an event occurs and streams that deliver multiple responses over time.</p>
             <p>Similar to the box stream protocol, the RPC protocol consists of fixed-length headers followed by variable-length bodies. There is also a goodbye message which is just a zeroed out header.</p>
-            <img src="img/rpc_overview.svg"/>
+            <img src="img/rpc_overview.svg" style="height: 155px;"/>
         </div>
         <aside>
             <p><strong>Remote procedure calls</strong> are where a computer exposes a set of procedures that another computer can call over the network.</p>
             <p>The requester tells the responder the name of the procedure they wish to call along with any arguments. The responder performs the action and returns a value back to the requester.</p>
         </aside>
         <p>Both peers make requests to each other at the same time using the pair of box streams that have been established. The box streams protect the RPC protocol from eavesdropping and tampering.</p>
-        <img src="img/rpc_alignment.svg"/>
+        <img src="img/rpc_alignment.svg" style="height: 230px;"/>
         <aside style="position: relative; top: 36px;">
             <p>RPC messages are not necessarily aligned to box stream boxes.</p>
             <p>Multiple RPC messages may be put inside one box or a single RPC message may be split over several boxes.</p>
@@ -471,7 +471,7 @@ assert_nacl_sign_verify_detached(
 
         <h4 id="header-structure">Header structure</h4>
         <p>RPC headers contain a set of flags to say what type of message it is, a field specifying its length and a request number which allows matching requests with their responses when there are several active at the same time.</p>
-        <img src="img/rpc_header.svg"/>
+        <img src="img/rpc_header.svg" style="height: 750px;"/>
 
         <h4 id="request-format">Request format</h4>
         <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of procedure and any arguments.</p>
@@ -696,7 +696,7 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="structure">Structure</h3>
         <p>The messages in a feed form an append-only log, meaning that once a message is posted it cannot be modified. Each message (except the first one) references the ID of the previous message, allowing a chain to be constructed back to the first message in the feed.</p>
-        <img src="img/sigchain.svg" class="pagewidth"/>
+        <img src="img/sigchain.svg" class="pagewidth" style="height: 855px;"/>
 
         <h3 id="message-format">Message format</h3>
         <p>To create a message to post in a feed, start by filling out these fields:</p>
@@ -1130,7 +1130,7 @@ assert_nacl_sign_verify_detached(
         </figure>
 
         <p><em>Start</em> and <em>end</em> are byte offsets from the start of the blob and form a half-open interval, meaning the end byte is not included.</p>
-        <img src="img/blobs_get_slice.svg"/>
+        <img src="img/blobs_get_slice.svg" style="height: 110px;"/>
         <p>Specifying <em>start</em> = 0 means start from the beginning of the blob. Specifying <em>end</em> = <em>size of the blob</em> means keep going all the way to the end of the blob.</p>
         <p><em>blobs.getSlice</em> also accepts the <em>size</em> and <em>max</em> options, which work the same as in <em>blobs.get</em>. These two options refer to the size of the entire blob, not the range requested.</p>
 
@@ -1208,7 +1208,7 @@ assert_nacl_sign_verify_detached(
         <aside class="kicker" style="position: relative; top: 48px;">
             <p>By fetching blobs on behalf of one another, Scuttlebutt peers can reach blobs beyond who they are immediately connected to.</p>
         </aside>
-        <img src="img/blobs_fetch.svg"/>
+        <img src="img/blobs_fetch.svg" style="height: 385px;"/>
 
         <h2 id="following">Following</h2>
         <p>Feeds can follow other feeds. Following is a way of saying “I am interested in the messages posted by this feed”.</p>
@@ -1232,7 +1232,7 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="follow-graph">Follow graph</h3>
         <p>Because each feed publicly announces which feeds it is following, clients can arrange feeds into a graph of who follows who:</p>
-        <img src="img/follow_graph.svg" class="pagewidth"/>
+        <img src="img/follow_graph.svg" class="pagewidth" style="height: 700px;"/>
         <p>Clients may want to use the follow graph to decide which feeds to display to the user and which to replicate. If the user explicitly follows a feed that is a strong signal that the user wants to see messages posted by that feed.</p>
         <p>One implementation, Patchwork, shows messages up to 2 hops out by default. Messages from feeds 3 hops out are replicated to help keep them available for others, but not directly shown in the user interface. A benefit of replicating at a greater range is that for discussion threads with lots of participants it’s more likely that the client will be able to fill in gaps where someone posted who was further than 2 hops out.</p>
         <p>Clients could also let users configure how far the visibility and replication ranges are, or a client could use an entirely different method of deciding which feeds to show and replicate that is not based on follow range.</p>
@@ -1245,7 +1245,7 @@ assert_nacl_sign_verify_detached(
         </ul>
         <p>Pubs speak the same protocol as regular peers and behave like regular peers except that they are normally run on servers so that they are always online.</p>
         <p>Joining a pub means following it and having it follow you back. After a new user joins a pub they will be able to see posts by the pub’s other members, and crucially the other members will be able to see the new member. This works because everyone is now within 2 hops of each other:</p>
-        <img src="img/follow_perspective.svg" class="pagewidth"/>
+        <img src="img/follow_perspective.svg" class="pagewidth" style="height: 365px;"/>
         <p>After joining a pub, a user may decide to follow some of its members directly, in which case the pub is no longer needed for feed visibility but is still useful for accepting TCP connections and replicating messages.</p>
 
         <h3 id="invites">Invites</h3>
@@ -1257,7 +1257,7 @@ assert_nacl_sign_verify_detached(
         <aside>
             <p>If you want to run a pub that caters to an existing community, you could generate invite codes and give them out to current members. That way everyone who joins will be able to see the other members.</p>
         </aside>
-        <img src="img/format_invite.svg"/>
+        <img src="img/format_invite.svg" style="height: 139px;"/>
         <p>To make a new invite code, a pub generates a new Ed25519 key pair. The secret key goes into the invite code, which is given to either a new user or the pub operator to distribute. The public key is remembered by the pub along with any extra conditions such as the number of remaining uses or expiry date.</p>
 
         <h4 id="redeeming-invites">Redeeming invites</h4>
@@ -1386,15 +1386,15 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="encrypting">Encrypting</h3>
         <p>To encrypt a private message, the sender starts with these keys:</p>
-        <img src="img/private_message_starting_keys.svg"/>
+        <img src="img/private_message_starting_keys.svg" style="height: 290px;"/>
         <p>Next, the sender uses scalar multiplication to derive a shared secret for each recipient:</p>
-        <img src="img/private_message_secret_derivation.svg"/>
+        <img src="img/private_message_secret_derivation.svg" style="height: 210px;"/>
         <p>The sender constructs the encrypted message by first enclosing the message content in a secret box, then enclosing the key needed to open it into a series of additional secret boxes, one to each recipient:</p>
-        <img src="img/private_message_encrypt.svg" class="pagewidth"/>
+        <img src="img/private_message_encrypt.svg" class="pagewidth" style="height: 915px;"/>
 
         <h3 id="decrypting">Decrypting</h3>
         <p>Decrypting a private message involves scanning through the series of header secret boxes to see if any of them open using your long-term secret key. Then, if one of them opens, taking out the body secret key and using it to open the secret box holding the message content:</p>
-        <img src="img/private_message_decrypt.svg" class="pagewidth"/>
+        <img src="img/private_message_decrypt.svg" class="pagewidth" style="height: 980px;"/>
 
         <h2 id="implementations">Implementations</h2>
         <p>Scuttlebutt was first implemented in JavaScript with additional implementations currently being written in several other programming languages. Use this table to compare how different authors have implemented each part of the protocol:</p>

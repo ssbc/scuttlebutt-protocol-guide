@@ -243,6 +243,8 @@ hr {
 }
 
 img.inline-key {
+    width: 57px;
+    height: 34px;
     margin: -5px 0 -5px 0;
     vertical-align: middle;
 }
