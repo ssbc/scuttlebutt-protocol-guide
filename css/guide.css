@@ -3,7 +3,16 @@ html {
     font-size: 17px;
     line-height: 1.68;
     color: #1a1a1a;
-    min-width: 1104px;
+}
+
+main, p {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img {
+  max-width: 100%;
 }
 
 body {
@@ -283,7 +292,8 @@ table.impls {
     margin: 2rem 0 2rem;
     font-size: 13px;
     line-height: 1.5;
-    width: 1072px;
+//    width: 1072px;
+    width: 100%;
     table-layout: fixed;
 }
 
@@ -306,7 +316,7 @@ table.impls tr {
 
 table.impls th {
     text-align: left;
-    width: calc((1072px - 184px - 6px) / 4);
+//    width: calc((1072px - 184px - 6px) / 4);
 }
 
 table.impls .byline {
@@ -466,3 +476,4 @@ table.impls a:hover {
     font-weight: normal;
     font-style: italic;
 }
+
