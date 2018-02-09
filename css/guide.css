@@ -279,47 +279,35 @@ table.defs td:first-child {
     padding-right: 1rem;
 }
 
-table.impls {
-    margin: 2rem 0 2rem;
-    font-size: 13px;
-    line-height: 1.5;
-    width: 1072px;
-    table-layout: fixed;
+.impl {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    grid-column-gap: 4px;
+    align-items: first baseline;
 }
 
-table.impls tr:nth-child(even) {
-    background-color: #f4f4f4;
+.impl .icon {
+    grid-column: 1;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
 }
 
-table.impls th, table.impls td {
-    padding: 6px;
-    box-sizing: border-box;
+.impl h5 {
+    grid-column: 2;
+    color: #0773b3;
+    margin: 0;
 }
 
-table.impls th:first-child {
-    width: calc(184px - 6px);
+.impl .lang {
+    grid-column: 1;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
-table.impls tr {
-    height: 55px;
-}
-
-table.impls th {
-    text-align: left;
-    width: calc((1072px - 184px - 6px) / 4);
-}
-
-table.impls .byline {
-    font-weight: normal;
-    color: rgba(0, 0, 0, 0.6);
-}
-
-table.impls a {
-    border-bottom: none;
-}
-
-table.impls a:hover {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+.impl .vs {
+    grid-column: 2;
 }
 
 .code {

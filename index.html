@@ -87,7 +87,6 @@
                         <div><a href="#decrypting">Decrypting</a></div>
                     </div>
                 </div>
-                <div><a class="s1" href="#implementations">Implementations</a></div>
             </div>
         </div>
         <hr/>
@@ -107,10 +106,19 @@
         <p>Each identity has an associated feed, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
 
         <h2 id="discovery">Discovery</h2>
-        <p>After a user has generated their identity they need to find some peers to connect to. To connect to a peer you need to know its IP address, port number and public key. The Scuttlebutt protocol currently has three methods for peers to discover each other.</p>
+        <div>
+            <p>After a user has generated their identity they need to find some peers to connect to. To connect to a peer you need to know its IP address, port number and public key. The Scuttlebutt protocol currently has three methods for peers to discover each other.</p>
 
-        <h3 id="local-network">Local network</h3>
-        <p>Peers constantly broadcast UDP packets on their local network advertising their presence. The body of each packet is a string containing the peer’s IP address, port and base64-encoded public key (without <code>@</code> or <code>.ed25519</code>):</p>
+            <h3 id="local-network">Local network</h3>
+            <p>Peers constantly broadcast UDP packets on their local network advertising their presence. The body of each packet is a string containing the peer’s IP address, port and base64-encoded public key (without <code>@</code> or <code>.ed25519</code>):</p>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
+            <div class="vs"><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/local.js">scuttlebot/local.js</a></div>
+        </aside>
 
         <div>
             <figure class="packets">
@@ -159,8 +167,25 @@
         <p>Once a Scuttlebutt client has discovered the IP address, port number and public key of a peer they can connect via TCP to ask for updates and exchange messages.</p>
 
         <h3 id="handshake">Handshake</h3>
-        <p>The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
-        <img src="img/message_flow.svg" style="height: 350px;"/>
+        <div>
+            <p>The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
+            <img src="img/message_flow.svg" style="height: 350px;"/>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/protocol.js">protocol.js</a></div>
+            <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/crypto.js">crypto.js</a></div>
+            <div class="lang">Py</div>
+            <div class="vs"><a href="https://github.com/pferreir/PySecretHandshake/blob/master/secret_handshake/crypto.py">crypto.py</a></div>
+            <div class="lang">Go</div>
+            <div class="vs"><a href="https://github.com/cryptix/secretstream/blob/master/secrethandshake/state.go">state.go</a></div>
+            <div class="vs"><a href="https://github.com/cryptix/secretstream/blob/master/secrethandshake/conn.go">conn.go</a></div>
+            <div class="lang">C</div>
+            <div class="vs"><a href="https://github.com/AljoschaMeyer/shs1-c/blob/master/src/shs1.c">shs1.c</a></div>
+            <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
+        </aside>
         <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
         <ul>
             <li>After a successful handshake the peers have verified each other’s public keys.</li>
@@ -429,12 +454,29 @@ assert_nacl_sign_verify_detached(
         <p>The shared secrets established during the handshake are used to set up a pair of box streams for securely exchanging further messages.</p>
 
         <h3 id="box-stream">Box stream</h3>
-        <p>Box stream is the bulk encryption protocol used to exchange messages following the handshake until the connection ends. It is designed to protect messages from being read or modified by a man-in-the-middle.</p>
-        <p>Each message in a box stream has a header and body. The header is always 34 bytes long and says how long the body will be.</p>
-        <img src="img/box_stream_overview.svg" style="height: 140px;"/>
+        <div>
+            <p>Box stream is the bulk encryption protocol used to exchange messages following the handshake until the connection ends. It is designed to protect messages from being read or modified by a man-in-the-middle.</p>
+            <p>Each message in a box stream has a header and body. The header is always 34 bytes long and says how long the body will be.</p>
+            <img src="img/box_stream_overview.svg" style="height: 140px;"/>
 
-        <h4 id="sending">Sending</h4>
-        <p>Sending a message involves encrypting the body of the message and preparing a header for it. Two secret boxes are used; one to protect the header and another to protect the body.</p>
+            <h4 id="sending">Sending</h4>
+            <p>Sending a message involves encrypting the body of the message and preparing a header for it. Two secret boxes are used; one to protect the header and another to protect the body.</p>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/dominictarr/pull-box-stream/blob/master/index.js">pull-box-stream</a></div>
+            <div class="lang">Py</div>
+            <div class="vs"><a href="https://github.com/pferreir/PySecretHandshake/blob/master/secret_handshake/boxstream.py">boxstream.py</a></div>
+            <div class="lang">Go</div>
+            <div class="vs"><a href="https://github.com/cryptix/secretstream/blob/master/boxstream/box.go">box.go</a></div>
+            <div class="vs"><a href="https://github.com/cryptix/secretstream/blob/master/boxstream/unbox.go">unbox.go</a></div>
+            <div class="lang">C</div>
+            <div class="vs"><a href="https://github.com/AljoschaMeyer/box-stream-c/blob/master/src/box-stream.c">box-stream.c</a></div>
+            <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
+        </aside>
+
         <img src="img/box_stream_send.svg" class="pagewidth" style="height: 670px;"/>
 
         <h4 id="receiving">Receiving</h4>
@@ -452,6 +494,19 @@ assert_nacl_sign_verify_detached(
         <p>The starting nonce is used for the first header in the stream (“secret box 1” in the above figures), then incremented for the first body (“secret box 2”), then incremented for the next header and so on.</p>
 
         <h3 id="rpc-protocol">RPC protocol</h3>
+        <aside class="impl kicker">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div><a href="https://github.com/dominictarr/packet-stream-codec/blob/master/index.js">packet-stream-codec</a></div>
+            <div class="lang">Py</div>
+            <div class="vs"><a href="https://github.com/pferreir/pyssb/blob/master/ssb/packet_stream.py">packet_stream.py</a></div>
+            <div class="vs"><a href="https://github.com/pferreir/pyssb/blob/master/ssb/muxrpc.py">muxrpc.py</a></div>
+            <div class="lang">Go</div>
+            <div class="vs"><a href="https://github.com/cryptix/go-muxrpc/blob/master/client.go">client.go</a></div>
+            <div class="lang">C</div>
+            <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
+        </aside>
         <div>
             <p>Scuttlebutt peers make requests to each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
             <p>The RPC protocol can interleave multiple requests so that a slow request doesn’t block following ones. It also handles long-running asynchronous requests for notifying when an event occurs and streams that deliver multiple responses over time.</p>
@@ -740,8 +795,19 @@ assert_nacl_sign_verify_detached(
         </table>
 
         <h4 id="signature">Signature</h4>
-        <p>All messages in a feed are signed by that feed’s long-term secret key. This enables recipients to verify that a message was really posted by a particular identity and not tampered with as it gets gossiped and replicated throughout the Scuttlebutt network.</p>
-        <p>Before signing a message it must be formatted as JSON as shown above. The formatting rules are:</p>
+        <div>
+            <p>All messages in a feed are signed by that feed’s long-term secret key. This enables recipients to verify that a message was really posted by a particular identity and not tampered with as it gets gossiped and replicated throughout the Scuttlebutt network.</p>
+            <p>Before signing a message it must be formatted as JSON as shown above. The formatting rules are:</p>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-feed/blob/master/validator.js">ssb-feed/validator.js</a></div>
+            <div class="lang">Py</div>
+            <div class="vs"><a href="https://github.com/pferreir/pyssb/blob/master/ssb/feed.py">feed.py</a></div>
+        </aside>
         <ul>
             <li>Two spaces for indentation.</li>
             <li>Dictionary entries and list elements each on their own line.</li>
@@ -788,6 +854,12 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="createHistoryStream">createHistoryStream</h3>
         <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to. When peers connect, one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/secure-scuttlebutt/blob/master/indexes/clock.js">clock.js</a></div>
+        </aside>
         <p>The RPC procedure <em>createHistoryStream</em> is how peers ask each other for a list of messages in a particular feed.</p>
 
         <figure class="request-response">
@@ -946,6 +1018,12 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="fetching">Fetching</h3>
         <p>There are two RPC methods for fetching blobs. To get an entire blob use <em>blobs.get</em>, or for only part of the blob use <em>blobs.getSlice</em>.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/multiblob/blob/master/index.js">multiblob</a></div>
+        </aside>
     
         <h4 id="blobs.get">blobs.get</h4>
         <p><em>blobs.get</em> asks a peer to send you the contents of a blob. There is one argument which is the blob ID:</p>
@@ -1135,6 +1213,12 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="want-and-have">Want and have</h3>
         <p>Peers signal to each other which blobs they want and have. This lets peers know who they can fetch a particular blob from. It also allows requests for blobs to propagate through the network until a peer that has the blob is found.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-blobs/blob/master/inject.js">inject.js</a></div>
+        </aside>
         <p>Upon connecting, peers typically invoke the RPC method <em>blobs.createWants</em> on each other. <em>blobs.createWants</em> asks a peer to tell you which blobs they want, and also allows the peer to tell you which blobs they have.</p>
 
         <figure class="request-response">
@@ -1211,6 +1295,12 @@ assert_nacl_sign_verify_detached(
 
         <h2 id="following">Following</h2>
         <p>Feeds can follow other feeds. Following is a way of saying “I am interested in the messages posted by this feed”.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-friends/blob/master/alg.js">alg.js</a></div>
+        </aside>
         <p>Following is an optional part of Scuttlebutt, however current clients do implement it because it enables interesting social dynamics, such as introducing people that otherwise wouldn’t have found each other and allowing trust to be built within human networks. Following is what enables Scuttlebutt to be a social network rather than a group messenger.</p>
 
         <p>When a user wants to follow another feed their client will post a message to their own feed that looks like:</p>
@@ -1261,6 +1351,12 @@ assert_nacl_sign_verify_detached(
 
         <h4 id="redeeming-invites">Redeeming invites</h4>
         <p>To redeem an invite, a user enters the invite code into their Scuttlebutt client. The client opens a new TCP connection to the domain and port contained in the invite and proceeds to set up a peer connection, starting with the handshake.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/invite.js">invite.js</a></div>
+        </aside>
         <p>However, unlike a regular handshake, the client uses the secret key in the invite as their <img class="inline-key" src="img/key_big_a_secret.svg"/> long term secret key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
         <p>Handshaking with the invite key allows the client to call a special RPC method <em>invite.use</em>:</p>
 
@@ -1347,8 +1443,17 @@ assert_nacl_sign_verify_detached(
         <p>These messages help peers discover new pubs where they might be able to fetch new messages from. Clients can maintain a list of pubs they have seen so that they know of alternative places to fetch messages from in case a pub goes offline.</p>
 
         <h2 id="private-messages">Private messages</h2>
-        <p>Private messages are encrypted so that only certain recipients can read them. They are posted to the sender’s Scuttlebutt feed like normal messages.</p>
-        <p>Anyone can see the fact that a feed posted a private message, who sent it (the feed that posted it), when it was sent and its size. However the list of recipients, number of recipients and message body is concealed.</p>
+        <div>
+            <p>Private messages are encrypted so that only certain recipients can read them. They are posted to the sender’s Scuttlebutt feed like normal messages.</p>
+            <p>Anyone can see the fact that a feed posted a private message, who sent it (the feed that posted it), when it was sent and its size. However the list of recipients, number of recipients and message body is concealed.</p>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.svg"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
+            <div class="vs"><a href="https://github.com/auditdrivencrypto/private-box/blob/master/index.js">private-box</a></div>
+        </aside>
         <p>Given the user wants to post these message contents:</p>
         <pre><code>{
   "type": "post",
@@ -1394,171 +1499,6 @@ assert_nacl_sign_verify_detached(
         <h3 id="decrypting">Decrypting</h3>
         <p>Decrypting a private message involves scanning through the series of header secret boxes to see if any of them open using your long-term secret key. Then, if one of them opens, taking out the body secret key and using it to open the secret box holding the message content:</p>
         <img src="img/private_message_decrypt.svg" class="pagewidth" style="height: 980px;"/>
-
-        <h2 id="implementations">Implementations</h2>
-        <p>Scuttlebutt was first implemented in JavaScript with additional implementations currently being written in several other programming languages. Use this table to compare how different authors have implemented each part of the protocol:</p>
-
-        <table class="pagewidth impls">
-            <tr>
-                <th></th>
-                <th>
-                    <div>JavaScript</div>
-                    <div class="byline">by dominictarr and contributors</div>
-                </th>
-                <th>
-                    <div>Python</div>
-                    <div class="byline">by pferreir</div>
-                </th>
-                <th>
-                    <div>Go</div>
-                    <div class="byline">by cryptix and keks</div>
-                </th>
-                <th>
-                    <div>C</div>
-                    <div class="byline">by AljoschaMeyer and cel</div>
-                </th>
-            </tr>
-
-            <tr>
-                <td>Keys and identities</td>
-                <td>
-                    <div><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td>
-                    <div><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
-                </td>
-            </tr>
-            <tr>
-                <td>Discovery</td>
-                <td>
-                    <div><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
-                    <div><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/local.js">scuttlebot/local.js</a></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Handshake</td>
-                <td>
-                    <div><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/protocol.js">secret-stack/protocol.js</a></div>
-                    <div><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/crypto.js">secret-stack/crypto.js</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/pferreir/PySecretHandshake/blob/master/secret_handshake/crypto.py">crypto.py</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/cryptix/secretstream/blob/master/secrethandshake/state.go">state.go</a></div>
-                    <div><a href="https://github.com/cryptix/secretstream/blob/master/secrethandshake/conn.go">conn.go</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/AljoschaMeyer/shs1-c/blob/master/src/shs1.c">shs1.c</a></div>
-                    <div><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
-                </td>
-            </tr>
-            <tr>
-                <td>Box stream</td>
-                <td>
-                    <div><a href="https://github.com/dominictarr/pull-box-stream/blob/master/index.js">pull-box-stream</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/pferreir/PySecretHandshake/blob/master/secret_handshake/boxstream.py">boxstream.py</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/cryptix/secretstream/blob/master/boxstream/box.go">box.go</a></div>
-                    <div><a href="https://github.com/cryptix/secretstream/blob/master/boxstream/unbox.go">unbox.go</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/AljoschaMeyer/box-stream-c/blob/master/src/box-stream.c">box-stream.c</a></div>
-                    <div><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
-                </td>
-            </tr>
-            <tr>
-                <td>RPC protocol</td>
-                <td>
-                    <div><a href="https://github.com/dominictarr/packet-stream-codec/blob/master/index.js">packet-stream-codec</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/pferreir/pyssb/blob/master/ssb/packet_stream.py">packet_stream.py</a></div>
-                    <div><a href="https://github.com/pferreir/pyssb/blob/master/ssb/muxrpc.py">muxrpc.py</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/cryptix/go-muxrpc/blob/master/client.go">client.go</a></div>
-                </td>
-                <td>
-                    <div><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
-                </td>
-            </tr>
-            <tr>
-                <td>Message signing</td>
-                <td>
-                    <div><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
-                    <div><a href="https://github.com/ssbc/ssb-feed/blob/master/validator.js">ssb-feed/validator.js</a></div>
-                </td>
-                <td>
-                    <div><a href="https://github.com/pferreir/pyssb/blob/master/ssb/feed.py">feed.py</a></div>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>createHistoryStream</td>
-                <td>
-                    <div><a href="https://github.com/ssbc/secure-scuttlebutt/blob/master/indexes/clock.js">secure-scuttlebutt/clock.js</a></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>blobs.get / blobs.getSlice</td>
-                <td>
-                    <div><a href="https://github.com/ssbc/multiblob/blob/master/index.js">multiblob</a></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>blobs.createWants</td>
-                <td>
-                    <div><a href="https://github.com/ssbc/ssb-blobs/blob/master/inject.js">ssb-blobs/inject.js</a></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Following</td>
-                <td>
-                    <div><a href="https://github.com/ssbc/ssb-friends/blob/master/alg.js">ssb-friends/alg.js</a></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Invites</td>
-                <td>
-                    <div><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/invite.js">scuttlebot/invite.js</a></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Private messages</td>
-                <td>
-                    <div><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
-                    <div><a href="https://github.com/auditdrivencrypto/private-box/blob/master/index.js">private-box</a></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
     </main>
 </body>
 </html>
