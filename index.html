@@ -25,7 +25,7 @@
         <p class="subtitle">How Scuttlebutt peers find and talk to each other</p>
         <hr/>
         <aside class="kicker section-kicker">
-            <h2>Contents</h2>
+            <h2 id="toc">Contents</h2>
         </aside>
         <div class="toc">
             <div class="col">
@@ -1500,5 +1500,9 @@ assert_nacl_sign_verify_detached(
         <p>Decrypting a private message involves scanning through the series of header secret boxes to see if any of them open using your long-term secret key. Then, if one of them opens, taking out the body secret key and using it to open the secret box holding the message content:</p>
         <img src="img/private_message_decrypt.svg" class="pagewidth" style="height: 980px;"/>
     </main>
+    <footer>
+        <p>Thanks for reading the protocol guide!</p>
+        <p class="small"><a href="#top">Table of contents</a></p>
+    </footer>
 </body>
 </html>

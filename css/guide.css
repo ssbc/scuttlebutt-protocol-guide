@@ -7,10 +7,10 @@ html {
 }
 
 body {
-    margin: 0 0 100px 0;
+    margin: 0;
 }
 
-header, main, .left-right.code {
+header, main, footer, .left-right.code {
     display: grid;
     grid-template-columns:
         [screen-start] 1fr
@@ -33,15 +33,24 @@ header, main, .left-right.code {
 
 main {
     align-items: first baseline;
+    margin-bottom: 64px;
+}
+
+header, footer {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 300;
 }
 
 header {
     background-color: #0f103d;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 12px;
-    font-weight: 300;
     height: 70px;
+    font-size: 12px;
     align-items: stretch;
+}
+
+footer {
+    background-color: #242828;
+    padding: 48px 0;
 }
 
 .title {
@@ -78,8 +87,12 @@ header a:hover {
     margin: -4px 10px -2px 0;
 }
 
-main > * {
+main > *, footer > * {
     grid-column: text;
+}
+
+footer > *:last-child {
+    margin-bottom: 0;
 }
 
 .pagewidth {
@@ -222,6 +235,14 @@ a:hover {
     border-bottom-color: rgba(0, 0, 0, 0.8);
 }
 
+footer a {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+footer a:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
 p, ol, ul, pre, table {
     margin: 0 0 1rem;
 }
@@ -277,6 +298,10 @@ table.defs td {
 table.defs td:first-child {
     font-weight: 500;
     padding-right: 1rem;
+}
+
+.small {
+    font-size: 13px;
 }
 
 .impl {
