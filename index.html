@@ -634,7 +634,8 @@ assert_nacl_sign_verify_detached(
             <p>All responses use the same request number as the original request but negative.</p>
         </aside>
 
-        <p>Each message posted by the feed is sent back in its own response. This feed only contains two messages. To signal the end of the stream, the responder sends an RPC message with both the stream and end/err flags set and a JSON body of <code>true</code>.</p>
+        <p>Each message posted by the feed is sent back in its own response. This feed only contains two messages.</p>
+        <p>To close the stream the responder sends an RPC message with both the stream and end/err flags set and a JSON body of <code>true</code>. When the requester sees that the stream is being closed they send a final message to close their own end of it (source type requests must always be closed by both ends).</p>
 
         <figure class="request-response">
             <img class="response-arrow" src="img/arrow.svg"/>
@@ -647,9 +648,19 @@ assert_nacl_sign_verify_detached(
                 </div>
                 <pre><code>true</code></pre>
             </div>
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
         </figure>
 
-        <p>Alternatively, to cancel a stream early the requester can send another request using the same request number, with the stream and end/err flags both set and a JSON body of <code>true</code>.</p>
+        <p>Alternatively, to abort a stream before it is finished the requester can send their closing message early, at which point the responder closes their own end.</p>
 
         <figure class="request-response">
             <div class="request">
@@ -1100,7 +1111,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <p>Finally, the stream ends with a JSON message of <code>true</code> with the end/err flag set:</p>
+        <p>Finally, the stream is closed with a JSON message of <code>true</code> with the end/err flag set. The requester sees that the stream is being closed and closes their end of the stream too:</p>
 
         <figure class="request-response">
             <img class="response-arrow" src="img/arrow.svg"/>
@@ -1113,6 +1124,16 @@ assert_nacl_sign_verify_detached(
                 </div>
                 <pre><code>true</code></pre>
             </div>
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
         </figure>
 
         <p>Upon receiving the blob the requester should check that what they received matches the sha256 checksum they asked for.</p>
@@ -1206,6 +1227,16 @@ assert_nacl_sign_verify_detached(
                 </div>
                 <pre><code>true</code></pre>
             </div>
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.svg"/>
         </figure>
 
         <p><em>Start</em> and <em>end</em> are byte offsets from the start of the blob and form a half-open interval, meaning the end byte is not included.</p>
