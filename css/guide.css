@@ -412,7 +412,7 @@ table.defs td:first-child {
     background-color: #808080;
 }
 
-.request-response pre, .packet pre {
+.request-response pre, .packet pre, .packet img {
     background: none;
     font-family: "DejaVu Sans Mono";
     margin: 0;

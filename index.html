@@ -101,9 +101,11 @@
         <p>Because identities are long and random, no coordination or permission is required to create a new one, which is essential to the network’s design.</p>
         <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it stolen they will need to generate a new identity and tell people to use their new one instead.</p>
         <p>The public key of an identity is presented to users and transmitted in some parts of the network protocol using this format:</p>
-        <pre class="center"><code>@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519</code></pre>
-        <p>Begin with an <code>@</code> sign, then base64 encode the public key (with the base64 variant that uses <code>+</code> and <code>/</code>, the final padding <code>=</code> is also required). Finally put <code>.ed25519</code> on the end.</p>
-        <p>Each identity has an associated feed, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
+        <img src="img/format_public_key.svg" style="height: 80px;"/>
+        <aside style="position: relative; top: 6px;">
+            <p>Throughout the protocol all instances of base64 are the variant that uses <code>+</code> and <code>/</code>. The final padding <code>=</code> is also required.</p>
+        </aside>
+        <p>The beginning <code>@</code> sign signifies that this represents a public key rather than a message or blob, which start with <code>%</code> and <code>&amp;</code>. Each identity has an associated <a href="#feeds">feed</a>, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
 
         <h2 id="discovery">Discovery</h2>
         <div>
@@ -129,7 +131,7 @@
                         <span class="key">Destination IP</span><span class="value">255.255.255.255</span>
                         <span class="key">Destination port</span><span class="value">8008</span>
                     </div>
-                    <pre><code>net:192.168.1.123:8008~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=</code></pre>
+                    <img src="img/format_udp_broadcast.svg" style="height: 40px;"/>
                 </div>
             </figure>
             <p>Current implementations broadcast one of these packets every second. When a peer sees another peer’s broadcast packet they can connect to exchange messages. Some clients show nearby peers in the user interface so that the user can see other people on the same network as them.</p>
@@ -848,8 +850,8 @@ assert_nacl_sign_verify_detached(
         <h4 id="message-id">Message ID</h4>
         <p>A message ID is a hash of the message including signature. Messages can refer to other messages by their ID.</p>
         <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key must appear last as shown above (but without wrapping the line).</p>
-        <p>Then hash the message using sha256 and base64 encode it, put a <code>%</code> sign on the front and <code>.sha256</code> on the end. The ID of the above message is:</p>
-        <pre class="center">%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256<code></code></pre>
+        <p>The ID of the above message is:</p>
+        <img src="img/format_message_id.svg" style="height: 80px;"/>
         <p>Currently all IDs are computed using sha256. However the protocol includes the name of the hash function in message IDs and the messages themselves to allow migrating to a different one if needed in the future.</p>
 
         <h3 id="createHistoryStream">createHistoryStream</h3>
@@ -1011,8 +1013,8 @@ assert_nacl_sign_verify_detached(
         <h2 id="blobs">Blobs</h2>
         <p>A blob is binary data. Blobs are referred to from Scuttlebutt messages and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
         <p>Being just a sequence of bytes, blobs can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages, which is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
-        <p>Blobs are referred to by their blob ID. To compute this, hash the contents of the blob with sha256, then base64 encode it and put an <code>&amp;</code> symbol on the front and <code>.sha256</code> on the end:</p>
-        <pre class="center"><code>&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256</code></pre>
+        <p>Blobs are referred to by their blob ID:</p>
+        <img src="img/format_blob_id.svg" style="height: 80px;"/>
         <p>Blobs are immutable because their ID contains a hash of their contents. This allows peers to fetch blobs from anyone in the network and know they haven’t been tampered with.</p>
         <p>When a Scuttlebutt implementation receives a new message and sees that it references a blob, it might be a good time to fetch that blob so that the complete message will be available to show the user.</p>
 
