@@ -153,7 +153,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -317,7 +317,7 @@
          x="212"
          sodipodi:role="line"><tspan
    id="tspan3364"
-   style="font-weight:bold">Message 3. </tspan> Client accept</tspan></text>
+   style="font-weight:bold">Message 3. </tspan> Client authenticate</tspan></text>
     <rect
        ry="5"
        rx="5"
