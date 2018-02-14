@@ -240,7 +240,7 @@ assert_nacl_auth_verify(
             <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
         </div>
         <aside>
-            <p><strong>hmac</strong> is a function that allows verifying that a message came from someone who knows the secret key as you. In this case the network identifier is used as the secret key.</p>
+            <p><strong>hmac</strong> is a function that allows verifying that a message came from someone who knows the same secret key as you. In this case the network identifier is used as the secret key.</p>
             <p>Both the message creator and verifier have to know the same message and secret key for the verification to succeed, but the secret key is not revealed to an eavesdropper. </p>
             <p>Throughout the protocol, all instances of hmac use HMAC-SHA-512-256.</p>
         </aside>
