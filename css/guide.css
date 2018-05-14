@@ -132,7 +132,7 @@ h5 {
     margin-top: 60px;
 }
 
-pre, code {
+pre, code, .binary span {
     font-family: "DejaVu Sans Mono";
 }
 
@@ -243,7 +243,7 @@ footer a:hover {
     border-color: rgba(255, 255, 255, 0.8);
 }
 
-p, ol, ul, pre, table {
+p, ol, ul, pre, table, .fixed-key {
     margin: 0 0 1rem;
 }
 
@@ -419,20 +419,44 @@ table.defs td:first-child {
     padding: 10px;
 }
 
+.fixed-key.binary {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-row-gap: 4px;
+    row-gap: 4px;
+}
+
+.fixed-key.binary span {
+    font-size: 15px;
+    padding: 9px;
+    background-color: #f4f4f4;
+    border-left: 1px solid #ccc;
+    justify-self: stretch;
+    text-align: center;
+}
+
+.fixed-key.binary span:nth-child(16n), .fixed-key.binary span:last-child {
+    border-right: 1px solid #ccc;
+}
+
 .request-response .binary {
     display: grid;
     grid-template-columns: repeat(24, 1fr);
     position: relative;
 }
 
-.request-response .binary code {
-    background: #e79f2755;
+.request-response .binary span {
     border-radius: 0;
     font-size: 12px;
     padding: 4px;
     justify-self: stretch;
     text-align: center;
 }
+
+.binary .d0 { background-color: #fcf3e4; }
+.binary .d1 { background-color: #fcecd2; }
+.binary .d2 { background-color: #fbe6c3; }
+.binary .d3 { background-color: #f9dfb3; }
 
 .request-arrow, .response-arrow {
     align-self: center;
