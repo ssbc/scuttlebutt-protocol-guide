@@ -1,9 +1,13 @@
+:root {
+    --standard-column: 0.4fr;
+    --standard-gap: 0.4fr;
+}
+
 html {
     font-family: Roboto;
     font-size: 17px;
     line-height: 1.68;
     color: #1a1a1a;
-    min-width: 1104px;
 }
 
 body {
@@ -14,21 +18,21 @@ header, main, footer, .left-right.code {
     display: grid;
     grid-template-columns:
         [screen-start] 1fr
-        [page-start kicker-start left-start] 60px [middle-start] 60px
-        [text-start kicker-end] 60px 60px 60px 60px
-        [left-end right-start] 60px 60px 60px 60px
-        [text-end gutter-start] 60px [middle-end] 60px 
+        [page-start kicker-start left-start] var(--standard-column) [middle-start] var(--standard-column)
+        [text-start kicker-end] repeat(4, var(--standard-column))
+        [left-end right-start] repeat(4, var(--standard-column))
+        [text-end gutter-start] var(--standard-column) [middle-end] var(--standard-column) 
         [page-end gutter-end right-end] 1fr [screen-end];
-    grid-column-gap: 32px;
+    grid-column-gap: var(--standard-gap);
 }
 
 .request-response, .toc {
     display: grid;
     grid-template-columns:
-        [page-start request-start response-gutter-start] 60px
-        [response-gutter-end response-start] 60px 60px 60px 60px 60px 60px
-        [request-end request-gutter-start] 60px [page-end request-gutter-end response-end];
-    grid-column-gap: 32px;
+        [page-start request-start response-gutter-start] var(--standard-column)
+        [response-gutter-end response-start] repeat(6, var(--standard-column))
+        [request-end request-gutter-start] var(--standard-column) [page-end request-gutter-end response-end];
+    grid-column-gap: var(--standard-gap);
 }
 
 main {
@@ -155,6 +159,10 @@ p code, ul code, ol code, table code {
     border-radius: 3px;
 }
 
+pre {
+    overflow-x: scroll;
+}
+
 pre code {
     background: none;
     padding: 0;
@@ -203,16 +211,21 @@ pre code {
     border-bottom: none;
 }
 
-main figure, main > img {
+main figure, main > img, main div img {
     margin: 1rem 0 2rem 0;
+    width: 100%;
 }
+
 
 aside {
     grid-column: gutter;
+    padding: 10px;
+    margin: auto 0;
 }
 
 aside.kicker {
     grid-column: kicker;
+    padding: 0;
 }
 
 figcaption, aside {
@@ -349,10 +362,12 @@ table.defs td:first-child {
 
 .left {
     grid-column: left;
+    margin-right: 5px !important;
 }
 
 .right {
     grid-column: right;
+    margin-left: 5px !important;
 }
 
 .request, .response, .request-arrow, .response-arrow {
@@ -412,6 +427,10 @@ table.defs td:first-child {
     background-color: #808080;
 }
 
+.packet img {
+    width: 100%;
+}
+
 .request-response pre, .packet pre, .packet img {
     background: none;
     font-family: "DejaVu Sans Mono";
@@ -424,6 +443,7 @@ table.defs td:first-child {
     grid-template-columns: repeat(16, 1fr);
     grid-row-gap: 4px;
     row-gap: 4px;
+    overflow-x: auto;
 }
 
 .fixed-key.binary span {
@@ -437,6 +457,10 @@ table.defs td:first-child {
 
 .fixed-key.binary span:nth-child(16n), .fixed-key.binary span:last-child {
     border-right: 1px solid #ccc;
+}
+
+.request-response {
+    overflow-x: auto;
 }
 
 .request-response .binary {

@@ -1,0 +1,43 @@
+@media screen and (max-width: 1024px) {
+  header {
+    display: grid;
+    grid-template-rows: 70px 70px;
+    grid-column-gap: var(--standard-gap);
+    height: auto;
+  }
+
+  header .title {
+    grid-row: 1;
+  }
+
+  header nav {
+    grid-row: 2;
+    justify-self: left;
+    grid-column: left;
+  }
+
+  p, h1, h2, h3, h4, div, aside, aside.kicker, pre, ul, .request-response, .defs, img{
+    grid-column: page;
+  }
+
+  aside.section-kicker {
+    margin: 10px 0;
+  }
+
+  aside {
+    padding: 0px;
+  }
+
+  aside.kicker {
+    padding: 0;
+    margin-bottom: 10px;
+  }
+
+  .pagewidth {
+    grid-column: screen;
+  }
+
+  .toc .col {
+    grid-column: page;
+  }
+}

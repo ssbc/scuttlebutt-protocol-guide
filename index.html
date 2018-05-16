@@ -6,6 +6,7 @@
     <link rel="icon" href="img/favicon.png"/>
     <link rel="stylesheet" href="css/fonts.css"/>
     <link rel="stylesheet" href="css/guide.css"/>
+    <link rel="stylesheet" href="css/mobile.css"/>
 </head>
 <body>
     <header>
@@ -102,7 +103,7 @@
         <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it stolen they will need to generate a new identity and tell people to use their new one instead.</p>
         <p>The public key of an identity is presented to users and transmitted in some parts of the network protocol using this format:</p>
         <img src="img/format_public_key.svg" style="height: 80px;"/>
-        <aside style="position: relative; top: 6px;">
+        <aside>
             <p>Throughout the protocol all instances of base64 are the variant that uses <code>+</code> and <code>/</code>. The final padding <code>=</code> is also required.</p>
         </aside>
         <p>The beginning <code>@</code> sign signifies that this represents a public key rather than a message or blob, which start with <code>%</code> and <code>&amp;</code>. Each identity has an associated <a href="#feeds">feed</a>, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
@@ -524,7 +525,7 @@ assert_nacl_sign_verify_detached(
         </aside>
         <p>Both peers make requests to each other at the same time using the pair of box streams that have been established. The box streams protect the RPC protocol from eavesdropping and tampering.</p>
         <img src="img/rpc_alignment.svg" style="height: 230px;"/>
-        <aside style="position: relative; top: 36px;">
+        <aside>
             <p>RPC messages are not necessarily aligned to box stream boxes.</p>
             <p>Multiple RPC messages may be put inside one box or a single RPC message may be split over several boxes.</p>
         </aside>
@@ -552,7 +553,7 @@ assert_nacl_sign_verify_detached(
         <h4 id="source-example">Source example</h4>
         <p>This RPC message shows an example of a <em>createHistoryStream</em> request:</p>
 
-        <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
+        <aside class="kicker">
             <p>JSON messages don’t have indentation or whitespace when sent over the wire.</p>
         </aside>
         <figure class="request-response">
@@ -632,7 +633,7 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
-        <aside style="align-self: start; position: relative; top: 29px;">
+        <aside>
             <p>Because the responses are part of a stream, their RPC headers have the stream flag set.</p>
             <p>All responses use the same request number as the original request but negative.</p>
         </aside>
@@ -1299,7 +1300,7 @@ assert_nacl_sign_verify_detached(
                 <pre><code>{"&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256": -1}</code></pre>
             </div>
         </figure>
-        <aside style="align-self: start; position: relative; top: 19px;">
+        <aside>
             <p>Only one blob is allowed per response. Send multiple responses if you want more than one blob.</p>
         </aside>
 
@@ -1320,12 +1321,12 @@ assert_nacl_sign_verify_detached(
                 <pre><code>{"&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256": 161699}</code></pre>
             </div>
         </figure>
-        <aside style="align-self: start; position: relative; top: 18px;">
+        <aside>
             <p><em>Have</em> and <em>want</em> messages can be distinguished because <em>have</em> messages use a positive number whereas <em>want</em> messages use a negative number.</p>
         </aside>
 
         <p>Now the requester knows they can retrieve the blob from this peer with <em>blobs.get</em> or <em>blobs.getSlice</em>.
-        <aside class="kicker" style="position: relative; top: 48px;">
+        <aside class="kicker">
             <p>By fetching blobs on behalf of one another, Scuttlebutt peers can reach blobs beyond who they are immediately connected to.</p>
         </aside>
         <img src="img/blobs_fetch.svg" style="height: 385px;"/>
@@ -1397,7 +1398,7 @@ assert_nacl_sign_verify_detached(
         <p>However, unlike a regular handshake, the client uses the secret key in the invite as their <img class="inline-key" src="img/key_big_a_secret.svg"/> long term secret key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
         <p>Handshaking with the invite key allows the client to call a special RPC method <em>invite.use</em>:</p>
 
-        <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
+        <aside class="kicker">
             <p><em>invite.use</em> has a single argument which is the feed ID of the user who wants to join the pub.</p>
         </aside>
         <figure class="request-response">
@@ -1446,7 +1447,7 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
-        <aside style="align-self: start; position: relative; top: 215px;">
+        <aside>
             <p>This message contains <code>"pub": true</code> to distinguish it from a normal follow.</p>
         </aside>
 
