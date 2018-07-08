@@ -465,6 +465,7 @@ table.defs td:first-child {
     -moz-user-select: none;
     user-drag: none;
     -webkit-user-drag: none;
+    width: 60px;
 }
 
 .request-arrow {
