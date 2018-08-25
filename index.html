@@ -806,7 +806,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>content</td>
-                <td>Free-form JSON. It is up to applications to interpret what it means. It’s polite to specify a <em>type</em> field so that applications can easily filter out message types they don’t understand.</td>
+                <td>Free-form JSON. It is up to applications to interpret what it means. A mandatory <em>type</em> field, a string, between 3 and 52 utf8 chars long (inclusive). This is used so that applications can easily filter out message types they don’t understand.</td>
             </tr>
         </table>
 
