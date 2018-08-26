@@ -829,10 +829,16 @@ assert_nacl_sign_verify_detached(
             <li>Dictionary entries and list elements each on their own line.</li>
             <li>Empty dictionaries appear as <code>{}</code> and empty lists appear as <code>[]</code>.</li>
             <li>One space after the colon <code>:</code> for dictionary keys.</li>
+            <li>Strings and numbers must be cannonically encoded. That is, they should be the form <em>produced</em> by <a href="https://www.ecma-international.org/ecma-262/6.0/#sec-json.stringify"><code>JSON.stringify</code></a></li>
             <li>No trailing newline.</li>
         </ul>
         <aside>
-            <p>Dictionary keys can appear in any order you choose, however the order needs to be remembered for later.</p>
+            <p>Dictionary keys can appear in any order you choose, however the order needs to be remembered for later.
+            </p>
+        </aside>
+        <aside>
+            <p>valid JSON accepts forms that JSON.stringify does not produce. Scuttlebutt messages are a subset of valid JSON, that will restringify to the same bytes that was parsed. The reference implementation parses messages received over the network, then reserializes them before validating the signature and will not accept messages with fields that are not cannonically encoded.
+            </p>
         </aside>
         <p>Then sign the message by computing:</p>
         <pre><code>signature = nacl_sign_detached(
