@@ -813,7 +813,7 @@ assert_nacl_sign_verify_detached(
         <h4 id="signature">Signature</h4>
         <div>
             <p>All messages in a feed are signed by that feed’s long-term secret key. This enables recipients to verify that a message was really posted by a particular identity and not tampered with as it gets gossiped and replicated throughout the Scuttlebutt network.</p>
-            <p>Before signing a message it must be formatted as JSON as shown above. The formatting rules are:</p>
+            <p>Before signing a message it must be serialized according to a specific canonical JSON format. This means for any given message there is exactly one way to serialize it as a sequence of bytes, which is necessary for signature verification to work. The reference implementation verifies that all messages it receives are in the canonical format and rejects messages that aren’t.</p>
         </div>
         <aside class="impl">
             <img class="icon" src="img/impl.png"/>
@@ -824,21 +824,18 @@ assert_nacl_sign_verify_detached(
             <div class="lang">Py</div>
             <div class="vs"><a href="https://github.com/pferreir/pyssb/blob/master/ssb/feed/models.py">models.py</a></div>
         </aside>
+        <p>The canonical format is defined by the <em>ECMA-262 6<sup>th</sup> Edition</em> section <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-json.stringify">JSON.stringify</a></em>. For an example, see how the above message is formatted.</p>
+        <p>In brief, the rules are:</p>
         <ul>
             <li>Two spaces for indentation.</li>
             <li>Dictionary entries and list elements each on their own line.</li>
             <li>Empty dictionaries appear as <code>{}</code> and empty lists appear as <code>[]</code>.</li>
             <li>One space after the colon <code>:</code> for dictionary keys.</li>
-            <li>Strings and numbers must be cannonically encoded. That is, they should be the form <em>produced</em> by <a href="https://www.ecma-international.org/ecma-262/6.0/#sec-json.stringify"><code>JSON.stringify</code></a></li>
+            <li>Strings and numbers formatted according to the sections <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-quotejsonstring">QuoteJSONString</a></em> and <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-tostring-applied-to-the-number-type">ToString Applied to the Number Type</a></em>.
             <li>No trailing newline.</li>
         </ul>
         <aside>
-            <p>Dictionary keys can appear in any order you choose, however the order needs to be remembered for later.
-            </p>
-        </aside>
-        <aside>
-            <p>valid JSON accepts forms that JSON.stringify does not produce. Scuttlebutt messages are a subset of valid JSON, that will restringify to the same bytes that was parsed. The reference implementation parses messages received over the network, then reserializes them before validating the signature and will not accept messages with fields that are not cannonically encoded.
-            </p>
+            <p>Dictionary keys can appear in any order you choose, however the order needs to be remembered for later.</p>
         </aside>
         <p>Then sign the message by computing:</p>
         <pre><code>signature = nacl_sign_detached(
