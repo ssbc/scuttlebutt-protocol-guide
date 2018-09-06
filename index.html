@@ -833,6 +833,7 @@ assert_nacl_sign_verify_detached(
             <li>One space after the colon <code>:</code> for dictionary keys.</li>
             <li>Strings and numbers formatted according to the sections <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-quotejsonstring">QuoteJSONString</a></em> and <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-tostring-applied-to-the-number-type">ToString Applied to the Number Type</a></em>.
             <li>No trailing newline.</li>
+            <li>The properties must be in an accepted order, no extra fields are permitted. Either <code>previous, author, sequence, timestamp, hash, content, signature</code> or <code>previous, sequence, author, timestamp, hash, content, signature</code>. (<code>author</code> and <code>sequence</code> are accepted in either order, but it's strongly recommended to put author first.</li>
         </ul>
         <aside>
             <p>Dictionary keys can appear in any order you choose, however the order needs to be remembered for later.</p>
