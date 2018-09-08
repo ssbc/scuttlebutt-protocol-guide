@@ -809,6 +809,11 @@ assert_nacl_sign_verify_detached(
                 <td>Dictionary containing free-form data for applications to interpret, plus a mandatory <em>type</em> field. The <em>type</em> field allows applications to filter out message types they don’t understand and must be a string between 3 and 52 characters long (inclusive).</td>
             </tr>
         </table>
+        <aside style="align-self: start; position: relative; top: 19px;">
+            <p>Only these fields are allowed and they all must be present.</p>
+            <p>Fields must appear in this order (although <em>author</em> and <em>sequence</em> can be swapped for legacy reasons, but please don’t do this for new messages).</p>
+            <p>Fields within <em>content</em> can appear in any order but the order must be remembered for later.</p>
+        </aside>
 
         <h4 id="signature">Signature</h4>
         <div>
@@ -833,17 +838,13 @@ assert_nacl_sign_verify_detached(
             <li>One space after the colon <code>:</code> for dictionary keys.</li>
             <li>Strings and numbers formatted according to the sections <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-quotejsonstring">QuoteJSONString</a></em> and <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-tostring-applied-to-the-number-type">ToString Applied to the Number Type</a></em>.
             <li>No trailing newline.</li>
-            <li>The properties must be in an accepted order, no extra fields are permitted. Either <code>previous, author, sequence, timestamp, hash, content, signature</code> or <code>previous, sequence, author, timestamp, hash, content, signature</code>. (<code>author</code> and <code>sequence</code> are accepted in either order, but it's strongly recommended to put author first.</li>
         </ul>
-        <aside>
-            <p>Dictionary keys can appear in any order you choose, however the order needs to be remembered for later.</p>
-        </aside>
         <p>Then sign the message by computing:</p>
         <pre><code>signature = nacl_sign_detached(
   msg: formatted_json_message,
   key: authors_longterm_sk
 )</code></pre>
-        <p>Base64 encode the signature and put <code>.sig.ed25519</code> on the end. Finally, add the signature to the message itself:</p>
+        <p>Base64 encode the signature and put <code>.sig.ed25519</code> on the end. Finally, add the signature to the message itself. It must be the last entry in the dictionary:</p>
         <pre><code>{
   "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
   "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
@@ -858,7 +859,7 @@ assert_nacl_sign_verify_detached(
                 IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
 }</code></pre>
 
-        <p>To verify the signature, first remove the signature field from the message. Make sure the remaining message is formatted as JSON using the same formatting rules. Here the order of dictionary keys matters; the keys must be in the same order that you received them.</p>
+        <p>To verify the signature, first remove the signature field from the message. Make sure the remaining message is formatted as JSON using the same formatting rules. Here the order of dictionary entries within <em>content</em> matters; they must be in the same order that you received them.</p>
         <p>Then remove the <code>.sig.ed25519</code> suffix from the signature, base64 decode it and verify with:</p>
         <pre><code>nacl_sign_verify_detached(
   sig: signature,
