@@ -245,7 +245,7 @@ assert_nacl_auth_verify(
         <aside>
             <p><strong>hmac</strong> is a function that allows verifying that a message came from someone who knows the same secret key as you. In this case the network identifier is used as the secret key.</p>
             <p>Both the message creator and verifier have to know the same message and secret key for the verification to succeed, but the secret key is not revealed to an eavesdropper. </p>
-            <p>Throughout the protocol, all instances of hmac use HMAC-SHA-512-256.</p>
+            <p>Throughout the protocol, all instances of hmac use HMAC-SHA-512-256 (which is the first 256 bits of HMAC-SHA-512).</p>
         </aside>
 
         <h4 id="server-hello">2. Server hello</h4>
