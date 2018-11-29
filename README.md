@@ -1,9 +1,5 @@
 # Scuttlebutt Protocol Guide
 
-- [Read online](https://ssbc.github.io/scuttlebutt-protocol-guide)
-- [GitHub repo](https://github.com/ssbc/scuttlebutt-protocol-guide)
-- Scuttlebutt repo: `%gghZe88ZC2N18Zz44cn0/PE12eEJ+vyzOj6CW1QG4Ds=.sha256`
-
 ## Contributing
 
 For typos, errors or other small changes feel free to email, open an issue or make a pull request. Please also send reports of what parts you found useful, confusing or where you got stuck. This feedback is very helpful and has already improved the guide in several different places.
