@@ -306,7 +306,7 @@ table.defs td:first-child {
 
 .impl {
     display: grid;
-    grid-template-columns: 22px 1fr;
+    grid-template-columns: 30px 1fr;
     grid-column-gap: 4px;
     align-items: first baseline;
 }
