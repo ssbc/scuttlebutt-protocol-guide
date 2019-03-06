@@ -846,6 +846,7 @@ assert_nacl_sign_verify_detached(
             <li>One space after the colon <code>:</code> for dictionary keys.</li>
             <li>Strings and numbers formatted according to the sections <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-quotejsonstring">QuoteJSONString</a></em> and <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-tostring-applied-to-the-number-type">ToString Applied to the Number Type</a></em>.
             <li>No trailing newline.</li>
+            <li>Use the line feed <code>\n</code> character as newline character.</li>
         </ul>
         <p>Then sign the message by computing:</p>
         <pre><code>signature = nacl_sign_detached(
