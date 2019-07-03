@@ -300,7 +300,7 @@ shared_secret_aB = nacl_scalarmult(
 )
 
 shared_secret_aB = nacl_scalarmult(
-  sk_to_curve25519(server_longterm_sk),
+  pk_to_curve25519(server_longterm_sk),
   client_ephemeral_pk
 )</code></pre>
         </figure>
