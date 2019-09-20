@@ -72,6 +72,25 @@ nav {
     text-transform: uppercase;
 }
 
+#backToTopButton {
+    position: fixed;
+    bottom: 10px;
+    float: right;
+    right: 10%;
+    left: 90%;
+    max-width: 40px;
+    width: 100%;
+    font-size: 14px;
+    border-color: rgba(85, 85, 85, 0.2);
+    background-color: rgb(100,100,100);
+    padding: .5px;
+    border-radius: 4px;
+}
+
+#backToTopButton:hover {
+    background-color: #7dbbf1;
+}
+
 header a {
     display: flex;
     align-items: center;
