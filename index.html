@@ -120,7 +120,7 @@
             <div class="vs"><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
             <div class="vs"><a href="https://github.com/ssbc/ssb-local/blob/master/index.js">ssb-local</a></div>
             <div class="lang">Java</div>
-            <div class="vs"><a href="https://github.com/ConsenSys/cava/blob/master/scuttlebutt-discovery/src/main/java/net/consensys/cava/scuttlebutt/discovery/ScuttlebuttLocalDiscoveryService.java">LocalDiscoveryService</a></div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-discovery/src/main/java/org/apache/tuweni/scuttlebutt/discovery/ScuttlebuttLocalDiscoveryService.java</a></div>
         </aside>
 
         <div>
@@ -189,8 +189,8 @@
             <div class="vs"><a href="https://github.com/AljoschaMeyer/shs1-c/blob/master/src/shs1.c">shs1.c</a></div>
             <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
             <div class="lang">Java</div>
-            <div class="vs"><a href="https://github.com/ConsenSys/cava/blob/master/scuttlebutt-handshake/src/main/java/net/consensys/cava/scuttlebutt/handshake/SecureScuttlebuttHandshakeClient.java">HandshakeClient</a></div>
-            <div class="vs"><a href="https://github.com/ConsenSys/cava/blob/master/scuttlebutt-handshake/src/main/java/net/consensys/cava/scuttlebutt/handshake/SecureScuttlebuttHandshakeServer.java">HandshakeServer</a></div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttHandshakeClient.java">HandshakeClient</a></div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttHandshakeServer.java">HandshakeServer</a></div>
         </aside>
         <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
         <ul>
@@ -485,7 +485,7 @@ assert_nacl_sign_verify_detached(
             <div class="vs"><a href="https://github.com/AljoschaMeyer/box-stream-c/blob/master/src/box-stream.c">box-stream.c</a></div>
             <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
             <div class="lang">Java</div>
-            <div class="vs"><a href="https://github.com/ConsenSys/cava/blob/master/scuttlebutt-handshake/src/main/java/net/consensys/cava/scuttlebutt/handshake/SecureScuttlebuttStream.java">Stream</a></div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttStream.java">Stream</a></div>
         </aside>
 
         <img src="img/box_stream_send.png" class="pagewidth" style="height: 670px;"/>
@@ -519,7 +519,7 @@ assert_nacl_sign_verify_detached(
             <div class="lang">C</div>
             <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
             <div class="lang">Java</div>
-            <div class="vs"><a href="https://github.com/ConsenSys/cava/blob/master/scuttlebutt-rpc/src/main/java/net/consensys/cava/scuttlebutt/rpc/RPCCodec.java">RPCCodec</a></div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-rpc/src/main/java/org/apache/tuweni/scuttlebutt/rpc/RPCCodec.java">RPCCodec</a></div>
         </aside>
         <div>
             <p>Scuttlebutt peers make requests to each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
@@ -1409,7 +1409,7 @@ assert_nacl_sign_verify_detached(
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/invite.js">invite.js</a></div>
             <div class="lang">Java</div>
-            <div class="vs"><a href="https://github.com/ConsenSys/cava/blob/master/scuttlebutt/src/main/java/net/consensys/cava/scuttlebutt/Invite.java">Invite</a></div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt/src/main/java/org/apache/tuweni/scuttlebutt/Invite.java">Invite</a></div>
         </aside>
         <p>However, unlike a regular handshake, the client uses the secret key in the invite as their <img class="inline-key" src="img/key_big_a_secret.png"/> long term secret key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
         <p>Handshaking with the invite key allows the client to call a special RPC method <em>invite.use</em>:</p>
