@@ -1399,7 +1399,7 @@ assert_nacl_sign_verify_detached(
             <p>If you want to run a pub that caters to an existing community, you could generate invite codes and give them out to current members. That way everyone who joins will be able to see the other members.</p>
         </aside>
         <img src="img/format_invite.png" style="height: 139px;"/>
-        <p>To make a new invite code, a pub generates a new Ed25519 key pair. The secret key goes into the invite code, which is given to either a new user or the pub operator to distribute. The public key is remembered by the pub along with any extra conditions such as the number of remaining uses or expiry date.</p>
+        <p>To make a new invite code, a pub generates a new Ed25519 key pair. The seed for the key pair (derived from the secret key) goes into the invite code, which is given to either a new user or the pub operator to distribute. The public key is remembered by the pub along with any extra conditions such as the number of remaining uses or expiry date.</p>
 
         <h4 id="redeeming-invites">Redeeming invites</h4>
         <p>To redeem an invite, a user enters the invite code into their Scuttlebutt client. The client opens a new TCP connection to the domain and port contained in the invite and proceeds to set up a peer connection, starting with the handshake.</p>
