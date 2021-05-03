@@ -89,7 +89,7 @@
             </div>
         </div>
         <hr/>
-    
+
         <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a> is a protocol for building decentralized applications that work well offline and that no one person can control. Because there is no central server, Scuttlebutt clients connect to their peers to exchange information. This guide describes the protocols used to communicate within the Scuttlebutt network.</p>
         <p>Scuttlebutt is a flexible protocol, capable of supporting many different types of applications. One of its first applications was as a social network. This guide has a slight focus on how to use Scuttlebutt for social networking, but many of the explanations will still be useful if want to use it for something completely different, or are just curious how it works.</p>
 
@@ -815,7 +815,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>content</td>
-                <td>If the message is not encrypted, This is a dictionary containing free-form data for applications to interpret, plus a mandatory <em>type</em> field. The <em>type</em> field allows applications to filter out message types they don’t understand and must be a string between 3 and 52 characters long (inclusive). If this is a base64 encoded string, followed by a suffiix of <code>.box</code></td>
+                <td>If the message is not encrypted, This is a dictionary containing free-form data for applications to interpret, plus a mandatory <em>type</em> field. The <em>type</em> field allows applications to filter out message types they don’t understand and must be a UTF-16 string between 3 and 52 code units long (inclusive). If this is a base64 encoded string, followed by a suffiix of <code>.box</code></td>
             </tr>
         </table>
         <aside style="align-self: start; position: relative; top: 19px;">
@@ -1056,7 +1056,7 @@ assert_nacl_sign_verify_detached(
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/ssbc/multiblob/blob/master/index.js">multiblob</a></div>
         </aside>
-    
+
         <h4 id="blobs.get">blobs.get</h4>
         <p><em>blobs.get</em> asks a peer to send you the contents of a blob. There is one argument which is the blob ID:</p>
         <figure class="request-response">
@@ -1075,7 +1075,7 @@ assert_nacl_sign_verify_detached(
             </div>
             <img class="request-arrow" src="img/arrow.png"/>
         </figure>
-        
+
         <p>Now the responder begins streaming back the contents of the blob. Each response has a body type of binary and contains a piece of the blob, starting from the beginning.</p>
         <p>This particular blob is 161,699 bytes long and the responder has decided to send it in pieces of 65,536 bytes each. That means two full pieces of 65,536 bytes will be sent and a final piece with the remaining 30,627 bytes.</p>
 
