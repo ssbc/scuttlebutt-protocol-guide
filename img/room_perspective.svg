@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 624 358" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <g id="Artboard1" transform="matrix(0.971238,0,0,1.00643,-336.29,0)">
+        <rect x="346.249" y="0" width="641.96" height="355" style="fill:none;"/>
+        <g id="Layer-1" serif:id="Layer 1" transform="matrix(1.02961,0,0,0.993613,-9.99704,-224.722)">
+            <circle id="circle6769" cx="535" cy="421.167" r="160" style="fill:rgb(248,236,243);"/>
+            <g transform="matrix(1,0,0,1,535,442.167)">
+                <g id="text1710">
+                    <text x="-16.713px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">room</text>
+                </g>
+            </g>
+            <circle id="circle57077" cx="537" cy="423.167" r="3.75" style="fill:rgb(216,153,188);"/>
+            <circle id="path6670" cx="535" cy="421.167" r="3.75" style="fill:rgb(204,122,168);stroke:rgb(180,69,131);stroke-width:1px;"/>
+            <g id="path5543" transform="matrix(1,-0,-0,1,346,226.167)">
+                <path d="M207.5,191L198.5,195.5L207.5,200C205.25,197.75 205.25,193.25 207.5,191Z" style="fill:rgb(7,115,179);fill-rule:nonzero;"/>
+                <path d="M205.7,195.5L249.5,195.5" style="fill:none;fill-rule:nonzero;stroke:rgb(7,115,179);stroke-width:1px;"/>
+            </g>
+            <g id="path55431" serif:id="path5543" transform="matrix(2.47059,0,0,1,-870.735,39.5)">
+                <g transform="matrix(0.404762,-0,-0,1,492.488,186.667)">
+                    <path d="M126.636,233.295L118.457,222.855L115.013,235.662C117.327,232.164 123.139,230.981 126.636,233.295Z" style="fill:rgb(7,115,179);fill-rule:nonzero;"/>
+                    <path d="M120.351,232.154C138.183,297.983 238.592,299.459 261.101,224.474" style="fill:none;fill-rule:nonzero;stroke:rgb(7,115,179);stroke-width:1.88px;stroke-dasharray:1.88,1.88;"/>
+                </g>
+            </g>
+            <circle id="circle79470" cx="467" cy="423.167" r="3.75" style="fill:rgb(216,178,200);"/>
+            <circle id="circle79472" cx="465" cy="421.167" r="3.75" style="fill:rgb(0,160,116);stroke:rgb(0,121,88);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,464.857,442.167)">
+                <g id="text79476">
+                    <text x="-15.193px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(0,160,116);">Alice</text>
+                </g>
+            </g>
+            <circle id="circle80196" cx="607" cy="423.167" r="3.75" style="fill:rgb(216,178,200);"/>
+            <circle id="circle80198" cx="605" cy="421.167" r="3.75" style="fill:rgb(7,115,179);stroke:rgb(5,80,124);stroke-width:1px;"/>
+            <g id="path87261" transform="matrix(1,-0,-0,1,346,226.167)">
+                <path d="M170.5,200L179.5,195.5L170.5,191C172.75,193.25 172.75,197.75 170.5,200Z" style="fill:rgb(0,160,116);fill-rule:nonzero;"/>
+                <path d="M172.3,195.5L128.5,195.5" style="fill:none;fill-rule:nonzero;stroke:rgb(0,160,116);stroke-width:1px;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,601.485,444.509)">
+                <g id="text89297">
+                    <text x="-11.823px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">Bob</text>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,534.759,239.721)">
+                <g id="text102179">
+                    <text x="-73.341px" y="0px" style="font-family:'LucidaGrande-Bold', 'Lucida Grande', sans-serif;font-weight:600;font-size:13px;fill:rgb(180,69,131);">Tunnelled Connection</text>
+                </g>
+            </g>
+            <g id="circle57127" transform="matrix(1,0,0,1,-110,335)">
+                <circle cx="854" cy="-41.333" r="3.75" style="fill:rgb(236,236,236);"/>
+            </g>
+            <g id="circle57125" transform="matrix(1,0,0,1,-110,335)">
+                <circle cx="809" cy="-41.333" r="3.75" style="fill:rgb(236,236,236);"/>
+            </g>
+            <g id="circle50159" transform="matrix(1,0,0,1,-110,335)">
+                <circle cx="807" cy="-43.333" r="3.75" style="fill:rgb(204,122,168);stroke:rgb(180,69,131);stroke-width:1px;"/>
+            </g>
+            <g id="circle50161" transform="matrix(1,0,0,1,-110,335)">
+                <circle cx="852" cy="-43.333" r="3.75" style="fill:rgb(7,115,179);stroke:rgb(5,80,124);stroke-width:1px;"/>
+            </g>
+            <g id="path50163" transform="matrix(1,0,0,1,-110,335)">
+                <g transform="matrix(1,-0,-0,1,456,-108.833)">
+                    <path d="M377.093,61.297L385.5,65.5L377.093,69.703C379.195,67.602 379.195,63.398 377.093,61.297Z" style="fill:rgb(7,115,179);fill-rule:nonzero;"/>
+                    <path d="M360,65.5L378.775,65.5" style="fill:none;fill-rule:nonzero;stroke:rgb(7,115,179);stroke-width:1px;"/>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,697,284.167)">
+                <g id="text50969">
+                    <text x="-4.485px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">A</text>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,742,284.167)">
+                <g id="text50973">
+                    <text x="-3.739px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">B</text>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,760,295.167)">
+                <g id="text50993">
+                    <g>
+                        <text x="0px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(102,102,102);">means</text>
+                        <text x="45.367px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">A</text>
+                        <text x="58.449px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(102,102,102);">connects directly to</text>
+                        <text x="186.38px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">B</text>
+                    </g>
+                </g>
+            </g>
+            <g id="circle571271" serif:id="circle57127" transform="matrix(1,0,0,1,-110,365)">
+                <circle cx="854" cy="-41.333" r="3.75" style="fill:rgb(236,236,236);"/>
+            </g>
+            <g id="circle571251" serif:id="circle57125" transform="matrix(1,0,0,1,-110,365)">
+                <circle cx="809" cy="-41.333" r="3.75" style="fill:rgb(236,236,236);"/>
+            </g>
+            <g id="circle501591" serif:id="circle50159" transform="matrix(1,0,0,1,-110,365)">
+                <circle cx="807" cy="-43.333" r="3.75" style="fill:rgb(204,122,168);stroke:rgb(180,69,131);stroke-width:1px;"/>
+            </g>
+            <g id="circle501611" serif:id="circle50161" transform="matrix(1,0,0,1,-110,365)">
+                <circle cx="852" cy="-43.333" r="3.75" style="fill:rgb(7,115,179);stroke:rgb(5,80,124);stroke-width:1px;"/>
+            </g>
+            <g id="path501631" serif:id="path50163" transform="matrix(1,0,0,1,-110,365)">
+                <g transform="matrix(1,-0,-0,1,456,-138.833)">
+                    <path d="M377.093,91.297L385.5,95.5L377.093,99.703C379.195,97.602 379.195,93.398 377.093,91.297Z" style="fill:rgb(7,115,179);fill-rule:nonzero;"/>
+                    <path d="M360,95.5L378.775,95.5" style="fill:none;fill-rule:nonzero;stroke:rgb(7,115,179);stroke-width:1px;stroke-dasharray:1,1;"/>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,697,314.167)">
+                <g id="text509691" serif:id="text50969">
+                    <text x="-4.485px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">A</text>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,742,314.167)">
+                <g id="text509731" serif:id="text50973">
+                    <text x="-3.739px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">B</text>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,760,325.167)">
+                <g id="text509931" serif:id="text50993">
+                    <g>
+                        <text x="0px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(102,102,102);">means</text>
+                        <text x="45.367px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">A</text>
+                        <text x="58.449px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(102,102,102);">connects indirectly to</text>
+                        <text x="198.206px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">B</text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

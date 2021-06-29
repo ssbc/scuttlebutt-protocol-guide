@@ -9,15 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="10"
-   height="10"
-   viewBox="0 0 10 10"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="diag_stripe.svg"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   sodipodi:docname="impl.svg">
   <defs
      id="defs2">
     <marker
@@ -150,20 +148,29 @@
      inkscape:snap-text-baseline="true"
      inkscape:snap-bbox="false"
      inkscape:snap-global="true"
-     inkscape:object-paths="false"
+     inkscape:object-paths="true"
      inkscape:snap-intersection-paths="false"
      inkscape:snap-smooth-nodes="false"
      fit-margin-top="20"
      fit-margin-left="20"
      fit-margin-right="20"
      fit-margin-bottom="20"
-     inkscape:snap-nodes="true"
-     inkscape:object-nodes="true">
+     height="280px"
+     inkscape:object-nodes="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-nodes="true">
     <inkscape:grid
        type="xygrid"
        id="grid826"
        originx="0"
-       originy="0" />
+       originy="0"
+       color="#ff00ff"
+       opacity="0.03921569"
+       empcolor="#ff00ff"
+       empopacity="0.19607843"
+       empspacing="2"
+       spacingx="0.5"
+       spacingy="0.5" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -173,7 +180,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -181,16 +188,18 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-0.31103516,-581.16663)">
+     transform="translate(-0.31103516,-575.16663)">
+    <circle
+       style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#0773b3;fill-opacity:1;stroke:none;stroke-width:1.33333313;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
+       id="path331"
+       cx="8.3110323"
+       cy="583.16663"
+       r="7.9999976" />
     <path
-       style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#e5e5e5;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
-       d="m -2.6889648,592.16663 13.9999998,-14"
-       id="path5075"
-       inkscape:connector-curvature="0" />
-    <path
+       style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.33333325;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:fill markers stroke"
+       d="m 6.3110352,577.16663 -2.5,2.5 0.25,0.75 -0.625,0.625 -0.75,-0.25 -0.875,0.875 2,2 0.875,-0.875 -0.25,-0.75 0.625,-0.625 0.75,-0.125 0.75,0.375 0.625,0.625 -0.125,0.625 4.7499998,4.75 1.5,-1.5 -4.7499998,-4.75 -0.625,0.125 -0.625,-0.625 v -1.375 l 0.875,-0.75 1.125,-0.125 h 0.9999998 v -0.75 l -1.9999998,-0.75 z"
+       id="path1374"
        inkscape:connector-curvature="0"
-       id="path5081"
-       d="m 5.311045,594.16663 7.99998,-7.99998"
-       style="color:#000000;overflow:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#e5e5e5;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke" />
+       sodipodi:nodetypes="cccccccccccccccccccccccccc" />
   </g>
 </svg>

@@ -7,10 +7,10 @@ html {
 }
 
 body {
-    margin: 0 0 100px 0;
+    margin: 0;
 }
 
-header, main, .left-right.code {
+header, main, footer, .left-right.code {
     display: grid;
     grid-template-columns:
         [screen-start] 1fr
@@ -33,15 +33,24 @@ header, main, .left-right.code {
 
 main {
     align-items: first baseline;
+    margin-bottom: 64px;
+}
+
+header, footer {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 300;
 }
 
 header {
     background-color: #0f103d;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 12px;
-    font-weight: 300;
     height: 70px;
+    font-size: 12px;
     align-items: stretch;
+}
+
+footer {
+    background-color: #242828;
+    padding: 48px 0;
 }
 
 .title {
@@ -78,8 +87,12 @@ header a:hover {
     margin: -4px 10px -2px 0;
 }
 
-main > * {
+main > *, footer > * {
     grid-column: text;
+}
+
+footer > *:last-child {
+    margin-bottom: 0;
 }
 
 .pagewidth {
@@ -119,7 +132,7 @@ h5 {
     margin-top: 60px;
 }
 
-pre, code {
+pre, code, .binary span {
     font-family: "DejaVu Sans Mono";
 }
 
@@ -215,14 +228,22 @@ figcaption code, aside code {
 a {
     color: unset;
     text-decoration: unset;
-    border-bottom: 1px solid rgb(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 a:hover {
-    border-bottom-color: rgb(0, 0, 0, 0.8);
+    border-bottom-color: rgba(0, 0, 0, 0.8);
 }
 
-p, ol, ul, pre, table {
+footer a {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+footer a:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+p, ol, ul, pre, table, .fixed-key {
     margin: 0 0 1rem;
 }
 
@@ -279,47 +300,39 @@ table.defs td:first-child {
     padding-right: 1rem;
 }
 
-table.impls {
-    margin: 2rem 0 2rem;
+.small {
     font-size: 13px;
-    line-height: 1.5;
-    width: 1072px;
-    table-layout: fixed;
 }
 
-table.impls tr:nth-child(even) {
-    background-color: #f4f4f4;
+.impl {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    grid-column-gap: 4px;
+    align-items: first baseline;
 }
 
-table.impls th, table.impls td {
-    padding: 6px;
-    box-sizing: border-box;
+.impl .icon {
+    grid-column: 1;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
 }
 
-table.impls th:first-child {
-    width: calc(184px - 6px);
+.impl h5 {
+    grid-column: 2;
+    color: #0773b3;
+    margin: 0;
 }
 
-table.impls tr {
-    height: 55px;
+.impl .lang {
+    grid-column: 1;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
-table.impls th {
-    text-align: left;
-    width: calc((1072px - 184px - 6px) / 4);
-}
-
-table.impls .byline {
-    font-weight: normal;
-    color: rgba(0, 0, 0, 0.6);
-}
-
-table.impls a {
-    border-bottom: none;
-}
-
-table.impls a:hover {
-    border-bottom: 1px solid rgb(0, 0, 0, 0.8);
+.impl .vs {
+    grid-column: 2;
 }
 
 .code {
@@ -399,11 +412,31 @@ table.impls a:hover {
     background-color: #808080;
 }
 
-.request-response pre, .packet pre {
+.request-response pre, .packet pre, .packet img {
     background: none;
     font-family: "DejaVu Sans Mono";
     margin: 0;
     padding: 10px;
+}
+
+.fixed-key.binary {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-row-gap: 4px;
+    row-gap: 4px;
+}
+
+.fixed-key.binary span {
+    font-size: 15px;
+    padding: 9px;
+    background-color: #f4f4f4;
+    border-left: 1px solid #ccc;
+    justify-self: stretch;
+    text-align: center;
+}
+
+.fixed-key.binary span:nth-child(16n), .fixed-key.binary span:last-child {
+    border-right: 1px solid #ccc;
 }
 
 .request-response .binary {
@@ -412,14 +445,18 @@ table.impls a:hover {
     position: relative;
 }
 
-.request-response .binary code {
-    background: #e79f2755;
+.request-response .binary span {
     border-radius: 0;
     font-size: 12px;
     padding: 4px;
     justify-self: stretch;
     text-align: center;
 }
+
+.binary .d0 { background-color: #fcf3e4; }
+.binary .d1 { background-color: #fcecd2; }
+.binary .d2 { background-color: #fbe6c3; }
+.binary .d3 { background-color: #f9dfb3; }
 
 .request-arrow, .response-arrow {
     align-self: center;
@@ -428,6 +465,7 @@ table.impls a:hover {
     -moz-user-select: none;
     user-drag: none;
     -webkit-user-drag: none;
+    width: 60px;
 }
 
 .request-arrow {
