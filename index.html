@@ -1574,6 +1574,7 @@ assert_nacl_sign_verify_detached(
         <p>Rooms differ from pubs because even though they're a Scuttlebutt peer, they are not meant to aid replication by <i>diminishing the number of hops between peers</i>. Instead, they provide a simple way for peers to find and connect to each other even though these peers might not have publicly-accessible connections, and thus no <i>follow</i> messages are used in the rooms workflow.</p>
         
         <h3 id="rooms-tunnel">Tunnel</h3>
+
         <p>A tunnel is an indirect connection between two Scuttlebutt peers that is facilitated by another peer with a stable and publicly available Internet connection. This facilitator peer wraps the indirect connection between the other peers thus providing a tunnel for them to meet with one another as if they were on the same network.</p>
         <aside>
             <p>For a deeper understanding of tunneling, refer to <a href="https://github.com/ssbc/ssb-tunnel" target="_blank">ssb-tunnel documentation.</a>
@@ -1588,8 +1589,9 @@ assert_nacl_sign_verify_detached(
             <div class="vs"><a href="https://github.com/ssb-ngi-pointer/go-ssb-room/tree/master/muxrpc/handlers/tunnel/server/plugin.go">plugin.go</a></div>
         </aside>
         <img src="img/room_perspective.png" />
-        <p>Be aware that tunnelled connections can only be established by peers who have established a friendship relationship by following each other.<p> 
+
         <h3 id="rooms-joining">Joining</h3>
+        
         <p>Before a peer is able to connect to a room and see other peers, they need to become an <i>authorized user</i> of that room by joining it with an invite code.</p>
         <p>Rooms can operate in three different modes:</p>
         <ul>
