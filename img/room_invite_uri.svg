@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 704 139" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <rect id="rect1362" x="0" y="0" width="704" height="139" style="fill:rgb(244,244,244);"/>
+    <g id="text862">
+        <g transform="matrix(1,0,0,1,356,73)">
+            <text x="-325.107px" y="0px" style="font-family:'DejaVuSansMono', 'DejaVu Sans Mono', monospace;font-size:15px;fill:rgb(7,115,179);">ssb</text>
+            <text x="-298.015px" y="0px" style="font-family:'DejaVuSansMono', 'DejaVu Sans Mono', monospace;font-size:15px;fill:rgb(26,26,26);">:</text>
+            <text x="-288.984px" y="0px" style="font-family:'DejaVuSansMono', 'DejaVu Sans Mono', monospace;font-size:15px;fill:rgb(204,122,168);">experimental</text>
+            <text x="-180.615px" y="0px" style="font-family:'DejaVuSansMono', 'DejaVu Sans Mono', monospace;font-size:15px;">?action=claim-http-invite&amp;invite=</text>
+            <text x="117.4px" y="0px" style="font-family:'DejaVuSansMono', 'DejaVu Sans Mono', monospace;font-size:15px;fill:rgb(211,96,39);">39c0ac1850ec9af14f1bb73</text>
+        </g>
+        <g transform="matrix(1,0,0,1,356,93.25)">
+            <text x="-225.769px" y="0px" style="font-family:'DejaVuSansMono', 'DejaVu Sans Mono', monospace;font-size:15px;">&amp;postTo=</text>
+            <text x="-153.523px" y="0px" style="font-family:'DejaVuSansMono', 'DejaVu Sans Mono', monospace;font-size:15px;fill:rgb(0,160,116);">https%3A%2F%2Fscuttlebutt.eu%2Fclaiminvite</text>
+        </g>
+    </g>
+    <g id="path5335" transform="matrix(0.962895,0,0,1,43.1062,0)">
+        <path d="M164.5,99L164.5,104.5L558.5,104.5L558.5,99" style="fill:none;fill-rule:nonzero;stroke:rgb(128,128,128);stroke-width:1px;"/>
+    </g>
+    <g transform="matrix(1,0,0,1,361,120)">
+        <g id="text5345">
+            <text x="-47.258px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Submission URL</text>
+        </g>
+    </g>
+    <g id="path114158" transform="matrix(0.288574,0,0,1,19.5242,0)">
+        <path d="M41.5,56L41.5,50.5L138.5,50.5L138.5,56" style="fill:none;fill-rule:nonzero;stroke:rgb(128,128,128);stroke-width:1.36px;"/>
+    </g>
+    <g id="path114164" transform="matrix(3.01178,0,0,1,-380.76,0)">
+        <path d="M183.5,56L183.5,50.5L149.5,50.5L149.5,56" style="fill:none;fill-rule:nonzero;stroke:rgb(128,128,128);stroke-width:0.45px;"/>
+    </g>
+    <g id="path114168" transform="matrix(0.435592,0,0,1,387.915,0)">
+        <path d="M670.5,56L670.5,50.5L193.5,50.5L193.5,56" style="fill:none;fill-rule:nonzero;stroke:rgb(128,128,128);stroke-width:1px;"/>
+    </g>
+    <g transform="matrix(1,0,0,1,585.34,39.2783)">
+        <g id="text114184">
+            <text x="-31.284px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">invite code</text>
+        </g>
+    </g>
+    <g transform="matrix(1,0,0,1,121,32)">
+        <g id="text114188">
+            <g>
+                <text x="-19.862px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">type of</text>
+                <text x="-23.353px" y="14.69px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">SSB URI</text>
+            </g>
+        </g>
+    </g>
+    <g transform="matrix(1,0,0,1,45.5466,28.3567)">
+        <g id="text114192">
+            <g>
+                <text x="-23.943px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="-12.378px -4.964px -0.844px " y="0px 0px 0px ">oto</tspan>col</text>
+                <text x="-23.01px" y="14.69px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">schema</text>
+            </g>
+        </g>
+    </g>
+</svg>
