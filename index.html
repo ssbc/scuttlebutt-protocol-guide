@@ -1507,11 +1507,11 @@ assert_nacl_sign_verify_detached(
         
         <h2 id="rooms">Rooms</h2>
         
-        <p>Rooms are an publicly-accessible Scuttlebutt peer, but unlike <a href="#pubs">pubs</a> they don't host feed data from other peers. The main feature rooms provide is a way for peers to find each other and establish tunnelled connections among themselves as if they were on the same network. They also provide more moderation tools than a pub with multiple user-levels and different privacy modes.</p>
+        <p>Rooms are an publicly accessible Scuttlebutt peer, but unlike <a href="#pubs">pubs</a> they don't host feed data from other peers. The main feature rooms provide is a way for peers to find each other and establish tunnelled connections among themselves as if they were on the same network. They also provide more moderation tools than a pub with multiple user-levels and different privacy modes.</p>
         <aside>
-            <p>There are two rooms specifications. There is a legacy <a href="https://github.com/staltz/ssb-room" target="_blank">room 1.0</a> implementation but most users and room operators have moved to the new <a href="https://ssb-ngi-pointer.github.io/rooms2/" target="_blank">rooms 2.0</a> specification, which is the one documented here.</p>
+            <p>There are two rooms specifications. There is a legacy <a href="https://github.com/staltz/ssb-room" target="_blank">room 1.0</a> implementation but most users and room operators have moved to the new <a href="https://ssb-ngi-pointer.github.io/rooms2/" target="_blank">rooms 2.0</a> specification, which is documented here.</p>
         </aside>
-        <p>Rooms differ from pubs because even though they're a Scuttlebutt peer, they are not meant to aid replication by <i>diminishing the number of hops between peers</i>. Instead, they provide a simple way for peers to find and connect to each other even though these peers might not have publicly-accessible connections, and thus no <i>follow</i> messages are used in the rooms workflow.</p>
+        <p>Rooms differ from pubs because even though they're a Scuttlebutt peer, they are not meant to aid replication by <i>diminishing the number of hops between peers</i>. Instead, they provide a simple way for peers to find and connect to each other even though these peers might not have publicly accessible connections, and thus no <i>follow</i> messages are used in the rooms workflow.</p>
         
         <h3 id="rooms-tunnel">Tunnel</h3>
 
@@ -1532,7 +1532,7 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="rooms-joining">Joining</h3>
         
-        <p>Before a peer is able to connect to a room and see other peers, they need to become an <i>authorized user</i> of that room by joining it with an invite code.</p>
+        <p>Before a peer can connect to a room and see other peers, they need to become an <i>authorized user</i> of that room by joining it with an invite code.</p>
         <p>Rooms can operate in three different modes:</p>
         <ul>
             <li><b>Open:</b> anyone can use an <i>open invite code</i> to join the room.</li>
@@ -1542,7 +1542,7 @@ assert_nacl_sign_verify_detached(
         <aside>
             <p>Check out the <a href="https://ssb-ngi-pointer.github.io/ssb-http-invite-spec/" target="_blank">full SSB HTTP Invite</a> specification for a deeper understanding of how it works.</p>
         </aside>
-        <p>Accepting a room invite code is a process that involves both <a href="#rpc-protocol">MUXRPC</a> connections and HTTP requests. The room invite is a URI specified according to the <a href="https://github.com/ssb-ngi-pointer/ssb-uri-spec" target="_blank">SSB URI specification</a>. Once the user navigates ot that URI, their operating system or web browser will launch a compatible Scuttlebutt client application that will handle the rest of the workflow.</p>
+        <p>Accepting a room invite code is a process that involves both <a href="#rpc-protocol">MUXRPC</a> connections and HTTP requests. The room invite is a URI specified according to the <a href="https://github.com/ssb-ngi-pointer/ssb-uri-spec" target="_blank">SSB URI specification</a>. Once the user navigates of that URI, their operating system or web browser will launch a compatible Scuttlebutt client application that will handle the rest of the workflow.</p>
         <img src="img/room_invite_uri.png" />
         <p>The Scuttlebutt client will extract the invite code and the submission URL from the SSB URI, and use them to claim that invite code to the room. This will involve a series of RPC calls described in the <a href="https://ssb-ngi-pointer.github.io/ssb-http-invite-spec/" target="_blank">SSB HTTP Invites specification</a>.</p>
         <p>Once a peer is accepted as a member of the room, their client application will see other peers in the same room as if they were on the same network and allow them to gossip with each other.</p>
