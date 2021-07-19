@@ -7,7 +7,7 @@
             <circle id="circle6769" cx="535" cy="421.167" r="160" style="fill:rgb(248,236,243);"/>
             <g transform="matrix(1,0,0,1,535,442.167)">
                 <g id="text1710">
-                    <text x="-16.713px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">room</text>
+                    <text x="-15.247px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(180,69,131);">r<tspan x="-10.975px " y="0px ">o</tspan>om</text>
                 </g>
             </g>
             <circle id="circle57077" cx="537" cy="423.167" r="3.75" style="fill:rgb(216,153,188);"/>
@@ -18,15 +18,15 @@
             </g>
             <g id="path55431" serif:id="path5543" transform="matrix(2.47059,0,0,1,-870.735,39.5)">
                 <g transform="matrix(0.404762,-0,-0,1,492.488,186.667)">
-                    <path d="M126.636,233.295L118.457,222.855L115.013,235.662C117.327,232.164 123.139,230.981 126.636,233.295Z" style="fill:rgb(7,115,179);fill-rule:nonzero;"/>
-                    <path d="M120.351,232.154C138.183,297.983 238.592,299.459 261.101,224.474" style="fill:none;fill-rule:nonzero;stroke:rgb(7,115,179);stroke-width:1.88px;stroke-dasharray:1.88,1.88;"/>
+                    <path d="M126.636,233.295L118.457,222.855L115.013,235.662C117.327,232.164 123.139,230.981 126.636,233.295Z" style="fill:rgb(188,68,136);fill-rule:nonzero;"/>
+                    <path d="M120.351,232.154C138.183,297.983 238.592,299.459 261.101,224.474" style="fill:none;fill-rule:nonzero;stroke:rgb(188,68,136);stroke-width:1.88px;stroke-dasharray:3.77,3.77,3.77,3.77;"/>
                 </g>
             </g>
             <circle id="circle79470" cx="467" cy="423.167" r="3.75" style="fill:rgb(216,178,200);"/>
             <circle id="circle79472" cx="465" cy="421.167" r="3.75" style="fill:rgb(0,160,116);stroke:rgb(0,121,88);stroke-width:1px;"/>
             <g transform="matrix(1,0,0,1,464.857,442.167)">
                 <g id="text79476">
-                    <text x="-15.193px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(0,160,116);">Alice</text>
+                    <text x="-14.241px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(0,160,116);">Alice</text>
                 </g>
             </g>
             <circle id="circle80196" cx="607" cy="423.167" r="3.75" style="fill:rgb(216,178,200);"/>
@@ -37,12 +37,12 @@
             </g>
             <g transform="matrix(1,0,0,1,601.485,444.509)">
                 <g id="text89297">
-                    <text x="-11.823px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">Bob</text>
+                    <text x="-11.4px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(7,115,179);">Bob</text>
                 </g>
             </g>
             <g transform="matrix(1,0,0,1,534.759,239.721)">
                 <g id="text102179">
-                    <text x="-73.341px" y="0px" style="font-family:'LucidaGrande-Bold', 'Lucida Grande', sans-serif;font-weight:600;font-size:13px;fill:rgb(180,69,131);">Tunnelled Connection</text>
+                    <text x="-63.835px" y="0px" style="font-family:'Roboto-Bold', 'Roboto';font-weight:700;font-size:13px;fill:rgb(180,69,131);">T<tspan x="-56.205px " y="0px ">u</tspan>nnelled Connection</text>
                 </g>
             </g>
             <g id="circle57127" transform="matrix(1,0,0,1,-110,335)">
@@ -65,21 +65,21 @@
             </g>
             <g transform="matrix(1,0,0,1,697,284.167)">
                 <g id="text50969">
-                    <text x="-4.485px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">A</text>
+                    <text x="-4.24px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(180,69,131);">A</text>
                 </g>
             </g>
             <g transform="matrix(1,0,0,1,742,284.167)">
                 <g id="text50973">
-                    <text x="-3.739px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">B</text>
+                    <text x="-4.047px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(7,115,179);">B</text>
                 </g>
             </g>
             <g transform="matrix(1,0,0,1,760,295.167)">
                 <g id="text50993">
                     <g>
-                        <text x="0px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(102,102,102);">means</text>
-                        <text x="45.367px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">A</text>
-                        <text x="58.449px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(102,102,102);">connects directly to</text>
-                        <text x="186.38px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">B</text>
+                        <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">means</text>
+                        <text x="42.447px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(180,69,131);">A</text>
+                        <text x="54.146px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">connects dir<tspan x="125.334px " y="0px ">e</tspan>ctly t<tspan x="159.917px " y="0px ">o</tspan></text>
+                        <text x="170.549px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(7,115,179);">B</text>
                     </g>
                 </g>
             </g>
@@ -97,27 +97,27 @@
             </g>
             <g id="path501631" serif:id="path50163" transform="matrix(1,0,0,1,-110,365)">
                 <g transform="matrix(1,-0,-0,1,456,-138.833)">
-                    <path d="M377.093,91.297L385.5,95.5L377.093,99.703C379.195,97.602 379.195,93.398 377.093,91.297Z" style="fill:rgb(7,115,179);fill-rule:nonzero;"/>
-                    <path d="M360,95.5L378.775,95.5" style="fill:none;fill-rule:nonzero;stroke:rgb(7,115,179);stroke-width:1px;stroke-dasharray:1,1;"/>
+                    <path d="M377.093,91.297L385.5,95.5L377.093,99.703C379.195,97.602 379.195,93.398 377.093,91.297Z" style="fill:rgb(192,73,141);fill-rule:nonzero;"/>
+                    <path d="M360,95.5L378.775,95.5" style="fill:none;fill-rule:nonzero;stroke:rgb(192,73,141);stroke-width:1px;stroke-dasharray:2,2,2,2;"/>
                 </g>
             </g>
             <g transform="matrix(1,0,0,1,697,314.167)">
                 <g id="text509691" serif:id="text50969">
-                    <text x="-4.485px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">A</text>
+                    <text x="-4.24px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(180,69,131);">A</text>
                 </g>
             </g>
             <g transform="matrix(1,0,0,1,742,314.167)">
                 <g id="text509731" serif:id="text50973">
-                    <text x="-3.739px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">B</text>
+                    <text x="-4.047px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(7,115,179);">B</text>
                 </g>
             </g>
             <g transform="matrix(1,0,0,1,760,325.167)">
                 <g id="text509931" serif:id="text50993">
                     <g>
-                        <text x="0px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(102,102,102);">means</text>
-                        <text x="45.367px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(180,69,131);">A</text>
-                        <text x="58.449px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(102,102,102);">connects indirectly to</text>
-                        <text x="198.206px" y="0px" style="font-family:'LucidaGrande', 'Lucida Grande', sans-serif;font-weight:500;font-size:13px;fill:rgb(7,115,179);">B</text>
+                        <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">means</text>
+                        <text x="42.447px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(180,69,131);">A</text>
+                        <text x="54.146px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">connects indir<tspan x="135.662px " y="0px ">e</tspan>ctly t<tspan x="170.244px " y="0px ">o</tspan></text>
+                        <text x="180.876px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(7,115,179);">B</text>
                     </g>
                 </g>
             </g>

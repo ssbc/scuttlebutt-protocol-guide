@@ -1515,7 +1515,7 @@ assert_nacl_sign_verify_detached(
         
         <h3 id="rooms-tunnel">Tunnel</h3>
 
-        <p>A tunnel is an indirect connection between two Scuttlebutt peers that is facilitated by another peer with a stable and publicly available Internet connection. This facilitator peer wraps the indirect connection between the other peers thus providing a tunnel for them to meet with one another as if they were on the same network.</p>
+        <p>A tunnel is an indirect connection between two Scuttlebutt peers which allows them to communicate as if they were on the same local network. This tunnel is made possible by the Room server which has a stable and publicly available Internet connection. The Room acts as a connection facilitator by wrapping the indirect connection between the other peers to create the tunnel.</p>
         <aside>
             <p>For a deeper understanding of tunneling, refer to <a href="https://github.com/ssbc/ssb-tunnel" target="_blank">ssb-tunnel documentation.</a>
         </aside>
