@@ -11,7 +11,7 @@
     <header>
         <div class="title">
             <a href="index.html">
-                <img src="img/logo.png"/>
+                <img src="img/logo.png" alt=""/>
                 <span>Scuttlebutt Protocol Guide</span>
             </a>
         </div>
@@ -96,11 +96,11 @@
         <h2 id="keys-and-identities">Keys and identities</h2>
         <p>The first thing a user needs to participate in Scuttlebutt is an identity. An identity is an Ed25519 key pair and typically represents a person, a device, a server or a bot. It’s normal for a person to have several Scuttlebutt identities.</p>
         <p>Upon starting for the first time, Scuttlebutt clients will automatically generate an Ed25519 key pair and save it in the user’s home folder under <code>.ssb/secret</code>.</p>
-        <img src="img/identity_keypair.png" style="height: 80px;"/>
+        <img src="img/identity_keypair.png" style="height: 80px;" alt="The Scuttlebutt identity is a long-term Ed25519 key pair." />
         <p>Because identities are long and random, no coordination or permission is required to create a new one, which is essential to the network’s design.</p>
         <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it stolen they will need to generate a new identity and tell people to use their new one instead.</p>
         <p>The public key of an identity is presented to users and transmitted in some parts of the network protocol using this format:</p>
-        <img src="img/format_public_key.png" style="height: 80px;"/>
+        <img src="img/format_public_key.png" style="height: 80px;" alt="@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519 where everything but the @ prefix and .ed25519 suffix is the public-key, base64-encoded." />
         <aside style="position: relative; top: 6px;">
             <p>Throughout the protocol all instances of base64 are the variant that uses <code>+</code> and <code>/</code>. The final padding <code>=</code> is also required.</p>
         </aside>
@@ -114,7 +114,7 @@
             <p>Peers constantly broadcast UDP packets on their local network advertising their presence. The body of each packet is a string containing the peer’s IP address, port and base64-encoded public key (without <code>@</code> or <code>.ed25519</code>):</p>
         </div>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt="net:192.168.1.123:8008:~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=" />
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
@@ -172,10 +172,10 @@
         <h3 id="handshake">Handshake</h3>
         <div>
             <p>The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
-            <img src="img/message_flow.png" style="height: 350px;"/>
+            <img src="img/message_flow.png" style="height: 350px;" alt="Message 1: Client hello (sent by the client). Message 2: Server hello. Message 3: Client authenticate. Message 4: Server accept" />
         </div>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/protocol.js">protocol.js</a></div>
@@ -209,10 +209,10 @@
 
         <h4 id="starting-keys">Starting keys</h4>
         <p>Upon starting the handshake, the client and server know these keys:</p>
-        <img src="img/starting_keys.png" style="height: 590px;"/>
+        <img src="img/starting_keys.png" style="height: 590px;" alt="Both the client and servers know: their own long term key pair, their own ephemeral key pair, and the network's (private) identifier. Additionally, the client knows the server's long term public key."/>
 
         <h4 id="client-hello">1. Client hello</h4>
-        <img src="img/client_hello.png" style="height: 120px;"/>
+        <img src="img/client_hello.png" style="height: 120px;" alt="The client sends their own ephemeral public key, hmac-authenticated using the network identifier"/>
 
         <figure class="left-right code">
             <h5 class="left">Client sends <span class="msgsize">(64 bytes)</span></h5>
@@ -237,8 +237,8 @@ assert_nacl_auth_verify(
         </figure>
 
         <div>
-            <p>First the client sends their <img class="inline-key" src="img/key_little_a_public.png"/> generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
-            <p>The <img class="inline-key" src="img/key_big_n.png"/> network identifier is a fixed key. On the main Scuttlebutt network it is the following 32-byte sequence:</p>
+            <p>First the client sends their <img class="inline-key" src="img/key_little_a_public.png" alt="public"/> generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
+            <p>The <img class="inline-key" src="img/key_big_n.png" alt=""/> network identifier is a fixed key. On the main Scuttlebutt network it is the following 32-byte sequence:</p>
             <div class="fixed-key binary">
                 <span>d4</span><span>a1</span><span>cb</span><span>88</span><span>a6</span><span>6f</span><span>02</span><span>f8</span><span>db</span><span>63</span><span>5c</span><span>e2</span><span>64</span><span>41</span><span>cc</span><span>5d</span>
                 <span>ac</span><span>1b</span><span>08</span><span>42</span><span>0c</span><span>ea</span><span>ac</span><span>23</span><span>08</span><span>39</span><span>b7</span><span>55</span><span>84</span><span>5a</span><span>9f</span><span>fb</span>
@@ -253,7 +253,7 @@ assert_nacl_auth_verify(
         </aside>
 
         <h4 id="server-hello">2. Server hello</h4>
-        <img src="img/server_hello.png" style="height: 120px;"/>
+        <img src="img/server_hello.png" style="height: 120px;" alt="The server sends their own ephemeral public key, hmac-authenticated using the network identifier"/>
 
         <figure class="left-right code">
             <h5 class="left">Client verifies</h5>
@@ -277,10 +277,10 @@ assert_nacl_auth_verify(
 )</code></pre>
         </figure>
 
-        <p>The server responds with their own <img class="inline-key" src="img/key_little_b_public.png"/> ephemeral public key and hmac. The client stores the key and verifies that they are also using the same network identifier.</p>
+        <p>The server responds with their own <img class="inline-key" src="img/key_little_b_public.png" alt="public"/> ephemeral public key and hmac. The client stores the key and verifies that they are also using the same network identifier.</p>
 
         <h4 id="shared-secret-derivation-1">Shared secret derivation</h4>
-        <img src="img/shared_secret_derivation_1.png" style="height: 220px;"/>
+        <img src="img/shared_secret_derivation_1.png" style="height: 220px;" alt="Each derivation uses one public key (their peer's) and one secret key (their own). The resultting shared secrets are identical between server and client."/>
 
         <figure class="left-right code">
             <h5 class="left">Client computes</h5>
@@ -306,9 +306,9 @@ shared_secret_aB = nacl_scalarmult(
         </figure>
 
         <div>
-            <p>Now that ephemeral keys have been exchanged, both ends use them to derive a shared secret <img class="inline-key" src="img/key_little_a_little_b.png"/> using scalar multiplication.</p>
-            <p>The client and server each combine their own ephemeral secret key with the other’s ephemeral public key to produce the same shared secret on both ends. An eavesdropper doesn’t know either secret key so they can’t generate the shared secret. A man-in-the-middle could swap out the ephemeral keys in Messages 1 and 2 for their own keys, so the shared secret <img class="inline-key" src="img/key_little_a_little_b.png"/> alone is not enough for the client and server to know that they are talking to each other and not a man-in-the-middle.</p>
-            <p>Because the client already knows the <img class="inline-key" src="img/key_big_b_public.png"/> server’s long term public key, both ends derive a second secret <img class="inline-key" src="img/key_little_a_big_b.png"/> that will allow the client to send a message that only the real server can read and not a man-in-the-middle.</p>
+            <p>Now that ephemeral keys have been exchanged, both ends use them to derive a shared secret <img class="inline-key" src="img/key_little_a_little_b.png" alt=""/> using scalar multiplication.</p>
+            <p>The client and server each combine their own ephemeral secret key with the other’s ephemeral public key to produce the same shared secret on both ends. An eavesdropper doesn’t know either secret key so they can’t generate the shared secret. A man-in-the-middle could swap out the ephemeral keys in Messages 1 and 2 for their own keys, so the shared secret <img class="inline-key" src="img/key_little_a_little_b.png" alt=""/> alone is not enough for the client and server to know that they are talking to each other and not a man-in-the-middle.</p>
+            <p>Because the client already knows the <img class="inline-key" src="img/key_big_b_public.png" alt=""/> server’s long term public key, both ends derive a second secret <img class="inline-key" src="img/key_little_a_big_b.png" alt="using the client's ephemeral key pair (either the public or the secret key) and the server's permanent key pair (respectively either the secret or private key)"/> that will allow the client to send a message that only the real server can read and not a man-in-the-middle.</p>
         </div>
         <aside>
             <p><strong>Scalar multiplication</strong> is a function for deriving shared secrets from a pair of secret and public Curve25519 keys.</p>
@@ -317,7 +317,7 @@ shared_secret_aB = nacl_scalarmult(
         </aside>
 
         <h4 id="client-accept">3. Client authenticate</h4>
-        <img src="img/client_authenticate.png" style="height: 330px;"/>
+        <img src="img/client_authenticate.png" style="height: 330px;" alt="The client computes a detached signature of the network identifier, the server's long-term public key, and a hash of the shared secret; signed with its permanent secret key. They add their permanent public key, and encrypt both so that they can only be opened by someone knowing the network identifier and both shared secrets; then send the cyphertext to the server." />
 
         <figure class="left-right code">
             <h5 class="left">Client computes</h5>
@@ -374,9 +374,9 @@ assert_nacl_sign_verify_detached(
         </figure>
 
         <div>
-            <p>The client reveals their identity to the server by sending their <img class="inline-key" src="img/key_big_a_public.png"/> long term public key. The client also makes a signature using their <img class="inline-key" src="img/key_big_a_secret.png"/> long term secret key. By signing the keys used earlier in the handshake the client proves their identity and confirms that they do indeed wish to be part of this handshake.</p>
+            <p>The client reveals their identity to the server by sending their <img class="inline-key" src="img/key_big_a_public.png" alt=""/> long term public key. The client also makes a signature using their <img class="inline-key" src="img/key_big_a_secret.png" alt=""/> long term secret key. By signing the keys used earlier in the handshake the client proves their identity and confirms that they do indeed wish to be part of this handshake.</p>
             <p>The client’s message is enclosed in a secret box to ensure that only the server can read it. Upon receiving it, the server opens the box, stores the client’s long term public key and verifies the signature.</p>
-            <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. It’s important to get this detail right because reusing a nonce will allow an attacker to recover the key and encrypt or decrypt any secret boxes using that key. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.png"/>, <img class="inline-key" src="img/key_little_a_little_b.png"/>, <img class="inline-key" src="img/key_little_a_big_b.png"/>))</span>.</p>
+            <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. It’s important to get this detail right because reusing a nonce will allow an attacker to recover the key and encrypt or decrypt any secret boxes using that key. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.png" alt=""/>, <img class="inline-key" src="img/key_little_a_little_b.png" alt=""/>, <img class="inline-key" src="img/key_little_a_big_b.png" alt=""/>))</span>.</p>
         </div>
         <aside>
             <p><strong>Detached signatures</strong> do not contain a copy of the message that was signed, only a tag that allows verifying the signature if you already know the message.</p>
@@ -384,7 +384,7 @@ assert_nacl_sign_verify_detached(
         </aside>
 
         <h4 id="shared-secret-derivation-2">Shared secret derivation</h4>
-        <img src="img/shared_secret_derivation_2.png" style="height: 220px;"/>
+        <img src="img/shared_secret_derivation_2.png" style="height: 220px;" alt="The client computes a new shared secret from their permanent secret key and the server's ephemeral public key. The server computes the same shared secret from the client's permanent public key and their own ephemeral secret key."/>
 
         <figure class="left-right code">
             <h5 class="left">Client computes</h5>
@@ -399,10 +399,10 @@ assert_nacl_sign_verify_detached(
 )</code></pre>
         </figure>
 
-        <p>Now that the server knows the <img class="inline-key" src="img/key_big_a_public.png"/> client’s long term public key, another shared secret <img class="inline-key" src="img/key_big_a_little_b.png"/> is derived by both ends. The server uses this shared secret to send a message that only the real client can read and not a man-in-the-middle.</p>
+        <p>Now that the server knows the <img class="inline-key" src="img/key_big_a_public.png" alt=""/> client’s long term public key, another shared secret <img class="inline-key" src="img/key_big_a_little_b.png" alt=""/> is derived by both ends. The server uses this shared secret to send a message that only the real client can read and not a man-in-the-middle.</p>
 
         <h4 id="server-accept">4. Server accept</h4>
-        <img src="img/server_accept.png" style="height: 400px;"/>
+        <img src="img/server_accept.png" style="height: 400px;" alt="The server signs the network identifier, the previous detached signature, the client's permanent secret key, and the hash of the first shared secret, with their permanent secret key, as a new detached signature. They encrypt it so that they can only be opened by someone knowing the network identifier and all three shared secrets; then send the cyphertext to the client." />
 
         <figure class="left-right code">
             <h5 class="left">Client verifies</h5>
@@ -453,12 +453,12 @@ assert_nacl_sign_verify_detached(
   )
 )</code></pre>
         </figure>
-        <p>The server accepts the handshake by signing a message using their <img class="inline-key" src="img/key_big_b_secret.png"/> long term secret key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
+        <p>The server accepts the handshake by signing a message using their <img class="inline-key" src="img/key_big_b_secret.png" alt=""/> long term secret key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
         <p>Upon receiving it, the client opens the box and verifies the server’s signature.</p>
-        <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.png"/>, <img class="inline-key" src="img/key_little_a_little_b.png"/>, <img class="inline-key" src="img/key_little_a_big_b.png"/>, <img class="inline-key" src="img/key_big_a_little_b.png"/>))</span>.</p>
+        <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.png"/>, <img class="inline-key" src="img/key_little_a_little_b.png" alt=""/>, <img class="inline-key" src="img/key_little_a_big_b.png" alt=""/>, <img class="inline-key" src="img/key_big_a_little_b.png" alt=""/>))</span>.</p>
 
         <h4 id="handshake-complete">Handshake complete</h4>
-        <img src="img/final_shared_secret.png" style="height: 40px;"/>
+        <img src="img/final_shared_secret.png" style="height: 40px;" alt="" />
         <p>At this point the handshake has succeeded. The client and server have proven their identities to each other.</p>
         <p>The shared secrets established during the handshake are used to set up a pair of box streams for securely exchanging further messages.</p>
 
@@ -466,13 +466,13 @@ assert_nacl_sign_verify_detached(
         <div>
             <p>Box stream is the bulk encryption protocol used to exchange messages following the handshake until the connection ends. It is designed to protect messages from being read or modified by a man-in-the-middle.</p>
             <p>Each message in a box stream has a header and body. The header is always 34 bytes long and says how long the body will be.</p>
-            <img src="img/box_stream_overview.png" style="height: 140px;"/>
+            <img src="img/box_stream_overview.png" style="height: 140px;" alt="A stream is made of alternating headers (34 bytes) and bodies (1 to 4096 bytes); ending with a body followed by a 34-bytes 'goodbye' header"/>
 
             <h4 id="sending">Sending</h4>
             <p>Sending a message involves encrypting the body of the message and preparing a header for it. Two secret boxes are used; one to protect the header and another to protect the body.</p>
         </div>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/dominictarr/pull-box-stream/blob/master/index.js">pull-box-stream</a></div>
@@ -488,25 +488,25 @@ assert_nacl_sign_verify_detached(
             <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttStream.java">Stream</a></div>
         </aside>
 
-        <img src="img/box_stream_send.png" class="pagewidth" style="height: 670px;"/>
+        <img src="img/box_stream_send.png" class="pagewidth" style="height: 670px;" alt="The plaintext message body is enclosed in a secret box using the key and nonce shown below. Secret boxes put a 16-byte tag onto the front of messages so that tampering can be detected when the box is opened. This tag is sliced off the body and put inside the header. A temporary header is made of the body length (a two-bytes big-endian integer) and th previous tag. This temporary header is then encrypted too, including its own (16-bytes) authentication tag, producing a 16+2+16 bytes header."/>
 
         <h4 id="receiving">Receiving</h4>
         <p>Receiving a message involves reading the header to find out how long the body is then reassembling and opening the body secret box.</p>
-        <img src="img/box_stream_receive.png" class="pagewidth" style="height: 560px;"/>
+        <img src="img/box_stream_receive.png" class="pagewidth" style="height: 560px;" alt="Read the first 34 bytes. This is the secret box containing the header. Open this box, extract the body length and body authentication tag. Read the number of bytes specified in the header. Join the body authentication tag and encrypted body back together, open it, and read the secret text."/>
 
         <h4 id="goodbye">Goodbye</h4>
         <p>The stream ends with a special “goodbye” header. Because the goodbye header is authenticated it allows a receiver to tell the difference between the connection genuinely being finished and a man-in-the-middle forcibly resetting the underlying TCP connection.</p>
-        <img src="img/box_stream_goodbye.png" class="pagewidth" style="height: 230px;"/>
+        <img src="img/box_stream_goodbye.png" class="pagewidth" style="height: 230px;" alt="The 'goodbye' header is made of 18 bytes of zero, encrypted in a secret box (with a header authenticated tag like other headers)."/>
         <p>When a receiver opens a header and finds that it contains all zeros then they will know that the connection is finished.</p>
 
         <h4 id="keys-and-nonces">Keys and nonces</h4>
         <p>Two box streams are used at the same time when Scuttlebutt peers communicate. One is for client-to-server messages and the other is for server-to-client messages. The two streams use different keys and starting nonces for their secret boxes.</p>
-        <img src="img/box_stream_params.png" class="pagewidth" style="height: 400px;"/>
+        <img src="img/box_stream_params.png" class="pagewidth" style="height: 400px;" alt="The secret box key is made of a double-sha256 hash of the network identifier and three shared secrets, followed by either the server's permanent public key (for Client to Server) or the client's permanent public key (for Server to Client), both hashed again with sha256. The starting nonces are respectively the first 24 bytes of server's or the client's ephemeral public key, hmac-authenticated with the network identifier."/>
         <p>The starting nonce is used for the first header in the stream (“secret box 1” in the above figures), then incremented for the first body (“secret box 2”), then incremented for the next header and so on.</p>
 
         <h3 id="rpc-protocol">RPC protocol</h3>
         <aside class="impl kicker">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div><a href="https://github.com/ssbc/packet-stream-codec/blob/master/index.js">packet-stream-codec</a></div>
@@ -524,15 +524,15 @@ assert_nacl_sign_verify_detached(
         <div>
             <p>Scuttlebutt peers make requests to each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
             <p>The RPC protocol can interleave multiple requests so that a slow request doesn’t block following ones. It also handles long-running asynchronous requests for notifying when an event occurs and streams that deliver multiple responses over time.</p>
-            <p>Similar to the box stream protocol, the RPC protocol consists of fixed-length headers followed by variable-length bodies. There is also a goodbye message which is just a zeroed out header.</p>
-            <img src="img/rpc_overview.png" style="height: 155px;"/>
+            <p>Similar to the box stream protocol, the RPC protocol consists of 9-bytes headers followed by variable-length bodies. There is also a 9-bytes goodbye message which is just a zeroed out header.</p>
+            <img src="img/rpc_overview.png" style="height: 155px;" alt=""/>
         </div>
         <aside>
             <p><strong>Remote procedure calls</strong> are where a computer exposes a set of procedures that another computer can call over the network.</p>
             <p>The requester tells the responder the name of the procedure they wish to call along with any arguments. The responder performs the action and returns a value back to the requester.</p>
         </aside>
         <p>Both peers make requests to each other at the same time using the pair of box streams that have been established. The box streams protect the RPC protocol from eavesdropping and tampering.</p>
-        <img src="img/rpc_alignment.png" style="height: 230px;"/>
+        <img src="img/rpc_alignment.png" style="height: 230px;" alt=""/>
         <aside style="position: relative; top: 36px;">
             <p>RPC messages are not necessarily aligned to box stream boxes.</p>
             <p>Multiple RPC messages may be put inside one box or a single RPC message may be split over several boxes.</p>
@@ -540,7 +540,7 @@ assert_nacl_sign_verify_detached(
 
         <h4 id="header-structure">Header structure</h4>
         <p>RPC headers contain a set of flags to say what type of message it is, a field specifying its length and a request number which allows matching requests with their responses when there are several active at the same time.</p>
-        <img src="img/rpc_header.png" style="height: 750px;"/>
+        <img src="img/rpc_header.png" style="height: 750px;" alt="Headers are made of (in network order): 4 zero bits, a stream bit (1 = 'message is part of a stream'), a end/error bit (1 = 'message is the last in its stream or an error), and a 2-bits body type (00 = binary, 01 = UTF-8 string, 10 = JSON), the body length (4 bytes unsigned big-endian), and the request number (4 bytes signed big-endial)."/>
 
         <h4 id="request-format">Request format</h4>
         <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of procedure and any arguments.</p>
@@ -578,7 +578,7 @@ assert_nacl_sign_verify_detached(
   "args": [{"id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"}]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
         <div>
@@ -588,7 +588,7 @@ assert_nacl_sign_verify_detached(
         <p>Now the responder begins streaming back responses:</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
