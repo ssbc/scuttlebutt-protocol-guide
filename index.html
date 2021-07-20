@@ -38,8 +38,6 @@
                         <div><a href="#pub-message">Pub message</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#peer-connections">Peer connections</a></div>
                     <div class="s2">
@@ -48,12 +46,20 @@
                         <div><a href="#rpc-protocol">RPC protocol</a></div>
                     </div>
                 </div>
+            </div>
+            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#feeds">Feeds</a></div>
                     <div class="s2">
                         <div><a href="#structure">Structure</a></div>
                         <div><a href="#message-format">Message format</a></div>
                         <div><a href="#createHistoryStream">createHistoryStream</a></div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div><a class="s1" href="#metafeeds">Metafeeds</a></div>
+                    <div class="s2">
+                        <div><a href="#bendy-butt">Structure</a></div>
                     </div>
                 </div>
             </div>
@@ -1046,7 +1052,67 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
-
+        <!-- metafeeds documentation -->
+        <h2 id="metafeeds">Metafeeds</h2>
+        <div>
+        <p>A metafeed is a special kind of feed that holds metadata information about multiple feeds. There can be only one active metafeed per identity, and it is only used to add or tombstone other feeds. Using metafeeds do not break compatibility with clients that only support the legacy feed format.</p>
+        <p>Metafeeds lay the necessary groundwork to implement many interesting features such as partial replication, per-application feeds, and even the co-existance of new feed formats with legacy ones.</p>
+        </div>
+        <aside>
+            <p>Want to get deeper into metafeeds? Check out the <a href="https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec" target="_blank">Metafeed specification</a>.</p>
+            <p>For some example of new feed formats, check out <a href="https://github.com/AljoschaMeyer/bamboo" target="_blank">Bamboo</a> and <a href="https://github.com/ssbc/ssb-spec-drafts/blob/master/drafts/draft-ssb-core-gabbygrove/00/draft-ssb-core-gabbygrove-00.md" target="_blank">Gabbygrove</a>.
+            </p>
+        </aside>
+        <h3 id="bendy-butt">Structure</h3>
+        <div>
+        <p>Metafeeds use a different format than the <a href="#structure">legacy feed</a>, this new format is called <i>bendy butt</i>. It still is an append-only log of cryptographically signed messages, but it is not tied to JSON or V8 engine internals like the old format thus making it easier to implement it using other programming languages.</p>
+        <p>Bendy Butt encodes its messages using the well-established <a href="https://en.wikipedia.org/wiki/Bencode" target="_blank">Bencode</a> format instead of JSON. While we may display metafeed message on this documentation as text, the encoding format uses binary delimiters instead of ascii. </p>
+        <p>A Bendy Butt Message is a Bencoded payload containing a collection with the following five elements, in this specific order.</p>
+        <table class="defs">
+            <tr>
+                <td>author</td>
+                <td>SSB-BFE encoded feed id.</td>
+            </tr>
+            <tr>
+                <td>sequence</td>
+                <td>Sequential 32-bit integer starting at 1.</td>
+            </tr>
+            <tr>
+                <td>previous</td>
+                <td>SSB-BFE encoded message ID, or SSB-BFE <i>nil</i> value for the first message.</td>
+            </tr>
+            <tr>
+                <td>timestamp</td>
+                <td>32-bit integer representing the time the message was created. Number of milliseconds since 1 January 1970 00:00 UTC, also known as UNIX epoch.</td>
+            </tr>
+            <tr>
+                <td>contentSection</td>
+                <td>If the message is not encrypted, This is a Bencoded dictionary containing SSB-BFE encoded payload and signature. If it is SSB-BFE encrypted data, then upon decryption it becomes a Bencoded dictionary of SSB-BFE encoded data and the signature for the payload.</td>
+            </tr>
+        </table>
+        </div>
+        <aside>
+            <p>Dig deeper by reading the <a href="https://github.com/ssb-ngi-pointer/bendy-butt-spec" target="_blank">Bendy Butt Specification</a>.</p>
+            <p>Bendy Butt uses <a href="https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings">SSB Binary Field Encodings</a> to encode many of its fields.</p>
+        </aside>
+        <h3>Announcing a metafeed</h3>
+        <p>A feed let other applications know that it supports metafeeds by announcing its own metafeed as a message of type <code>metafeed/announce</code> on its <i>main feed</i>.</p>
+        <pre><code>
+{
+  // ... other msg.value field ...
+  content: {
+    type: 'metafeed/announce',
+    metafeed: '@mf.bbfeed-v1',
+    tangles: {
+      metafeed: {
+        root: null,
+        previous: null
+      }
+    }
+  }
+}
+        </code></pre>
+        <!-- end of metafeeds documentation -->
         <h2 id="blobs">Blobs</h2>
         <p>A blob is binary data. Blobs are referred to from Scuttlebutt messages and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
         <p>Being just a sequence of bytes, blobs can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages, which is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
