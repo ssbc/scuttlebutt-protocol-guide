@@ -108,7 +108,7 @@
 
         <h2 id="discovery">Discovery</h2>
         <div>
-            <p>After a user has generated their identity they need to find some peers to connect to. To connect to a peer you need to know its IP address, port number and public key. The Scuttlebutt protocol currently has three methods for peers to discover each other.</p>
+            <p>After a user has generated their identity they need to find some peers to connect to. To connect to a peer you need its public key and its address using any of the protocol it supports. Typically with TCP/IP, you would need its IP address and port, but the Scuttlebutt protocol is not restricted to TCP/IP as transport. The Scuttlebutt protocol currently has three methods for peers to discover each other.</p>
 
             <h3 id="local-network">Local network</h3>
             <p>Peers constantly broadcast UDP packets on their local network advertising their presence. The body of each packet is a string containing the peer’s IP address, port and base64-encoded public key (without <code>@</code> or <code>.ed25519</code>):</p>
@@ -135,6 +135,7 @@
                     <img src="img/format_udp_broadcast.png" style="height: 40px;"/>
                 </div>
             </figure>
+            <p>This message format can be any valid <a href="https://github.com/ssb-js/multiserver#address-format">multiserver address</a>. In local networks, this is usually a <code>net</code> address with an IPv4 or IPv6 address.</p>
             <p>Current implementations broadcast one of these packets every second. When a peer sees another peer’s broadcast packet they can connect to exchange messages. Some clients show nearby peers in the user interface so that the user can see other people on the same network as them.</p>
         </div>
         <aside>
