@@ -93,7 +93,9 @@
         <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a> is a protocol for building decentralized applications that work well offline and that no one person can control. Because there is no central server, Scuttlebutt clients connect to their peers to exchange information. This guide describes the protocols used to communicate within the Scuttlebutt network.</p>
         <p>Scuttlebutt is a flexible protocol, capable of supporting many different types of applications. One of its first applications was as a social network. This guide has a slight focus on how to use Scuttlebutt for social networking, but many of the explanations will still be useful if want to use it for something completely different, or are just curious how it works.</p>
 
-        <h2 id="keys-and-identities">Keys and identities</h2>
+        <h2 id="cryptography">Cryptography</h2>
+
+        <h3 id="keys-and-identities">Keys and identities</h3>
         <p>The first thing a user needs to participate in Scuttlebutt is an identity. An identity is an Ed25519 key pair and typically represents a person, a device, a server or a bot. It’s normal for a person to have several Scuttlebutt identities.</p>
         <p>Upon starting for the first time, Scuttlebutt clients will automatically generate an Ed25519 key pair and save it in the user’s home folder under <code>.ssb/secret</code>.</p>
         <img src="img/identity_keypair.png" style="height: 80px;" alt="The Scuttlebutt identity is a long-term Ed25519 key pair." />
@@ -105,6 +107,24 @@
             <p>Throughout the protocol all instances of base64 are the variant that uses <code>+</code> and <code>/</code>. The final padding <code>=</code> is also required.</p>
         </aside>
         <p>The beginning <code>@</code> sign signifies that this represents a public key rather than a message or blob, which start with <code>%</code> and <code>&amp;</code>. Each identity has an associated <a href="#feeds">feed</a>, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
+
+        <h3 id="cryptographic-primitives">Cryptographic primitives</h3>
+
+        <p>The Scuttlebutt protocol relies on NaCl/libsodium's cryptobox primitives. This guide uses the following:</p>
+
+        <dl>
+            <dt><code>nacl_scalarmult(n, p)</code></dt>
+            <dd>This is <a href="https://doc.libsodium.org/advanced/scalar_multiplication">Libsodium's scalar multiplication function</a>, which takes two scalars (usually public and/or secret keys). It has the useful property that, given two key pairs <code>(pk1, sk1)</code> and <code>(pk2, sk2)</code>, <code>nacl_scalarmult(sk1, pk2) == nacl_scalarmult(sk2, pk1)</code>, which allows shared secret derivation between peers who know each other's public key. More on this later.</dd>
+
+            <dt><code>nacl_auth(msg, key)</code> and <code>assert_nacl_auth_verify(authenticator, msg, key)</code></dt>
+            <dd>This functions are <a href="https://doc.libsodium.org/public-key_cryptography/authenticated_encryption">Libsodium's message authentication function</a>. The former takes a message and returns a 32-bytes authenticator, that acts as a detacted signature of the message. The latter verifies this authenticator is indeed valid for the given message and key; and errors if they don't.</dd>
+
+            <dt><code>nacl_sign_detached(msg, key)</code> and <code>assert_nacl_sign_verify_detached(sig, msg, key)</code></dt>
+            <dd>The former is computed from <a href="https://doc.libsodium.org/public-key_cryptography/public-key_signatures">Libsodium's signature functions</a>. Unlike the usual Libsodium/NaCl functions, they work with signatures in independent buffers, rather than concatenated with the msg.</dd>
+
+            <dt><code>nacl_secret_box(msg, nonce, key)</code> and <code>assert_nacl_secretbox_open(ciphertext, nonce, key)</code></dt>
+            <dd>These function are based on <a href="https://doc.libsodium.org/secret-key_cryptography/secretbox">Libsodium's crypto_secretbox_easy and crypto_secretbox_open_easy function</a>, which use symmetric cryptography to, respectively, encrypt+authenticate, and verify+decrypt a message using a nonce and a shared secret.</dd>
+        </dl>
 
         <h2 id="discovery">Discovery</h2>
         <div>
