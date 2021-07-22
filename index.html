@@ -815,7 +815,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>content</td>
-                <td>If the message is not encrypted, This is a dictionary containing free-form data for applications to interpret, plus a mandatory <em>type</em> field. The <em>type</em> field allows applications to filter out message types they don’t understand and must be a UTF-16 string between 3 and 52 code units long (inclusive). If this is a base64 encoded string, followed by a suffix of <code>.box</code></td>
+                <td>If the message is not encrypted, This is a dictionary containing free-form data for applications to interpret, plus a mandatory <em>type</em> field. The <em>type</em> field allows applications to filter out message types they don’t understand and must be a UTF-16 string between 3 and 52 code units long (inclusive). If the message is encrypted, then this is a base64 encoded string, followed by a suffix of <code>.box</code>; we will describe private messages later in this document.</td>
             </tr>
         </table>
         <aside style="align-self: start; position: relative; top: 19px;">
