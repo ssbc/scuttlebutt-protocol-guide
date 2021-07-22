@@ -119,11 +119,14 @@
             <dt><code>nacl_auth(msg, key)</code> and <code>assert_nacl_auth_verify(authenticator, msg, key)</code></dt>
             <dd>This functions are <a href="https://doc.libsodium.org/public-key_cryptography/authenticated_encryption">Libsodium's message authentication function</a>. The former takes a message and returns a 32-bytes authenticator, that acts as a detacted signature of the message. The latter verifies this authenticator is indeed valid for the given message and key; and errors if they don't.</dd>
 
+            <dt><code>nacl_secret_box(msg, nonce, key)</code> and <code>assert_nacl_secretbox_open(ciphertext, nonce, key)</code></dt>
+            <dd>These function are based on <a href="https://doc.libsodium.org/secret-key_cryptography/secretbox">Libsodium's crypto_secretbox_easy and crypto_secretbox_open_easy function</a>, which use symmetric cryptography to, respectively, encrypt+authenticate, and verify+decrypt a message using a nonce and a shared secret.</dd>
+
             <dt><code>nacl_sign_detached(msg, key)</code> and <code>assert_nacl_sign_verify_detached(sig, msg, key)</code></dt>
             <dd>The former is computed from <a href="https://doc.libsodium.org/public-key_cryptography/public-key_signatures">Libsodium's signature functions</a>. Unlike the usual Libsodium/NaCl functions, they work with signatures in independent buffers, rather than concatenated with the msg.</dd>
 
-            <dt><code>nacl_secret_box(msg, nonce, key)</code> and <code>assert_nacl_secretbox_open(ciphertext, nonce, key)</code></dt>
-            <dd>These function are based on <a href="https://doc.libsodium.org/secret-key_cryptography/secretbox">Libsodium's crypto_secretbox_easy and crypto_secretbox_open_easy function</a>, which use symmetric cryptography to, respectively, encrypt+authenticate, and verify+decrypt a message using a nonce and a shared secret.</dd>
+            <dt><code>pk_to_curve25519(ed25519_pk)</code> and <code>sk_to_curve25519(ed25519_sk)</code></dt>
+            <dd>These functions convert Ed25519 keys (used for cryptobox) to Curve25519 (aka X25519) keys, used for signing. They are <a href="https://doc.libsodium.org/advanced/ed25519-curve25519">implemented by Libsodium as <code>crypto_sign_ed25519_pk_to_curve25519</code> and <code>crypto_sign_ed25519_sk_to_curve25519</code></a>, respectively.</dd>
         </dl>
 
         <h2 id="discovery">Discovery</h2>
