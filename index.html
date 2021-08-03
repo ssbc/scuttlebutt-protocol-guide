@@ -137,7 +137,7 @@
             <p>Peers constantly broadcast UDP packets on their local network advertising their presence. The body of each packet is a string containing the peer’s IP address, port and base64-encoded public key (without <code>@</code> or <code>.ed25519</code>):</p>
         </div>
         <aside class="impl">
-            <img class="icon" src="img/impl.png" alt="net:192.168.1.123:8008:~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=" />
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
@@ -155,7 +155,7 @@
                         <span class="key">Destination IP</span><span class="value">255.255.255.255</span>
                         <span class="key">Destination port</span><span class="value">8008</span>
                     </div>
-                    <img src="img/format_udp_broadcast.png" style="height: 40px;"/>
+                    <img src="img/format_udp_broadcast.png" style="height: 40px;" alt="net:192.168.1.123:8008:~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY="/>
                 </div>
             </figure>
             <p>This message format can be any valid <a href="https://github.com/ssb-js/multiserver#address-format">multiserver address</a>. In local networks, this is usually a <code>net</code> address with an IPv4 or IPv6 address.</p>
@@ -638,7 +638,7 @@ assert_nacl_sign_verify_detached(
   "timestamp": 1514517067956
 }</code></pre>
             </div>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -674,7 +674,7 @@ assert_nacl_sign_verify_detached(
         <p>To close the stream the responder sends an RPC message with both the stream and end/err flags set and a JSON body of <code>true</code>. When the requester sees that the stream is being closed they send a final message to close their own end of it (source type requests must always be closed by both ends).</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -693,7 +693,7 @@ assert_nacl_sign_verify_detached(
                 </div>
                 <pre><code>true</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
         <p>Alternatively, to abort a stream before it is finished the requester can send their closing message early, at which point the responder closes their own end.</p>
@@ -708,8 +708,8 @@ assert_nacl_sign_verify_detached(
                 </div>
                 <pre><code>true</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -739,13 +739,13 @@ assert_nacl_sign_verify_detached(
   "args": ["&amp;WWw4tQJ6ZrM7o3gA8lOEAcO4zmyqXqb/3bmIKTLQepo=.sha256"]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
         <p>The responder does in fact have this blob so they respond with <code>true</code>. Because this is an async procedure and not a stream, there is only one response and no need to close the stream afterwards:</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png alt="""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-2</span>
@@ -775,8 +775,8 @@ assert_nacl_sign_verify_detached(
   "args": ["<strong>this was a mistake</strong>"]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-3</span>
@@ -800,7 +800,7 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="structure">Structure</h3>
         <p>The messages in a feed form an append-only log, meaning that once a message is posted it cannot be modified. Each message (except the first one) references the ID of the previous message, allowing a chain to be constructed back to the first message in the feed.</p>
-        <img src="img/sigchain.png" class="pagewidth" style="height: 855px;"/>
+        <img src="img/sigchain.png" class="pagewidth" style="height: 855px;" alt=""/>
 
         <h3 id="message-format">Message format</h3>
         <p>To create a message to post in a feed, start by filling out these fields:</p>
@@ -905,13 +905,13 @@ assert_nacl_sign_verify_detached(
         <p>A message ID is a hash of the message including signature. Messages can refer to other messages by their ID.</p>
         <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key must appear last as shown above (but without wrapping the line).</p>
         <p>The ID of the above message is:</p>
-        <img src="img/format_message_id.png" style="height: 80px;"/>
+        <img src="img/format_message_id.png" style="height: 80px;" alt="%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256 where everything between % and .sha256 is the base64-encoding of the sha256 hash of the formatted message including signature" />
         <p>Currently all IDs are computed using sha256. However the protocol includes the name of the hash function in message IDs and the messages themselves to allow migrating to a different one if needed in the future.</p>
 
         <h3 id="createHistoryStream">createHistoryStream</h3>
         <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to. When peers connect, one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/ssbc/ssb-db/blob/master/indexes/clock.js">clock.js</a></div>
@@ -941,7 +941,7 @@ assert_nacl_sign_verify_detached(
   ]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
         <p><em>createHistoryStream</em> takes one argument which is a dictionary of additional options that controls how the feed is returned. Valid options are:</p>
@@ -993,8 +993,8 @@ assert_nacl_sign_verify_detached(
   ]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1039,8 +1039,8 @@ assert_nacl_sign_verify_detached(
   ]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-2</span>
@@ -1068,14 +1068,14 @@ assert_nacl_sign_verify_detached(
         <p>A blob is binary data. Blobs are referred to from Scuttlebutt messages and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
         <p>Being just a sequence of bytes, blobs can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages, which is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
         <p>Blobs are referred to by their blob ID:</p>
-        <img src="img/format_blob_id.png" style="height: 80px;"/>
+        <img src="img/format_blob_id.png" style="height: 80px;" alt="&uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256 where everything between & and .sha256 is the base64-encoding of the sha256 hash of the blob"/>
         <p>Blobs are immutable because their ID contains a hash of their contents. This allows peers to fetch blobs from anyone in the network and know they haven’t been tampered with.</p>
         <p>When a Scuttlebutt implementation receives a new message and sees that it references a blob, it might be a good time to fetch that blob so that the complete message will be available to show the user.</p>
 
         <h3 id="fetching">Fetching</h3>
         <p>There are two RPC methods for fetching blobs. To get an entire blob use <em>blobs.get</em>, or for only part of the blob use <em>blobs.getSlice</em>.</p>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/ssbc/multiblob/blob/master/index.js">multiblob</a></div>
@@ -1097,14 +1097,14 @@ assert_nacl_sign_verify_detached(
   "args": ["&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256"]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
         <p>Now the responder begins streaming back the contents of the blob. Each response has a body type of binary and contains a piece of the blob, starting from the beginning.</p>
         <p>This particular blob is 161,699 bytes long and the responder has decided to send it in pieces of 65,536 bytes each. That means two full pieces of 65,536 bytes will be sent and a final piece with the remaining 30,627 bytes.</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1120,7 +1120,7 @@ assert_nacl_sign_verify_detached(
                     <div class="fadeout">…65536 bytes total</div>
                 </div>
             </div>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1136,7 +1136,7 @@ assert_nacl_sign_verify_detached(
                     <div class="fadeout">…65536 bytes total</div>
                 </div>
             </div>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1157,7 +1157,7 @@ assert_nacl_sign_verify_detached(
         <p>Finally, the stream is closed with a JSON message of <code>true</code> with the end/err flag set. The requester sees that the stream is being closed and closes their end of the stream too:</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1176,7 +1176,7 @@ assert_nacl_sign_verify_detached(
                 </div>
                 <pre><code>true</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
         <p>Upon receiving the blob the requester should check that what they received matches the sha256 checksum they asked for.</p>
@@ -1202,7 +1202,7 @@ assert_nacl_sign_verify_detached(
   ]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
         <p>Valid options are:</p>
@@ -1246,8 +1246,8 @@ assert_nacl_sign_verify_detached(
   ]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1260,7 +1260,7 @@ assert_nacl_sign_verify_detached(
                     <span class="d2">b5</span><span class="d2">b9</span><span class="d0">33</span><span class="d0">0f</span><span class="d0">34</span><span class="d2">90</span><span class="d1">57</span><span class="d2">a7</span><span class="d0">23</span><span class="d2">a9</span><span class="d3">f6</span><span class="d0">35</span><span class="d2">93</span><span class="d0">29</span><span class="d2">b8</span><span class="d2">92</span><span class="d1">52</span><span class="d3">d2</span><span class="d1">61</span><span class="d1">49</span><span class="d0">18</span><span class="d1">55</span><span class="d0">1d</span><span class="d0">3e</span>
                 </div>
             </div>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1279,18 +1279,18 @@ assert_nacl_sign_verify_detached(
                 </div>
                 <pre><code>true</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
         <p><em>Start</em> and <em>end</em> are byte offsets from the start of the blob and form a half-open interval, meaning the end byte is not included.</p>
-        <img src="img/blobs_get_slice.png" style="height: 110px;"/>
+        <img src="img/blobs_get_slice.png" style="height: 110px;" alt="For example, start=4 and end=10 returns six bytes: bytes 4, 5, 6, 7, 8, and 9; but not byte 10. (Bytes are numbered so that the first byte is byte 0)"/>
         <p>Specifying <em>start</em> = 0 means start from the beginning of the blob. Specifying <em>end</em> = <em>size of the blob</em> means keep going all the way to the end of the blob.</p>
         <p><em>blobs.getSlice</em> also accepts the <em>size</em> and <em>max</em> options, which work the same as in <em>blobs.get</em>. These two options refer to the size of the entire blob, not the range requested.</p>
 
         <h3 id="want-and-have">Want and have</h3>
         <p>Peers signal to each other which blobs they want and have. This lets peers know who they can fetch a particular blob from. It also allows requests for blobs to propagate through the network until a peer that has the blob is found.</p>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/ssbc/ssb-blobs/blob/master/inject.js">inject.js</a></div>
@@ -1311,8 +1311,8 @@ assert_nacl_sign_verify_detached(
   "args": []
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1327,7 +1327,7 @@ assert_nacl_sign_verify_detached(
         <p>Responding with an empty dictionary <code>{}</code> means they don’t currently want any blobs. Later, when they want a particular blob the responder will send another response back:</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1348,7 +1348,7 @@ assert_nacl_sign_verify_detached(
         <p>If the responder does in fact have the blob, they can respond with its size in bytes:</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1367,12 +1367,12 @@ assert_nacl_sign_verify_detached(
         <aside class="kicker" style="position: relative; top: 48px;">
             <p>By fetching blobs on behalf of one another, Scuttlebutt peers can reach blobs beyond who they are immediately connected to.</p>
         </aside>
-        <img src="img/blobs_fetch.png" style="height: 385px;"/>
+        <img src="img/blobs_fetch.png" style="height: 385px;" alt="Peer A tells Peer B: 'Want: &uaGie: -1'. Peer B tells Peer C: 'Want: &uaGie: -2'. Peer C has it, so it answers: 'Have: &uaGie: 161699'. Peer B then requests 'Get: &uaGie' and Peer C returns the content of the blob. Peer B then tells Peer A: 'Have: &uaGie'. Peer A hen requests 'Get: &uaGie' from B, and B answers with the blob."/>
 
         <h2 id="following">Following</h2>
         <p>Feeds can follow other feeds. Following is a way of saying “I am interested in the messages posted by this feed”.</p>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/ssbc/ssb-friends/blob/master/index.js">ssb-friends</a></div>
@@ -1397,7 +1397,7 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="follow-graph">Follow graph</h3>
         <p>Because each feed publicly announces which feeds it is following, clients can arrange feeds into a graph of who follows who:</p>
-        <img src="img/follow_graph.png" class="pagewidth" style="height: 700px;"/>
+        <img src="img/follow_graph.png" class="pagewidth" style="height: 700px;" alt="The follow graph seen by a user is a directed graph, 'rooted' in the user. It can be seen as concentric circles, with the user in the center, and feeds arranged by proximity to the user according to the number of hops. First, feeds directly followed by the user. Then feeds not directly followed by visible in the user interface (2 hops or more). Then feeds not visible, whose content is fetched by the client nontheless. Then feeds the client has need mentioned but chosen not to fetch."/>
         <p>Clients may want to use the follow graph to decide which feeds to display to the user and which to replicate. If the user explicitly follows a feed that is a strong signal that the user wants to see messages posted by that feed.</p>
         <p>One implementation, Patchwork, shows messages up to 2 hops out by default. Messages from feeds 3 hops out are replicated to help keep them available for others, but not directly shown in the user interface. A benefit of replicating at a greater range is that for discussion threads with lots of participants it’s more likely that the client will be able to fill in gaps where someone posted who was further than 2 hops out.</p>
         <p>Clients could also let users configure how far the visibility and replication ranges are, or a client could use an entirely different method of deciding which feeds to show and replicate that is not based on follow range.</p>
@@ -1410,7 +1410,7 @@ assert_nacl_sign_verify_detached(
         </ul>
         <p>Pubs speak the same protocol as regular peers and behave like regular peers except that they are normally run on servers so that they are always online.</p>
         <p>Joining a pub means following it and having it follow you back. After a new user joins a pub they will be able to see posts by the pub’s other members, and crucially the other members will be able to see the new member. This works because everyone is now within 2 hops of each other:</p>
-        <img src="img/follow_perspective.png" class="pagewidth" style="height: 365px;"/>
+        <img src="img/follow_perspective.png" class="pagewidth" style="height: 365px;" alt="From a new user perspective, the pub will be 1 hop from them, and existing users will be 2 hops from them. From the pub's perspective, all users who are members of the pub are 1 hop from it. From existing users' perspective, the pub is 1 hop from them, and both the new user and other existing users are 2 hops away."/>
         <p>After joining a pub, a user may decide to follow some of its members directly, in which case the pub is no longer needed for feed visibility but is still useful for accepting TCP connections and replicating messages.</p>
 
         <h3 id="invites">Invites</h3>
@@ -1422,20 +1422,20 @@ assert_nacl_sign_verify_detached(
         <aside>
             <p>If you want to run a pub that caters to an existing community, you could generate invite codes and give them out to current members. That way everyone who joins will be able to see the other members.</p>
         </aside>
-        <img src="img/format_invite.png" style="height: 139px;"/>
+        <img src="img/format_invite.png" style="height: 139px;" alt="one.butt.nz:8008:@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519~r4hIBk7KC7a9Gknj6Qiuuo4+Et/TS2rjgl6gYgw3OIM=. the parts are: a domain name or IP address of the pub, a colon, the port, a colon, the pub's public key (prefixed with an @ and suffixed with .ed25519 as usual), a tilde, then the base64-encoded invite secret key."/>
         <p>To make a new invite code, a pub generates a new Ed25519 key pair. The seed for the key pair (derived from the secret key) goes into the invite code, which is given to either a new user or the pub operator to distribute. The public key is remembered by the pub along with any extra conditions such as the number of remaining uses or expiry date.</p>
 
         <h4 id="redeeming-invites">Redeeming invites</h4>
         <p>To redeem an invite, a user enters the invite code into their Scuttlebutt client. The client opens a new TCP connection to the domain and port contained in the invite and proceeds to set up a peer connection, starting with the handshake.</p>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/invite.js">invite.js</a></div>
             <div class="lang">Java</div>
             <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt/src/main/java/org/apache/tuweni/scuttlebutt/Invite.java">Invite</a></div>
         </aside>
-        <p>However, unlike a regular handshake, the client uses the secret key in the invite as their <img class="inline-key" src="img/key_big_a_secret.png"/> long term secret key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
+        <p>However, unlike a regular handshake, the client uses the secret key in the invite as their <img class="inline-key" src="img/key_big_a_secret.png" alt=""/> long term secret key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
         <p>Handshaking with the invite key allows the client to call a special RPC method <em>invite.use</em>:</p>
 
         <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
@@ -1455,11 +1455,11 @@ assert_nacl_sign_verify_detached(
   "args": [{"feed": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"}]
 }</code></pre>
             </div>
-            <img class="request-arrow" src="img/arrow.png"/>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
         <p>The pub checks the key used in the handshake against its list of unredeemed invites. If the invite code is valid and has not expired, the pub follows the feed ID specified by the requester and responds with its new follow message:</p>
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png"/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-1</span>
@@ -1526,7 +1526,7 @@ assert_nacl_sign_verify_detached(
             <p>Anyone can see the fact that a feed posted a private message, who sent it (the feed that posted it), when it was sent and its size. However the list of recipients, number of recipients and message body is concealed.</p>
         </div>
         <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
+            <img class="icon" src="img/impl.png" alt=""/>
             <h5>Implementations</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
@@ -1568,15 +1568,15 @@ assert_nacl_sign_verify_detached(
 
         <h3 id="encrypting">Encrypting</h3>
         <p>To encrypt a private message, the sender starts with these keys:</p>
-        <img src="img/private_message_starting_keys.png" style="height: 290px;"/>
+        <img src="img/private_message_starting_keys.png" style="height: 290px;" alt="A generated Curve25519 key pair used to encrypt the message header, call the 'header key'; a generated 32-byte secret key used to encrypt the message body called the 'body key'; and the public long-term key of each recipient (max 7)."/>
         <p>Next, the sender uses scalar multiplication to derive a shared secret for each recipient:</p>
-        <img src="img/private_message_secret_derivation.png" style="height: 210px;"/>
+        <img src="img/private_message_secret_derivation.png" style="height: 210px;" alt="by computing the product of the secret key they just generated and that recipient's public long-term key."/>
         <p>The sender constructs the encrypted message by first enclosing the message content in a secret box, then enclosing the key needed to open it into a series of additional secret boxes, one to each recipient:</p>
-        <img src="img/private_message_encrypt.png" class="pagewidth" style="height: 915px;"/>
+        <img src="img/private_message_encrypt.png" class="pagewidth" style="height: 915px;" alt="The plaintext message content is enclosed in a secret box using the public 'body key' and a random 24-byte nonce; this box is 16 bytes (the auth tag) plus the original length of the message. The sender prepares a temporary header, made of the number of recipients (1 byte) and the secret body key (32 bytes). This temporary header is then enclosed as many times as there are recipients, in as many secret boxes (the 'encrypted headers', 16 + 33 bytes each, as they each include their own auth tag). The final message is made of: the 24 bytes nonce (defined above), the public header key (32 bytes), all the encrypted headers (49 bytes each), and finally the encrypted message content (at least 16 + 1 bytes)."/>
 
         <h3 id="decrypting">Decrypting</h3>
         <p>Decrypting a private message involves scanning through the series of header secret boxes to see if any of them open using your long-term secret key. Then, if one of them opens, taking out the body secret key and using it to open the secret box holding the message content:</p>
-        <img src="img/private_message_decrypt.png" class="pagewidth" style="height: 980px;"/>
+        <img src="img/private_message_decrypt.png" class="pagewidth" style="height: 980px;" alt="base64-decode the message, extract the nonce and the public header key at the beginning. Then use the secret long-term key and the header public key to compute the shared secret. Read the first 49 bytes of the encrypted headers and try to open it as a secret box. If that fails, try the next 49 bytes. Keep trying up to 7 times. If the shared secret opens a secret box, then this message is intended for you. Read the number of recipients and body secret key. Now that you know how many recipients there are, skip forward 49 bytes for each remaining header. Finally open the secret box using the body secret key and read the content."/>
     </main>
     <footer>
         <p>Thanks for reading the protocol guide!</p>
