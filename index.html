@@ -60,6 +60,8 @@
                     <div><a class="s1" href="#metafeeds">Metafeeds</a></div>
                     <div class="s2">
                         <div><a href="#bendy-butt">Structure</a></div>
+                        <div><a href="#metafeed-contentSection">Content setion</a></div>
+                        <div><a href="#metafeed-announcing">Announcing</a></div>
                     </div>
                 </div>
             </div>
@@ -1079,7 +1081,7 @@ assert_nacl_sign_verify_detached(
         <!-- metafeeds documentation -->
         <h2 id="metafeeds">Metafeeds</h2>
         <div>
-        <p>A metafeed is a special kind of feed that holds metadata information about multiple feeds. There can be only one active metafeed per identity, and it is only used to add or tombstone other feeds. Using metafeeds do not break compatibility with clients that only support the legacy feed format.</p>
+        <p>A metafeed is a special kind of feed that holds metadata information about multiple feeds. There can be only one active metafeed per identity, and it is only record metadata information about other feeds. Using metafeeds do not break compatibility with clients that only support the legacy feed format. Clients, for compatibility reasons, will always have a <i>main feed</i> in the format described above. They may support multiple additional feeds beyond that <i>main feed</i>, those additional feeds which will be organised and using a metafeed.</p>
         <p>Metafeeds lay the necessary groundwork to implement many interesting features such as partial replication, per-application feeds, and even the co-existance of new feed formats with legacy ones.</p>
         </div>
         <aside>
@@ -1114,12 +1116,41 @@ assert_nacl_sign_verify_detached(
                 <td>If the message is not encrypted, This is a Bencoded dictionary containing SSB-BFE encoded payload and signature. If it is SSB-BFE encrypted data, then upon decryption it becomes a Bencoded dictionary of SSB-BFE encoded data and the signature for the payload.</td>
             </tr>
         </table>
+        <h3 id="metafeed-contentSection">The content section</h3>
+        <p>Unlike the messages on the <i>legacy feed format</i>&mdash;with their flexible content section&mdash;the messages in a metafeed must conform to very specific types that deal only with metadata information about feeds.</p>
+        <p>The content section can be an encrypted text in which case it is decoded as a SSB-BFE-encoded dictionary. If the message is not encrypted, then it is an SSB-BFE-encoded dictionary. In both cases, the dictionary has the same fields.</p>
+        <table class="defs">
+            <tr>
+                <td>type</td>
+                <td>Is a SSB-BFE string. It can only be one of <code>metafeed/add</code>, <code>metafeed/update</code>, <code>metafeed/seed</code>, or <code>metafeed/tombstone</code>.</td>
+            </tr>
+            <tr>
+                <td>subfeed</td>
+                <td>A SSB-BFE Feed ID.</td>
+            </tr>
+            <tr>
+                <td>metafeed</td>
+                <td>A SSB-BFE Bendy Butt Feed ID.</td>
+            </tr>
+            <tr>
+                <td>feedpurpose</td>
+                <td>A SSB-BFE String. It describes the purpose of the specified feed.</td>
+            </tr>
+            <tr>
+                <td>tangles</td>
+                <td>A SSB-BFE dictionary. It conforms to the <a target="_blank" href="https://github.com/ssbc/ssb-tangle">SSB tangles specification</a> and establishes the relationship between the message and other messages on the metafeed.</td>
+            </tr>
+            <tr>
+                <td>nonce</td>
+                <td>SSB-BFE bytes. This field is only used for messages of type <code>metafeed/add</code>. The value must be 32 random bytes.</td>
+            </tr>
+        </table> 
         </div>
         <aside>
             <p>Dig deeper by reading the <a href="https://github.com/ssb-ngi-pointer/bendy-butt-spec" target="_blank">Bendy Butt Specification</a>.</p>
             <p>Bendy Butt uses <a href="https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings">SSB Binary Field Encodings</a> to encode many of its fields.</p>
         </aside>
-        <h3>Announcing a metafeed</h3>
+        <h3 id="metafeed-announcing">Announcing a metafeed</h3>
         <p>A feed let other applications know that it supports metafeeds by announcing its own metafeed as a message of type <code>metafeed/announce</code> on its <i>main feed</i>.</p>
         <pre><code>
 {
