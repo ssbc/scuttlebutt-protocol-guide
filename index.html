@@ -1119,7 +1119,7 @@ assert_nacl_sign_verify_detached(
                 <td>If the message is not encrypted, This is a Bencoded dictionary containing SSB-BFE encoded payload and signature. If it is SSB-BFE encrypted data, then upon decryption it becomes a Bencoded dictionary of SSB-BFE encoded data and the signature for the payload.</td>
             </tr>
         </table>
-        <img src="img/metafeed-structure.svg" class="pagewidth" style="height: 855px;" alt=""/>
+        <img src="img/metafeed-structure.png" class="pagewidth" style="height: 855px;" alt=""/>
         <h3 id="metafeed-contentSection">The content section</h3>
         <p>Unlike the messages on the <i>legacy feed format</i>&mdash;with their flexible content section&mdash;the messages in a metafeed must conform to very specific types that deal only with metadata information about feeds.</p>
         <p>The content section can be an encrypted text in which case it is decoded as a SSB-BFE-encoded dictionary. If the message is not encrypted, then it is an SSB-BFE-encoded dictionary. In both cases, the dictionary has the same fields.</p>
