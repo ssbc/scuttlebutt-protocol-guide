@@ -1152,7 +1152,8 @@ assert_nacl_sign_verify_detached(
         <h3 class="metafeed-message-types">Message Types</h3>
         <p>Unlike other feed types which have very flexible content sections, metafeeds support just a small collection of message types. Metafeeds are not supposed to store arbitrary messages. Messages in the metafeed deal only with metadata information about other feeds and nothing more. The supported types are:</p>
         <ul>
-            <li><code>metafeed/add</code>: Used to add a feed to the metafeed.</li> 
+            <li><code>metafeed/add/existing</code>: Used to add an existing feed to the metafeed.</li> 
+            <li><code>metafeed/add/derived</code>: Used to add a derived feed to the metafeed.</li> 
             <li><code>metafeed/update</code>: Used to update a feed information.</li>
             <li><code>metafeed/seed</code>: Used to record the cryptographic seed used to generate the metafeed identity. More about this later.</li>
             <li><code>metafeed/tombstone</code>: Used to flag that a feed is no longer in use.</li>
