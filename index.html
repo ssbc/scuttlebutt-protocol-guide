@@ -1126,7 +1126,7 @@ assert_nacl_sign_verify_detached(
         <table class="defs">
             <tr>
                 <td>type</td>
-                <td>Is a SSB-BFE string. It can only be one of <code>metafeed/add</code>, <code>metafeed/update</code>, <code>metafeed/seed</code>, or <code>metafeed/tombstone</code>.</td>
+                <td>Is a SSB-BFE string. It can only be one of <code>metafeed/add/existing</code>, <code>metafeed/add/derived</code>, <code>metafeed/update</code>, <code>metafeed/seed</code>, or <code>metafeed/tombstone</code>.</td>
             </tr>
             <tr>
                 <td>subfeed</td>
@@ -1148,10 +1148,18 @@ assert_nacl_sign_verify_detached(
                 <td>nonce</td>
                 <td>SSB-BFE bytes. This field is only used for messages of type <code>metafeed/add</code>. The value must be 32 random bytes.</td>
             </tr>
-        </table> 
+        </table>
+        <h3 class="metafeed-message-types">Message Types</h3>
+        <p>Unlike other feed types which have very flexible content sections, metafeeds support just a small collection of message types. Metafeeds are not supposed to store arbitrary messages. Messages in the metafeed deal only with metadata information about other feeds and nothing more. The supported types are:</p>
+        <ul>
+            <li><code>metafeed/add</code>: Used to add a feed to the metafeed.</li> 
+            <li><code>metafeed/update</code>: Used to update a feed information.</li>
+            <li><code>metafeed/seed</code>: Used to record the cryptographic seed used to generate the metafeed identity. More about this later.</li>
+            <li><code>metafeed/tombstone</code>: Used to flag that a feed is no longer in use.</li>
+        </ul>
 
         <h3 id="metafeed-announcing">Announcing a metafeed</h3>
-        <p>A feed let other applications know that it supports metafeeds by announcing its own metafeed as a message of type <code>metafeed/announce</code> on its <i>main feed</i>.</p>
+        <p>A feed let other peers know that it supports metafeeds by announcing its own metafeed as a message of type <code>metafeed/announce</code> on its <i>main feed</i>.</p>
         <pre><code>
 {
   // ... other msg.value field ...
@@ -1167,6 +1175,10 @@ assert_nacl_sign_verify_detached(
   }
 }
         </code></pre>
+        <h3>Example Metafeed with Feeds</h3>
+        <p>The sample diagram below shows a metafeed and the associated subfeeds.</p>
+        <img src="img/metafeed-structure-with-feeds.png" class="pagewidth" style="width:  100%;" alt=""/>
+
         <!-- end of metafeeds documentation -->
         <h2 id="blobs">Blobs</h2>
         <p>A blob is binary data. Blobs are referred to from Scuttlebutt messages and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
