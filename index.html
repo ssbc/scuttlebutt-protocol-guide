@@ -62,6 +62,10 @@
                         <div><a href="#bendy-butt">Structure</a></div>
                         <div><a href="#metafeed-contentSection">Content setion</a></div>
                         <div><a href="#metafeed-announcing">Announcing</a></div>
+                        <div><a href="#metafeed-use-cases">Use Cases</a></div>
+                        <div><a href="#metafeed-partial-replication">Partial Replication</a></div>
+                        <div><a href="#metafeed-fusion-identity">Fusion Identity</a></div>
+                        <div><a href="#metafeed-network-identity">Network Identity</a></div>
                     </div>
                 </div>
             </div>
@@ -1176,9 +1180,35 @@ assert_nacl_sign_verify_detached(
   }
 }
         </code></pre>
+        <p>This message is ignored by clients that do not support metafeeds thus guaranteeing that metafeeds do not break legacy clients. Clients that support metafeeds will discover new metafeeds and subfeeds by looking for such announcements.</p>
+
         <h3>Example Metafeed with Feeds</h3>
         <p>The sample diagram below shows a metafeed and the associated subfeeds.</p>
         <img src="img/metafeed-structure-with-feeds.png" class="pagewidth" style="width:  100%;" alt=""/>
+
+        <h2 id="metafeed-use-cases">Use cases</h2>
+        <p>The usage of metafeeds unlock a series of potential use cases and features that might not seem obvious just from a glance at the technical specifications.</p>
+
+        <h3 id="metafeed-partial-replication">Partial Replication</h3>
+        <p>Traditionally, SSB replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform because due to the huge amount of data the client needs to download before a feed is up to date, and the necessary computing cost to index the new data.</p>
+        <aside>
+            <p>To learn more about how partial replication works, check out the <a href="https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec" target="_blank">Partial Replication specification</a>.
+            </p>
+        </aside>
+        <p>Partial replication allows a client to selectivelly fetch slices of data starting from the most recent message instead. This allows the user to be able to see recent messages, and have a working client, after smaller data transfers and with minimal indexing time.</p>
+    
+        <h3 id="metafeed-network-identity">Network Identity</h3>
+        <p>Network identities are a way to decouple the key used for <a href="#handshake">Secret Handshake</a> from the <a href="#keys-and-identities">Identity key</a> being used by the user.</p>
+        <aside>
+            <p>Dive deeper by reading the <a href="https://github.com/ssb-ngi-pointer/ssb-network-identity-spec" target="_blank">Network Identity specification</a>.</p>
+        </aside>
+        <p>A user may have multiple network identities. They are stored in their own feed which is listed on the user's root metafeed. By having the identities listed in their own feed, a user can have private identities that are known only to them and those they trust.</p>
+
+        <h3 id="metafeed-fusion-identity">Fusion Identity</h3>
+        <p>Fusion Identities solve the challenge of using multiple devices with SSB. Each device still uses it's own identity, there is no avoiding that, but they can now share fusion identities with each other. These new fusion identities can be used to compute mentions and notifications taking into account all the keys that are part of the fusion. They also make it possible to send private messages to the fusion identity which are readable by all the members of the fusion identity. Replicating multiple feeds from the same user can be done by following the fusion identity.</p>
+        <aside>
+            <p>Check out the <a href="" targer="_blank">Fusion Identity specification</a> for more information.</p>
+        </aside>
 
         <!-- end of metafeeds documentation -->
         <h2 id="blobs">Blobs</h2>
