@@ -1183,11 +1183,11 @@ assert_nacl_sign_verify_detached(
         <p>This message is ignored by clients that do not support metafeeds thus guaranteeing that metafeeds do not break legacy clients. Clients that support metafeeds will discover new metafeeds and subfeeds by looking for such announcements.</p>
 
         <h3>Example Metafeed with Feeds</h3>
-        <p>The sample diagram below shows a metafeed and the associated subfeeds.</p>
-        <img src="img/metafeed-structure-with-feeds.png" class="pagewidth" style="width:  100%;" alt=""/>
+        <p>The sample diagram below shows a root feed, a metafeed and the associated subfeeds.</p>
+        <img src="img/metafeed-structure-with-feeds-simplified.png" style="width:  100%;" alt=""/>
 
         <h2 id="metafeed-use-cases">Use cases</h2>
-        <p>The usage of metafeeds unlock a series of potential use cases and features that might not seem obvious just from a glance at the technical specifications.</p>
+        <p>The usage of metafeeds unlock a series of potential use cases and features that are impossible to implement using the legacy feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
 
         <h3 id="metafeed-partial-replication">Partial Replication</h3>
         <p>Traditionally, SSB replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform because due to the huge amount of data the client needs to download before a feed is up to date, and the necessary computing cost to index the new data.</p>
