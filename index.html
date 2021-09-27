@@ -1168,7 +1168,7 @@ assert_nacl_sign_verify_detached(
   // ... other msg.value field ...
   content: {
     type: 'metafeed/announce',
-    metafeed: '@mf.bbfeed-v1',
+    metafeed: 'ssb:feed/bendybutt-v1/APaWWDs8g73EZFUMfW37RBULtFEjwKNbDczvdYiRXtA=',
     tangles: {
       metafeed: {
         root: null,
@@ -1185,7 +1185,7 @@ assert_nacl_sign_verify_detached(
         <img src="img/metafeed-structure-with-feeds-simplified.png" style="width:  100%;" alt=""/>
 
         <h2 id="metafeed-use-cases">Use cases</h2>
-        <p>The usage of metafeeds unlock a series of potential use cases and features that are impossible to implement using the classic feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
+        <p>The usage of metafeeds unlock a series of potential use cases and features that are much harder to implement using the classic feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
 
         <h3 id="metafeed-partial-replication">Partial Replication</h3>
         <p>Traditionally, Secure Scuttlebutt replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform due to the huge amount of data the client needs to download before a feed is up to date, and the associated computing cost for indexing the new data.</p>
