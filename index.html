@@ -1085,8 +1085,8 @@ assert_nacl_sign_verify_detached(
         <!-- metafeeds documentation -->
         <h2 id="metafeeds">Metafeeds</h2>
         <div>
-        <p>A metafeed is a special kind of feed that holds metadata information about multiple feeds. There can be only one active metafeed per identity, and it is only record metadata information about other feeds. Using metafeeds do not break compatibility with clients that only support the legacy feed format. Clients, for compatibility reasons, will always have a <i>main feed</i> in the format described above. They may support multiple additional feeds beyond that <i>main feed</i>, those additional feeds which will be organised and using a metafeed.</p>
-        <p>Metafeeds lay the necessary groundwork to implement many interesting features such as partial replication, per-application feeds, and even the co-existance of new feed formats with legacy ones.</p>
+        <p>A metafeed is a special kind of feed that holds metadata information about multiple feeds. There can be only one active root metafeed per identity, and it only recordx metadata information about other feeds. Using metafeeds does not break compatibility with clients that only support the legacy feed format. Clients, for compatibility reasons, will always have a <i>main feed</i> in the format described above. Clients may support multiple additional feeds beyond that <i>main feed</i>, which will be organised using a metafeed.</p>
+        <p>Metafeeds lays the necessary groundwork to implement many interesting features such as partial replication, per-application feeds, and even the co-existence of new feed formats with legacy ones.</p>
         </div>
         <aside>
             <p>Want to get deeper into metafeeds? Check out the <a href="https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec" target="_blank">Metafeed specification</a>.</p>
@@ -1094,12 +1094,12 @@ assert_nacl_sign_verify_detached(
             </p>
         </aside>
         <h3 id="bendy-butt">Structure</h3>
-        <p>Metafeeds use a different format than the <a href="#structure">legacy feed</a>, this new format is called <i>bendy butt</i>. It still is an append-only log of cryptographically signed messages, but it is not tied to JSON or V8 engine internals like the old format thus making it easier to implement it using other programming languages.</p>
+        <p>Metafeeds uses a different format than the <a href="#structure">legacy feed</a>, this new format is called <i>bendy butt</i>. It still is an append-only log of cryptographically signed messages, but it is not tied to JSON or V8 engine internals like the old format thus making it easier to implement it using other programming languages.</p>
         <aside>
             <p>Dig deeper by reading the <a href="https://github.com/ssb-ngi-pointer/bendy-butt-spec" target="_blank">Bendy Butt Specification</a>.</p>
             <p>Bendy Butt uses <a href="https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings">SSB Binary Field Encodings</a> to encode many of its fields.</p>
         </aside>
-        <p>Bendy Butt encodes its messages using the well-established <a href="https://en.wikipedia.org/wiki/Bencode" target="_blank">Bencode</a> format instead of JSON. While we may display metafeed message on this documentation as text, the encoding format uses binary delimiters instead of ascii. </p>
+        <p>Bendy Butt encodes its messages using the well-established <a href="https://en.wikipedia.org/wiki/Bencode" target="_blank">Bencode</a> format instead of JSON. While we may display metafeed messages on this documentation as text, the encoding format uses binary delimiters instead of ascii. </p>
         <p>A Bendy Butt Message is a Bencoded payload containing a collection with the following five elements, in this specific order.</p>
         <table class="defs">
             <tr>
@@ -1154,17 +1154,17 @@ assert_nacl_sign_verify_detached(
             </tr>
         </table>
         <h3 class="metafeed-message-types">Message Types</h3>
-        <p>Unlike other feed types which have very flexible content sections, metafeeds support just a small collection of message types. Metafeeds are not supposed to store arbitrary messages. Messages in the metafeed deal only with metadata information about other feeds and nothing more. The supported types are:</p>
+        <p>Unlike other feed types which have very flexible content sections, metafeeds supports just a small collection of message types. Metafeeds are not supposed to store arbitrary messages. Messages in the metafeed deal only with metadata information about other feeds. The supported types are:</p>
         <ul>
-            <li><code>metafeed/add/existing</code>: Used to add an existing feed to the metafeed.</li> 
-            <li><code>metafeed/add/derived</code>: Used to add a derived feed to the metafeed.</li> 
-            <li><code>metafeed/update</code>: Used to update a feed information.</li>
-            <li><code>metafeed/seed</code>: Used to record the cryptographic seed used to generate the metafeed identity. More about this later.</li>
+            <li><code>metafeed/add/existing</code>: Adds an existing feed to the metafeed.</li> 
+            <li><code>metafeed/add/derived</code>: Adds a derived feed to the metafeed.</li> 
+            <li><code>metafeed/update</code>: Updates a feed information.</li>
+            <li><code>metafeed/seed</code>: Records the cryptographic seed used to generate the metafeed identity. More about this later.</li>
             <li><code>metafeed/tombstone</code>: Used to flag that a feed is no longer in use.</li>
         </ul>
 
         <h3 id="metafeed-announcing">Announcing a metafeed</h3>
-        <p>A feed let other peers know that it supports metafeeds by announcing its own metafeed as a message of type <code>metafeed/announce</code> on its <i>main feed</i>.</p>
+        <p>A feed lets other peers know that it supports metafeeds by announcing its own metafeed as a message of type <code>metafeed/announce</code> on its <i>main feed</i>.</p>
         <pre><code>
 {
   // ... other msg.value field ...
@@ -1180,26 +1180,26 @@ assert_nacl_sign_verify_detached(
   }
 }
         </code></pre>
-        <p>This message is ignored by clients that do not support metafeeds thus guaranteeing that metafeeds do not break legacy clients. Clients that support metafeeds will discover new metafeeds and subfeeds by looking for such announcements.</p>
+        <p>This announcement message is ignored by clients that do not support metafeeds thus guaranteeing that metafeeds do not break legacy clients. Clients that support metafeeds will discover new metafeeds and subfeeds by looking for such announcements.</p>
 
         <h3>Example Metafeed with Feeds</h3>
-        <p>The sample diagram below shows a root feed, a metafeed and the associated subfeeds.</p>
+        <p>The sample diagram below shows a main feed, a root metafeed, and the associated subfeeds.</p>
         <img src="img/metafeed-structure-with-feeds-simplified.png" style="width:  100%;" alt=""/>
 
         <h2 id="metafeed-use-cases">Use cases</h2>
         <p>The usage of metafeeds unlock a series of potential use cases and features that are impossible to implement using the legacy feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
 
         <h3 id="metafeed-partial-replication">Partial Replication</h3>
-        <p>Traditionally, SSB replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform because due to the huge amount of data the client needs to download before a feed is up to date, and the necessary computing cost to index the new data.</p>
+        <p>Traditionally, SSB replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform due to the huge amount of data the client needs to download before a feed is up to date, and the associated computing cost for indexing the new data.</p>
         <aside>
             <p>To learn more about how partial replication works, check out the <a href="https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec" target="_blank">Partial Replication specification</a>.
             </p>
         </aside>
-        <p>Partial replication allows a client to selectivelly fetch slices of data starting from the most recent message instead. This allows the user to be able to see recent messages, and have a working client, after smaller data transfers and with minimal indexing time.</p>
+        <p>Partial replication allows a client to selectively fetch slices of data starting from the most recent message instead. This allows the user to be able to see recent messages, &mdash;without their client freezing up&mdash; as a result of smaller data transfers and with minimal indexing time.</p>
     
         <h3 id="metafeed-network-identity">Network Identity</h3>
         <p>Network identities are a way to decouple the key used for <a href="#handshake">Secret Handshake</a> from the <a href="#keys-and-identities">Identity key</a> being used by the user.</p>
-        <aside>
+        <aside> 
             <p>Dive deeper by reading the <a href="https://github.com/ssb-ngi-pointer/ssb-network-identity-spec" target="_blank">Network Identity specification</a>.</p>
         </aside>
         <p>A user may have multiple network identities. They are stored in their own feed which is listed on the user's root metafeed. By having the identities listed in their own feed, a user can have private identities that are known only to them and those they trust.</p>
