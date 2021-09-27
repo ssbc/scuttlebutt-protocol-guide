@@ -1085,8 +1085,8 @@ assert_nacl_sign_verify_detached(
         <!-- metafeeds documentation -->
         <h2 id="metafeeds">Metafeeds</h2>
         <div>
-        <p>A metafeed is a special kind of feed that holds metadata information about multiple feeds. There can be only one active root metafeed per identity, and it only recordx metadata information about other feeds. Using metafeeds does not break compatibility with clients that only support the legacy feed format. Clients, for compatibility reasons, will always have a <i>main feed</i> in the format described above. Clients may support multiple additional feeds beyond that <i>main feed</i>, which will be organised using a metafeed.</p>
-        <p>Metafeeds lays the necessary groundwork to implement many interesting features such as partial replication, per-application feeds, and even the co-existence of new feed formats with legacy ones.</p>
+        <p>A metafeed is a special kind of feed that only publishes metadata information concerning other feeds, called the <i>subfeeds</i>. A metafeed can also contain other metafeeds as subfeeds, so they form a tree structure. There can only be one <i>root metafeed</i> at the top of this tree. Using metafeeds do not break compatibility with clients that only support the classic feed format. Clients, for compatibility reasons, have a <i>main classic feed</i> alongside the root metafeed. They may support multiple additional feeds beyond that <i>main feed</i>, those additional feeds which will be organised and using a metafeed.</p>
+        <p>Metafeeds lays the necessary groundwork to implement many interesting features such as partial replication, per-application feeds, and even the co-existence of new feed formats with classic ones.</p>
         </div>
         <aside>
             <p>Want to get deeper into metafeeds? Check out the <a href="https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec" target="_blank">Metafeed specification</a>.</p>
@@ -1094,17 +1094,17 @@ assert_nacl_sign_verify_detached(
             </p>
         </aside>
         <h3 id="bendy-butt">Structure</h3>
-        <p>Metafeeds uses a different format than the <a href="#structure">legacy feed</a>, this new format is called <i>bendy butt</i>. It still is an append-only log of cryptographically signed messages, but it is not tied to JSON or V8 engine internals like the old format thus making it easier to implement it using other programming languages.</p>
+        <p>Metafeeds uses a different format than the <a href="#structure">classic feed</a>, this new format is called <i>Bendy Butt</i>. It still is an append-only log of cryptographically signed messages, but it is not tied to JSON or V8 engine internals like the old format thus making it easier to implement in other programming languages.</p>
         <aside>
             <p>Dig deeper by reading the <a href="https://github.com/ssb-ngi-pointer/bendy-butt-spec" target="_blank">Bendy Butt Specification</a>.</p>
-            <p>Bendy Butt uses <a href="https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings">SSB Binary Field Encodings</a> to encode many of its fields.</p>
+            <p>Bendy Butt uses <a href="https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings">Binary Field Encodings (BFE)</a> to encode many of its fields.</p>
         </aside>
         <p>Bendy Butt encodes its messages using the well-established <a href="https://en.wikipedia.org/wiki/Bencode" target="_blank">Bencode</a> format instead of JSON. While we may display metafeed messages on this documentation as text, the encoding format uses binary delimiters instead of ascii. </p>
-        <p>A Bendy Butt Message is a Bencoded payload containing a collection with the following five elements, in this specific order.</p>
+        <p>A Bendy Butt Message is a Bencoded list containing a collection with the following five elements, in this specific order.</p>
         <table class="defs">
             <tr>
                 <td>author</td>
-                <td>SSB-BFE encoded feed id.</td>
+                <td>BFE encoded feed ID.</td>
             </tr>
             <tr>
                 <td>sequence</td>
@@ -1112,7 +1112,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>previous</td>
-                <td>SSB-BFE encoded message ID, or SSB-BFE <i>nil</i> value for the first message.</td>
+                <td>BFE encoded message ID, or BFE <i>nil</i> value for the first message.</td>
             </tr>
             <tr>
                 <td>timestamp</td>
@@ -1120,37 +1120,37 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>contentSection</td>
-                <td>If the message is not encrypted, This is a Bencoded dictionary containing SSB-BFE encoded payload and signature. If it is SSB-BFE encrypted data, then upon decryption it becomes a Bencoded dictionary of SSB-BFE encoded data and the signature for the payload.</td>
+                <td>If the message is not encrypted, This is a Bencoded dictionary containing BFE encoded payload and signature. If it is BFE encrypted data, then upon decryption it becomes a Bencoded dictionary of BFE encoded data and the signature for the payload.</td>
             </tr>
         </table>
         <img src="img/metafeed-structure.png" class="pagewidth" style="height: 855px;" alt=""/>
         <h3 id="metafeed-contentSection">The content section</h3>
-        <p>Unlike the messages on the <i>legacy feed format</i>&mdash;with their flexible content section&mdash;the messages in a metafeed must conform to very specific types that deal only with metadata information about feeds.</p>
-        <p>The content section can be an encrypted text in which case it is decoded as a SSB-BFE-encoded dictionary. If the message is not encrypted, then it is an SSB-BFE-encoded dictionary. In both cases, the dictionary has the same fields.</p>
+        <p>Unlike the messages on the <i>classic feed format</i>&mdash;with their flexible content section&mdash;the messages in a metafeed must conform to very specific types that deal only with metadata information about feeds.</p>
+        <p>The content section can be an encrypted text in which case it is decoded as a BFE-encoded dictionary. If the message is not encrypted, then it is an BFE-encoded dictionary. In both cases, the dictionary has the same fields.</p>
         <table class="defs">
             <tr>
                 <td>type</td>
-                <td>Is a SSB-BFE string. It can only be one of <code>metafeed/add/existing</code>, <code>metafeed/add/derived</code>, <code>metafeed/update</code>, <code>metafeed/seed</code>, or <code>metafeed/tombstone</code>.</td>
+                <td>Is a BFE string. It can only be one of <code>metafeed/add/existing</code>, <code>metafeed/add/derived</code>, <code>metafeed/update</code>, <code>metafeed/seed</code>, or <code>metafeed/tombstone</code>.</td>
             </tr>
             <tr>
                 <td>subfeed</td>
-                <td>A SSB-BFE Feed ID.</td>
+                <td>A BFE Feed ID.</td>
             </tr>
             <tr>
                 <td>metafeed</td>
-                <td>A SSB-BFE Bendy Butt Feed ID.</td>
+                <td>A BFE Bendy Butt Feed ID.</td>
             </tr>
             <tr>
                 <td>feedpurpose</td>
-                <td>A SSB-BFE String. It describes the purpose of the specified feed.</td>
+                <td>A BFE String. It describes the purpose of the specified feed.</td>
             </tr>
             <tr>
                 <td>tangles</td>
-                <td>A SSB-BFE dictionary. It conforms to the <a target="_blank" href="https://github.com/ssbc/ssb-tangle">SSB tangles specification</a> and establishes the relationship between the message and other messages on the metafeed.</td>
+                <td>A BFE dictionary. It conforms to the <a target="_blank" href="https://github.com/ssbc/ssb-tangle">SSB tangles specification</a> and establishes the relationship between the message and other messages on the metafeed.</td>
             </tr>
             <tr>
                 <td>nonce</td>
-                <td>SSB-BFE bytes. This field is only used for messages of type <code>metafeed/add</code>. The value must be 32 random bytes.</td>
+                <td>BFE bytes. This field is only used for messages of type <code>metafeed/add</code>. The value must be 32 random bytes.</td>
             </tr>
         </table>
         <h3 class="metafeed-message-types">Message Types</h3>
@@ -1187,7 +1187,7 @@ assert_nacl_sign_verify_detached(
         <img src="img/metafeed-structure-with-feeds-simplified.png" style="width:  100%;" alt=""/>
 
         <h2 id="metafeed-use-cases">Use cases</h2>
-        <p>The usage of metafeeds unlock a series of potential use cases and features that are impossible to implement using the legacy feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
+        <p>The usage of metafeeds unlock a series of potential use cases and features that are impossible to implement using the classic feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
 
         <h3 id="metafeed-partial-replication">Partial Replication</h3>
         <p>Traditionally, SSB replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform due to the huge amount of data the client needs to download before a feed is up to date, and the associated computing cost for indexing the new data.</p>
