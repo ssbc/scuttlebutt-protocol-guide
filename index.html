@@ -1120,17 +1120,17 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>contentSection</td>
-                <td>If the message is not encrypted, This is a Bencoded dictionary containing BFE encoded payload and signature. If it is BFE encrypted data, then upon decryption it becomes a Bencoded dictionary of BFE encoded data and the signature for the payload.</td>
+                <td>If the message is not encrypted, This is a Bencoded list containing BFE encoded payload and signature. If it is BFE encrypted data, then upon decryption it becomes a Bencoded list of BFE encoded data and the signature for the payload.</td>
             </tr>
         </table>
         <img src="img/metafeed-structure.png" class="pagewidth" style="height: 855px;" alt=""/>
         <h3 id="metafeed-contentSection">The content section</h3>
         <p>Unlike the messages on the <i>classic feed format</i>&mdash;with their flexible content section&mdash;the messages in a metafeed must conform to very specific types that deal only with metadata information about feeds.</p>
-        <p>The content section can be an encrypted text in which case it is decoded as a BFE-encoded dictionary. If the message is not encrypted, then it is an BFE-encoded dictionary. In both cases, the dictionary has the same fields.</p>
+        <p>The content section can be an encrypted text in which case it is decoded as a BFE-encoded list. If the message is not encrypted, then it is an BFE-encoded list. In both cases, the dictionary inside the list has the same fields.</p>
         <table class="defs">
             <tr>
                 <td>type</td>
-                <td>Is a BFE string. It can only be one of <code>metafeed/add/existing</code>, <code>metafeed/add/derived</code>, <code>metafeed/update</code>, <code>metafeed/seed</code>, or <code>metafeed/tombstone</code>.</td>
+                <td>Is a BFE string. It can only be one of <code>metafeed/add/existing</code>, <code>metafeed/add/derived</code>, or <code>metafeed/tombstone</code>.</td>
             </tr>
             <tr>
                 <td>subfeed</td>
@@ -1158,13 +1158,11 @@ assert_nacl_sign_verify_detached(
         <ul>
             <li><code>metafeed/add/existing</code>: Adds an existing feed to the metafeed.</li> 
             <li><code>metafeed/add/derived</code>: Adds a derived feed to the metafeed.</li> 
-            <li><code>metafeed/update</code>: Updates a feed information.</li>
-            <li><code>metafeed/seed</code>: Records the cryptographic seed used to generate the metafeed identity. More about this later.</li>
             <li><code>metafeed/tombstone</code>: Used to flag that a feed is no longer in use.</li>
         </ul>
 
         <h3 id="metafeed-announcing">Announcing a metafeed</h3>
-        <p>A feed lets other peers know that it supports metafeeds by announcing its own metafeed as a message of type <code>metafeed/announce</code> on its <i>main feed</i>.</p>
+        <p>A classic main feed can let other peers know that it supports metafeeds by announcing its own root metafeed as a message of type <i>metafeed/announce</i>.</p>
         <pre><code>
 {
   // ... other msg.value field ...
@@ -1180,17 +1178,17 @@ assert_nacl_sign_verify_detached(
   }
 }
         </code></pre>
-        <p>This announcement message is ignored by clients that do not support metafeeds thus guaranteeing that metafeeds do not break legacy clients. Clients that support metafeeds will discover new metafeeds and subfeeds by looking for such announcements.</p>
+        <p>This announcement message is ignored by existing apps that do not support metafeeds such that adding a metafeed is harmless to existing apps. Clients that support metafeeds will discover new metafeeds and subfeeds by looking for such announcements.</p>
 
         <h3>Example Metafeed with Feeds</h3>
-        <p>The sample diagram below shows a main feed, a root metafeed, and the associated subfeeds.</p>
+        <p>The sample diagram below shows a classic main feed, a root metafeed, and the associated subfeeds.</p>
         <img src="img/metafeed-structure-with-feeds-simplified.png" style="width:  100%;" alt=""/>
 
         <h2 id="metafeed-use-cases">Use cases</h2>
         <p>The usage of metafeeds unlock a series of potential use cases and features that are impossible to implement using the classic feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
 
         <h3 id="metafeed-partial-replication">Partial Replication</h3>
-        <p>Traditionally, SSB replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform due to the huge amount of data the client needs to download before a feed is up to date, and the associated computing cost for indexing the new data.</p>
+        <p>Traditionally, Secure Scuttlebutt replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform due to the huge amount of data the client needs to download before a feed is up to date, and the associated computing cost for indexing the new data.</p>
         <aside>
             <p>To learn more about how partial replication works, check out the <a href="https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec" target="_blank">Partial Replication specification</a>.
             </p>
@@ -1205,7 +1203,7 @@ assert_nacl_sign_verify_detached(
         <p>A user may have multiple network identities. They are stored in their own feed which is listed on the user's root metafeed. By having the identities listed in their own feed, a user can have private identities that are known only to them and those they trust.</p>
 
         <h3 id="metafeed-fusion-identity">Fusion Identity</h3>
-        <p>Fusion Identities solve the challenge of using multiple devices with SSB. Each device still uses it's own identity, there is no avoiding that, but they can now share fusion identities with each other. These new fusion identities can be used to compute mentions and notifications taking into account all the keys that are part of the fusion. They also make it possible to send private messages to the fusion identity which are readable by all the members of the fusion identity. Replicating multiple feeds from the same user can be done by following the fusion identity.</p>
+        <p>Fusion Identities solve the challenge of using multiple devices with Secure Scuttlebutt. Each device still uses it's own identity, there is no avoiding that, but they can now share fusion identities with each other. These new fusion identities can be used to compute mentions and notifications taking into account all the keys that are part of the fusion. They also make it possible to send private messages to the fusion identity which are readable by all the members of the fusion identity. Replicating multiple feeds from the same user can be done by following the fusion identity.</p>
         <aside>
             <p>Check out the <a href="" targer="_blank">Fusion Identity specification</a> for more information.</p>
         </aside>
