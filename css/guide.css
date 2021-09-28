@@ -136,6 +136,10 @@ pre, code, .binary span {
     font-family: "DejaVu Sans Mono";
 }
 
+code{
+    font-weight:bold;
+}
+
 pre {
     font-size: 12px;
     line-height: 1.3;
