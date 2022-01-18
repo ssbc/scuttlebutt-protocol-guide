@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Scuttlebutt Protocol Guide</title>
+    <title>Описание протокола Scuttlebutt</title>
     <link rel="icon" href="img/favicon.png"/>
     <link rel="stylesheet" href="css/fonts.css"/>
     <link rel="stylesheet" href="css/guide.css"/>
@@ -12,53 +12,53 @@
         <div class="title">
             <a href="index.html">
                 <img src="img/logo.png" alt=""/>
-                <span>Scuttlebutt Protocol Guide</span>
+                <span>Описание протокола Scuttlebutt</span>
             </a>
         </div>
         <nav>
-            <a href="https://github.com/ssbc/scuttlebutt-protocol-guide"><div>Repo</div></a>
+            <a href="https://github.com/ssbc/scuttlebutt-protocol-guide"><div>Репозиторий</div></a>
         </nav>
         <lang>
           <select onchange="if (this.value) window.location.href = this.value">
-            <option value="./index.html" selected>Englich</option>
-            <option value="./index_ru.html">Russian</option>
+            <option value="./index.html">Английский</option>
+            <option value="./index_ru.html" selected>Русский</option>
           </select>
         </lang>
     </header>
     <main>
-        <h1>Scuttlebutt Protocol Guide</h1>
-        <p class="subtitle">How Scuttlebutt peers find and talk to each other</p>
+        <h1>Описание протокола Scuttlebutt</h1>
+        <p class="subtitle">Как пиры Scuttlebutt находят и общаются друг с другом </p>
         <hr/>
         <aside class="kicker section-kicker">
-            <h2 id="toc">Contents</h2>
+            <h2 id="toc">СОДЕРЖАНИЕ</h2>
         </aside>
         <div class="toc">
             <div class="col">
-                <div><a class="s1" href="#introduction">Introduction</a></div>
-                <div><a class="s1" href="#keys-and-identities">Keys and identities</a></div>
+                <div><a class="s1" href="#introduction">Вступление</a></div>
+                <div><a class="s1" href="#keys-and-identities">Ключи&nbsp;и&nbsp;идентификаторы</a></div>
                 <div class="section">
-                    <div><a class="s1" href="#discovery">Discovery</a></div>
+                    <div><a class="s1" href="#discovery">Развертывание</a></div>
                     <div class="s2">
-                        <div><a href="#local-network">Local network</a></div>
-                        <div><a href="#invite-code">Invite code</a></div>
-                        <div><a href="#pub-message">Pub message</a></div>
+                        <div><a href="#local-network">Локальная сеть</a></div>
+                        <div><a href="#invite-code">Код приглашения</a></div>
+                        <div><a href="#pub-message">Pub сообщение</a></div>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="section">
-                    <div><a class="s1" href="#peer-connections">Peer connections</a></div>
+                    <div><a class="s1" href="#peer-connections">Одноранговые&nbsp;соединения</a></div>
                     <div class="s2">
-                        <div><a href="#handshake">Handshake</a></div>
-                        <div><a href="#box-stream">Box stream</a></div>
-                        <div><a href="#rpc-protocol">RPC protocol</a></div>
+                        <div><a href="#handshake">Рукопожатие</a></div>
+                        <div><a href="#box-stream">Box поток</a></div>
+                        <div><a href="#rpc-protocol">Протокол RPC</a></div>
                     </div>
                 </div>
                 <div class="section">
-                    <div><a class="s1" href="#feeds">Feeds</a></div>
+                    <div><a class="s1" href="#feeds">Каналы</a></div>
                     <div class="s2">
-                        <div><a href="#structure">Structure</a></div>
-                        <div><a href="#message-format">Message format</a></div>
+                        <div><a href="#structure">Структура</a></div>
+                        <div><a href="#message-format">Формат сообщения</a></div>
                         <div><a href="#createHistoryStream">createHistoryStream</a></div>
                     </div>
                 </div>
@@ -67,84 +67,85 @@
                 <div class="section">
                     <div><a class="s1" href="#blobs">Blobs</a></div>
                     <div class="s2">
-                        <div><a href="#fetching">Fetching</a></div>
-                        <div><a href="#want-and-have">Want and have</a></div>
+                        <div><a href="#fetching">Получение</a></div>
+                        <div><a href="#want-and-have">Хочу и имею</a></div>
                     </div>
                 </div>
                 <div class="section">
-                    <div><a class="s1" href="#following">Following</a></div>
+                    <div><a class="s1" href="#following">Следование</a></div>
                     <div class="s2">
-                        <div><a href="#follow-graph">Follow graph</a></div>
+                        <div><a href="#follow-graph">Обход графа</a></div>
                     </div>
                 </div>
                 <div class="section">
-                    <div><a class="s1" href="#pubs">Pubs</a></div>
+                    <div><a class="s1" href="#pubs">Пабы</a></div>
                     <div class="s2">
-                        <div><a href="#invites">Invites</a></div>
+                        <div><a href="#invites">Приглашения</a></div>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="section">
-                    <div><a class="s1" href="#private-messages">Private messages</a></div>
+                    <div><a class="s1" href="#private-messages">Приватные сообщения</a></div>
                     <div class="s2">
-                        <div><a href="#encrypting">Encrypting</a></div>
-                        <div><a href="#decrypting">Decrypting</a></div>
+                        <div><a href="#encrypting">Шифрование</a></div>
+                        <div><a href="#decrypting">Дешифрование</a></div>
                     </div>
                 </div>
             </div>
         </div>
         <hr/>
+    
+        <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a>  - это протокол для создания децентрализованных приложений, которые хорошо работают в автономном режиме и которые никто не может контролировать. Поскольку центрального сервера нет, клиенты Scuttlebutt подключаются к своим партнерам для обмена информацией. В этом руководстве описаны протоколы, используемые для связи в сети Scuttlebutt. </p>
+        <p>Scuttlebutt - это гибкий протокол, способный поддерживать множество различных типов приложений. Одно из первых его приложений было как социальная сеть. В этом руководстве небольшое внимание уделяется тому, как использовать Scuttlebutt для социальных сетей, но многие объяснения все равно будут полезны, если вы хотите использовать его для чего-то совершенно другого или вам просто интересно, как это работает.</p>
 
-        <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a> is a protocol for building decentralized applications that work well offline and that no one person can control. Because there is no central server, Scuttlebutt clients connect to their peers to exchange information. This guide describes the protocols used to communicate within the Scuttlebutt network.</p>
-        <p>Scuttlebutt is a flexible protocol, capable of supporting many different types of applications. One of its first applications was as a social network. This guide has a slight focus on how to use Scuttlebutt for social networking, but many of the explanations will still be useful if want to use it for something completely different, or are just curious how it works.</p>
+        <h2 id="cryptography">Криптография</h2>
 
-        <h2 id="cryptography">Cryptography</h2>
-
-        <h3 id="keys-and-identities">Keys and identities</h3>
-        <p>The first thing a user needs to participate in Scuttlebutt is an identity. An identity is an Ed25519 key pair and typically represents a person, a device, a server or a bot. It’s normal for a person to have several Scuttlebutt identities.</p>
-        <p>Upon starting for the first time, Scuttlebutt clients will automatically generate an Ed25519 key pair and save it in the user’s home folder under <code>.ssb/secret</code>.</p>
-        <img src="img/identity_keypair.png" style="height: 80px;" alt="The Scuttlebutt identity is a long-term Ed25519 key pair." />
-        <p>Because identities are long and random, no coordination or permission is required to create a new one, which is essential to the network’s design.</p>
-        <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it stolen they will need to generate a new identity and tell people to use their new one instead.</p>
-        <p>The public key of an identity is presented to users and transmitted in some parts of the network protocol using this format:</p>
-        <img src="img/format_public_key.png" style="height: 80px;" alt="@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519 where everything but the @ prefix and .ed25519 suffix is the public-key, base64-encoded." />
+        <h3 id="keys-and-identities">Ключи&nbsp;и&nbsp;идентификаторы</h3>
+        <p>Первое, что нужно пользователю для участия в Scuttlebutt, - это личность. Личность - это пара ключей Ed25519, которая обычно представляет человека, устройство, сервер или бота. Наличие нескольких личностей Scuttlebutt - это нормально.</p>
+        <p>При первом запуске клиенты Scuttlebutt автоматически сгенерируют пару ключей Ed25519 и сохранят ее в домашней папке пользователя в папке <code>.ssb/secret</code>.</p>
+        <img src="lang/ru/img/identity_keypair.png" style="height: 80px;"/>    
+        <p>Поскольку идентификаторы длинные и случайные, для создания нового идентификатора не требуется согласования или разрешения, что очень важно для конструкции сети.</p>
+        <p>Позже пользователь может выбрать себе псевдоним или аватар, чтобы было удобнее ссылаться на него. Со временем прозвища могут измениться, но личности останутся прежними. Если пользователь потеряет свой секретный ключ или его украдут, ему нужно будет сгенерировать новую личность и попросить людей использовать вместо старой новую.</p>
+        <p>Открытый ключ личности показывается пользователям и передается в некоторых частях сетевого протокола с использованием этого формата:</p>
+        <img src="lang/ru/img/format_public_key.png" style="height: 80px;" alt="@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519 где все, кроме префикса @ и суффикса .ed25519, является открытым ключом закодированным base64. " />
         <aside style="position: relative; top: 6px;">
-            <p>Throughout the protocol all instances of base64 are the variant that uses <code>+</code> and <code>/</code>. The final padding <code>=</code> is also required.</p>
+            <p>Во всем протоколе все экземпляры base64 являются вариантом, в котором используются <code>+</code> и <code>/</code>. Также требуется завершающий символ <code>=</code>.</p>
         </aside>
-        <p>The beginning <code>@</code> sign signifies that this represents a public key rather than a message or blob, which start with <code>%</code> and <code>&amp;</code>. Each identity has an associated <a href="#feeds">feed</a>, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
+        <p>Знак начала <code>@</code> означает, что он представляет собой открытый ключ, а не сообщение или большой двоичный объект, которые начинаются с <code>%</code> и <code>&amp;</code>. С каждым идентификатором связан <a href="#feeds">канал</a>, который представляет собой список всех сообщений, отправленных этим идентификатором. Вот почему идентификатор также называется <em> feed ID </em>.</p>
 
-        <h3 id="cryptographic-primitives">Cryptographic primitives</h3>
+        <h3 id="cryptographic-primitives">Криптографические примитивы</h3>
 
-        <p>The Scuttlebutt protocol relies on NaCl/libsodium's cryptobox primitives. This guide uses the following:</p>
+        <p>Протокол Scuttlebutt основан на примитивах криптобокса NaCl/libsodium. В этом руководстве используется следующее: </p>
 
         <dl>
             <dt><code>nacl_scalarmult(n, p)</code></dt>
-            <dd>This is <a href="https://doc.libsodium.org/advanced/scalar_multiplication">Libsodium's scalar multiplication function</a>, which takes two scalars (usually public and/or secret keys). It has the useful property that, given two key pairs <code>(pk1, sk1)</code> and <code>(pk2, sk2)</code>, <code>nacl_scalarmult(sk1, pk2) == nacl_scalarmult(sk2, pk1)</code>, which allows shared secret derivation between peers who know each other's public key. More on this later.</dd>
+            <dd>Это <a href="http://doc.libsodium.org/advanced/scalar_multiplication"> Функция скалярного умножения libsodium </a>, которая принимает два скаляра (обычно публичный и / или секретный ключи). Она обладает полезным свойством, которое, учитывая две пары ключей <code> (pk1, sk1) </code> и <code> (pk2, sk2) </code>, <code> nacl_scalarmult (sk1, pk2) == nacl_scalarmult ( sk2, pk1) </code>, которое позволяет общий секретный вывод между коллегами, которые знают открытые ключи друг друга. Более подробно рассмотрим позже. </dd>
 
-            <dt><code>nacl_auth(msg, key)</code> and <code>assert_nacl_auth_verify(authenticator, msg, key)</code></dt>
-            <dd>This functions are <a href="https://doc.libsodium.org/public-key_cryptography/authenticated_encryption">Libsodium's message authentication function</a>. The former takes a message and returns a 32-bytes authenticator, that acts as a detacted signature of the message. The latter verifies this authenticator is indeed valid for the given message and key; and errors if they don't.</dd>
+            <dt><code>nacl_auth(msg, key)</code> и <code>assert_nacl_auth_verify(authenticator, msg, key)</code></dt>
+            <dd> Эти функции являются <a href="https://doc.libsodium.org/public-key_cryptography/authenticated_encryption">функциями аутентификации сообщений Libsodium </a>. Первая принимает сообщение и возвращает 32-байтовый аутентификатор, который действует как отдельная подпись сообщения. Последняя проверяет, что этот аутентификатор является действительным для данного сообщения и ключа; и возвращают ошибки, если они этого не делают. </dd>
+            
+            <dt><code>nacl_secret_box(msg, nonce, key)</code> и <code>assert_nacl_secretbox_open(ciphertext, nonce, key)</code></dt>
+            <dd>Эти функции основаны на функциях <a href="https://doc.libsodium.org/secret-key_cryptography/secretbox">crypto_secretbox_easy и crypto_secretbox_open_easy в Libsodium </a>, которые используют симметричную криптографию для шифрования + аутентификации и проверки + расшифровки сообщения, используя одноразовый номер и опубликованный ключ. </dd>
 
-            <dt><code>nacl_secret_box(msg, nonce, key)</code> and <code>assert_nacl_secretbox_open(ciphertext, nonce, key)</code></dt>
-            <dd>These function are based on <a href="https://doc.libsodium.org/secret-key_cryptography/secretbox">Libsodium's crypto_secretbox_easy and crypto_secretbox_open_easy function</a>, which use symmetric cryptography to, respectively, encrypt+authenticate, and verify+decrypt a message using a nonce and a shared secret.</dd>
-
-            <dt><code>nacl_sign_detached(msg, key)</code> and <code>assert_nacl_sign_verify_detached(sig, msg, key)</code></dt>
+            <dt><code>nacl_sign_detached(msg, key)</code> и <code>assert_nacl_sign_verify_detached(sig, msg, key)</code></dt>
             <dd>The former is computed from <a href="https://doc.libsodium.org/public-key_cryptography/public-key_signatures">Libsodium's signature functions</a>. Unlike the usual Libsodium/NaCl functions, they work with signatures in independent buffers, rather than concatenated with the msg.</dd>
+            <dd>Первичные вычисления из <a href="http://doc.libsodium.org/public-key_cryptography/publickey_signatures">Функции сигнатур libsodium </a>. В отличие от обычных функций Libsodium / NaCl, они работают с сигнатурами в независимых буферах, а не объединены с помощью MSG. </dd>
 
-            <dt><code>pk_to_curve25519(ed25519_pk)</code> and <code>sk_to_curve25519(ed25519_sk)</code></dt>
-            <dd>These functions convert Ed25519 keys (used for cryptobox) to Curve25519 (aka X25519) keys, used for signing. They are <a href="https://doc.libsodium.org/advanced/ed25519-curve25519">implemented by Libsodium as <code>crypto_sign_ed25519_pk_to_curve25519</code> and <code>crypto_sign_ed25519_sk_to_curve25519</code></a>, respectively.</dd>
+            <dt><code>pk_to_curve25519(ed25519_pk)</code> и <code>sk_to_curve25519(ed25519_sk)</code></dt>
+            <dd>Эти функции преобразуют Ed25519 ключи (используемые для cryptobox) в Curve25519 (он же X25519) ключи, используемые для подписания. Они <a href="https://doc.libsodium.org/advanced/ed25519-curve25519"> реализованы libsodium как <code> crypto_sign_ed25519_pk_to_curve25519 </code> и <code> crypto_sign_ed25519_sk_to_curve25519 </code> </a> соответственно. </dd>
         </dl>
 
-        <h2 id="discovery">Discovery</h2>
+        <h2 id="discovery">Развертывание</h2>
         <div>
-            <p>After a user has generated their identity they need to find some peers to connect to. To connect to a peer you need its public key and its address using any of the protocol it supports. Typically with TCP/IP, you would need its IP address and port, but the Scuttlebutt protocol is not restricted to TCP/IP as transport. The Scuttlebutt protocol currently has three methods for peers to discover each other.</p>
+            <p>После того, как пользователь сгенерировал свою личность, ему нужно найти одноранговые узлы для подключения. Чтобы подключиться к одноранговому узлу, вам понадобится его открытый ключ и его адрес, используя любой из поддерживаемых им протоколов. Обычно для TCP/IP вам понадобятся его IP-адрес и порт, но протокол Scuttlebutt не ограничивается TCP/IP в качестве транспорта. В настоящее время протокол Scuttlebutt позволяет одноранговым узлам обнаруживать друг друга тремя способами.</p>
 
-            <h3 id="local-network">Local network</h3>
-            <p>Peers constantly broadcast UDP packets on their local network advertising their presence. The body of each packet is a string containing the peer’s IP address, port and base64-encoded public key (without <code>@</code> or <code>.ed25519</code>):</p>
+            <h3 id="local-network">Локальная сеть</h3>
+            <p>Одноранговые узлы постоянно передают UDP-пакеты в свою локальную сеть, объявляя о своем присутствии. Тело каждого пакета - это строка, содержащая IP-адрес, порт и открытый ключ в кодировке base64 (без <code>@</code> или <code>.ed25519</code>):</p>
         </div>
         <aside class="impl">
             <img class="icon" src="img/impl.png" alt=""/>
-            <h5>Implementations</h5>
+            <h5>Реализации</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
             <div class="vs"><a href="https://github.com/ssbc/ssb-local/blob/master/index.js">ssb-local</a></div>
@@ -156,30 +157,30 @@
             <figure class="packets">
                 <div class="packet">
                     <div class="header">
-                        <span class="key">Source IP</span><span class="value">192.168.1.123</span>
-                        <span class="key">Source port</span><span class="value">8008</span>
-                        <span class="key">Destination IP</span><span class="value">255.255.255.255</span>
-                        <span class="key">Destination port</span><span class="value">8008</span>
+                        <span class="key">Исходящий&nbsp;IP</span><span class="value">192.168.1.123</span>
+                        <span class="key">Исходящий&nbsp;порт</span><span class="value">8008</span>
+                        <span class="key">Целевой&nbsp;IP</span><span class="value">255.255.255.255</span>
+                        <span class="key">Целевой&nbsp;порт</span><span class="value">8008</span>
                     </div>
-                    <img src="img/format_udp_broadcast.png" style="height: 40px;" alt="net:192.168.1.123:8008:~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY="/>
+                    <img src="lang/ru/img/format_udp_broadcast.png" style="height: 40px;" alt="net:192.168.1.123:8008:~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY="/>
                 </div>
             </figure>
-            <p>This message format can be any valid <a href="https://github.com/ssb-js/multiserver#address-format">multiserver address</a>. In local networks, this is usually a <code>net</code> address with an IPv4 or IPv6 address.</p>
-            <p>Current implementations broadcast one of these packets every second. When a peer sees another peer’s broadcast packet they can connect to exchange messages. Some clients show nearby peers in the user interface so that the user can see other people on the same network as them.</p>
+            <p>Этим форматом сообщения может быть любой действительный <a href="https://github.com/ssb-js/multiserver#address-format">многосерверный адрес</a>. В локальных сетях это обычно <code> net </code> адрес с адресом IPv4 или IPv6. </p>
+            <p>Текущие реализации транслируют один из этих пакетов каждую секунду. Когда одноранговый узел видит широковещательный пакет другого однорангового узла, он может подключиться для обмена сообщениями. Некоторые клиенты показывают ближайших партнеров в пользовательском интерфейсе, чтобы пользователь мог видеть других людей в той же сети, что и они.</p> 
         </div>
         <aside>
-            <p>UDP source and destination ports are set to the same port number that the peer is listening on TCP for peer connections (normally 8008).</p>
+            <p> Для портов источника и назначения UDP задан тот же номер порта, который одноранговый узел прослушивает по TCP для одноранговых соединений (обычно 8008). </p> 
         </aside>
 
-        <h3 id="invite-code">Invite code</h3>
-        <p><a href="#invites">Invite codes</a> help new users get connected to their first <a href="#pubs">pub</a>, which is a Scuttlebutt peer that is publicly accessible over the internet. An invite code contains a pub’s domain name, port and public key.</p>
-        <p>They also contain a secret key that the user can <a href="#redeeming-invites">redeem</a> to make the pub <a href="#following">follow</a> them back. This lets the new user see messages posted by other members of the pub and share their own messages. Invite codes are the most common way for new users to get started on Scuttlebutt.</p>
-        <p>Pub operators can distribute invite codes any way they see fit, for example by posting them on existing social networks. Some pubs have a web page that anybody can visit to generate an invite code.</p>
+        <h3 id="invite-code">Код приглашения</h3>
+        <p><a href="#invites">Коды приглашения</a> помогают новым пользователям подключиться к их первому <a href="#pubs">пабу</a>, который является общедоступным узлом Scuttlebutt  через интернет. Код приглашения содержит доменное имя, порт и открытый ключ паба.</p>
+        <p>Они также содержат секретный ключ, который пользователь может <a href="#redeeming-invites">активировать</a>, чтобы паб <a href="#following">подписался</a> на него в ответ. Это позволяет новому пользователю видеть сообщения, отправленные другими участниками паба, и делиться своими собственными сообщениями. Пригласительные коды - это самый распространенный способ для новых пользователей начать работу со Scuttlebutt.</p>
+        <p>Операторы пабов могут распространять коды приглашения любым способом, который они считают нужным, например, размещая их в существующих социальных сетях. В некоторых пабах есть веб-страницы, которые любой может посетить, чтобы сгенерировать код приглашения.</p>
 
-        <h3 id="pub-message">Pub message</h3>
-        <p>Users can post a message to their own <a href="#feeds">feed</a> advertising a pub:</p>
+        <h3 id="pub-message">Pub сообщение</h3>
+        <p>Пользователи могут публиковать сообщения в своем <a href="#feeds">канале</a> рекламируя pub:</p>
         <aside class="kicker">
-            <p>Here the user <code>@FCX/ts…</code> is advertising that they know of pub <code>@VJM7w1…</code> along with the pub’s domain name and port.</p>
+            <p> Здесь пользователь <code>@FCX/ts…</code> сообщает, что он знает о pub <code>@VJM7w1…</code> вместе с доменным именем и портом паба.</p>
         </aside>
         <pre><code>{
   "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
@@ -193,8 +194,8 @@
   },
   …
 }</code></pre>
-        <p>When others see this message they can make a note that this pub exists and connect to it in the future.</p>
-        <p>Pub messages are a useful way to find additional peers if you already know a few. Obviously this doesn’t work for new users who don’t know anyone else yet and therefore can’t see any pub messages.</p>
+        <p>Когда другие видят это сообщение, они могут отметить, что этот паб существует, и подключиться к нему в будущем.</p>
+        <p>Сообщения в пабе - полезный способ найти дополнительных пиров, если вы уже знаете некоторых из них. Очевидно, это не работает для новых пользователей, которые еще никого не знают и поэтому не могут видеть сообщения паблика.</p>
 
         <h2 id="peer-connections">Peer connections</h2>
         <p>Once a Scuttlebutt client has discovered the IP address, port number and public key of a peer they can connect via TCP to ask for updates and exchange messages.</p>
@@ -751,7 +752,7 @@ assert_nacl_sign_verify_detached(
         <p>The responder does in fact have this blob so they respond with <code>true</code>. Because this is an async procedure and not a stream, there is only one response and no need to close the stream afterwards:</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png alt="""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-2</span>

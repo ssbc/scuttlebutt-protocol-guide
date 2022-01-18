@@ -36,7 +36,7 @@ main {
     margin-bottom: 64px;
 }
 
-header, footer {
+header, footer, lang select{
     color: rgba(255, 255, 255, 0.8);
     font-weight: 300;
 }
@@ -70,6 +70,16 @@ nav {
     justify-self: end;
     grid-gap: 24px;
     text-transform: uppercase;
+}
+
+lang{
+    background-color: #0f103d;
+    display: inline;
+    display: flex;
+    align-items: center;
+}
+lang select{
+    background-color: #0f103d;
 }
 
 header a {
@@ -137,7 +147,7 @@ pre, code, .binary span {
 }
 
 code{
-    font-weight:bold;
+    font-style: italic;
 }
 
 pre {
