@@ -197,17 +197,17 @@
         <p>Когда другие видят это сообщение, они могут отметить, что этот паб существует, и подключиться к нему в будущем.</p>
         <p>Сообщения в пабе - полезный способ найти дополнительных пиров, если вы уже знаете некоторых из них. Очевидно, это не работает для новых пользователей, которые еще никого не знают и поэтому не могут видеть сообщения паблика.</p>
 
-        <h2 id="peer-connections">Peer connections</h2>
-        <p>Once a Scuttlebutt client has discovered the IP address, port number and public key of a peer they can connect via TCP to ask for updates and exchange messages.</p>
+        <h2 id="peer-connections">Одноранговые соединения</h2>
+        <p>Как только клиент Scuttlebutt обнаружит IP-адрес, номер порта и открытый ключ партнера, он может подключиться через TCP, чтобы запросить обновления и обменяться сообщениями.</p> 
 
-        <h3 id="handshake">Handshake</h3>
+        <h3 id="handshake">Рукопожатие</h3>
         <div>
-            <p>The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
-            <img src="img/message_flow.png" style="height: 350px;" alt="Message 1: Client hello (sent by the client). Message 2: Server hello. Message 3: Client authenticate. Message 4: Server accept" />
+            <p>Подключение начинается с четырехэтапного рукопожатия для аутентификации каждого узла и настройки зашифрованного канала.</p> 
+            <img src="lang/ru/img/message_flow.png" style="height: 350px;" alt="Message 1: Client hello (sent by the client). Message 2: Server hello. Message 3: Client authenticate. Message 4: Server accept" />
         </div>
         <aside class="impl">
             <img class="icon" src="img/impl.png" alt=""/>
-            <h5>Implementations</h5>
+            <h5>Реализации</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/protocol.js">protocol.js</a></div>
             <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/crypto.js">crypto.js</a></div>
@@ -223,31 +223,31 @@
             <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttHandshakeClient.java">HandshakeClient</a></div>
             <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttHandshakeServer.java">HandshakeServer</a></div>
         </aside>
-        <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
+        <p>При рукопожатии используется <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">обмен секретным ключом рукопожатия</a>, обеспечивающий следующие свойства безопасности:</p> 
         <ul>
-            <li>After a successful handshake the peers have verified each other’s public keys.</li>
-            <li>The handshake produces a shared secret that can be used with a bulk encryption cypher for exchanging further messages.</li>
-            <li>The client must know the server’s public key before connecting. The server learns the client’s public key during the handshake.</li>
-            <li>Once the client has proven their identity the server can decide they don’t want to talk to this client and disconnect without confirming their own identity.</li>
-            <li>A man-in-the-middle cannot learn the public key of either peer.</li>
-            <li>Both peers need to know a key that represents the particular Scuttlebutt network they wish to connect to, however a man-in-the-middle can’t learn this key from the handshake. If the handshake succeeds then both ends have confirmed that they wish to use the same network.</li>
-            <li>Past handshakes cannot be replayed. Attempting to replay a handshake will not allow an attacker to discover or confirm guesses about the participants’ public keys.</li>
-            <li>Handshakes provide forward secrecy. Recording a user’s network traffic and then later stealing their secret key will not allow an attacker to decrypt their past handshakes.</li>
+            <li>После успешного рукопожатия узлы подтвердили открытые ключи друг друга.</li>
+            <li>При рукопожатии создается общий секретный ключ, который можно использовать в шифровании для массового обмена сообщениями.</li>
+            <li>Перед подключением клиент должен знать открытый ключ сервера. Сервер узнает открытый ключ клиента во время рукопожатия.</li>
+            <li>После того, как клиент подтвердит свою личность, сервер может решить, что он не хочет разговаривать с этим клиентом, и отключиться, не подтверждая свою личность.</li>
+            <li>Посредник не может узнать открытый ключ любого партнера.</li>
+            <li>Оба узла должны знать ключ, представляющий конкретную сеть Scuttlebutt, к которой они хотят подключиться, однако посредник не может узнать этот ключ из рукопожатия. Если рукопожатие прошло успешно, обе стороны подтвердили, что хотят использовать одну и ту же сеть.</li>
+            <li>Прошлые рукопожатия нельзя воспроизвести. Попытка воспроизвести рукопожатие не позволит злоумышленнику обнаружить или подтвердить предположения об открытых ключах участников.</li>
+            <li>Рукопожатия обеспечивают конфиденциальность при пересылке. Запись сетевого трафика пользователя, а затем кража его секретного ключа не позволит злоумышленнику расшифровать его прошлые рукопожатия.</li> 
         </ul>
         <aside>
-            <p><strong>Client</strong> is the computer initiating the TCP connection and <strong>server</strong> is the computer receiving it. Once the handshake is complete this distinction goes away.</p>
+            <p><strong>Клиент</strong> — это компьютер, инициирующий TCP-соединение, а <strong>сервер</strong> — компьютер, который его получает. После завершения рукопожатия это различие исчезает.</p> 
         </aside>
 
-        <h4 id="starting-keys">Starting keys</h4>
-        <p>Upon starting the handshake, the client and server know these keys:</p>
-        <img src="img/starting_keys.png" style="height: 590px;" alt="Both the client and servers know: their own long term key pair, their own ephemeral key pair, and the network's (private) identifier. Additionally, the client knows the server's long term public key."/>
+        <h4 id="starting-keys">Стартовые ключи</h4>
+        <p>При запуске рукопожатия клиент и сервер знают эти ключи:</p>
+        <img src="lang/ru/img/starting_keys.png" style="height: 590px;" alt="Both the client and servers know: their own long term key pair, their own ephemeral key pair, and the network's (private) identifier. Additionally, the client knows the server's long term public key."/>
 
-        <h4 id="client-hello">1. Client hello</h4>
-        <img src="img/client_hello.png" style="height: 120px;" alt="The client sends their own ephemeral public key, hmac-authenticated using the network identifier"/>
+        <h4 id="client-hello">1. Клиент hello</h4>
+        <img src="lang/ru/img/client_hello.png" style="height: 120px;" alt="The client sends their own ephemeral public key, hmac-authenticated using the network identifier"/>
 
         <figure class="left-right code">
-            <h5 class="left">Client sends <span class="msgsize">(64 bytes)</span></h5>
-            <h5 class="right">Server verifies</h5>
+            <h5 class="left">Клиент отправляет <span class="msgsize">(64 bytes)</span></h5>
+            <h5 class="right">Сервер проверяет</h5>
             <pre class="left"><code>concat(
   nacl_auth(
     msg: client_ephemeral_pk,
@@ -268,19 +268,19 @@ assert_nacl_auth_verify(
         </figure>
 
         <div>
-            <p>First the client sends their <img class="inline-key" src="img/key_little_a_public.png" alt="public"/> generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
-            <p>The <img class="inline-key" src="img/key_big_n.png" alt=""/> network identifier is a fixed key. On the main Scuttlebutt network it is the following 32-byte sequence:</p>
+            <p>Сначала клиент отправляет свой <img class="inline-key" src="img/key_little_a_public.png" alt="public"/> сгенерированный эфемерный ключ. Также включен hmac, который указывает, что клиент желает использовать свой ключ с этим конкретным экземпляром сети Scuttlebutt.</p> 
+            <p>Идентификатор сети <img class="inline-key" src="img/key_big_n.png" alt=""/> – это фиксированный ключ. В основной сети Scuttlebutt это следующая 32-байтовая последовательность:</p> 
             <div class="fixed-key binary">
                 <span>d4</span><span>a1</span><span>cb</span><span>88</span><span>a6</span><span>6f</span><span>02</span><span>f8</span><span>db</span><span>63</span><span>5c</span><span>e2</span><span>64</span><span>41</span><span>cc</span><span>5d</span>
                 <span>ac</span><span>1b</span><span>08</span><span>42</span><span>0c</span><span>ea</span><span>ac</span><span>23</span><span>08</span><span>39</span><span>b7</span><span>55</span><span>84</span><span>5a</span><span>9f</span><span>fb</span>
             </div>
-            <p>Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from what is sent over the wire, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
-            <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
+            <p>Изменение ключа позволяет создавать отдельные сети, например частные сети или тестовые сети. Злоумышленник не может извлечь идентификатор сети непосредственно из того, что передается по сети, хотя он может подтвердить предположение, что это основная сеть Scuttlebutt, поскольку этот идентификатор общеизвестен.</p>
+            <p>Сервер сохраняет недолговечный открытый ключ клиента и использует hmac для проверки того, что клиент использует тот же сетевой идентификатор.</p>
         </div>
         <aside>
-            <p><strong>hmac</strong> is a function that allows verifying that a message came from someone who knows the same secret key as you. In this case the network identifier is used as the secret key.</p>
-            <p>Both the message creator and verifier have to know the same message and secret key for the verification to succeed, but the secret key is not revealed to an eavesdropper. </p>
-            <p>Throughout the protocol, all instances of hmac use HMAC-SHA-512-256 (which is the first 256 bits of HMAC-SHA-512).</p>
+            <p><strong>hmac</strong> — это функция, которая позволяет проверить, что сообщение пришло от кого-то, кто знает тот же секретный ключ, что и вы. В этом случае идентификатор сети используется в качестве секретного ключа.</p>
+            <p>И создатель сообщения, и проверяющий должны знать одно и то же сообщение и секретный ключ, чтобы проверка прошла успешно, но секретный ключ не раскрывается перехватчику. </p>
+            <p>В этом протоколе все экземпляры hmac используют HMAC-SHA-512-256 (первые 256 бит HMAC-SHA-512).</p>
         </aside>
 
         <h4 id="server-hello">2. Server hello</h4>
