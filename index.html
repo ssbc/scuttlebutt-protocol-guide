@@ -1156,8 +1156,8 @@ assert_nacl_sign_verify_detached(
         <h3 class="metafeed-message-types">Message Types</h3>
         <p>Unlike other feed types which have very flexible content sections, metafeeds supports just a small collection of message types. Metafeeds are not supposed to store arbitrary messages. Messages in the metafeed deal only with metadata information about other feeds. The supported types are:</p>
         <ul>
-            <li><code>metafeed/add/existing</code>: Adds an existing feed to the metafeed.</li> 
-            <li><code>metafeed/add/derived</code>: Adds a derived feed to the metafeed.</li> 
+            <li><code>metafeed/add/existing</code>: Adds an existing feed to the metafeed.</li>
+            <li><code>metafeed/add/derived</code>: Adds a derived feed to the metafeed.</li>
             <li><code>metafeed/tombstone</code>: Used to flag that a feed is no longer in use.</li>
         </ul>
 
@@ -1194,10 +1194,10 @@ assert_nacl_sign_verify_detached(
             </p>
         </aside>
         <p>Partial replication allows a client to selectively fetch slices of data starting from the most recent message instead. This allows the user to be able to see recent messages &mdash; without their client freezing up &mdash; as a result of smaller data transfers and with minimal indexing time.</p>
-    
+
         <h3 id="metafeed-network-identity">Network Identity</h3>
         <p>Network identities are a way to decouple the key used for <a href="#handshake">Secret Handshake</a> from the <a href="#keys-and-identities">Identity key</a> being used by the user.</p>
-        <aside> 
+        <aside>
             <p>Dive deeper by reading the <a href="https://github.com/ssb-ngi-pointer/ssb-network-identity-spec" target="_blank">Network Identity specification</a>.</p>
         </aside>
         <p>A user may have multiple network identities. They are stored in their own feed which is listed on the user's root metafeed. By having the identities listed in their own feed, a user can have private identities that are known only to them and those they trust.</p>
@@ -1666,22 +1666,18 @@ assert_nacl_sign_verify_detached(
         <p>These messages help peers discover new pubs where they might be able to fetch new messages from. Clients can maintain a list of pubs they have seen so that they know of alternative places to fetch messages from in case a pub goes offline.</p>
 
         <!-- rooms documentation start -->
-        
+
         <h2 id="rooms">Rooms</h2>
-        
+
         <p>Rooms are an publicly accessible Scuttlebutt peer, but unlike <a href="#pubs">pubs</a> they don't host feed data from other peers. The main feature rooms provide is a way for peers to find each other and establish tunnelled connections among themselves as if they were on the same network. They also provide more moderation tools than a pub with multiple user-levels and different privacy modes.</p>
         <aside>
             <p>There are two rooms specifications. There is a legacy <a href="https://github.com/staltz/ssb-room" target="_blank">room 1.0</a> implementation but most users and room operators have moved to the new <a href="https://ssb-ngi-pointer.github.io/rooms2/" target="_blank">rooms 2.0</a> specification, which is documented here.</p>
         </aside>
         <p>Rooms differ from pubs because even though they're a Scuttlebutt peer, they are not meant to aid replication by <i>diminishing the number of hops between peers</i>. Instead, they provide a simple way for peers to find and connect to each other even though these peers might not have publicly accessible connections, and thus no <i>follow</i> messages are used in the rooms workflow.</p>
-        
+
         <h3 id="rooms-tunnel">Tunnel</h3>
 
-        <p>A tunnel is an indirect connection between two Scuttlebutt peers that is facilitated by another peer with a stable and publicly available Internet connection. This facilitator peer wraps the indirect connection between the other peers thus providing a tunnel for them to meet with one another as if they were on the same network.</p>
-        <aside>
-            <p>For a deeper understanding of tunneling, refer to <a href="https://github.com/ssbc/ssb-tunnel" target="_blank">ssb-tunnel documentation.</a>
-        </aside>
-        <p> 
+        <p>A tunnel is an indirect connection between two Scuttlebutt peers that is facilitated by another peer with a stable and publicly available Internet connection. This facilitator peer, also known as the "portal" or the room, wraps the indirect connection between the other peers thus providing a tunnel for them to meet with one another as if they were on the same network.</p>
         <aside class="impl">
             <img class="icon" src="img/impl.png"/>
             <h5>Implementations</h5>
@@ -1692,8 +1688,93 @@ assert_nacl_sign_verify_detached(
         </aside>
         <img src="img/room_perspective.png" />
 
+        <p>To establish a tunnel, one of the peers (the "source") calls the RPC <em>tunnel.connect</em> on the portal peer, specifying the "target" peer's ID:</p>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["tunnel", "connect"],
+  "type": "duplex",
+  "args": [
+    {
+      "portal":"@uMYDVPuEKftL4SzpRGVyQxLdyPkOiX7njit7+qT/7IQ=.ed25519",
+      "target":"@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519"
+    }
+  ],
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p>The portal receives this and recognizes it as an intention to connect with the target peer. If the portal recognizes the target peer as being online, then it also calls the RPC <em>tunnel.connect</em> on the target peer, this time also specifying the "source" peer's ID:</p>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["tunnel", "connect"],
+  "type": "duplex",
+  "args": [
+    {
+      "source":"@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "portal":"@uMYDVPuEKftL4SzpRGVyQxLdyPkOiX7njit7+qT/7IQ=.ed25519",
+      "target":"@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519"
+    }
+  ],
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p>From this point onward, the portal should know to forward any messages on this stream from the source to the target, and vice-versa. In the example below, the target sends this to the portal</p>
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <span class="d3">b4</span><span class="d1">6d</span><span class="d0">1d</span><span class="d3">ee</span><span class="d1">75</span><span class="d1">53</span><span class="d1">7a</span><span class="d1">61</span><span class="d1">74</span><span class="d3">fe</span><span class="d0">01</span><span class="d0">28</span><span class="d2">82</span><span class="d1">45</span><span class="d3">e9</span><span class="d3">ea</span><span class="d1">6c</span><span class="d2">a1</span><span class="d0">3e</span><span class="d1">44</span><span class="d1">49</span><span class="d1">7f</span><span class="d3">b2</span><span class="d0">3d</span>
+                    <span class="d3">cd</span><span class="d1">7e</span><span class="d0">14</span><span class="d0">18</span><span class="d1">77</span><span class="d1">73</span><span class="d1">57</span><span class="d2">aa</span><span class="d0">33</span><span class="d3">f3</span><span class="d0">2a</span><span class="d3">f0</span><span class="d3">cd</span><span class="d1">57</span><span class="d3">d6</span><span class="d2">9a</span><span class="d2">89</span><span class="d1">55</span><span class="d3">b5</span><span class="d2">9b</span><span class="d3">c4</span><span class="d2">91</span>
+                    <span class="d0">33</span><span class="d0">0d</span><span class="d1">76</span><span class="d1">69</span><span class="d1">5f</span><span class="d0">26</span><span class="d1">7b</span><span class="d1">5e</span><span class="d1">7c</span><span class="d3">b4</span><span class="d1">63</span><span class="d0">20</span><span class="d0">0e</span><span class="d0">3c</span><span class="d0">29</span><span class="d0">16</span><span class="d3">c2</span><span class="d0">08</span>
+                </div>
+            </div>
+        </figure>
+
+        <p>And then the portal forwards it to the source, unaltered:</p>
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <span class="d3">b4</span><span class="d1">6d</span><span class="d0">1d</span><span class="d3">ee</span><span class="d1">75</span><span class="d1">53</span><span class="d1">7a</span><span class="d1">61</span><span class="d1">74</span><span class="d3">fe</span><span class="d0">01</span><span class="d0">28</span><span class="d2">82</span><span class="d1">45</span><span class="d3">e9</span><span class="d3">ea</span><span class="d1">6c</span><span class="d2">a1</span><span class="d0">3e</span><span class="d1">44</span><span class="d1">49</span><span class="d1">7f</span><span class="d3">b2</span><span class="d0">3d</span>
+                    <span class="d3">cd</span><span class="d1">7e</span><span class="d0">14</span><span class="d0">18</span><span class="d1">77</span><span class="d1">73</span><span class="d1">57</span><span class="d2">aa</span><span class="d0">33</span><span class="d3">f3</span><span class="d0">2a</span><span class="d3">f0</span><span class="d3">cd</span><span class="d1">57</span><span class="d3">d6</span><span class="d2">9a</span><span class="d2">89</span><span class="d1">55</span><span class="d3">b5</span><span class="d2">9b</span><span class="d3">c4</span><span class="d2">91</span>
+                    <span class="d0">33</span><span class="d0">0d</span><span class="d1">76</span><span class="d1">69</span><span class="d1">5f</span><span class="d0">26</span><span class="d1">7b</span><span class="d1">5e</span><span class="d1">7c</span><span class="d3">b4</span><span class="d1">63</span><span class="d0">20</span><span class="d0">0e</span><span class="d0">3c</span><span class="d0">29</span><span class="d0">16</span><span class="d3">c2</span><span class="d0">08</span>
+                </div>
+            </div>
+        </figure>
+
+        <p>Notice that the payload is in binary, because it's encrypted with secret handshake and box stream between the source peer and the target peer. This means the portal cannot know what the two peers are communicating, and it cannot tamper with the binary payload in a way that the source and target could not detect.</p>
+
         <h3 id="rooms-joining">Joining</h3>
-        
+
         <p>Before a peer can connect to a room and see other peers, they need to become an <i>authorized user</i> of that room by joining it with an invite code.</p>
         <p>Rooms can operate in three different modes:</p>
         <ul>
@@ -1708,7 +1789,7 @@ assert_nacl_sign_verify_detached(
         <img src="img/room_invite_uri.png" />
         <p>The Scuttlebutt client will extract the invite code and the submission URL from the SSB URI, and use them to claim that invite code to the room. This will involve a series of RPC calls described in the <a href="https://ssb-ngi-pointer.github.io/ssb-http-invite-spec/" target="_blank">SSB HTTP Invites specification</a>.</p>
         <p>Once a peer is accepted as a member of the room, their client application will see other peers in the same room as if they were on the same network and allow them to gossip with each other.</p>
-        
+
         <!-- end of rooms documentation -->
 
         <h2 id="private-messages">Private messages</h2>
