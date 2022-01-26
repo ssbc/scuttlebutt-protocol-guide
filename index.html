@@ -38,8 +38,6 @@
                         <div><a href="#pub-message">Pub message</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#peer-connections">Peer connections</a></div>
                     <div class="s2">
@@ -48,12 +46,26 @@
                         <div><a href="#rpc-protocol">RPC protocol</a></div>
                     </div>
                 </div>
+            </div>
+            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#feeds">Feeds</a></div>
                     <div class="s2">
                         <div><a href="#structure">Structure</a></div>
                         <div><a href="#message-format">Message format</a></div>
                         <div><a href="#createHistoryStream">createHistoryStream</a></div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div><a class="s1" href="#metafeeds">Metafeeds</a></div>
+                    <div class="s2">
+                        <div><a href="#bendy-butt">Structure</a></div>
+                        <div><a href="#metafeed-contentSection">Content setion</a></div>
+                        <div><a href="#metafeed-announcing">Announcing</a></div>
+                        <div><a href="#metafeed-use-cases">Use Cases</a></div>
+                        <div><a href="#metafeed-partial-replication">Partial Replication</a></div>
+                        <div><a href="#metafeed-fusion-identity">Fusion Identity</a></div>
+                        <div><a href="#metafeed-network-identity">Network Identity</a></div>
                     </div>
                 </div>
             </div>
@@ -79,6 +91,13 @@
                 </div>
             </div>
             <div class="col">
+                <div class="section">
+                    <div><a class="s1" href="#rooms">Rooms</a></div>
+                    <div class="s2">
+                        <div><a href="#rooms-tunnel">Tunnel</a></div>
+                        <div><a href="#rooms-joining">Joining</a></div>
+                    </div>
+                </div>
                 <div class="section">
                     <div><a class="s1" href="#private-messages">Private messages</a></div>
                     <div class="s2">
@@ -1063,7 +1082,133 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
+        <!-- metafeeds documentation -->
+        <h2 id="metafeeds">Metafeeds</h2>
+        <div>
+        <p>A metafeed is a special kind of feed that only publishes metadata information concerning other feeds, called the <i>subfeeds</i>. A metafeed can also contain other metafeeds as subfeeds, so they form a tree structure. There can only be one <i>root metafeed</i> at the top of this tree. Using metafeeds do not break compatibility with clients that only support the classic feed format. Clients, for compatibility reasons, have a <i>main classic feed</i> alongside the root metafeed. They may support multiple additional feeds beyond that <i>main feed</i>, those additional feeds which will be organised and using a metafeed.</p>
+        <p>Metafeeds lays the necessary groundwork to implement many interesting features such as partial replication, per-application feeds, and even the co-existence of new feed formats with classic ones.</p>
+        </div>
+        <aside>
+            <p>Want to get deeper into metafeeds? Check out the <a href="https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec" target="_blank">Metafeed specification</a>.</p>
+            <p>For some example of new feed formats, check out <a href="https://github.com/AljoschaMeyer/bamboo" target="_blank">Bamboo</a> and <a href="https://github.com/ssbc/ssb-spec-drafts/blob/master/drafts/draft-ssb-core-gabbygrove/00/draft-ssb-core-gabbygrove-00.md" target="_blank">Gabbygrove</a>.
+            </p>
+        </aside>
+        <h3 id="bendy-butt">Structure</h3>
+        <p>Metafeeds uses a different format than the <a href="#structure">classic feed</a>, this new format is called <i>Bendy Butt</i>. It still is an append-only log of cryptographically signed messages, but it is not tied to JSON or V8 engine internals like the old format thus making it easier to implement in other programming languages.</p>
+        <aside>
+            <p>Dig deeper by reading the <a href="https://github.com/ssb-ngi-pointer/bendy-butt-spec" target="_blank">Bendy Butt Specification</a>.</p>
+            <p>Bendy Butt uses <a href="https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings">Binary Field Encodings (BFE)</a> to encode many of its fields.</p>
+        </aside>
+        <p>Bendy Butt encodes its messages using the well-established <a href="https://en.wikipedia.org/wiki/Bencode" target="_blank">Bencode</a> format instead of JSON. While we may display metafeed messages on this documentation as text, the encoding format uses binary delimiters instead of ascii. </p>
+        <p>A Bendy Butt Message is a Bencoded list containing a collection with the following five elements, in this specific order.</p>
+        <table class="defs">
+            <tr>
+                <td>author</td>
+                <td>BFE encoded feed ID.</td>
+            </tr>
+            <tr>
+                <td>sequence</td>
+                <td>Sequential 32-bit integer starting at 1.</td>
+            </tr>
+            <tr>
+                <td>previous</td>
+                <td>BFE encoded message ID, or BFE <i>nil</i> value for the first message.</td>
+            </tr>
+            <tr>
+                <td>timestamp</td>
+                <td>32-bit integer representing the time the message was created. Number of milliseconds since 1 January 1970 00:00 UTC, also known as UNIX epoch.</td>
+            </tr>
+            <tr>
+                <td>contentSection</td>
+                <td>If the message is not encrypted, This is a Bencoded list containing BFE encoded payload and signature. If it is BFE encrypted data, then upon decryption it becomes a Bencoded list of BFE encoded data and the signature for the payload.</td>
+            </tr>
+        </table>
+        <img src="img/metafeed-structure.png" class="pagewidth" style="height: 855px;" alt=""/>
+        <h3 id="metafeed-contentSection">The content section</h3>
+        <p>Unlike the messages on the <i>classic feed format</i>&mdash;with their flexible content section&mdash;the messages in a metafeed must conform to very specific types that deal only with metadata information about feeds.</p>
+        <p>The content section can be an encrypted text in which case it is decoded as a BFE-encoded list. If the message is not encrypted, then it is an BFE-encoded list. In both cases, the dictionary inside the list has the same fields.</p>
+        <table class="defs">
+            <tr>
+                <td>type</td>
+                <td>Is a BFE string. It can only be one of <code>metafeed/add/existing</code>, <code>metafeed/add/derived</code>, or <code>metafeed/tombstone</code>.</td>
+            </tr>
+            <tr>
+                <td>subfeed</td>
+                <td>A BFE Feed ID.</td>
+            </tr>
+            <tr>
+                <td>metafeed</td>
+                <td>A BFE Bendy Butt Feed ID.</td>
+            </tr>
+            <tr>
+                <td>feedpurpose</td>
+                <td>A BFE String. It describes the purpose of the specified feed.</td>
+            </tr>
+            <tr>
+                <td>tangles</td>
+                <td>A BFE dictionary. It conforms to the <a target="_blank" href="https://github.com/ssbc/ssb-tangle">SSB tangles specification</a> and establishes the relationship between the message and other messages on the metafeed.</td>
+            </tr>
+            <tr>
+                <td>nonce</td>
+                <td>BFE bytes. This field is only used for messages of type <code>metafeed/add</code>. The value must be 32 random bytes.</td>
+            </tr>
+        </table>
+        <h3 class="metafeed-message-types">Message Types</h3>
+        <p>Unlike other feed types which have very flexible content sections, metafeeds supports just a small collection of message types. Metafeeds are not supposed to store arbitrary messages. Messages in the metafeed deal only with metadata information about other feeds. The supported types are:</p>
+        <ul>
+            <li><code>metafeed/add/existing</code>: Adds an existing feed to the metafeed.</li> 
+            <li><code>metafeed/add/derived</code>: Adds a derived feed to the metafeed.</li> 
+            <li><code>metafeed/tombstone</code>: Used to flag that a feed is no longer in use.</li>
+        </ul>
 
+        <h3 id="metafeed-announcing">Announcing a metafeed</h3>
+        <p>A classic main feed can let other peers know that it supports metafeeds by announcing its own root metafeed as a message of type <i>metafeed/announce</i>.</p>
+        <pre><code>
+{
+  // ... other msg.value field ...
+  content: {
+    type: 'metafeed/announce',
+    metafeed: 'ssb:feed/bendybutt-v1/APaWWDs8g73EZFUMfW37RBULtFEjwKNbDczvdYiRXtA=',
+    tangles: {
+      metafeed: {
+        root: null,
+        previous: null
+      }
+    }
+  }
+}
+        </code></pre>
+        <p>This announcement message is ignored by existing apps that do not support metafeeds such that adding a metafeed is harmless to existing apps. Clients that support metafeeds will discover new metafeeds and subfeeds by looking for such announcements.</p>
+
+        <h3>Example Metafeed with Feeds</h3>
+        <p>The sample diagram below shows a classic main feed, a root metafeed, and the associated subfeeds.</p>
+        <img src="img/metafeed-structure-with-feeds-simplified.png" style="width:  100%;" alt=""/>
+
+        <h2 id="metafeed-use-cases">Use cases</h2>
+        <p>The usage of metafeeds unlock a series of potential use cases and features that are much harder to implement using the classic feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
+
+        <h3 id="metafeed-partial-replication">Partial Replication</h3>
+        <p>Traditionally, Secure Scuttlebutt replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform due to the huge amount of data the client needs to download before a feed is up to date, and the associated computing cost for indexing the new data.</p>
+        <aside>
+            <p>To learn more about how partial replication works, check out the <a href="https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec" target="_blank">Partial Replication specification</a>.
+            </p>
+        </aside>
+        <p>Partial replication allows a client to selectively fetch slices of data starting from the most recent message instead. This allows the user to be able to see recent messages &mdash; without their client freezing up &mdash; as a result of smaller data transfers and with minimal indexing time.</p>
+    
+        <h3 id="metafeed-network-identity">Network Identity</h3>
+        <p>Network identities are a way to decouple the key used for <a href="#handshake">Secret Handshake</a> from the <a href="#keys-and-identities">Identity key</a> being used by the user.</p>
+        <aside> 
+            <p>Dive deeper by reading the <a href="https://github.com/ssb-ngi-pointer/ssb-network-identity-spec" target="_blank">Network Identity specification</a>.</p>
+        </aside>
+        <p>A user may have multiple network identities. They are stored in their own feed which is listed on the user's root metafeed. By having the identities listed in their own feed, a user can have private identities that are known only to them and those they trust.</p>
+
+        <h3 id="metafeed-fusion-identity">Fusion Identity</h3>
+        <p>Fusion Identities solve the challenge of using multiple devices with Secure Scuttlebutt. Each device still uses it's own identity, there is no avoiding that, but they can now share fusion identities with each other. These new fusion identities can be used to compute mentions and notifications taking into account all the keys that are part of the fusion. They also make it possible to send private messages to the fusion identity which are readable by all the members of the fusion identity. Replicating multiple feeds from the same user can be done by following the fusion identity.</p>
+        <aside>
+            <p>Check out the <a href="" targer="_blank">Fusion Identity specification</a> for more information.</p>
+        </aside>
+
+        <!-- end of metafeeds documentation -->
         <h2 id="blobs">Blobs</h2>
         <p>A blob is binary data. Blobs are referred to from Scuttlebutt messages and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
         <p>Being just a sequence of bytes, blobs can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages, which is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
@@ -1519,6 +1664,52 @@ assert_nacl_sign_verify_detached(
   …
 }</code></pre>
         <p>These messages help peers discover new pubs where they might be able to fetch new messages from. Clients can maintain a list of pubs they have seen so that they know of alternative places to fetch messages from in case a pub goes offline.</p>
+
+        <!-- rooms documentation start -->
+        
+        <h2 id="rooms">Rooms</h2>
+        
+        <p>Rooms are an publicly accessible Scuttlebutt peer, but unlike <a href="#pubs">pubs</a> they don't host feed data from other peers. The main feature rooms provide is a way for peers to find each other and establish tunnelled connections among themselves as if they were on the same network. They also provide more moderation tools than a pub with multiple user-levels and different privacy modes.</p>
+        <aside>
+            <p>There are two rooms specifications. There is a legacy <a href="https://github.com/staltz/ssb-room" target="_blank">room 1.0</a> implementation but most users and room operators have moved to the new <a href="https://ssb-ngi-pointer.github.io/rooms2/" target="_blank">rooms 2.0</a> specification, which is documented here.</p>
+        </aside>
+        <p>Rooms differ from pubs because even though they're a Scuttlebutt peer, they are not meant to aid replication by <i>diminishing the number of hops between peers</i>. Instead, they provide a simple way for peers to find and connect to each other even though these peers might not have publicly accessible connections, and thus no <i>follow</i> messages are used in the rooms workflow.</p>
+        
+        <h3 id="rooms-tunnel">Tunnel</h3>
+
+        <p>A tunnel is an indirect connection between two Scuttlebutt peers that is facilitated by another peer with a stable and publicly available Internet connection. This facilitator peer wraps the indirect connection between the other peers thus providing a tunnel for them to meet with one another as if they were on the same network.</p>
+        <aside>
+            <p>For a deeper understanding of tunneling, refer to <a href="https://github.com/ssbc/ssb-tunnel" target="_blank">ssb-tunnel documentation.</a>
+        </aside>
+        <p> 
+        <aside class="impl">
+            <img class="icon" src="img/impl.png"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-tunnel/blob/master/index.js">ssb-tunnel</a></div>
+            <div class="lang">Go</div>
+            <div class="vs"><a href="https://github.com/ssb-ngi-pointer/go-ssb-room/tree/master/muxrpc/handlers/tunnel/server/plugin.go">plugin.go</a></div>
+        </aside>
+        <img src="img/room_perspective.png" />
+
+        <h3 id="rooms-joining">Joining</h3>
+        
+        <p>Before a peer can connect to a room and see other peers, they need to become an <i>authorized user</i> of that room by joining it with an invite code.</p>
+        <p>Rooms can operate in three different modes:</p>
+        <ul>
+            <li><b>Open:</b> anyone can use an <i>open invite code</i> to join the room.</li>
+            <li><b>Community:</b> other members of the room can invite new members by generating <i>individual invite codes</i> for them.</li>
+            <li><b>Restricted:</b> only room administrators can generate <i>individual invite codes</i> and allow new users in.</li>
+        </ul>
+        <aside>
+            <p>Check out the <a href="https://ssb-ngi-pointer.github.io/ssb-http-invite-spec/" target="_blank">full SSB HTTP Invite</a> specification for a deeper understanding of how it works.</p>
+        </aside>
+        <p>Accepting a room invite code is a process that involves both <a href="#rpc-protocol">MUXRPC</a> connections and HTTP requests. The room invite is a URI specified according to the <a href="https://github.com/ssb-ngi-pointer/ssb-uri-spec" target="_blank">SSB URI specification</a>. Once the user navigates of that URI, their operating system or web browser will launch a compatible Scuttlebutt client application that will handle the rest of the workflow.</p>
+        <img src="img/room_invite_uri.png" />
+        <p>The Scuttlebutt client will extract the invite code and the submission URL from the SSB URI, and use them to claim that invite code to the room. This will involve a series of RPC calls described in the <a href="https://ssb-ngi-pointer.github.io/ssb-http-invite-spec/" target="_blank">SSB HTTP Invites specification</a>.</p>
+        <p>Once a peer is accepted as a member of the room, their client application will see other peers in the same room as if they were on the same network and allow them to gossip with each other.</p>
+        
+        <!-- end of rooms documentation -->
 
         <h2 id="private-messages">Private messages</h2>
         <div>

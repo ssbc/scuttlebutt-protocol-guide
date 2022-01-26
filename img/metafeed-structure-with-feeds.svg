@@ -1,0 +1,1201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1298 1035" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <g id="Layer-1" serif:id="Layer 1" transform="matrix(1,0,0,1,112.717,353.733)">
+        <g id="rect1586" transform="matrix(1,0,0,1,30,-223)">
+            <path d="M679,-9.833C679,-12.593 676.76,-14.833 674,-14.833L409,-14.833C406.24,-14.833 404,-12.593 404,-9.833L404,125.167C404,127.926 406.24,130.167 409,130.167L674,130.167C676.76,130.167 679,127.926 679,125.167L679,-9.833Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect1588" transform="matrix(1.27658,0,0,1.48893,-92.6696,-214.036)">
+            <path d="M675.5,-14.975C675.5,-16.829 673.745,-18.333 671.583,-18.333L404.417,-18.333C402.255,-18.333 400.5,-16.829 400.5,-14.975L400.5,123.309C400.5,125.162 402.255,126.667 404.417,126.667L671.583,126.667C673.745,126.667 675.5,125.162 675.5,123.309L675.5,-14.975Z" style="fill:white;stroke:rgb(5,80,124);stroke-width:1px;"/>
+        </g>
+        <g id="rect1692" transform="matrix(1,0,0,1,50,-223)">
+            <rect x="495" y="-8.833" width="75" height="20" style="fill:rgb(7,115,179);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,445,-216.833)">
+            <g id="text1592">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,-36.8333)">
+            <g id="text1596">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,-191.833)">
+            <g id="text1600">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,-166.833)">
+            <g id="text1604">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,-141.833)">
+            <g id="text1608">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,592.5,-36.8333)">
+            <g id="text1620">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">00 03 5c 27 ac,,,</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,-191.833)">
+            <g id="text1624">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">2</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,-166.833)">
+            <g id="text1628">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514517078157</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,745,-11.8333)">
+            <g id="text4351">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(5,80,124);">signed by</text>
+            </g>
+        </g>
+        <g id="g4300" transform="matrix(1,0,0,1,735.5,-342.5)">
+            <path id="path4258" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="rect9119" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(7,115,179);fill-rule:nonzero;stroke:rgb(5,80,124);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text9101">
+                    <text x="-6.548px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">M</text>
+                </g>
+            </g>
+        </g>
+        <g id="g2236" transform="matrix(1,0,0,1,-79.5,-372.5)">
+            <path id="path2255" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path2220" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(5,80,124);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text2224">
+                    <text x="-5.675px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(5,80,124);">M</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect2262" transform="matrix(1,0,0,1,-410,-40)">
+            <path d="M679,-194.833C679,-197.593 676.76,-199.833 674,-199.833L409,-199.833C406.24,-199.833 404,-197.593 404,-194.833L404,-59.833C404,-57.074 406.24,-54.833 409,-54.833L674,-54.833C676.76,-54.833 679,-57.074 679,-59.833L679,-194.833Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect2264" transform="matrix(1.20383,0,0,1.50272,-523.535,62.2204)">
+            <path d="M675.5,-200.006C675.5,-201.842 673.639,-203.333 671.347,-203.333L404.653,-203.333C402.361,-203.333 400.5,-201.842 400.5,-200.006L400.5,-61.661C400.5,-59.824 402.361,-58.333 404.653,-58.333L671.347,-58.333C673.639,-58.333 675.5,-59.824 675.5,-61.661L675.5,-200.006Z" style="fill:white;stroke:rgb(5,80,124);stroke-width:1px;"/>
+        </g>
+        <g id="rect16921" serif:id="rect1692" transform="matrix(1,0,0,1,-410,-223)">
+            <rect x="495" y="-8.833" width="75" height="20" style="fill:rgb(7,115,179);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,-218.833)">
+            <g id="text2270">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,-38.8334)">
+            <g id="text2274">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,-193.833)">
+            <g id="text2278">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,-168.833)">
+            <g id="text2282">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,-143.833)">
+            <g id="text2286">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,91,-217.833)">
+            <g id="text2290">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">06 02 13...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,132.5,-38.8334)">
+            <g id="text2294">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">00 03 5c 27 ac,,,</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,-193.833)">
+            <g id="text2298">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,-168.833)">
+            <g id="text2302">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514517067954</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,-143.833)">
+            <g id="text2306">
+                <g>
+                    <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{</text>
+                    <text x="6.437px" y="15.6px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">type: &quot;<tspan x="41.412px " y="15.6px ">m</tspan>etaf<tspan x="75.372px " y="15.6px ">e</tspan>ed/add/existing&quot;,</text>
+                    <text x="6.437px" y="31.2px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">f<tspan x="10.797px " y="31.2px ">e</tspan>edpurpose: &quot;<tspan x="89.458px " y="31.2px ">m</tspan>ain<tspan x="117.59px " y="31.2px ">&quot;</tspan>,</text>
+                    <text x="6.437px" y="46.8px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">subf<tspan x="31.96px " y="46.8px ">e</tspan>ed: &quot;00 00 46 43...<tspan x="140.829px " y="46.8px ">&quot;</tspan>,</text>
+                    <text x="6.437px" y="62.4px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">...</text>
+                    <text x="0px" y="78px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">}</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,-143.833)">
+            <g id="text23061" serif:id="text2306">
+                <g>
+                    <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{</text>
+                    <text x="6.437px" y="15.6px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">type: &quot;<tspan x="41.412px " y="15.6px ">m</tspan>etaf<tspan x="75.372px " y="15.6px ">e</tspan>ed/add/existing&quot;,</text>
+                    <text x="6.437px" y="31.2px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">f<tspan x="10.797px " y="31.2px ">e</tspan>edpurpose: &quot;book club app<tspan x="170.625px " y="31.2px ">&quot;</tspan>,</text>
+                    <text x="6.437px" y="46.8px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">subf<tspan x="31.96px " y="46.8px ">e</tspan>ed: &quot;00 00 71 76...<tspan x="140.829px " y="46.8px ">&quot;</tspan>,</text>
+                    <text x="6.437px" y="62.4px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">...</text>
+                    <text x="0px" y="78px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">}</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,269,-13.8334)">
+            <g id="text2314">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(5,80,124);">signed by</text>
+            </g>
+        </g>
+        <g id="g2324" transform="matrix(1,0,0,1,261.5,-344.5)">
+            <path id="path2316" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path2318" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(7,115,179);fill-rule:nonzero;stroke:rgb(5,80,124);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text2322">
+                    <text x="-6.548px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">M</text>
+                </g>
+            </g>
+        </g>
+        <g id="g2334" transform="matrix(1,0,0,1,-539.5,-374.5)">
+            <path id="path2326" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path2328" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(5,80,124);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text2332">
+                    <text x="-5.675px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(5,80,124);">M</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect2352" transform="matrix(1,0,0,1,450,-410)">
+            <path d="M679,175.167C679,172.407 676.76,170.167 674,170.167L409,170.167C406.24,170.167 404,172.407 404,175.167L404,310.167C404,312.926 406.24,315.167 409,315.167L674,315.167C676.76,315.167 679,312.926 679,310.167L679,175.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect2354" transform="matrix(1.171,0,0,1.50272,349.614,-493.787)">
+            <path d="M675.5,169.994C675.5,168.158 673.587,166.667 671.23,166.667L404.77,166.667C402.413,166.667 400.5,168.158 400.5,169.994L400.5,308.339C400.5,310.176 402.413,311.667 404.77,311.667L671.23,311.667C673.587,311.667 675.5,310.176 675.5,308.339L675.5,169.994Z" style="fill:white;stroke:rgb(5,80,124);stroke-width:1px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,845,-218.833)">
+            <g id="text2360">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g id="rect2356" transform="matrix(1,0,0,1,450,-410)">
+            <rect x="495" y="176.167" width="75" height="20" style="fill:rgb(7,115,179);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,845,-38.8333)">
+            <g id="text2364">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,845,-193.833)">
+            <g id="text2368">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,845,-168.833)">
+            <g id="text2372">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,845,-143.833)">
+            <g id="text2376">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,950,-218.833)">
+            <g id="text2380">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">01 04 5	7...…</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,992.5,-38.8333)">
+            <g id="text2384">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">00 03 5c 27 ac,,,</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,950,-193.833)">
+            <g id="text2388">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">3</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,950,-168.833)">
+            <g id="text2392">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514843102292</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1115,-13.8333)">
+            <g id="text2400">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(5,80,124);">signed by</text>
+            </g>
+        </g>
+        <g id="g2410" transform="matrix(1,0,0,1,1105.5,-344.5)">
+            <path id="path2402" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path2404" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(7,115,179);fill-rule:nonzero;stroke:rgb(5,80,124);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text2408">
+                    <text x="-6.548px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">M</text>
+                </g>
+            </g>
+        </g>
+        <g id="g2420" transform="matrix(1,0,0,1,320.5,-374.5)">
+            <path id="path2412" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path2414" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(5,80,124);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text2418">
+                    <text x="-5.675px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(5,80,124);">M</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect2426" transform="matrix(1,0,0,1,-410,-230)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect2428" transform="matrix(1.20383,0,0,1,-523.535,-230)">
+            <path d="M675.5,356.667C675.5,353.907 673.639,351.667 671.347,351.667L404.653,351.667C402.361,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.361,496.667 404.653,496.667L671.347,496.667C673.639,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(124,61,5);stroke-width:1px;"/>
+        </g>
+        <g id="rect2430" transform="matrix(1,0,0,1,-410,-230)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(211,96,39);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,146.167)">
+            <g id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,246.167)">
+            <g id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,171.167)">
+            <g id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,196.167)">
+            <g id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,221.167)">
+            <g id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,146.167)">
+            <g id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%Gf54b...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,132.5,246.167)">
+            <g id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@FCx/ts...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,171.167)">
+            <g id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">4</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,196.167)">
+            <g id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514843126492</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,221.167)">
+            <g id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;<tspan x="39.375px " y="0px ">m</tspan>etaf<tspan x="73.334px " y="0px ">e</tspan>ed/announce&quot;...}</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,265,281.167)">
+            <g id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(157,110,68);">signed by</text>
+            </g>
+        </g>
+        <g id="g2484" transform="matrix(1,0,0,1,255.5,-49.5)">
+            <path id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(211,96,39);fill-rule:nonzero;stroke:rgb(162,71,27);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text2482">
+                    <text x="-4.893px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">A</text>
+                </g>
+            </g>
+        </g>
+        <g id="g2494" transform="matrix(1,0,0,1,-539.5,-89.5)">
+            <path id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(211,96,39);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(211,96,39);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text2492">
+                    <text x="-4.24px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(211,96,39);stroke:rgb(211,96,39);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">A</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,199.468,60.0886)">
+            <g id="text1472">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Message adding the main f<tspan x="156.571px " y="0px ">e</tspan>ed.</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-90.5322,60.0886)">
+            <g id="text14721" serif:id="text1472">
+                <g>
+                    <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Announcement points t<tspan x="134.513px " y="0px ">o</tspan></text>
+                    <text x="0px" y="19.11px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Metaf<tspan x="33.916px " y="19.11px ">e</tspan>ed.</text>
+                </g>
+            </g>
+        </g>
+        <g id="path4592" transform="matrix(4.29568,0,0,1.10275,-1761.82,-6.7062)">
+            <path d="M400.5,-218.911L400.5,-233.333L675.5,-233.333L675.5,-219.901" style="fill:none;fill-rule:nonzero;stroke:rgb(128,128,128);stroke-width:0.74px;"/>
+        </g>
+        <g id="path45921" serif:id="path4592" transform="matrix(1.12221e-16,-1.8327,0.470476,2.88084e-17,48.6888,1359.66)">
+            <path d="M400.5,-205.354L400.5,-233.333L675.5,-233.333L675.5,-207.964" style="fill:none;fill-rule:nonzero;stroke:rgb(128,128,128);stroke-width:1.49px;"/>
+        </g>
+        <g id="text12" transform="matrix(1,0,0,1,0,-32)">
+            <g transform="matrix(1,0,0,1,414,-246.833)">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Metaf<tspan x="33.916px " y="0px ">e</tspan>ed for identity</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,580.5,-278.833)">
+            <g id="text6981">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">00 03 5c 27 ac,,,</text>
+            </g>
+        </g>
+        <g id="g6991" transform="matrix(1,0,0,1,-91.5,-614.5)">
+            <path id="path6983" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path6985" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(5,80,124);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text6989">
+                    <text x="-5.675px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(5,80,124);">M</text>
+                </g>
+            </g>
+        </g>
+        <g id="text121" serif:id="text12" transform="matrix(6.12323e-17,-1,1,6.12323e-17,162.725,922.558)">
+            <g transform="matrix(1,0,0,1,434,-246.833)">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Main f<tspan x="36.328px " y="0px ">e</tspan>ed for identity</text>
+            </g>
+        </g>
+        <g transform="matrix(6.12323e-17,-1,1,6.12323e-17,-84.1081,312.058)">
+            <g id="text69811" serif:id="text6981">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@FCx/ts...</text>
+            </g>
+        </g>
+        <g id="g69911" serif:id="g6991" transform="matrix(6.12323e-17,-1,1,6.12323e-17,-419.775,984.058)">
+            <path id="path69831" serif:id="path6983" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path69851" serif:id="path6985" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(211,96,39);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text69891" serif:id="text6989">
+                    <text x="-4.24px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(211,96,39);">A</text>
+                </g>
+            </g>
+        </g>
+        <g id="path45922" serif:id="path4592" transform="matrix(1.12221e-16,-1.8327,0.470476,2.88084e-17,508.689,1359.66)">
+            <path d="M400.5,-205.354L400.5,-233.333L675.5,-233.333L675.5,-207.964" style="fill:none;fill-rule:nonzero;stroke:rgb(128,128,128);stroke-width:1.49px;"/>
+        </g>
+        <g id="text122" serif:id="text12" transform="matrix(6.12323e-17,-1,1,6.12323e-17,622.725,892.558)">
+            <g transform="matrix(1,0,0,1,384,-246.833)">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Application-speciﬁc f<tspan x="121.253px " y="0px ">e</tspan>ed</text>
+            </g>
+        </g>
+        <g transform="matrix(6.12323e-17,-1,1,6.12323e-17,375.892,312.058)">
+            <g id="text69812" serif:id="text6981">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@qv10...</text>
+            </g>
+        </g>
+        <g id="g69912" serif:id="g6991" transform="matrix(6.12323e-17,-1,1,6.12323e-17,40.2252,984.058)">
+            <path id="path69832" serif:id="path6983" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path69852" serif:id="path6985" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(124,5,124);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text69892" serif:id="text6989">
+                    <text x="-4.047px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);">B</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect24261" serif:id="rect2426" transform="matrix(1,0,0,1,-410,-47)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect24281" serif:id="rect2428" transform="matrix(1.20383,0,0,1,-523.535,-47)">
+            <path d="M675.5,356.667C675.5,353.907 673.639,351.667 671.347,351.667L404.653,351.667C402.361,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.361,496.667 404.653,496.667L671.347,496.667C673.639,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(124,61,5);stroke-width:1px;"/>
+        </g>
+        <g id="rect24301" serif:id="rect2430" transform="matrix(1,0,0,1,-410,-47)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(211,96,39);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,329.167)">
+            <g id="text24341" serif:id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,429.167)">
+            <g id="text24381" serif:id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,354.167)">
+            <g id="text24421" serif:id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,379.167)">
+            <g id="text24461" serif:id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,404.167)">
+            <g id="text24501" serif:id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,329.167)">
+            <g id="text24541" serif:id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%GBhJE<tspan x="48.071px " y="0px ">d</tspan>...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,132.5,429.167)">
+            <g id="text24581" serif:id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@FCx/ts...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,354.167)">
+            <g id="text24621" serif:id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">5</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,91,379.167)">
+            <g id="text24661" serif:id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514843257413</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,404.167)">
+            <g id="text24701" serif:id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;<tspan x="39.375px " y="0px ">p</tspan>ost&quot;...}</text>
+            </g>
+        </g>
+        <g id="g24941" serif:id="g2494" transform="matrix(1,0,0,1,-539.5,93.5)">
+            <path id="path24861" serif:id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(211,96,39);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path24881" serif:id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(211,96,39);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text24921" serif:id="text2492">
+                    <text x="-4.24px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(211,96,39);stroke:rgb(211,96,39);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">A</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect24262" serif:id="rect2426" transform="matrix(1,0,0,1,-410,130)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect24282" serif:id="rect2428" transform="matrix(1.20383,0,0,1,-523.535,130)">
+            <path d="M675.5,356.667C675.5,353.907 673.639,351.667 671.347,351.667L404.653,351.667C402.361,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.361,496.667 404.653,496.667L671.347,496.667C673.639,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(124,61,5);stroke-width:1px;"/>
+        </g>
+        <g id="rect24302" serif:id="rect2430" transform="matrix(1,0,0,1,-410,130)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(211,96,39);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,506.167)">
+            <g id="text24342" serif:id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,606.167)">
+            <g id="text24382" serif:id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,531.167)">
+            <g id="text24422" serif:id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,556.167)">
+            <g id="text24462" serif:id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-15,581.167)">
+            <g id="text24502" serif:id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,506.167)">
+            <g id="text24542" serif:id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%E32SwB...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,132.5,606.167)">
+            <g id="text24582" serif:id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@FCx/ts...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,531.167)">
+            <g id="text24622" serif:id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">6</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,556.167)">
+            <g id="text24662" serif:id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514843132456</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,90,581.167)">
+            <g id="text24702" serif:id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;vote<tspan x="64.162px " y="0px ">&quot;</tspan>...}</text>
+            </g>
+        </g>
+        <g id="g24942" serif:id="g2494" transform="matrix(1,0,0,1,-539.5,270.5)">
+            <path id="path24862" serif:id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(211,96,39);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path24882" serif:id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(211,96,39);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text24922" serif:id="text2492">
+                    <text x="-4.24px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(211,96,39);stroke:rgb(211,96,39);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">A</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect24263" serif:id="rect2426" transform="matrix(1,0,0,1,50,-230)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect24283" serif:id="rect2428" transform="matrix(1.116,0,0,1,-28.3595,-230)">
+            <path d="M675.5,356.667C675.5,353.907 673.492,351.667 671.02,351.667L404.98,351.667C402.508,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.508,496.667 404.98,496.667L671.02,496.667C673.492,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(124,5,124);stroke-width:1px;"/>
+        </g>
+        <g id="rect24303" serif:id="rect2430" transform="matrix(1,0,0,1,50,-230)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(124,5,124);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,445,146.167)">
+            <g id="text24343" serif:id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,246.167)">
+            <g id="text24383" serif:id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,171.167)">
+            <g id="text24423" serif:id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,196.167)">
+            <g id="text24463" serif:id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,221.167)">
+            <g id="text24503" serif:id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,146.167)">
+            <g id="text24543" serif:id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%QwaFt...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,592.5,246.167)">
+            <g id="text24583" serif:id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@qv10...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,171.167)">
+            <g id="text24623" serif:id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">18</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,196.167)">
+            <g id="text24663" serif:id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514843126255</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,221.167)">
+            <g id="text24703" serif:id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;bookClub<tspan x="94.104px " y="0px ">&quot;</tspan>...}</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,705,281.167)">
+            <g id="text24741" serif:id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);">signed by</text>
+            </g>
+        </g>
+        <g id="g24841" serif:id="g2484" transform="matrix(1,0,0,1,695.5,-49.5)">
+            <path id="path24761" serif:id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path24781" serif:id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(124,5,124);fill-rule:nonzero;stroke:rgb(86,8,86);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text24821" serif:id="text2482">
+                    <text x="-4.669px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">B</text>
+                </g>
+            </g>
+        </g>
+        <g id="g24943" serif:id="g2494" transform="matrix(1,0,0,1,-79.5,-89.5)">
+            <path id="path24863" serif:id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(81,13,81);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path24883" serif:id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(81,13,81);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text24923" serif:id="text2492">
+                    <text x="-4.047px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);stroke:rgb(81,13,81);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">B</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect24264" serif:id="rect2426" transform="matrix(1,0,0,1,50,-47)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect24284" serif:id="rect2428" transform="matrix(1.116,0,0,1,-28.3595,-47)">
+            <path d="M675.5,356.667C675.5,353.907 673.492,351.667 671.02,351.667L404.98,351.667C402.508,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.508,496.667 404.98,496.667L671.02,496.667C673.492,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(124,5,124);stroke-width:1px;"/>
+        </g>
+        <g id="rect24304" serif:id="rect2430" transform="matrix(1,0,0,1,50,-47)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(124,5,124);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,445,329.167)">
+            <g id="text24344" serif:id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,429.167)">
+            <g id="text24384" serif:id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,354.167)">
+            <g id="text24424" serif:id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,379.167)">
+            <g id="text24464" serif:id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,404.167)">
+            <g id="text24504" serif:id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,329.167)">
+            <g id="text24544" serif:id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%Gd3e/s...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,592.5,429.167)">
+            <g id="text24584" serif:id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@qv10...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,354.167)">
+            <g id="text24624" serif:id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">19</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,379.167)">
+            <g id="text24664" serif:id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">15148431276523</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,404.167)">
+            <g id="text24704" serif:id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;bookClub<tspan x="94.104px " y="0px ">&quot;</tspan>...}</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,705,464.167)">
+            <g id="text24742" serif:id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);">signed by</text>
+            </g>
+        </g>
+        <g id="g24842" serif:id="g2484" transform="matrix(1,0,0,1,695.5,133.5)">
+            <path id="path24762" serif:id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path24782" serif:id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(124,5,124);fill-rule:nonzero;stroke:rgb(86,9,86);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text24822" serif:id="text2482">
+                    <text x="-4.669px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">B</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect24265" serif:id="rect2426" transform="matrix(1,0,0,1,50,130)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect24285" serif:id="rect2428" transform="matrix(1.116,0,0,1,-28.3595,130)">
+            <path d="M675.5,356.667C675.5,353.907 673.492,351.667 671.02,351.667L404.98,351.667C402.508,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.508,496.667 404.98,496.667L671.02,496.667C673.492,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(124,5,124);stroke-width:1px;"/>
+        </g>
+        <g id="rect24305" serif:id="rect2430" transform="matrix(1,0,0,1,50,130)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(124,5,124);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,445,506.167)">
+            <g id="text24345" serif:id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,606.167)">
+            <g id="text24385" serif:id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,531.167)">
+            <g id="text24425" serif:id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,556.167)">
+            <g id="text24465" serif:id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,445,581.167)">
+            <g id="text24505" serif:id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,506.167)">
+            <g id="text24545" serif:id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%FjtY<tspan x="31.453px " y="0px ">d</tspan>...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,592.5,606.167)">
+            <g id="text24585" serif:id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@qv10...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,531.167)">
+            <g id="text24625" serif:id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">20</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,556.167)">
+            <g id="text24665" serif:id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514843156784</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,581.167)">
+            <g id="text24705" serif:id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;bookClubUpdate&quot;...}</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,705,641.167)">
+            <g id="text24743" serif:id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);">signed by</text>
+            </g>
+        </g>
+        <g id="g24843" serif:id="g2484" transform="matrix(1,0,0,1,695.5,310.5)">
+            <path id="path24763" serif:id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path24783" serif:id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(124,5,124);fill-rule:nonzero;stroke:rgb(81,13,81);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text24823" serif:id="text2482">
+                    <text x="-4.669px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">B</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(2.05957,0.00261031,0.00137547,0.780379,-331.086,-427.253)">
+            <g transform="matrix(0.48554,-0.0016241,-0.000855797,1.28143,105.964,93.8552)">
+                <path d="M365.131,130.687L361.395,126.776L363.567,121.824L365.131,130.687Z" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M673.447,130.531C624.509,115.934 578.854,97.18 508.579,98.9C472.955,99.772 405.973,118.911 364.349,126.255" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(1.51328,0.00191795,0.00234081,1.32807,290.898,-570.128)">
+            <g transform="matrix(0.660816,-0.000954328,-0.00116473,0.752976,-266.967,163.325)">
+                <path d="M834.924,132.752L830.44,129.728L831.506,124.426L834.924,132.752Z" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M1059.23,129.77C1007.04,93.827 931.658,88.177 833.215,128.589" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,265,461.167)">
+            <g id="text24744" serif:id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(157,110,68);">signed by</text>
+            </g>
+        </g>
+        <g id="g24844" serif:id="g2484" transform="matrix(1,0,0,1,255.5,130.5)">
+            <path id="path24764" serif:id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path24784" serif:id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(211,96,39);fill-rule:nonzero;stroke:rgb(162,71,27);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text24824" serif:id="text2482">
+                    <text x="-4.893px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">A</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,265,641.167)">
+            <g id="text24745" serif:id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(157,110,68);">signed by</text>
+            </g>
+        </g>
+        <g id="g24845" serif:id="g2484" transform="matrix(1,0,0,1,255.5,310.5)">
+            <path id="path24765" serif:id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path24785" serif:id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(211,96,39);fill-rule:nonzero;stroke:rgb(162,71,27);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text24825" serif:id="text2482">
+                    <text x="-4.893px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">A</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1.0001,-0.00501254,-0.00501254,1.242,-169.4,-513.887)">
+            <g transform="matrix(0.999916,0.00403551,0.00403551,0.805168,57.3243,129.179)">
+                <path d="M231.94,608.807L236.501,605.901L240.938,608.993L231.94,608.807Z" style="fill:none;stroke:rgb(211,96,39);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M235.217,667.9L236.439,608.9" style="fill:none;stroke:rgb(211,96,39);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(1.0001,-0.00501254,-0.00501254,1.242,-169.4,-331.887)">
+            <g transform="matrix(0.999916,0.00403551,0.00403551,0.805168,56.5899,-17.3613)">
+                <path d="M231.94,790.807L236.501,787.901L240.938,790.993L231.94,790.807Z" style="fill:none;stroke:rgb(211,96,39);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M235.217,849.9L236.439,790.9" style="fill:none;stroke:rgb(211,96,39);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(1.0001,-0.00501254,-0.00501254,1.242,290.6,-513.887)">
+            <g transform="matrix(0.999916,0.00403551,0.00403551,0.805168,-402.637,127.323)">
+                <path d="M691.94,608.807L696.501,605.901L700.938,608.993L691.94,608.807Z" style="fill:none;stroke:rgb(124,5,124);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M695.217,667.9L696.439,608.9" style="fill:none;stroke:rgb(124,5,124);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(1.0001,-0.00501254,-0.00501254,1.242,290.6,-331.887)">
+            <g transform="matrix(0.999916,0.00403551,0.00403551,0.805168,-403.372,-19.2177)">
+                <path d="M691.94,790.807L696.501,787.901L700.938,790.993L691.94,790.807Z" style="fill:none;stroke:rgb(124,5,124);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M695.217,849.9L696.439,790.9" style="fill:none;stroke:rgb(124,5,124);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g id="g24944" serif:id="g2494" transform="matrix(1,0,0,1,-79.5,92.5)">
+            <path id="path24864" serif:id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(81,13,81);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path24884" serif:id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(81,13,81);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text24924" serif:id="text2492">
+                    <text x="-4.047px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);stroke:rgb(81,13,81);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">B</text>
+                </g>
+            </g>
+        </g>
+        <g id="g24945" serif:id="g2494" transform="matrix(1,0,0,1,-79.5,270.5)">
+            <path id="path24865" serif:id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(81,13,81);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path24885" serif:id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(81,13,81);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text24925" serif:id="text2492">
+                    <text x="-4.047px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);stroke:rgb(81,13,81);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">B</text>
+                </g>
+            </g>
+        </g>
+        <g id="path45923" serif:id="path4592" transform="matrix(1.12221e-16,-1.8327,0.470476,2.88084e-17,922.689,1359.66)">
+            <path d="M400.5,-205.354L400.5,-233.333L675.5,-233.333L675.5,-207.964" style="fill:none;fill-rule:nonzero;stroke:rgb(128,128,128);stroke-width:1.49px;"/>
+        </g>
+        <g id="text123" serif:id="text12" transform="matrix(6.12323e-17,-1,1,6.12323e-17,1046.73,892.558)">
+            <g transform="matrix(1,0,0,1,424,-246.833)">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">T<tspan x="7.128px " y="0px ">o</tspan>mbst<tspan x="44.053px " y="0px ">o</tspan>ned f<tspan x="80.438px " y="0px ">e</tspan>ed</text>
+            </g>
+        </g>
+        <g transform="matrix(6.12323e-17,-1,1,6.12323e-17,799.892,312.058)">
+            <g id="text69813" serif:id="text6981">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@e3e...</text>
+            </g>
+        </g>
+        <g id="g69913" serif:id="g6991" transform="matrix(6.12323e-17,-1,1,6.12323e-17,464.225,984.058)">
+            <path id="path69833" serif:id="path6983" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path69853" serif:id="path6985" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(38,38,38);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text69893" serif:id="text6989">
+                    <text x="-4.231px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(64,64,64);">C</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect24266" serif:id="rect2426" transform="matrix(1,0,0,1,464,-230)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect24286" serif:id="rect2428" transform="matrix(1.116,0,0,1,385.641,-230)">
+            <path d="M675.5,356.667C675.5,353.907 673.492,351.667 671.02,351.667L404.98,351.667C402.508,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.508,496.667 404.98,496.667L671.02,496.667C673.492,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(51,51,51);stroke-width:1px;"/>
+        </g>
+        <g id="rect24306" serif:id="rect2430" transform="matrix(1,0,0,1,464,-230)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(51,51,51);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,859,146.167)">
+            <g id="text24346" serif:id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,246.167)">
+            <g id="text24386" serif:id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,171.167)">
+            <g id="text24426" serif:id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,196.167)">
+            <g id="text24466" serif:id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,221.167)">
+            <g id="text24506" serif:id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,146.167)">
+            <g id="text24546" serif:id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%QwaFt...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1006.5,246.167)">
+            <g id="text24586" serif:id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@e3e...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,171.167)">
+            <g id="text24626" serif:id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">18</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,196.167)">
+            <g id="text24666" serif:id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514843126255</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,221.167)">
+            <g id="text24706" serif:id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;bookClub<tspan x="94.104px " y="0px ">&quot;</tspan>...}</text>
+            </g>
+        </g>
+        <g id="g24946" serif:id="g2494" transform="matrix(1,0,0,1,334.5,-89.5)">
+            <path id="path24866" serif:id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(51,51,51);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path24886" serif:id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(51,51,51);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text24926" serif:id="text2492">
+                    <text x="-4.231px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);stroke:rgb(51,51,51);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">C</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect24267" serif:id="rect2426" transform="matrix(1,0,0,1,464,-47)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect24287" serif:id="rect2428" transform="matrix(1.116,0,0,1,385.641,-47)">
+            <path d="M675.5,356.667C675.5,353.907 673.492,351.667 671.02,351.667L404.98,351.667C402.508,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.508,496.667 404.98,496.667L671.02,496.667C673.492,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(51,51,51);stroke-width:1px;"/>
+        </g>
+        <g id="rect24307" serif:id="rect2430" transform="matrix(1,0,0,1,464,-47)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(51,51,51);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,859,329.167)">
+            <g id="text24347" serif:id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,429.167)">
+            <g id="text24387" serif:id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,354.167)">
+            <g id="text24427" serif:id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,379.167)">
+            <g id="text24467" serif:id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,404.167)">
+            <g id="text24507" serif:id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,329.167)">
+            <g id="text24547" serif:id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%Gd3e/s...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1006.5,429.167)">
+            <g id="text24587" serif:id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@e3e...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,354.167)">
+            <g id="text24627" serif:id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">19</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,379.167)">
+            <g id="text24667" serif:id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">15148431276523</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,404.167)">
+            <g id="text24707" serif:id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;bookClub<tspan x="94.104px " y="0px ">&quot;</tspan>...}</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1119,464.167)">
+            <g id="text24746" serif:id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(51,51,51);">signed by</text>
+            </g>
+        </g>
+        <g id="g24846" serif:id="g2484" transform="matrix(1,0,0,1,1109.5,133.5)">
+            <path id="path24766" serif:id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path24786" serif:id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(51,51,51);fill-rule:nonzero;stroke:rgb(38,38,38);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text24826" serif:id="text2482">
+                    <text x="-4.669px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">B</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1119,284.167)">
+            <g id="text24747" serif:id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(51,51,51);">signed by</text>
+            </g>
+        </g>
+        <g id="g24847" serif:id="g2484" transform="matrix(1,0,0,1,1109.5,-46.5)">
+            <path id="path24767" serif:id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path24787" serif:id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(51,51,51);fill-rule:nonzero;stroke:rgb(38,38,38);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text24827" serif:id="text2482">
+                    <text x="-4.669px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">B</text>
+                </g>
+            </g>
+        </g>
+        <g id="rect24268" serif:id="rect2426" transform="matrix(1,0,0,1,464,130)">
+            <path d="M679,360.167C679,357.407 676.76,355.167 674,355.167L409,355.167C406.24,355.167 404,357.407 404,360.167L404,495.167C404,497.926 406.24,500.167 409,500.167L674,500.167C676.76,500.167 679,497.926 679,495.167L679,360.167Z" style="fill:rgb(236,236,236);"/>
+        </g>
+        <g id="rect24288" serif:id="rect2428" transform="matrix(1.116,0,0,1,385.641,130)">
+            <path d="M675.5,356.667C675.5,353.907 673.492,351.667 671.02,351.667L404.98,351.667C402.508,351.667 400.5,353.907 400.5,356.667L400.5,491.667C400.5,494.426 402.508,496.667 404.98,496.667L671.02,496.667C673.492,496.667 675.5,494.426 675.5,491.667L675.5,356.667Z" style="fill:white;stroke:rgb(51,51,51);stroke-width:1px;"/>
+        </g>
+        <g id="rect24308" serif:id="rect2430" transform="matrix(1,0,0,1,464,130)">
+            <rect x="495" y="361.167" width="75" height="20" style="fill:rgb(51,51,51);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,859,506.167)">
+            <g id="text24348" serif:id="text2434">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">pr<tspan x="11.572px " y="0px ">e</tspan>vious</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,606.167)">
+            <g id="text24388" serif:id="text2438">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">author</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,531.167)">
+            <g id="text24428" serif:id="text2442">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">sequence</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,556.167)">
+            <g id="text24468" serif:id="text2446">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">timestamp</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,859,581.167)">
+            <g id="text24508" serif:id="text2450">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">contentSection</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,506.167)">
+            <g id="text24548" serif:id="text2454">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">%FjtY<tspan x="31.453px " y="0px ">d</tspan>...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1006.5,606.167)">
+            <g id="text24588" serif:id="text2458">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">@e3e...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,531.167)">
+            <g id="text24628" serif:id="text2462">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">20</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,556.167)">
+            <g id="text24668" serif:id="text2466">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">1514843156784</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,964,581.167)">
+            <g id="text24708" serif:id="text2470">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{type: &quot;bookClubUpdate&quot;...}</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1119,641.167)">
+            <g id="text24748" serif:id="text2474">
+                <text x="-55.136px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(51,51,51);">signed by</text>
+            </g>
+        </g>
+        <g id="g24848" serif:id="g2484" transform="matrix(1,0,0,1,1109.5,310.5)">
+            <path id="path24768" serif:id="path2476" d="M23.5,304.667C20.73,304.667 18.5,306.897 18.5,309.667L18.5,329.667C18.5,332.437 20.73,334.667 23.5,334.667L43.5,334.667C46.27,334.667 48.5,332.437 48.5,329.667L48.5,322.667L50.5,322.667L53.5,325.667L56.5,322.667L59.5,325.667L62.5,322.667L65.5,325.667L71.5,319.667L66.5,314.667L48.5,314.667L48.5,309.667C48.5,306.897 46.27,304.667 43.5,304.667L23.5,304.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;"/>
+            <path id="path24788" serif:id="path2478" d="M20,301.167C17.23,301.167 15,303.397 15,306.167L15,326.167C15,328.937 17.23,331.167 20,331.167L40,331.167C42.77,331.167 45,328.937 45,326.167L45,319.167L47,319.167L50,322.167L53,319.167L56,322.167L59,319.167L62,322.167L68,316.167L63,311.167L45,311.167L45,306.167C45,303.397 42.77,301.167 40,301.167L20,301.167Z" style="fill:rgb(51,51,51);fill-rule:nonzero;stroke:rgb(38,38,38);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,30,321.167)">
+                <g id="text24828" serif:id="text2482">
+                    <text x="-4.669px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:15px;fill:rgb(253,253,253);">B</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1.0001,-0.00501254,-0.00501254,1.242,704.6,-513.887)">
+            <g transform="matrix(0.999916,0.00403551,0.00403551,0.805168,-816.603,125.652)">
+                <path d="M1105.94,608.807L1110.5,605.901L1114.94,608.993L1105.94,608.807Z" style="fill:none;stroke:rgb(51,51,51);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M1109.22,667.9L1110.44,608.9" style="fill:none;stroke:rgb(51,51,51);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(1.0001,-0.00501254,-0.00501254,1.242,704.6,-331.887)">
+            <g transform="matrix(0.999916,0.00403551,0.00403551,0.805168,-817.337,-20.8884)">
+                <path d="M1105.94,790.807L1110.5,787.901L1114.94,790.993L1105.94,790.807Z" style="fill:none;stroke:rgb(64,64,64);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M1109.22,849.9L1110.44,790.9" style="fill:none;stroke:rgb(64,64,64);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g id="g24947" serif:id="g2494" transform="matrix(1,0,0,1,334.5,92.5)">
+            <path id="path24867" serif:id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(51,51,51);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path24887" serif:id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(51,51,51);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text24927" serif:id="text2492">
+                    <text x="-4.231px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);stroke:rgb(51,51,51);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">C</text>
+                </g>
+            </g>
+        </g>
+        <g id="g24948" serif:id="g2494" transform="matrix(1,0,0,1,334.5,270.5)">
+            <path id="path24868" serif:id="path2486" d="M635.833,324.667C633.987,324.667 632.5,326.153 632.5,328L632.5,341.333C632.5,343.18 633.987,344.667 635.833,344.667L649.167,344.667C651.013,344.667 652.5,343.18 652.5,341.333L652.5,336.667L654.5,336.667L656.5,338.667L658.5,336.667L660.5,338.667L662.5,336.667L664.5,338.667L668,335.167L664.5,331.667L652.5,331.667L652.5,328C652.5,326.153 651.013,324.667 649.167,324.667L635.833,324.667Z" style="fill:rgb(236,236,236);fill-rule:nonzero;stroke:rgb(64,64,64);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;"/>
+            <path id="path24888" serif:id="path2488" d="M633.333,322.167C631.487,322.167 630,323.653 630,325.5L630,338.833C630,340.68 631.487,342.167 633.333,342.167L646.667,342.167C648.513,342.167 650,340.68 650,338.833L650,334.167L652,334.167L654,336.167L656,334.167L658,336.167L660,334.167L662,336.167L665.5,332.667L662,329.167L650,329.167L650,325.5C650,323.653 648.513,322.167 646.667,322.167L633.333,322.167Z" style="fill:white;fill-rule:nonzero;stroke:rgb(64,64,64);stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,640,336.167)">
+                <g id="text24928" serif:id="text2492">
+                    <text x="-4.231px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(124,5,124);stroke:rgb(64,64,64);stroke-width:1px;stroke-linejoin:round;stroke-miterlimit:2;">C</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,550,-216.833)">
+            <g id="text1616">
+                <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:white;">01 04 47...</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,950,-143.833)">
+            <g id="text23062" serif:id="text2306">
+                <g>
+                    <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">{</text>
+                    <text x="6.437px" y="15.6px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">type: &quot;<tspan x="41.412px " y="15.6px ">m</tspan>etaf<tspan x="75.372px " y="15.6px ">e</tspan>ed/t<tspan x="105.955px " y="15.6px ">o</tspan>mbst<tspan x="142.879px " y="15.6px ">o</tspan>ne&quot;,</text>
+                    <text x="6.437px" y="31.2px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">f<tspan x="10.797px " y="31.2px ">e</tspan>edpurpose: &quot;<tspan x="89.21px " y="31.2px ">d</tspan>ead f<tspan x="125.411px " y="31.2px ">e</tspan>ed&quot;,</text>
+                    <text x="6.437px" y="46.8px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">subf<tspan x="31.96px " y="46.8px ">e</tspan>ed: &quot;00 00 e8 20...<tspan x="140.417px " y="46.8px ">&quot;</tspan>,</text>
+                    <text x="6.437px" y="62.4px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">...</text>
+                    <text x="0px" y="78px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">}</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1.10425,-112.717,-387.958)">
+            <g transform="matrix(1,-0,-0,0.905591,-0,30.9939)">
+                <path d="M312.128,490.736L307.628,493.736L303.128,490.736L312.128,490.736Z" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M307.628,328.295L307.628,490.736" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,529.468,60.0886)">
+            <g id="text14722" serif:id="text1472">
+                <g>
+                    <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Message adding the application-speciﬁc</text>
+                    <text x="0px" y="19.11px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">f<tspan x="4.361px " y="19.11px ">e</tspan>ed fr<tspan x="37.47px " y="19.11px ">o</tspan>m Book Club App.</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1.10425,217.283,-387.958)">
+            <g transform="matrix(1,-0,-0,0.905591,-330,30.9939)">
+                <path d="M642.128,490.736L637.628,493.736L633.128,490.736L642.128,490.736Z" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M637.628,328.295L637.628,490.736" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,929.468,50.0886)">
+            <g id="text14723" serif:id="text1472">
+                <g>
+                    <text x="0px" y="0px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">Message t<tspan x="60.233px " y="0px ">o</tspan>mbst<tspan x="97.157px " y="0px ">o</tspan>ning  a f<tspan x="150.452px " y="0px ">e</tspan>ed. Clients</text>
+                    <text x="0px" y="19.11px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">should st<tspan x="52.971px " y="19.11px ">o</tspan>p caring about that f<tspan x="176.725px " y="19.11px ">e</tspan>ed after</text>
+                    <text x="0px" y="38.22px" style="font-family:'Roboto-Regular', 'Roboto';font-size:13px;fill:rgb(102,102,102);">seeing this message.</text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1.10425,617.283,-387.958)">
+            <g transform="matrix(1,-0,-0,0.905591,-730,30.9939)">
+                <path d="M1042.13,490.736L1037.63,493.736L1033.13,490.736L1042.13,490.736Z" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M1037.63,328.295L1037.63,490.736" style="fill:none;stroke:rgb(7,115,179);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+        <g transform="matrix(-1,-1.22465e-16,1.35232e-16,-1.10425,372.538,482.523)">
+            <g transform="matrix(-1,1.10903e-16,-1.22465e-16,-0.905591,485.255,757.306)">
+                <path d="M173.128,311.295L177.628,308.295L182.128,311.295L173.128,311.295Z" style="fill:none;stroke:rgb(162,71,27);stroke-width:2px;stroke-linecap:round;stroke-miterlimit:10;"/>
+                <path d="M177.628,473.736L177.628,311.295" style="fill:none;stroke:rgb(162,71,27);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:2,2;"/>
+            </g>
+        </g>
+    </g>
+</svg>
