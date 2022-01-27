@@ -589,9 +589,10 @@ assert_nacl_sign_verify_detached(
         <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of procedure and any arguments.</p>
         <p>The name is a list of strings. For a top-level procedure like <em>createHistoryStream</em> the list only has one element: <code>["createHistoryStream"]</code>. Procedures relating to blobs are grouped in the blobs namespace, for example to use <em>blobs.get</em> send the list: <code>["blobs", "get"]</code>.</p>
         <div>
-            <p>There are two types of procedure used when Scuttlebutt peers talk to each other:</p>
+            <p>There are three types of procedure used when Scuttlebutt peers talk to each other:</p>
             <ul>
                 <li><em>Source</em> procedures return multiple responses over time and are used for streaming data or continually notifying when new events occur. When making one of these requests, the stream flag in the RPC header must be set.</li>
+                <li><em>Duplex</em> procedures are similar to <em>source</em> procedures but allow <em>multiple requests</em> as well as multiple responses over time. The many request events in a duplex utilize the same request number, and the stream flag must be set.</li>
                 <li><em>Async</em> procedures return a single response. Async responses can arrive quickly or arrive much later in response to a one-off event.</li>
             </ul>
             <p>For each procedure in the RPC protocol you must already know whether it is source or async and correctly specify this in the request body.</p>
