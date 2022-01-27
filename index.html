@@ -1688,7 +1688,7 @@ assert_nacl_sign_verify_detached(
         </aside>
         <img src="img/room_perspective.png" />
 
-        <p>To establish a tunnel, one of the peers (the "source") calls the RPC <em>tunnel.connect</em> on the portal peer, specifying the "target" peer's ID:</p>
+        <p>To establish a tunnel, one of the peers (the "origin") calls the RPC <em>tunnel.connect</em> on the portal peer, specifying the "target" peer's ID:</p>
         <figure class="request-response">
             <div class="request">
                 <div class="header">
@@ -1711,7 +1711,7 @@ assert_nacl_sign_verify_detached(
             <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
-        <p>The portal receives this and recognizes it as an intention to connect with the target peer. If the portal recognizes the target peer as being online, then it also calls the RPC <em>tunnel.connect</em> on the target peer, this time also specifying the "source" peer's ID:</p>
+        <p>The portal receives this and recognizes it as an intention to connect with the target peer. If the portal recognizes the target peer as being online, then it also calls the RPC <em>tunnel.connect</em> on the target peer, this time also specifying the "origin" peer's ID:</p>
         <figure class="request-response">
             <div class="request">
                 <div class="header">
@@ -1725,7 +1725,7 @@ assert_nacl_sign_verify_detached(
   "type": "duplex",
   "args": [
     {
-      "source":"@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "origin":"@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
       "portal":"@uMYDVPuEKftL4SzpRGVyQxLdyPkOiX7njit7+qT/7IQ=.ed25519",
       "target":"@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519"
     }
@@ -1735,7 +1735,7 @@ assert_nacl_sign_verify_detached(
             <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
 
-        <p>From this point onward, the portal should know to forward any messages on this stream from the source to the target, and vice-versa. In the example below, the target sends this to the portal</p>
+        <p>From this point onward, the portal should know to forward any messages on this stream from the origin to the target, and vice-versa. In the example below, the target sends this to the portal</p>
         <figure class="request-response">
             <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
@@ -1753,7 +1753,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <p>And then the portal forwards it to the source, unaltered:</p>
+        <p>And then the portal forwards it to the origin, unaltered:</p>
         <figure class="request-response">
             <img class="response-arrow" src="img/arrow.png" alt=""/>
             <div class="response">
@@ -1771,7 +1771,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
 
-        <p>Notice that the payload is in binary, because it's encrypted with secret handshake and box stream between the source peer and the target peer. This means the portal cannot know what the two peers are communicating, and it cannot tamper with the binary payload in a way that the source and target could not detect.</p>
+        <p>Notice that the payload is in binary, because it's encrypted with secret handshake and box stream between the origin peer and the target peer. This means the portal cannot know what the two peers are communicating, and it cannot tamper with the binary payload in a way that the origin and target could not detect.</p>
 
         <h3 id="rooms-joining">Joining</h3>
 
