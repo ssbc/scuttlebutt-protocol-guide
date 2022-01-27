@@ -1774,6 +1774,8 @@ assert_nacl_sign_verify_detached(
 
         <p>Notice that the payload is in binary, because it's encrypted with secret handshake and box stream between the origin peer and the target peer. This means the portal cannot know what the two peers are communicating, and it cannot tamper with the binary payload in a way that the origin and target could not detect.</p>
 
+        <p>When the origin or the target close the encrypted duplex stream, they also notify the portal with a standard stream "end" flag.</p>
+
         <h3 id="rooms-joining">Joining</h3>
 
         <p>Before a peer can connect to a room and see other peers, they need to become an <i>authorized user</i> of that room by joining it with an invite code.</p>
