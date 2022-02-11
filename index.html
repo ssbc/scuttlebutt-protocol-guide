@@ -53,9 +53,25 @@
                     <div class="s2">
                         <div><a href="#structure">Structure</a></div>
                         <div><a href="#message-format">Message format</a></div>
+                        <div><a href="#message-schemas">Common schemas</a></div>
                         <div><a href="#createHistoryStream">createHistoryStream</a></div>
                     </div>
                 </div>
+                <div class="section">
+                    <div><a class="s1" href="#schemas">Message Schemas</a></div>
+                    <div class="s2">
+                        <div><a href="#about-profile">About</a></div>
+                        <div><a href="#blog">Blog</a></div>
+                        <div><a href="#contact">Contact</a></div>
+                        <div><a href="#post">Post</a></div>
+                        <div><a href="#private">Private</a></div>
+                        <div><a href="#pub">Pub</a></div>
+                        <div><a href="#vote">Vote</a></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#metafeeds">Metafeeds</a></div>
                     <div class="s2">
@@ -68,15 +84,15 @@
                         <div><a href="#metafeed-network-identity">Network Identity</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="section">
+               <div class="section">
                     <div><a class="s1" href="#blobs">Blobs</a></div>
                     <div class="s2">
                         <div><a href="#fetching">Fetching</a></div>
                         <div><a href="#want-and-have">Want and have</a></div>
                     </div>
                 </div>
+            </div>
+            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#following">Following</a></div>
                     <div class="s2">
@@ -89,8 +105,6 @@
                         <div><a href="#invites">Invites</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
                 <div class="section">
                     <div><a class="s1" href="#rooms">Rooms</a></div>
                     <div class="s2">
@@ -899,7 +913,7 @@ assert_nacl_sign_verify_detached(
   key: authors_longterm_sk
 )</code></pre>
         <p>Base64 encode the signature and put <code>.sig.ed25519</code> on the end. Finally, add the signature to the message itself. It must be the last entry in the dictionary:</p>
-        <pre><code>{
+      <pre><code>{
   "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
   "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
   "sequence": 2,
@@ -921,12 +935,13 @@ assert_nacl_sign_verify_detached(
   key: authors_longterm_pk
 )</code></pre>
 
-        <h4 id="message-id">Message ID</h4>
+    <h4 id="message-id">Message ID</h4>
         <p>A message ID is a hash of the message including signature. Messages can refer to other messages by their ID.</p>
         <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key must appear last as shown above (but without wrapping the line).</p>
         <p>The ID of the above message is:</p>
         <img src="img/format_message_id.png" style="height: 80px;" alt="%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256 where everything between % and .sha256 is the base64-encoding of the sha256 hash of the formatted message including signature" />
         <p>Currently all IDs are computed using sha256. However the protocol includes the name of the hash function in message IDs and the messages themselves to allow migrating to a different one if needed in the future.</p>
+
 
         <h3 id="createHistoryStream">createHistoryStream</h3>
         <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to. When peers connect, one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
@@ -1083,6 +1098,226 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
+
+    <h2 id="message-schemas">Message Schemas</h2>
+        <p>Secure Scuttlebutt supports arbitary schema and it is up to each implimentation to determine which message types and schema are supported. There is no enforcement mechanism or verification of schemas. Most apps support a subset of these schema types. </p>
+   
+    <h3 id="about-profile">about (profile update)</h3>
+        <p>About messages are used to add additional information to another message, much like attaching post-it notes to some book page. You're _attaching information about_ something. Most use cases of <i>about</i> messages are to add names, images and descriptions to a user profile.</p>
+        
+        <aside style="align-self: start; position: relative; top: 19px;">
+            <p>There is no central authority handling names on the Scuttleverse. Much like in the physical world where two people can have the exact same name so it is on Scuttlebutt. You can name other people as well, just like partners and friends do.</p>
+        </aside>
+        
+        <h4>What does it look like?</h4>
+
+        <pre><code>{
+    "key": "%buRChtQMrk/WjZQsfsgsg17XHmSDnMMKfFEXv/bjL43lQ=.sha256",
+    "value": {
+    "previous": null,
+    "sequence": 1,
+    "author": "@G/zUdqlPsdgsgd8yXIfMjx1676ApAOghwgc=.ed25519",
+    "timestamp": 1560287825423,
+    "hash": "sha256",
+    "content": {
+        "type": "about",
+        "about": "@G/zUdqlPMsdgsdg8yXIfMjx1676ApAOghwgc=.ed25519",
+        "image": "&N3ectV2qM5gyH2Zrsdgsdgd+InCMkJBc/MaTbJ0=.sha256",
+        "name": "Hilo",
+        "description": "extrem klug"
+    },
+    "signature": "UMjf4aFsdgsgUY9zeDAqWdTZeymoQznicvfgATu0/kArvLnshqbkiG7ZIngXcnztMUc6SyI4GrDwkAA==.sig.ed25519"
+    },
+    "timestamp": 1560288248693,
+    "rts": 1560287825423
+}
+        </code></pre>
+        
+        <p>The message above is adding a <i>name</i>, an <i>image</i>> and a <i>description</i> to the user specified by the <i>about</i> field.</p>
+        
+        <p>There is a lot more <a href="http://scuttlebot.io/docs/message-types/about.html">information about <i>about</i> online</a>.</p>
+        
+
+
+        <h3 id="blog">blog</h3>
+        <p>Sometimes messages of type <code>post</code> are not enough for you to express what you need. All messages in Secure Scuttlebutt have a maximum size of 8k which is counting the metadata associated with the message and not just the content itself. For those occasions when you need to write longer messages you can use <code>blog</code>.</p>
+        <p>These messages are actually a small set of metadata, just enough so that clients can display a summary and an associated <a href="#blobs">blob (this link explains them in depth)</a> which holds the content. </p>
+        <blockquote>
+        <p><strong>About blobs:</strong> You can think of blobs like attachments to an email. Blobs are not downloaded automatically, they need to be requested. Patchfox will request images on its own so that you can see posts and images together but it will not request other blobs unless you initiate some action that needs them. In cases such as <code>blog</code> messages, the blobs are requested when you press the <em>Read Blogpost</em> button. If you don&#39;t press it, we don&#39;t download that post.</p>
+        </blockquote>
+        <h4 id="what-do-blog-posts-look-like-">What do blog posts look like?</h4>
+        <pre><code>{
+    "key": "%x4+H95OSsvVgsPl6sggsfgsD0KPM8Y3eHQ9lj2oKNb4=.sha256",
+    "value": {
+    "previous": "%CwJcRGnZsdgsdg59NyL9gBokQzOzAoJJFjBE=.sha256",
+    "sequence": 176,
+    "author": "@aSo64imXSBLArsdgsdgidEUsvp2Lziiu3youY=.ed25519",
+    "timestamp": 1560521419974,
+    "hash": "sha256",
+    "content": {
+        "type": "blog",
+        "title": "Fridays for Future treffen Science Fiction: Was ist eigentlich Solarpunk?",
+        "summary": "Die Welt der Science Fiction ist bunt und vielfältig. Das zeigen 
+        Untergenres wie Cyberpunk und Steampunk – die mittlerweile weithin bekannt sind. 
+        Solarpunk ist hingegen nur wenigen ein Begriff. Dabei passt dieses Genre so gut in 
+        unsere Zeit wie kein anderes. Denn Solarpunk zeichnet eine Welt, in der wir unseren 
+        Planeten noch retten können.",
+        "thumbnail": "&amp;EmYpby5uFsdgsdg81wwggzPT52zZLNpQSoZu8=.sha256",
+        "blog": "&amp;DcG4eJNU65yuVMjwNIsdgsdgsdZfmTIfXQrTxOQ=.sha256",
+        "mentions": [
+        {
+            "link": "&amp;pU8sdgsdgsSIs3z5kw25OPoqmDbwLoNPIJE6XI=.sha256",
+            "type": "image/jpeg",
+            "size": 195993
+        }
+        ],
+        "channel": "solarpunk"
+    },
+    "signature": "51SNzLdPRDMWNVTdBjU0TplV9gbmyehpieNPUAaMnob9YFe4sH6nMjAA==.sig.ed25519"
+    }
+}</code></pre>
+        
+        <p>On the message above you can see some metadata to help create a summary card in fields <code>summary</code>, <code>title</code>, <code>thumbnail</code>. The content for the blogpost is a blob in field <code>blog</code>. Blobs start with an <code>%</code>. Patchfox will fetch that blob and display it if you ask it to. The blob is a markdown text file.</p>
+        
+        <h3 id="contact">contact</h3>
+        <p>Contact messages are used to follow or unfollow another user. This affects your social graph and gossiping. Once you follow a given user, you&#39;ll start replicating all of that user&#39;s feed and, depending on how your client is configured, their friends. Most clients will do two levels of replication, so you end up with all your friends&#39; data and friends-of-friends&#39; data, much like the physical world in which you receive gossip regarding your friends&#39; friends.</p>
+        <h4 id="what-does-it-look-like-">What does it look like?</h3>
+        <pre><code>{
+    "key": "%JJW6l3PphHHNxkbe6q+gzsgsgOIgIEjqtnKVq5fo=.sha256",
+    "value": {
+    "previous": "%4UrrxMHmjgkw/tDZ40ztxwwrg2TQSzPVMw9efqj9E=.sha256",
+    "sequence": 1182,
+    "author": "@GLH9VPzvvU2KcnnUwgwgTUtzw+Rk6fd/Kb9Si0=.ed25519",
+    "timestamp": 1560279915710,
+    "hash": "sha256",
+    "content": {
+        "type": "contact",
+        "contact": "@S954DSMnCh8aBqwegwegVZSBtK9N49Wq5AHh3OwOjo=.ed25519",
+        "following": true
+    },
+    "signature": "laHTnqQkbem2rFxvfwegwegwI4B7l2egVZSBtK9N49M4i8uTCDg==.sig.ed25519"
+    },
+    "timestamp": 1560279930388,
+    "rts": 1560279915710
+}</code></pre>
+        <p>In the message above, the author is <em>following</em> (specified by the <code>following</code> field) a user specified by the <code>contact</code> field. If the value of the <code>following</code> field was false, that would be an unfollow message.</p>
+        <p>You can <a href="http://scuttlebot.io/docs/message-types/contact.html">learn more about this message</a> if you want.</p>
+        
+        <h3 id="post">post</h3>
+        <p>Post messages are text-based messages intended for a public or private audience. They are what you normally see on feeds from social networks and make most of the meaningful interaction in Scuttlebutt at the moment.</p>
+        
+        <h4 id="what-does-it-look-like-">What does it look like?</h4>
+        <pre><code>{
+    "key": "%gZIjLirxZKxCMmcsoud/bC0pL68UeB+Yuz+4re67TNk=.sha256",
+    "value": {
+    "previous": "%X8PLQuBhdUA+WF5VANRfG5iAKMNAeBXxlAtd9SKDAtM=.sha256",
+    "sequence": 251,
+    "author": "@qv10rF4IsmxRZb7g5ekJ33EakYBpdrmV/vtP1ij5BS4=.ed25519",
+    "timestamp": 1560279840471,
+    "hash": "sha256",
+    "content": {
+        "type": "post",
+        "text": "YES WE CAN! :heart: :smiley_cat:",
+        "root": "%Yx6/snCfur1NHd9fov8H359DfqTyncxuh93uZKnLQI8=.sha256",
+        "branch": "%X8PLQuBhdUA+WF5VANRfG5iAKMNAeBXxlAtd9SKDAtM=.sha256",
+        "channel": "patchfox"
+    },
+    "signature": "nP2guRVtAJrvJpmcwG/K+mn4JgNW1TB1yszzZebDrk3j+UBBA==.sig.ed25519"
+    },
+    "timestamp": 1560279840471.001,
+    "rts": 1560279840471
+}
+        </code></pre>
+        
+        <p>These messages have a lot of fields. Lets go through the most important ones:</p>
+        <ul>
+        <li><code>text</code>: This is a Markdown-based textual content that is the body of your message. The other users will see a rendered version of this content.</li>
+        <li><code>root</code>: In case this message is part of a thread of messages. The <code>root</code> fields points at the topmost message.</li>
+        <li><code>branch</code>: If this message is a reply to another message, then <code>branch</code> points at the message this message is replying to.</li>
+        <li><code>channel</code>: The channel this message is being posted to. It works much like hashtags but don&#39;t need to be present in the content itself.</li>
+        </ul>
+        <p>There are other fields such as <code>recps</code>- which holds the recipients for the messages and is used by private messages- and <code>mentions</code>- which is used to help link mentioned users and messages.</p>
+        <p>There is <a href="http://scuttlebot.io/docs/message-types/post.html">more information about posts online</a>.</p>
+
+        <h3 id="private">private</h3>
+<p>One of the cool things about Secure Scuttlebutt is that it takes privacy seriously. The <a href="https://ssbc.github.io/scuttlebutt-protocol-guide/#private-messages">cryptography techniques</a> employed by the SSB stack allows a group of people to message each other using encrypted text that is only visible to the involved parties, everyone else will just see undecypherable text.</p>
+<h4 id="how-does-it-looks-like-">How does it looks like?</h4>
+<pre><code>{
+  "key": "%OEZvP6IBUvadgsgCW16wN44TTMu0tntgS2YjOadCSLE=.sha256",
+  "value": {
+    "previous": "%YQJ+N13OCg14ixpsgsgdjrhe4t/lCI9+6P6oYPtZM=.sha256",
+    "author": "@zurF8X68ArfRM71sdgsgW0xDM8QmOnAS5bYOq8hA=.ed25519",
+    "sequence": 2529,
+    "timestamp": 1560619975563,
+    "hash": "sha256",
+    "content": "DHczz4HPS1sdgsdg2bTMVXUggdA7wLopexXlNgQA2JukhCH8WKFNAu81fLcu0euPM/lT
+BcAXoYIda6qKCGUwvxdgsgX6cCF3Ktu/BXIsYYk8TECYFM39gTfUTp0ORa18lussdgsdgZsCcOrHN4HJ7QF1
+dHIEgkWglJtMO4Q4NwufiQ1keDqgsxnE6h5qKLBcZjQ8duvhSEwhoyJ6oBFAMUn0NeF9UYWi2r0EKtMucdit
+ltqG1CsdgsdgasH2rGdt6GZkm89L7JahsYiZFtDPV1AQkQNhFp8cO5bHFmMQyhXFZBs0ABDqrq7l9skJlCKv
+w1ycDanwqhIoiAjU851JtZD4fWh81KwkKOWBVZeYqZnimNsm9jXAWlADGUe2GmS3yWRJfvcxgjGyGzzy5Sm7
+xU2XVol6WfKoMrLpedtl9CQ3uk7gR7WLmRUI78CkcJLHXDC3td4JSPWKPpCoh60pmdiG6e8e5aaYpMLKeHNz
+qecXpcNKAh3r4281Ddma7lqbU7zujf5xIMni1VmUklVk6+KZr1CIwZUw+esP5DDns/Nyb/w8X1JwuVpSWmlg
+sxqsQ==.box",
+    "signature": "G6YHYOsdgsdgsdgqrgb7kANjZyegf5ZWMSmW6GXezaR1UC70OymEvBBA==.sig.ed25519"
+  },
+  "timestamp": 1560619916779,
+  "rts": 1560619916779
+}
+</code></pre>
+        <p>As you can see from the message above, the <code>content</code> is encrypted. Only the intended recipients for that message are able to decrypt it. All the other users will fail to decrypt it and ignore the message.</p>
+
+        <h3 id="pub">pub</h3>
+        <p><code>pub</code> messages are used for <em>pub announcements</em>. These are issued by <a href="https://github.com/ssbc/ssb-server/wiki/pub-servers">pub servers</a> so that clients discover them.</p>
+        <h4 id="what-they-look-like">What they look like</h4>
+        <pre><code class="lang-json">{
+  "author": "@E5lOaTD+74yeVZhyGnPW9wSykpUGj6h8OjgVIoD4QdI=.ed25519",
+  "content": {
+      "address": {
+          "host": "188.166.252.233",
+          "key": "@uRECWB4KIeKoNMis2UYWyB2aQPvWmS3OePQvBj2zClg=.ed25519",
+          "port": 8008
+      },
+      "type": "pub"
+  },
+  "hash": "sha256",
+  "previous": "%c6bhBJfl1zWABSmV0sVWlTkklYTLxGHfSxt2LwA1ndM=.sha256",
+  "sequence": 6,
+  "signature": "4zTxKyyu8Gt24AGwTUrJnEy7x91657+dQrCwjLHrYuE156/dy9cTpvCA==.sig.ed25519",
+  "timestamp": 1459981972234
+}
+</code></pre>
+        <p>They match a <em>pub key</em> with an accessible <em>host</em>. You can learn more about <a href="http://scuttlebot.io/docs/message-types/pub.html">pub messages online</a>.</p>
+
+        <h3 id="vote">vote</h3>
+        <p>This message is akin to <em>likes</em>, <em>hearts</em> and <em>stars</em> in social networks. They represent an intention to support the message. Secure Scuttlebutt doesn&#39;t mandate a term to be used in this case and some clients will call it <em>like</em> while others call it <em>dig</em>, it doesn&#39;t matter, the message structure is the same.</p>
+        <h4 id="what-does-it-looks-like-">What does it looks like?</h3>
+        <pre><code>{
+  "key": "%p3LT5yzsfb/bPizfsgsEruyCeCgtqBY=.sha256",
+  "value": {
+    "previous": "%isvGQ2h9qnRiilXNssbXbi9pI+lTa1V4rpXpbT0=.sha256",
+    "sequence": 549,
+    "author": "@MRiJ+CvDnD9ZjqunY1oy6sfbsbMDC4Q3tTC8riS3s=.ed25519",
+    "timestamp": 1560279862309,
+    "hash": "sha256",
+    "content": {
+      "type": "vote",
+      "channel": "patchfox",
+      "vote": {
+        "link": "%gZIjLirxZKxCMmczsbfsUeB+Yuz+4re67TNk=.sha256",
+        "value": 1,
+        "expression": "Like"
+      }
+    },
+    "signature": "eIXFCiv3znd3p7/gtWfxUqTaV2ikHkmzgYTpWc9xD39B12a2DQ==.sig.ed25519"
+  },
+  "timestamp": 1560279864098,
+  "rts": 1560279862309
+}
+</code></pre><p>On the message above you can see that the author is doing a <em>Like</em> (as specified by the <code>expression</code> field) towards a message specified by the <code>link</code> field. The value <code>1</code> means a positive outcome, a value <code>-1</code> means withdrawing your positive vote from the message.</p>
+<p>There is <a href="http://scuttlebot.io/docs/message-types/vote.html">more information about the <code>vote</code> message</a> available online.</p>
+
+
+
         <!-- metafeeds documentation -->
         <h2 id="metafeeds">Metafeeds</h2>
         <div>
