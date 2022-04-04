@@ -971,7 +971,7 @@ assert_nacl_sign_verify_detached(
                 <td>Public key of the feed to return messages from. Required.</td>
             </tr>
             <tr>
-                <td>seq</td>
+                <td>sequence</td>
                 <td>Only return messages later than this sequence number. If not specified then start from the very beginning of the feed.</td>
             </tr>
             <tr>
@@ -991,6 +991,9 @@ assert_nacl_sign_verify_detached(
                 <td>If true, also include message IDs and timestamps of when each message was received by this peer. If false, just send the messages themselves. Default: true.</td>
             </tr>
         </table>
+        <aside style="align-self: start; position: relative; top: 60px;">
+            <p>Clients should use the name <em>sequence</em> when producing requests. However for legacy reasons both <em>sequence</em> and <em>seq</em> should be accepted when receiving requests. Receiving both <em>sequence</em> and <em>seq</em> arguments with conflicting values should be considered an error.</p>
+        </aside>
 
         <p>Here is a comparison of <em>createHistoryStream</em> responses with <em>keys</em> set to true and false:</p>
 
