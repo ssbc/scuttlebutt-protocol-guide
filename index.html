@@ -992,7 +992,7 @@ assert_nacl_sign_verify_detached(
             </tr>
         </table>
         <aside style="align-self: start; position: relative; top: 60px;">
-            <p>Clients should use the name <em>sequence</em> when producing requests. However for legacy reasons both <em>sequence</em> and <em>seq</em> should be accepted when receiving requests. Receiving both <em>sequence</em> and <em>seq</em> arguments with conflicting values should be considered an error.</p>
+            <p>Clients must use the name <em>sequence</em> when producing requests. However for legacy reasons both <em>sequence</em> and <em>seq</em> should be accepted as the name of this argument when receiving requests. If that behaviour is supported then receiving both <em>sequence</em> and <em>seq</em> arguments with conflicting values must be considered an error.</p>
         </aside>
 
         <p>Here is a comparison of <em>createHistoryStream</em> responses with <em>keys</em> set to true and false:</p>
