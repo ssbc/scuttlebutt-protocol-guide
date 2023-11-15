@@ -54,6 +54,7 @@
                         <div><a href="#structure">Structure</a></div>
                         <div><a href="#message-format">Message format</a></div>
                         <div><a href="#createHistoryStream">createHistoryStream</a></div>
+                        <div><a href="#ebt-replication">EBT replication</a></div>
                     </div>
                 </div>
                 <div class="section">
@@ -1086,6 +1087,159 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
+        <!-- ebt documentation -->
+        <h3 id="ebt-replication">Epidemic Broadcast Tree (EBT) Replication</h3>
+        <aside class="impl kicker">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div><a href="https://github.com/ssbc/epidemic-broadcast-trees/blob/master/index.js">epidemic-broadcast-trees</a></div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-ebt/blob/master/index.js">ssb-ebt</a></div>
+            <div class="lang">Go</div>
+            <div class="vs"><a href="https://github.com/planetary-social/scuttlego/tree/main/service/domain/replication/ebt">ebt</a></div>
+        </aside>
+ <p>In addition to classic replication using <i>createHistoryStream</i>, some Scuttlebutt clients implement a more efficient form of replication known as <i>Epidemic broadcast tree replication</i>. This is often referred to by the abbreviation <i>EBT</i>. The implementation of EBT used in Scuttlebutt is loosely based on the push-lazy-push multicast tree protocol, more commonly known as the <i>Plumtree</i> protocol [1].</p>
+        <h4 id="session-initiation">Session Initiation</h4>
+        <p>An EBT session may be initiated once two peers have completed the secret handshake and have established their respective box streams. The peer who acted as the client during the secret handshake takes on the role of the requester, sending an <i>["ebt", "replicate"]</i> request to the connected peer.</p>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["ebt", "replicate"],
+  "type": "duplex",
+  "args": [
+    {
+      "version": 3,
+      "format": "classic"
+    }
+  ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+        <p>The peer who acted as the server during the secret handshake takes on the role of the responder. After having received the replicate request, the responder must first validate the arguments to ensure that the version is 3 and the format is "classic". If either of those values are incorrect, the responder terminates the stream with an error.</p>
+        <h4 id="vector-clocks">Vector Clocks</h4>
+        <p>The responder then sends a vector clock (also known as a "note" or "control message") to the requester. The vector clock takes the form of a JSON object with one or more key-value pairs. The key of each pair specifies a Scuttlebutt feed identified by the @-prefixed public key of the author. The value of each pair is a signed integer encoding a replicate flag, a receive flag and a feed sequence number.
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "@qK93G/R9R5J2fiqK+kxV72HqqPUcss+rth8rACcYr4s=.ed25519": 450,
+  "@L/g6qZQE/2FdO2UhSJ0uyDiZb5LjJLatM/d8MN+INSM=.ed25519": 12,
+  "@fGHFd8rUgoznX/qS/1U7HPF3vnirbSyfaaWlS8cCWR0=.ed25519": 1,
+  "@HEqy940T6uB+T+d9Jaa58aNfRzLx9eRWqkZljBmnkmk=.ed25519": -1
+}</code></pre>
+            </div>
+        </figure>
+        <p>The requester should terminate the stream with an error if any of the received feed identifiers or encoded values are malformed. If the received vector clock is valid, the requester can proceed with decoding the values.</p>
+        <p>The value in each key-value pair of a vector clock encodes a maximum of three data points: a replicate flag, a receive flag and a sequence number. A negative value (usually -1) signals that the responder does not wish to replicate the associated feed, neither sending nor receiving messages. In this scenario, the replicate flag is set to false and both the receive flag and sequence number are irrelevant.</p>
+        <p>A positive value signals that the responder wishes to replicate the associated feed. If the value is positive it should be decoded as follows. First, the JSON number should be parsed and converted to a signed integer. Then, the rightmost (lowest order) bit of the number should be interpreted as a binary flag with 0 equal to true and 1 equal to false. This flag is referred to as the receive flag. Next, a sign-extending right shift (also called arithmetic right shift) by 1 bit should be performed on the binary number, therefore discarding the rightmost (lowest order) bit. The remaining number should then be interpreted as a sequence number for the associated feed.</p>
+        <p>If the receive flag is set to true, the peer who sent the vector clock wishes to receive messages for the associated feed. The decoded sequence number defines the latest message held by the peer for that feed.</p>
+        <p>Encoding of a vector clock value involves reversing the steps outlined above. If the peer does not wish to replicate a feed, the value is simply set to -1. Otherwise, the latest sequence number of the associated feed should be stored as a signed integer and an arithmetic left shift should be performed. The rightmost (lowest order) bit should then be set according to the replicate flag as described previously.</p>
+        <table class="clock-values">
+            <thead>
+                <tr>
+                    <th rowspan="2">Encoded</th>
+                    <th colspan="3">Decoded</th>
+                </tr>
+                <tr>
+                    <th>Replicate flag</th>
+                    <th>Receive flag</th>
+                    <th>Sequence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>-1</td>
+                    <td>False</td>
+                    <td>Irrelevant</td>
+                    <td>Irrelevant</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>True</td>
+                    <td>True</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>True</td>
+                    <td>False</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>True</td>
+                    <td>True</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>True</td>
+                    <td>False</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The requester then sends their own vector clock to the responder. At this point, the initial exchange of vector clocks is complete and both peers can begin freely sending messages.</p>
+        <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
+            <p>The same request number is used for all requests occurring between a pair of peers over the course of a single EBT session.</p>
+        </aside>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "@fGHFd8rUgoznX/qS/1U7HPF3vnirbSyfaaWlS8cCWR0=.ed25519": 62,
+  "@qK93G/R9R5J2fiqK+kxV72HqqPUcss+rth8rACcYr4s=.ed25519": -1,
+  "@L/g6qZQE/2FdO2UhSJ0uyDiZb5LjJLatM/d8MN+INSM=.ed25519": 10
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+        <p>Messages are sent in exactly the same way as when responding to a <i>createHistoryStream</i> request.
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "previous": "%GvRqbiZFY0cNyGRD4QwjeMQvnrjz9vMPBsT5JdWrcW0=.sha256",
+  "author": "@L/g6qZQE/2FdO2UhSJ0uyDiZb5LjJLatM/d8MN+INSM=.ed25519",
+  "sequence": 5,
+  "timestamp": 1698824093970,
+  "hash": "sha256",
+  "content": {
+    "type": "contact",
+    "contact": "@fGHFd8rUgoznX/qS/1U7HPF3vnirbSyfaaWlS8cCWR0=.ed25519",
+    "blocking": false,
+    "following": true
+  },
+  "signature": "8+VQ7sbv0fnD8ZnbunJ19fyvtcwSpHvhlWUakj32nU4woFNNpI
+                qpvkAJ4GMGJdYHoqc8C7asPXPa+wMzbPR1Cw==.sig.ed25519"
+}</code></pre>
+            </div>
+        </figure>
+        <p>[1] Joao Leitao, Jose Pereira and Luis Rodrigues. 2007. Epidemic Broadcast Trees. In <i>2007 26th IEEE International Symposium on Reliable Distributed Systems (SRDS 2007)</i>, 301-310. https://doi.org/10.1109/SRDS.2007.27</p>
         <!-- metafeeds documentation -->
         <h2 id="metafeeds">Metafeeds</h2>
         <div>
