@@ -1239,7 +1239,16 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
-        <p>[1] Joao Leitao, Jose Pereira and Luis Rodrigues. 2007. Epidemic Broadcast Trees. In <i>2007 26th IEEE International Symposium on Reliable Distributed Systems (SRDS 2007)</i>, 301-310. https://doi.org/10.1109/SRDS.2007.27</p>
+        <h4 id="session-initiation">Session Termination</h4>
+        <p>An <i>EBT</i> session may be terminated by either peer at any point, either by sending an error response or by closing the stream. If no error has occurred, the stream should be closed (as described in the <b>Source example</b> of the <b>RPC protocol</b> section above).</p>
+        <h4 id="request-skipping">Request Skipping</h4>
+        <p><i>EBT</i> implementations rely on a mechanism known as <i>request skipping</i> to lower bandwidth overhead and increase replication efficiency. Each peer stores the vector clocks they receive from remote peers; these may be held in memory and persisted to disk to allow later retrieval. When a subsequent <i>EBT</i> session is initiated between peers, each peer first checks the stored vector clock of their peer before calculating an updated vector clock to be sent. If the latest locally-available sequence of a feed from the peer's vector clock is the same as the sequence in the saved vector clock for that peer, that feed is left out of the new vector clock in the outgoing request (hence the name <i>request skipping</i>). This provides a mechanism for limiting the total number of bytes to be sent over the wire.</p>
+        <aside>
+            <p>Approaches to tracking EBT session state may be gleaned from the JS and Go implementations.</p>
+        </aside>
+        <p>The stored vector clock for the remote peer may differ from their current vector clock. In that case, the remote peer will include the updated feed in their request and the local peer will respond by sending an additional partial vector clock including their sequence for that feed. Once both sides have exchanged their sequence for a particular feed, replication of messages in that feed may occur.</p>
+        <p>In order to further increase efficiency when connecting to multiple peers, feeds for which the local peer would like to receive updates are only sent to one peer at a time (in the outbound vector clock). A timeout may be used to request the feed from an alternate peer if no updates are available from the initial peer. In this way, the total set of requested feeds is spread across multiple peers.</p>
+<p>[1] Joao Leitao, Jose Pereira and Luis Rodrigues. 2007. Epidemic Broadcast Trees. In <i>2007 26th IEEE International Symposium on Reliable Distributed Systems (SRDS 2007)</i>, 301-310. https://doi.org/10.1109/SRDS.2007.27</p>
         <!-- metafeeds documentation -->
         <h2 id="metafeeds">Metafeeds</h2>
         <div>
