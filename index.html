@@ -1098,9 +1098,9 @@ assert_nacl_sign_verify_detached(
             <div class="lang">Go</div>
             <div class="vs"><a href="https://github.com/planetary-social/scuttlego/tree/main/service/domain/replication/ebt">ebt</a></div>
         </aside>
- <p>In addition to classic replication using <i>createHistoryStream</i>, some Scuttlebutt clients implement a more efficient form of replication known as <i>Epidemic broadcast tree replication</i>. This is often referred to by the abbreviation <i>EBT</i>. The implementation of EBT used in Scuttlebutt is loosely based on the push-lazy-push multicast tree protocol, more commonly known as the <i>Plumtree</i> protocol [1].</p>
+        <p>In addition to classic replication using <i>createHistoryStream</i>, some Scuttlebutt clients implement a more efficient form of replication known as <i>Epidemic broadcast tree replication</i>. This is often referred to by the abbreviation <i>EBT</i>. The implementation of <i>EBT</i> used in Scuttlebutt is loosely based on the push-lazy-push multicast tree protocol, more commonly known as the <i>Plumtree</i> protocol [1].</p>
         <h4 id="session-initiation">Session Initiation</h4>
-        <p>An EBT session may be initiated once two peers have completed the secret handshake and have established their respective box streams. The peer who acted as the client during the secret handshake takes on the role of the requester, sending an <i>["ebt", "replicate"]</i> request to the connected peer.</p>
+        <p>An <i>EBT</i> session may be initiated once two peers have completed the secret handshake and have established their respective box streams. The peer who acted as the client during the secret handshake takes on the role of the requester, sending an <i>["ebt", "replicate"]</i> request to the connected peer.</p>
         <figure class="request-response">
             <div class="request">
                 <div class="header">
@@ -1192,7 +1192,7 @@ assert_nacl_sign_verify_detached(
                 </tr>
             </tbody>
         </table>
-        <p>The requester then sends their own vector clock to the responder. At this point, the initial exchange of vector clocks is complete and both peers can begin freely sending messages.</p>
+        <p>The requester then sends their own vector clock to the responder. At this point, the initial exchange of vector clocks is complete and both peers may begin sending messages at will. Updated vector clocks may continue to be sent by both peers at any point during the session. These updated clocks may reference a subset of the feeds represented in the initial vector clock, or they may reference different feeds entirely. This provides a means for responding to state changes in the local database and follow graph.</p>
         <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
             <p>The same request number is used for all requests occurring between a pair of peers over the course of a single EBT session.</p>
         </aside>
@@ -1240,13 +1240,14 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
         <h4 id="session-initiation">Session Termination</h4>
-        <p>An <i>EBT</i> session may be terminated by either peer at any point, either by sending an error response or by closing the stream. If no error has occurred, the stream should be closed (as described in the <b>Source example</b> of the <b>RPC protocol</b> section above).</p>
-        <h4 id="request-skipping">Request Skipping and Partitioning</h4>
-        <p><i>EBT</i> implementations rely on a mechanism known as <i>request skipping</i> to lower bandwidth overhead and increase replication efficiency. Each peer stores the vector clocks they receive from remote peers; these may be held in memory and persisted to disk to allow later retrieval. When a subsequent <i>EBT</i> session is initiated between peers, each peer first checks the stored vector clock of their peer before calculating an updated vector clock to be sent. If the latest locally-available sequence of a feed from the peer's vector clock is the same as the sequence in the saved vector clock for that peer, that feed is left out of the new vector clock in the outgoing request (hence the name <i>request skipping</i>). This provides a mechanism for limiting the total number of bytes to be sent over the wire.</p>
+        <p>An <i>EBT</i> session may be terminated by either peer at any point, either by sending an error response or by closing the stream. If no error has occurred, the stream should be closed when a peer wishes to conclude the session (as described in the <b>Source example</b> of the <b>RPC protocol</b> section above).</p>
+        <h4 id="request-skipping">Request Skipping</h4>
+        <p><i>EBT</i> implementations rely on a mechanism known as <i>request skipping</i> to lower bandwidth overhead and increase replication efficiency. Each peer stores the vector clocks they receive from remote peers; these may be held in memory and persisted to disk to allow later retrieval. When a subsequent <i>EBT</i> session is initiated between peers, each peer first checks the stored vector clock of their remote peer before calculating an updated vector clock to be sent. If the latest locally-available sequence of a feed from the remote peer's vector clock is the same as the sequence in the saved vector clock for that peer, that feed is left out of the new vector clock in the outgoing request (hence the name <i>request skipping</i>). This provides a mechanism for limiting the total number of bytes to be sent over the wire.</p>
         <aside>
             <p>Approaches to tracking EBT session state may be gleaned from the JS and Go implementations.</p>
         </aside>
         <p>The stored vector clock for the remote peer may differ from their current vector clock. In that case, the remote peer will include the updated feed in their request and the local peer will respond by sending an additional partial vector clock including their sequence for that feed. Once both sides have exchanged their sequence for a particular feed, replication of messages in that feed may occur.</p>
+        <h4 id="vector-clock-partioning">Vector Clock Partitioning</h4>
         <p>In order to further increase efficiency when connecting to multiple peers, feeds for which the local peer would like to receive updates are only sent to one peer at a time (in the outbound vector clock). A timeout may be used to request the feed from an alternate peer if no updates are available from the initial peer. In this way, the total set of requested feeds is spread across multiple peers.</p>
         <h4 id="fallback-mechanisms">Fallback Mechanisms</h4>
         <p><i>EBT</i> should be depended upon as the primary means of replicating messages between peers. However, not all Scuttlebutt clients support <i>EBT</i> replication. In the case that only one of two connected peers support <i>EBT</i>, both peers may instead fallback to using <i>createHistoryStream</i> to exchange messages. There are several scenarios which may trigger initiation of <i>createHistoryStream</i> replication:</p>
