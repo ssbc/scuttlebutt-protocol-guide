@@ -320,8 +320,17 @@ table.clock-values tr {
     border-bottom: solid thin #fff;
 }
 
-table.clock-values thead tr:nth-child(1) { background-color: #ca82c9; }
-table.clock-values thead tr:nth-child(2) { background-color: #f29bce; }
+table.clock-values thead tr:first-child {
+    background-color: #ca82c9;
+}
+
+table.clock-values thead tr:second-child {
+    background-color: #f29bce;
+}
+
+table.clock-values tbody td:first-child {
+    font-weight: bold;
+}
 
 .small {
     font-size: 13px;
