@@ -1190,6 +1190,18 @@ assert_nacl_sign_verify_detached(
                     <td>False</td>
                     <td>1</td>
                 </tr>
+                <tr>
+                    <td>12</td>
+                    <td>True</td>
+                    <td>True</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td>450</td>
+                    <td>True</td>
+                    <td>True</td>
+                    <td>225</td>
+                </tr>
             </tbody>
         </table>
         <p>The requester then sends their own vector clock to the responder. At this point, the initial exchange of vector clocks is complete and both peers may begin sending messages at will. Updated vector clocks may continue to be sent by both peers at any point during the session. These updated clocks may reference a subset of the feeds represented in the initial vector clock, or they may reference different feeds entirely. This provides a means for responding to state changes in the local database and follow graph.</p>
