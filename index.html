@@ -1122,7 +1122,7 @@ assert_nacl_sign_verify_detached(
             </div>
             <img class="request-arrow" src="img/arrow.png" alt=""/>
         </figure>
-        <p>The peer who acted as the server during the secret handshake takes on the role of the responder. After having received the replicate request, the responder must first validate the arguments to ensure that the version is 3 and the format is "classic". If either of those values are incorrect, the responder terminates the stream with an error.</p>
+        <p>The peer who acted as the server during the secret handshake takes on the role of the responder. After having received the replicate request, the responder first validates the arguments to ensure that the version is 3 and the format is "classic". If either of those values are incorrect, the responder terminates the stream with an error.</p>
         <h4 id="vector-clocks">Vector Clocks</h4>
         <p>The responder then sends a vector clock (also known as a "note" or "control message") to the requester. The vector clock takes the form of a JSON object with one or more key-value pairs. The key of each pair specifies a Scuttlebutt feed identified by the @-prefixed public key of the author. The value of each pair is a signed integer encoding a replicate flag, a receive flag and a feed sequence number.
         <figure class="request-response">
@@ -1142,11 +1142,11 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
-        <p>The requester should terminate the stream with an error if any of the received feed identifiers or encoded values are malformed. If the received vector clock is valid, the requester can proceed with decoding the values.</p>
+        <p>The requester terminates the stream with an error if any of the received feed identifiers or encoded values are malformed. If the received vector clock is valid, the requester can proceed with decoding the values.</p>
         <p>The value in each key-value pair of a vector clock encodes a maximum of three data points: a replicate flag, a receive flag and a sequence number. A negative value (usually -1) signals that the responder does not wish to replicate the associated feed, neither sending nor receiving messages. In this scenario, the replicate flag is set to false and both the receive flag and sequence number are irrelevant.</p>
-        <p>A positive value signals that the responder wishes to replicate the associated feed. If the value is positive it should be decoded as follows. First, the JSON number should be parsed and converted to a signed integer. Then, the rightmost (lowest order) bit of the number should be interpreted as a binary flag with 0 equal to true and 1 equal to false. This flag is referred to as the receive flag. Next, a sign-extending right shift (also called arithmetic right shift) by 1 bit should be performed on the binary number, therefore discarding the rightmost (lowest order) bit. The remaining number should then be interpreted as a sequence number for the associated feed.</p>
+        <p>A positive value signals that the responder wishes to replicate the associated feed. If the value is positive it should be decoded as follows. First, the JSON number is parsed and converted to a signed integer. Then, the rightmost (lowest order) bit of the number is interpreted as a binary flag with 0 equal to true and 1 equal to false. This flag is referred to as the receive flag. Next, a sign-extending right shift (also called arithmetic right shift) by 1 bit is performed on the binary number, therefore discarding the rightmost (lowest order) bit. The remaining number is then interpreted as a sequence number for the associated feed.</p>
         <p>If the receive flag is set to true, the peer who sent the vector clock wishes to receive messages for the associated feed. The decoded sequence number defines the latest message held by the peer for that feed.</p>
-        <p>Encoding of a vector clock value involves reversing the steps outlined above. If the peer does not wish to replicate a feed, the value is simply set to -1. Otherwise, the latest sequence number of the associated feed should be stored as a signed integer and an arithmetic left shift should be performed. The rightmost (lowest order) bit should then be set according to the replicate flag as described previously.</p>
+        <p>Encoding of a vector clock value involves reversing the steps outlined above. If the peer does not wish to replicate a feed, the value is simply set to -1. Otherwise, the latest sequence number of the associated feed is stored as a signed integer and an arithmetic left shift is performed. The rightmost (lowest order) bit is then set according to the replicate flag as described previously.</p>
         <table class="clock-values">
             <thead>
                 <tr>
@@ -1252,7 +1252,7 @@ assert_nacl_sign_verify_detached(
             </div>
         </figure>
         <h4 id="session-initiation">Session Termination</h4>
-        <p>An <i>EBT</i> session may be terminated by either peer at any point, either by sending an error response or by closing the stream. If no error has occurred, the stream should be closed when a peer wishes to conclude the session (as described in the <b>Source example</b> of the <b>RPC protocol</b> section above).</p>
+        <p>An <i>EBT</i> session may be terminated by either peer at any point, either by sending an error response or by closing the stream. If no error has occurred, the stream is closed when a peer wishes to conclude the session (as described in the <b>Source example</b> of the <b>RPC protocol</b> section above).</p>
         <h4 id="request-skipping">Request Skipping</h4>
         <p><i>EBT</i> implementations rely on a mechanism known as <i>request skipping</i> to lower bandwidth overhead and increase replication efficiency. Each peer stores the vector clocks they receive from remote peers; these may be held in memory and persisted to disk to allow later retrieval. When a subsequent <i>EBT</i> session is initiated between peers, each peer first checks the stored vector clock of their remote peer before calculating an updated vector clock to be sent. If the latest locally-available sequence of a feed from the remote peer's vector clock is the same as the sequence in the saved vector clock for that peer, that feed is left out of the new vector clock in the outgoing request (hence the name <i>request skipping</i>). This provides a mechanism for limiting the total number of bytes to be sent over the wire.</p>
         <aside>
@@ -1262,7 +1262,7 @@ assert_nacl_sign_verify_detached(
         <h4 id="vector-clock-partioning">Vector Clock Partitioning</h4>
         <p>In order to further increase efficiency when connecting to multiple peers, feeds for which the local peer would like to receive updates are only sent to one peer at a time (in the outbound vector clock). A timeout may be used to request the feed from an alternate peer if no updates are available from the initial peer. In this way, the total set of requested feeds is spread across multiple peers.</p>
         <h4 id="fallback-mechanisms">Fallback Mechanisms</h4>
-        <p><i>EBT</i> should be depended upon as the primary means of replicating messages between peers. However, not all Scuttlebutt clients support <i>EBT</i> replication. In the case that only one of two connected peers support <i>EBT</i>, both peers may instead fallback to using <i>createHistoryStream</i> to exchange messages. There are several scenarios which may trigger initiation of <i>createHistoryStream</i> replication:</p>
+        <p><i>EBT</i> is the preferred means for peers to exchange messages. However, not all Scuttlebutt clients support <i>EBT</i> replication. In the case that only one of two connected peers support <i>EBT</i>, both peers may instead fallback to using <i>createHistoryStream</i> to exchange messages. There are several scenarios which may trigger initiation of <i>createHistoryStream</i> replication:</p>
         <ul>
             <li>If the requester attempts to initiate an <i>EBT</i> session but the session is terminated with an error by the responder</li>
             <li>If a <i>createHistoryStream</i> request is immediately sent by the client upon successful connection</li>
