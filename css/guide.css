@@ -300,6 +300,38 @@ table.defs td:first-child {
     padding-right: 1rem;
 }
 
+table.clock-values {
+    font-size: 13px;
+    margin: 1rem 0 2rem;
+    background-color: #f9d2e9;
+}
+
+table.clock-values td, th {
+    text-align: center;
+    vertical-align: middle;
+    border-right: solid thin #fff;
+}
+
+table.clock-values thead {
+    color: #fff;
+}
+
+table.clock-values tr {
+    border-bottom: solid thin #fff;
+}
+
+table.clock-values thead tr:nth-child(1) {
+    background-color: #ca82c9;
+}
+
+table.clock-values thead tr:nth-child(2) {
+    background-color: #f29bce;
+}
+
+table.clock-values tbody td:first-child {
+    font-weight: bold;
+}
+
 .small {
     font-size: 13px;
 }
@@ -355,7 +387,7 @@ table.defs td:first-child {
     grid-column: right;
 }
 
-.request, .response, .request-arrow, .response-arrow {
+.request, .response, .request-arrow, .response-arrow, .clock-table {
     margin: 12px 0;
 }
 
