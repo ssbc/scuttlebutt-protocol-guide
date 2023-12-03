@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Scuttlebutt Protocol Guide</title>
+    <title>Описание протокола Scuttlebutt</title>
     <link rel="icon" href="img/favicon.png"/>
     <link rel="stylesheet" href="css/fonts.css"/>
     <link rel="stylesheet" href="css/guide.css"/>
@@ -12,67 +12,54 @@
         <div class="title">
             <a href="index.html">
                 <img src="img/logo.png" alt=""/>
-                <span>Scuttlebutt Protocol Guide</span>
+                <span>Описание протокола Scuttlebutt</span>
             </a>
         </div>
         <nav>
-            <a href="https://github.com/ssbc/scuttlebutt-protocol-guide"><div>Repo</div></a>
+            <a href="https://github.com/ssbc/scuttlebutt-protocol-guide"><div>Репозиторий</div></a>
         </nav>
         <lang>
           <select onchange="if (this.value) window.location.href = this.value">
-            <option value="./index.html" selected>Englich</option>
-            <option value="./index_ru.html">Russian</option>
+            <option value="./index.html">Английский</option>
+            <option value="./index_ru.html" selected>Русский</option>
           </select>
         </lang>
     </header>
     <main>
-        <h1>Scuttlebutt Protocol Guide</h1>
-        <p class="subtitle">How Scuttlebutt peers find and talk to each other</p>
+        <h1>Описание протокола Scuttlebutt</h1>
+        <p class="subtitle">Как пиры Scuttlebutt находят и общаются друг с другом </p>
         <hr/>
         <aside class="kicker section-kicker">
-            <h2 id="toc">Contents</h2>
+            <h2 id="toc">СОДЕРЖАНИЕ</h2>
         </aside>
         <div class="toc">
             <div class="col">
-                <div><a class="s1" href="#introduction">Introduction</a></div>
-                <div><a class="s1" href="#keys-and-identities">Keys and identities</a></div>
+                <div><a class="s1" href="#introduction">Вступление</a></div>
+                <div><a class="s1" href="#keys-and-identities">Ключи&nbsp;и&nbsp;идентификаторы</a></div>
                 <div class="section">
-                    <div><a class="s1" href="#discovery">Discovery</a></div>
+                    <div><a class="s1" href="#discovery">Развертывание</a></div>
                     <div class="s2">
-                        <div><a href="#local-network">Local network</a></div>
-                        <div><a href="#invite-code">Invite code</a></div>
-                        <div><a href="#pub-message">Pub message</a></div>
-                    </div>
-                </div>
-                <div class="section">
-                    <div><a class="s1" href="#peer-connections">Peer connections</a></div>
-                    <div class="s2">
-                        <div><a href="#handshake">Handshake</a></div>
-                        <div><a href="#box-stream">Box stream</a></div>
-                        <div><a href="#rpc-protocol">RPC protocol</a></div>
+                        <div><a href="#local-network">Локальная сеть</a></div>
+                        <div><a href="#invite-code">Код приглашения</a></div>
+                        <div><a href="#pub-message">Pub сообщение</a></div>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="section">
-                    <div><a class="s1" href="#feeds">Feeds</a></div>
+                    <div><a class="s1" href="#peer-connections">Одноранговые&nbsp;соединения</a></div>
                     <div class="s2">
-                        <div><a href="#structure">Structure</a></div>
-                        <div><a href="#message-format">Message format</a></div>
-                        <div><a href="#createHistoryStream">createHistoryStream</a></div>
-                        <div><a href="#ebt-replication">EBT replication</a></div>
+                        <div><a href="#handshake">Рукопожатие</a></div>
+                        <div><a href="#box-stream">Box поток</a></div>
+                        <div><a href="#rpc-protocol">Протокол RPC</a></div>
                     </div>
                 </div>
                 <div class="section">
-                    <div><a class="s1" href="#metafeeds">Metafeeds</a></div>
+                    <div><a class="s1" href="#feeds">Каналы</a></div>
                     <div class="s2">
-                        <div><a href="#bendy-butt">Structure</a></div>
-                        <div><a href="#metafeed-contentSection">Content setion</a></div>
-                        <div><a href="#metafeed-announcing">Announcing</a></div>
-                        <div><a href="#metafeed-use-cases">Use Cases</a></div>
-                        <div><a href="#metafeed-partial-replication">Partial Replication</a></div>
-                        <div><a href="#metafeed-fusion-identity">Fusion Identity</a></div>
-                        <div><a href="#metafeed-network-identity">Network Identity</a></div>
+                        <div><a href="#structure">Структура</a></div>
+                        <div><a href="#message-format">Формат сообщения</a></div>
+                        <div><a href="#createHistoryStream">createHistoryStream</a></div>
                     </div>
                 </div>
             </div>
@@ -80,91 +67,85 @@
                 <div class="section">
                     <div><a class="s1" href="#blobs">Blobs</a></div>
                     <div class="s2">
-                        <div><a href="#fetching">Fetching</a></div>
-                        <div><a href="#want-and-have">Want and have</a></div>
+                        <div><a href="#fetching">Получение</a></div>
+                        <div><a href="#want-and-have">Хочу и имею</a></div>
                     </div>
                 </div>
                 <div class="section">
-                    <div><a class="s1" href="#following">Following</a></div>
+                    <div><a class="s1" href="#following">Следование</a></div>
                     <div class="s2">
-                        <div><a href="#follow-graph">Follow graph</a></div>
+                        <div><a href="#follow-graph">Обход графа</a></div>
                     </div>
                 </div>
                 <div class="section">
-                    <div><a class="s1" href="#pubs">Pubs</a></div>
+                    <div><a class="s1" href="#pubs">Пабы</a></div>
                     <div class="s2">
-                        <div><a href="#invites">Invites</a></div>
+                        <div><a href="#invites">Приглашения</a></div>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="section">
-                    <div><a class="s1" href="#rooms">Rooms</a></div>
+                    <div><a class="s1" href="#private-messages">Приватные сообщения</a></div>
                     <div class="s2">
-                        <div><a href="#rooms-tunnel">Tunnel</a></div>
-                        <div><a href="#rooms-joining">Joining</a></div>
-                    </div>
-                </div>
-                <div class="section">
-                    <div><a class="s1" href="#private-messages">Private messages</a></div>
-                    <div class="s2">
-                        <div><a href="#encrypting">Encrypting</a></div>
-                        <div><a href="#decrypting">Decrypting</a></div>
+                        <div><a href="#encrypting">Шифрование</a></div>
+                        <div><a href="#decrypting">Дешифрование</a></div>
                     </div>
                 </div>
             </div>
         </div>
         <hr/>
+    
+        <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a>  - это протокол для создания децентрализованных приложений, которые хорошо работают в автономном режиме и которые никто не может контролировать. Поскольку центрального сервера нет, клиенты Scuttlebutt подключаются к своим партнерам для обмена информацией. В этом руководстве описаны протоколы, используемые для связи в сети Scuttlebutt. </p>
+        <p>Scuttlebutt - это гибкий протокол, способный поддерживать множество различных типов приложений. Одно из первых его приложений было как социальная сеть. В этом руководстве небольшое внимание уделяется тому, как использовать Scuttlebutt для социальных сетей, но многие объяснения все равно будут полезны, если вы хотите использовать его для чего-то совершенно другого или вам просто интересно, как это работает.</p>
 
-        <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a> is a protocol for building decentralized applications that work well offline and that no one person can control. Because there is no central server, Scuttlebutt clients connect to their peers to exchange information. This guide describes the protocols used to communicate within the Scuttlebutt network.</p>
-        <p>Scuttlebutt is a flexible protocol, capable of supporting many different types of applications. One of its first applications was as a social network. This guide has a slight focus on how to use Scuttlebutt for social networking, but many of the explanations will still be useful if want to use it for something completely different, or are just curious how it works.</p>
+        <h2 id="cryptography">Криптография</h2>
 
-        <h2 id="cryptography">Cryptography</h2>
-
-        <h3 id="keys-and-identities">Keys and identities</h3>
-        <p>The first thing a user needs to participate in Scuttlebutt is an identity. An identity is an Ed25519 key pair and typically represents a person, a device, a server or a bot. It’s normal for a person to have several Scuttlebutt identities.</p>
-        <p>Upon starting for the first time, Scuttlebutt clients will automatically generate an Ed25519 key pair and save it in the user’s home folder under <code>.ssb/secret</code>.</p>
-        <img src="img/identity_keypair.png" style="height: 80px;" alt="The Scuttlebutt identity is a long-term Ed25519 key pair." />
-        <p>Because identities are long and random, no coordination or permission is required to create a new one, which is essential to the network’s design.</p>
-        <p>Later, a user can choose to give themselves a nickname or avatar to make themselves easier to refer to. Over time nicknames may change but identities stay the same. If a user loses their secret key or has it stolen they will need to generate a new identity and tell people to use their new one instead.</p>
-        <p>The public key of an identity is presented to users and transmitted in some parts of the network protocol using this format:</p>
-        <img src="img/format_public_key.png" style="height: 80px;" alt="@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519 where everything but the @ prefix and .ed25519 suffix is the public-key, base64-encoded." />
+        <h3 id="keys-and-identities">Ключи&nbsp;и&nbsp;идентификаторы</h3>
+        <p>Первое, что нужно пользователю для участия в Scuttlebutt, - это личность. Личность - это пара ключей Ed25519, которая обычно представляет человека, устройство, сервер или бота. Наличие нескольких личностей Scuttlebutt - это нормально.</p>
+        <p>При первом запуске клиенты Scuttlebutt автоматически сгенерируют пару ключей Ed25519 и сохранят ее в домашней папке пользователя в папке <code>.ssb/secret</code>.</p>
+        <img src="lang/ru/img/identity_keypair.png" style="height: 80px;"/>    
+        <p>Поскольку идентификаторы длинные и случайные, для создания нового идентификатора не требуется согласования или разрешения, что очень важно для конструкции сети.</p>
+        <p>Позже пользователь может выбрать себе псевдоним или аватар, чтобы было удобнее ссылаться на него. Со временем прозвища могут измениться, но личности останутся прежними. Если пользователь потеряет свой секретный ключ или его украдут, ему нужно будет сгенерировать новую личность и попросить людей использовать вместо старой новую.</p>
+        <p>Открытый ключ личности показывается пользователям и передается в некоторых частях сетевого протокола с использованием этого формата:</p>
+        <img src="lang/ru/img/format_public_key.png" style="height: 80px;" alt="@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519 где все, кроме префикса @ и суффикса .ed25519, является открытым ключом закодированным base64. " />
         <aside style="position: relative; top: 6px;">
-            <p>Throughout the protocol all instances of base64 are the variant that uses <code>+</code> and <code>/</code>. The final padding <code>=</code> is also required.</p>
+            <p>Во всем протоколе все экземпляры base64 являются вариантом, в котором используются <code>+</code> и <code>/</code>. Также требуется завершающий символ <code>=</code>.</p>
         </aside>
-        <p>The beginning <code>@</code> sign signifies that this represents a public key rather than a message or blob, which start with <code>%</code> and <code>&amp;</code>. Each identity has an associated <a href="#feeds">feed</a>, which is a list of all the messages posted by that identity. This is why the identity is also called a <em>feed ID</em>.</p>
+        <p>Знак начала <code>@</code> означает, что он представляет собой открытый ключ, а не сообщение или большой двоичный объект, которые начинаются с <code>%</code> и <code>&amp;</code>. С каждым идентификатором связан <a href="#feeds">канал</a>, который представляет собой список всех сообщений, отправленных этим идентификатором. Вот почему идентификатор также называется <em> feed ID </em>.</p>
 
-        <h3 id="cryptographic-primitives">Cryptographic primitives</h3>
+        <h3 id="cryptographic-primitives">Криптографические примитивы</h3>
 
-        <p>The Scuttlebutt protocol relies on NaCl/libsodium's cryptobox primitives. This guide uses the following:</p>
+        <p>Протокол Scuttlebutt основан на примитивах криптобокса NaCl/libsodium. В этом руководстве используется следующее: </p>
 
         <dl>
             <dt><code>nacl_scalarmult(n, p)</code></dt>
-            <dd>This is <a href="https://doc.libsodium.org/advanced/scalar_multiplication">Libsodium's scalar multiplication function</a>, which takes two scalars (usually public and/or secret keys). It has the useful property that, given two key pairs <code>(pk1, sk1)</code> and <code>(pk2, sk2)</code>, <code>nacl_scalarmult(sk1, pk2) == nacl_scalarmult(sk2, pk1)</code>, which allows shared secret derivation between peers who know each other's public key. More on this later.</dd>
+            <dd>Это <a href="http://doc.libsodium.org/advanced/scalar_multiplication"> Функция скалярного умножения libsodium </a>, которая принимает два скаляра (обычно публичный и / или секретный ключи). Она обладает полезным свойством, которое, учитывая две пары ключей <code> (pk1, sk1) </code> и <code> (pk2, sk2) </code>, <code> nacl_scalarmult (sk1, pk2) == nacl_scalarmult ( sk2, pk1) </code>, которое позволяет общий секретный вывод между коллегами, которые знают открытые ключи друг друга. Более подробно рассмотрим позже. </dd>
 
-            <dt><code>nacl_auth(msg, key)</code> and <code>assert_nacl_auth_verify(authenticator, msg, key)</code></dt>
-            <dd>This functions are <a href="https://doc.libsodium.org/public-key_cryptography/authenticated_encryption">Libsodium's message authentication function</a>. The former takes a message and returns a 32-bytes authenticator, that acts as a detacted signature of the message. The latter verifies this authenticator is indeed valid for the given message and key; and errors if they don't.</dd>
+            <dt><code>nacl_auth(msg, key)</code> и <code>assert_nacl_auth_verify(authenticator, msg, key)</code></dt>
+            <dd> Эти функции являются <a href="https://doc.libsodium.org/public-key_cryptography/authenticated_encryption">функциями аутентификации сообщений Libsodium </a>. Первая принимает сообщение и возвращает 32-байтовый аутентификатор, который действует как отдельная подпись сообщения. Последняя проверяет, что этот аутентификатор является действительным для данного сообщения и ключа; и возвращают ошибки, если они этого не делают. </dd>
+            
+            <dt><code>nacl_secret_box(msg, nonce, key)</code> и <code>assert_nacl_secretbox_open(ciphertext, nonce, key)</code></dt>
+            <dd>Эти функции основаны на функциях <a href="https://doc.libsodium.org/secret-key_cryptography/secretbox">crypto_secretbox_easy и crypto_secretbox_open_easy в Libsodium </a>, которые используют симметричную криптографию для шифрования + аутентификации и проверки + расшифровки сообщения, используя одноразовый номер и опубликованный ключ. </dd>
 
-            <dt><code>nacl_secret_box(msg, nonce, key)</code> and <code>assert_nacl_secretbox_open(ciphertext, nonce, key)</code></dt>
-            <dd>These function are based on <a href="https://doc.libsodium.org/secret-key_cryptography/secretbox">Libsodium's crypto_secretbox_easy and crypto_secretbox_open_easy function</a>, which use symmetric cryptography to, respectively, encrypt+authenticate, and verify+decrypt a message using a nonce and a shared secret.</dd>
-
-            <dt><code>nacl_sign_detached(msg, key)</code> and <code>assert_nacl_sign_verify_detached(sig, msg, key)</code></dt>
+            <dt><code>nacl_sign_detached(msg, key)</code> и <code>assert_nacl_sign_verify_detached(sig, msg, key)</code></dt>
             <dd>The former is computed from <a href="https://doc.libsodium.org/public-key_cryptography/public-key_signatures">Libsodium's signature functions</a>. Unlike the usual Libsodium/NaCl functions, they work with signatures in independent buffers, rather than concatenated with the msg.</dd>
+            <dd>Первичные вычисления из <a href="http://doc.libsodium.org/public-key_cryptography/publickey_signatures">Функции сигнатур libsodium </a>. В отличие от обычных функций Libsodium / NaCl, они работают с сигнатурами в независимых буферах, а не объединены с помощью MSG. </dd>
 
-            <dt><code>pk_to_curve25519(ed25519_pk)</code> and <code>sk_to_curve25519(ed25519_sk)</code></dt>
-            <dd>These functions convert Ed25519 keys (used for cryptobox) to Curve25519 (aka X25519) keys, used for signing. They are <a href="https://doc.libsodium.org/advanced/ed25519-curve25519">implemented by Libsodium as <code>crypto_sign_ed25519_pk_to_curve25519</code> and <code>crypto_sign_ed25519_sk_to_curve25519</code></a>, respectively.</dd>
+            <dt><code>pk_to_curve25519(ed25519_pk)</code> и <code>sk_to_curve25519(ed25519_sk)</code></dt>
+            <dd>Эти функции преобразуют Ed25519 ключи (используемые для cryptobox) в Curve25519 (он же X25519) ключи, используемые для подписания. Они <a href="https://doc.libsodium.org/advanced/ed25519-curve25519"> реализованы libsodium как <code> crypto_sign_ed25519_pk_to_curve25519 </code> и <code> crypto_sign_ed25519_sk_to_curve25519 </code> </a> соответственно. </dd>
         </dl>
 
-        <h2 id="discovery">Discovery</h2>
+        <h2 id="discovery">Развертывание</h2>
         <div>
-            <p>After a user has generated their identity they need to find some peers to connect to. To connect to a peer you need its public key and its address using any of the protocol it supports. Typically with TCP/IP, you would need its IP address and port, but the Scuttlebutt protocol is not restricted to TCP/IP as transport. The Scuttlebutt protocol currently has three methods for peers to discover each other.</p>
+            <p>После того, как пользователь сгенерировал свою личность, ему нужно найти одноранговые узлы для подключения. Чтобы подключиться к одноранговому узлу, вам понадобится его открытый ключ и его адрес, используя любой из поддерживаемых им протоколов. Обычно для TCP/IP вам понадобятся его IP-адрес и порт, но протокол Scuttlebutt не ограничивается TCP/IP в качестве транспорта. В настоящее время протокол Scuttlebutt позволяет одноранговым узлам обнаруживать друг друга тремя способами.</p>
 
-            <h3 id="local-network">Local network</h3>
-            <p>Peers constantly broadcast UDP packets on their local network advertising their presence. The body of each packet is a string containing the peer’s IP address, port and base64-encoded public key (without <code>@</code> or <code>.ed25519</code>):</p>
+            <h3 id="local-network">Локальная сеть</h3>
+            <p>Одноранговые узлы постоянно передают UDP-пакеты в свою локальную сеть, объявляя о своем присутствии. Тело каждого пакета - это строка, содержащая IP-адрес, порт и открытый ключ в кодировке base64 (без <code>@</code> или <code>.ed25519</code>):</p>
         </div>
         <aside class="impl">
             <img class="icon" src="img/impl.png" alt=""/>
-            <h5>Implementations</h5>
+            <h5>Реализации</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
             <div class="vs"><a href="https://github.com/ssbc/ssb-local/blob/master/index.js">ssb-local</a></div>
@@ -176,30 +157,30 @@
             <figure class="packets">
                 <div class="packet">
                     <div class="header">
-                        <span class="key">Source IP</span><span class="value">192.168.1.123</span>
-                        <span class="key">Source port</span><span class="value">8008</span>
-                        <span class="key">Destination IP</span><span class="value">255.255.255.255</span>
-                        <span class="key">Destination port</span><span class="value">8008</span>
+                        <span class="key">Исходящий&nbsp;IP</span><span class="value">192.168.1.123</span>
+                        <span class="key">Исходящий&nbsp;порт</span><span class="value">8008</span>
+                        <span class="key">Целевой&nbsp;IP</span><span class="value">255.255.255.255</span>
+                        <span class="key">Целевой&nbsp;порт</span><span class="value">8008</span>
                     </div>
-                    <img src="img/format_udp_broadcast.png" style="height: 40px;" alt="net:192.168.1.123:8008:~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY="/>
+                    <img src="lang/ru/img/format_udp_broadcast.png" style="height: 40px;" alt="net:192.168.1.123:8008:~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY="/>
                 </div>
             </figure>
-            <p>This message format can be any valid <a href="https://github.com/ssb-js/multiserver#address-format">multiserver address</a>. In local networks, this is usually a <code>net</code> address with an IPv4 or IPv6 address.</p>
-            <p>Current implementations broadcast one of these packets every second. When a peer sees another peer’s broadcast packet they can connect to exchange messages. Some clients show nearby peers in the user interface so that the user can see other people on the same network as them.</p>
+            <p>Этим форматом сообщения может быть любой действительный <a href="https://github.com/ssb-js/multiserver#address-format">многосерверный адрес</a>. В локальных сетях это обычно <code> net </code> адрес с адресом IPv4 или IPv6. </p>
+            <p>Текущие реализации транслируют один из этих пакетов каждую секунду. Когда одноранговый узел видит широковещательный пакет другого однорангового узла, он может подключиться для обмена сообщениями. Некоторые клиенты показывают ближайших партнеров в пользовательском интерфейсе, чтобы пользователь мог видеть других людей в той же сети, что и они.</p> 
         </div>
         <aside>
-            <p>UDP source and destination ports are set to the same port number that the peer is listening on TCP for peer connections (normally 8008).</p>
+            <p> Для портов источника и назначения UDP задан тот же номер порта, который одноранговый узел прослушивает по TCP для одноранговых соединений (обычно 8008). </p> 
         </aside>
 
-        <h3 id="invite-code">Invite code</h3>
-        <p><a href="#invites">Invite codes</a> help new users get connected to their first <a href="#pubs">pub</a>, which is a Scuttlebutt peer that is publicly accessible over the internet. An invite code contains a pub’s domain name, port and public key.</p>
-        <p>They also contain a secret key that the user can <a href="#redeeming-invites">redeem</a> to make the pub <a href="#following">follow</a> them back. This lets the new user see messages posted by other members of the pub and share their own messages. Invite codes are the most common way for new users to get started on Scuttlebutt.</p>
-        <p>Pub operators can distribute invite codes any way they see fit, for example by posting them on existing social networks. Some pubs have a web page that anybody can visit to generate an invite code.</p>
+        <h3 id="invite-code">Код приглашения</h3>
+        <p><a href="#invites">Коды приглашения</a> помогают новым пользователям подключиться к их первому <a href="#pubs">пабу</a>, который является общедоступным узлом Scuttlebutt  через интернет. Код приглашения содержит доменное имя, порт и открытый ключ паба.</p>
+        <p>Они также содержат секретный ключ, который пользователь может <a href="#redeeming-invites">активировать</a>, чтобы паб <a href="#following">подписался</a> на него в ответ. Это позволяет новому пользователю видеть сообщения, отправленные другими участниками паба, и делиться своими собственными сообщениями. Пригласительные коды - это самый распространенный способ для новых пользователей начать работу со Scuttlebutt.</p>
+        <p>Операторы пабов могут распространять коды приглашения любым способом, который они считают нужным, например, размещая их в существующих социальных сетях. В некоторых пабах есть веб-страницы, которые любой может посетить, чтобы сгенерировать код приглашения.</p>
 
-        <h3 id="pub-message">Pub message</h3>
-        <p>Users can post a message to their own <a href="#feeds">feed</a> advertising a pub:</p>
+        <h3 id="pub-message">Pub сообщение</h3>
+        <p>Пользователи могут публиковать сообщения в своем <a href="#feeds">канале</a> рекламируя pub:</p>
         <aside class="kicker">
-            <p>Here the user <code>@FCX/ts…</code> is advertising that they know of pub <code>@VJM7w1…</code> along with the pub’s domain name and port.</p>
+            <p> Здесь пользователь <code>@FCX/ts…</code> сообщает, что он знает о pub <code>@VJM7w1…</code> вместе с доменным именем и портом паба.</p>
         </aside>
         <pre><code>{
   "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
@@ -213,20 +194,20 @@
   },
   …
 }</code></pre>
-        <p>When others see this message they can make a note that this pub exists and connect to it in the future.</p>
-        <p>Pub messages are a useful way to find additional peers if you already know a few. Obviously this doesn’t work for new users who don’t know anyone else yet and therefore can’t see any pub messages.</p>
+        <p>Когда другие видят это сообщение, они могут отметить, что этот паб существует, и подключиться к нему в будущем.</p>
+        <p>Сообщения в пабе - полезный способ найти дополнительных пиров, если вы уже знаете некоторых из них. Очевидно, это не работает для новых пользователей, которые еще никого не знают и поэтому не могут видеть сообщения паблика.</p>
 
-        <h2 id="peer-connections">Peer connections</h2>
-        <p>Once a Scuttlebutt client has discovered the IP address, port number and public key of a peer they can connect via TCP to ask for updates and exchange messages.</p>
+        <h2 id="peer-connections">Одноранговые соединения</h2>
+        <p>Как только клиент Scuttlebutt обнаружит IP-адрес, номер порта и открытый ключ партнера, он может подключиться через TCP, чтобы запросить обновления и обменяться сообщениями.</p> 
 
-        <h3 id="handshake">Handshake</h3>
+        <h3 id="handshake">Рукопожатие</h3>
         <div>
-            <p>The connection begins with a 4-step handshake to authenticate each peer and set up an encrypted channel.</p>
-            <img src="img/message_flow.png" style="height: 350px;" alt="Message 1: Client hello (sent by the client). Message 2: Server hello. Message 3: Client authenticate. Message 4: Server accept" />
+            <p>Подключение начинается с четырехэтапного рукопожатия для аутентификации каждого узла и настройки зашифрованного канала.</p> 
+            <img src="lang/ru/img/message_flow.png" style="height: 350px;" alt="Message 1: Client hello (sent by the client). Message 2: Server hello. Message 3: Client authenticate. Message 4: Server accept" />
         </div>
         <aside class="impl">
             <img class="icon" src="img/impl.png" alt=""/>
-            <h5>Implementations</h5>
+            <h5>Реализации</h5>
             <div class="lang">JS</div>
             <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/protocol.js">protocol.js</a></div>
             <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/crypto.js">crypto.js</a></div>
@@ -242,31 +223,31 @@
             <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttHandshakeClient.java">HandshakeClient</a></div>
             <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttHandshakeServer.java">HandshakeServer</a></div>
         </aside>
-        <p>The handshake uses the <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">Secret Handshake key exchange</a> which is designed to have these security properties:</p>
+        <p>При рукопожатии используется <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">обмен секретным ключом рукопожатия</a>, обеспечивающий следующие свойства безопасности:</p> 
         <ul>
-            <li>After a successful handshake the peers have verified each other’s public keys.</li>
-            <li>The handshake produces a shared secret that can be used with a bulk encryption cypher for exchanging further messages.</li>
-            <li>The client must know the server’s public key before connecting. The server learns the client’s public key during the handshake.</li>
-            <li>Once the client has proven their identity the server can decide they don’t want to talk to this client and disconnect without confirming their own identity.</li>
-            <li>A man-in-the-middle cannot learn the public key of either peer.</li>
-            <li>Both peers need to know a key that represents the particular Scuttlebutt network they wish to connect to, however a man-in-the-middle can’t learn this key from the handshake. If the handshake succeeds then both ends have confirmed that they wish to use the same network.</li>
-            <li>Past handshakes cannot be replayed. Attempting to replay a handshake will not allow an attacker to discover or confirm guesses about the participants’ public keys.</li>
-            <li>Handshakes provide forward secrecy. Recording a user’s network traffic and then later stealing their secret key will not allow an attacker to decrypt their past handshakes.</li>
+            <li>После успешного рукопожатия узлы подтвердили открытые ключи друг друга.</li>
+            <li>При рукопожатии создается общий секретный ключ, который можно использовать в шифровании для массового обмена сообщениями.</li>
+            <li>Перед подключением клиент должен знать открытый ключ сервера. Сервер узнает открытый ключ клиента во время рукопожатия.</li>
+            <li>После того, как клиент подтвердит свою личность, сервер может решить, что он не хочет разговаривать с этим клиентом, и отключиться, не подтверждая свою личность.</li>
+            <li>Посредник не может узнать открытый ключ любого партнера.</li>
+            <li>Оба узла должны знать ключ, представляющий конкретную сеть Scuttlebutt, к которой они хотят подключиться, однако посредник не может узнать этот ключ из рукопожатия. Если рукопожатие прошло успешно, обе стороны подтвердили, что хотят использовать одну и ту же сеть.</li>
+            <li>Прошлые рукопожатия нельзя воспроизвести. Попытка воспроизвести рукопожатие не позволит злоумышленнику обнаружить или подтвердить предположения об открытых ключах участников.</li>
+            <li>Рукопожатия обеспечивают конфиденциальность при пересылке. Запись сетевого трафика пользователя, а затем кража его секретного ключа не позволит злоумышленнику расшифровать его прошлые рукопожатия.</li> 
         </ul>
         <aside>
-            <p><strong>Client</strong> is the computer initiating the TCP connection and <strong>server</strong> is the computer receiving it. Once the handshake is complete this distinction goes away.</p>
+            <p><strong>Клиент</strong> — это компьютер, инициирующий TCP-соединение, а <strong>сервер</strong> — компьютер, который его получает. После завершения рукопожатия это различие исчезает.</p> 
         </aside>
 
-        <h4 id="starting-keys">Starting keys</h4>
-        <p>Upon starting the handshake, the client and server know these keys:</p>
-        <img src="img/starting_keys.png" style="height: 590px;" alt="Both the client and servers know: their own long term key pair, their own ephemeral key pair, and the network's (private) identifier. Additionally, the client knows the server's long term public key."/>
+        <h4 id="starting-keys">Стартовые ключи</h4>
+        <p>При запуске рукопожатия клиент и сервер знают эти ключи:</p>
+        <img src="lang/ru/img/starting_keys.png" style="height: 590px;" alt="Both the client and servers know: their own long term key pair, their own ephemeral key pair, and the network's (private) identifier. Additionally, the client knows the server's long term public key."/>
 
-        <h4 id="client-hello">1. Client hello</h4>
-        <img src="img/client_hello.png" style="height: 120px;" alt="The client sends their own ephemeral public key, hmac-authenticated using the network identifier"/>
+        <h4 id="client-hello">1. Клиент hello</h4>
+        <img src="lang/ru/img/client_hello.png" style="height: 120px;" alt="The client sends their own ephemeral public key, hmac-authenticated using the network identifier"/>
 
         <figure class="left-right code">
-            <h5 class="left">Client sends <span class="msgsize">(64 bytes)</span></h5>
-            <h5 class="right">Server verifies</h5>
+            <h5 class="left">Клиент отправляет <span class="msgsize">(64 bytes)</span></h5>
+            <h5 class="right">Сервер проверяет</h5>
             <pre class="left"><code>concat(
   nacl_auth(
     msg: client_ephemeral_pk,
@@ -287,19 +268,19 @@ assert_nacl_auth_verify(
         </figure>
 
         <div>
-            <p>First the client sends their <img class="inline-key" src="img/key_little_a_public.png" alt="public"/> generated ephemeral key. Also included is an hmac that indicates the client wishes to use their key with this specific instance of the Scuttlebutt network.</p>
-            <p>The <img class="inline-key" src="img/key_big_n.png" alt=""/> network identifier is a fixed key. On the main Scuttlebutt network it is the following 32-byte sequence:</p>
+            <p>Сначала клиент отправляет свой <img class="inline-key" src="img/key_little_a_public.png" alt="public"/> сгенерированный эфемерный ключ. Также включен hmac, который указывает, что клиент желает использовать свой ключ с этим конкретным экземпляром сети Scuttlebutt.</p> 
+            <p>Идентификатор сети <img class="inline-key" src="img/key_big_n.png" alt=""/> – это фиксированный ключ. В основной сети Scuttlebutt это следующая 32-байтовая последовательность:</p> 
             <div class="fixed-key binary">
                 <span>d4</span><span>a1</span><span>cb</span><span>88</span><span>a6</span><span>6f</span><span>02</span><span>f8</span><span>db</span><span>63</span><span>5c</span><span>e2</span><span>64</span><span>41</span><span>cc</span><span>5d</span>
                 <span>ac</span><span>1b</span><span>08</span><span>42</span><span>0c</span><span>ea</span><span>ac</span><span>23</span><span>08</span><span>39</span><span>b7</span><span>55</span><span>84</span><span>5a</span><span>9f</span><span>fb</span>
             </div>
-            <p>Changing the key allows separate networks to be created, for example private networks or testnets. An eavesdropper cannot extract the network identifier directly from what is sent over the wire, although they could confirm a guess that it is the main Scuttlebutt network because that identifier is publicly known.</p>
-            <p>The server stores the client’s ephemeral public key and uses the hmac to verify that the client is using the same network identifier.</p>
+            <p>Изменение ключа позволяет создавать отдельные сети, например частные сети или тестовые сети. Злоумышленник не может извлечь идентификатор сети непосредственно из того, что передается по сети, хотя он может подтвердить предположение, что это основная сеть Scuttlebutt, поскольку этот идентификатор общеизвестен.</p>
+            <p>Сервер сохраняет недолговечный открытый ключ клиента и использует hmac для проверки того, что клиент использует тот же сетевой идентификатор.</p>
         </div>
         <aside>
-            <p><strong>hmac</strong> is a function that allows verifying that a message came from someone who knows the same secret key as you. In this case the network identifier is used as the secret key.</p>
-            <p>Both the message creator and verifier have to know the same message and secret key for the verification to succeed, but the secret key is not revealed to an eavesdropper. </p>
-            <p>Throughout the protocol, all instances of hmac use HMAC-SHA-512-256 (which is the first 256 bits of HMAC-SHA-512).</p>
+            <p><strong>hmac</strong> — это функция, которая позволяет проверить, что сообщение пришло от кого-то, кто знает тот же секретный ключ, что и вы. В этом случае идентификатор сети используется в качестве секретного ключа.</p>
+            <p>И создатель сообщения, и проверяющий должны знать одно и то же сообщение и секретный ключ, чтобы проверка прошла успешно, но секретный ключ не раскрывается перехватчику. </p>
+            <p>В этом протоколе все экземпляры hmac используют HMAC-SHA-512-256 (первые 256 бит HMAC-SHA-512).</p>
         </aside>
 
         <h4 id="server-hello">2. Server hello</h4>
@@ -596,10 +577,9 @@ assert_nacl_sign_verify_detached(
         <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of procedure and any arguments.</p>
         <p>The name is a list of strings. For a top-level procedure like <em>createHistoryStream</em> the list only has one element: <code>["createHistoryStream"]</code>. Procedures relating to blobs are grouped in the blobs namespace, for example to use <em>blobs.get</em> send the list: <code>["blobs", "get"]</code>.</p>
         <div>
-            <p>There are three types of procedure used when Scuttlebutt peers talk to each other:</p>
+            <p>There are two types of procedure used when Scuttlebutt peers talk to each other:</p>
             <ul>
                 <li><em>Source</em> procedures return multiple responses over time and are used for streaming data or continually notifying when new events occur. When making one of these requests, the stream flag in the RPC header must be set.</li>
-                <li><em>Duplex</em> procedures are similar to <em>source</em> procedures but allow <em>multiple requests</em> as well as multiple responses over time. The many request events in a duplex utilize the same request number, and the stream flag must be set.</li>
                 <li><em>Async</em> procedures return a single response. Async responses can arrive quickly or arrive much later in response to a one-off event.</li>
             </ul>
             <p>For each procedure in the RPC protocol you must already know whether it is source or async and correctly specify this in the request body.</p>
@@ -772,7 +752,7 @@ assert_nacl_sign_verify_detached(
         <p>The responder does in fact have this blob so they respond with <code>true</code>. Because this is an async procedure and not a stream, there is only one response and no need to close the stream afterwards:</p>
 
         <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png alt="""/>
             <div class="response">
                 <div class="header">
                     <span class="key">Request number</span><span class="value">-2</span>
@@ -866,7 +846,7 @@ assert_nacl_sign_verify_detached(
             </tr>
             <tr>
                 <td>content</td>
-                <td>If the message is not encrypted, This is a dictionary containing free-form data for applications to interpret, plus a mandatory <em>type</em> field. The <em>type</em> field allows applications to filter out message types they don’t understand and must be a Unicode string between 3 and 52 code units long (inclusive). If the message is encrypted, then this is a base64 encoded string, followed by a suffix of <code>.box</code>; we will describe private messages later in this document.</td>
+                <td>If the message is not encrypted, This is a dictionary containing free-form data for applications to interpret, plus a mandatory <em>type</em> field. The <em>type</em> field allows applications to filter out message types they don’t understand and must be a UTF-16 string between 3 and 52 code units long (inclusive). If the message is encrypted, then this is a base64 encoded string, followed by a suffix of <code>.box</code>; we will describe private messages later in this document.</td>
             </tr>
         </table>
         <aside style="align-self: start; position: relative; top: 19px;">
@@ -978,7 +958,7 @@ assert_nacl_sign_verify_detached(
                 <td>Public key of the feed to return messages from. Required.</td>
             </tr>
             <tr>
-                <td>sequence</td>
+                <td>seq</td>
                 <td>Only return messages later than this sequence number. If not specified then start from the very beginning of the feed.</td>
             </tr>
             <tr>
@@ -998,9 +978,6 @@ assert_nacl_sign_verify_detached(
                 <td>If true, also include message IDs and timestamps of when each message was received by this peer. If false, just send the messages themselves. Default: true.</td>
             </tr>
         </table>
-        <aside style="align-self: start; position: relative; top: 60px;">
-            <p>Clients must use the name <em>sequence</em> when producing requests. However for legacy reasons both <em>sequence</em> and <em>seq</em> should be accepted as the name of this argument when receiving requests. If that behaviour is supported then receiving both <em>sequence</em> and <em>seq</em> arguments with conflicting values must be considered an error.</p>
-        </aside>
 
         <p>Here is a comparison of <em>createHistoryStream</em> responses with <em>keys</em> set to true and false:</p>
 
@@ -1093,315 +1070,7 @@ assert_nacl_sign_verify_detached(
 }</code></pre>
             </div>
         </figure>
-        <!-- ebt documentation -->
-        <h3 id="ebt-replication">Epidemic Broadcast Tree (EBT) Replication</h3>
-        <aside class="impl kicker">
-            <img class="icon" src="img/impl.png" alt=""/>
-            <h5>Implementations</h5>
-            <div class="lang">JS</div>
-            <div><a href="https://github.com/ssbc/epidemic-broadcast-trees/blob/master/index.js">epidemic-broadcast-trees</a></div>
-            <div class="vs"><a href="https://github.com/ssbc/ssb-ebt/blob/master/index.js">ssb-ebt</a></div>
-            <div class="lang">Go</div>
-            <div class="vs"><a href="https://github.com/planetary-social/scuttlego/tree/main/service/domain/replication/ebt">ebt</a></div>
-        </aside>
-        <p>In addition to classic replication using <i>createHistoryStream</i>, some Scuttlebutt clients implement a more efficient form of replication known as <i>Epidemic broadcast tree replication</i>. This is often referred to by the abbreviation <i>EBT</i>. The implementation of <i>EBT</i> used in Scuttlebutt is loosely based on the push-lazy-push multicast tree protocol, more commonly known as the <i>Plumtree</i> protocol [1].</p>
-        <h4 id="session-initiation">Session Initiation</h4>
-        <p>An <i>EBT</i> session may be initiated once two peers have completed the secret handshake and have established their respective box streams. The peer who acted as the client during the secret handshake takes on the role of the requester, sending an <i>["ebt", "replicate"]</i> request to the connected peer.</p>
-        <figure class="request-response">
-            <div class="request">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{
-  "name": ["ebt", "replicate"],
-  "type": "duplex",
-  "args": [
-    {
-      "version": 3,
-      "format": "classic"
-    }
-  ]
-}</code></pre>
-            </div>
-            <img class="request-arrow" src="img/arrow.png" alt=""/>
-        </figure>
-        <p>The peer who acted as the server during the secret handshake takes on the role of the responder. After having received the replicate request, the responder first validates the arguments to ensure that the version is 3 and the format is "classic". If either of those values are incorrect, the responder terminates the stream with an error.</p>
-        <h4 id="vector-clocks">Vector Clocks</h4>
-        <p>The responder then sends a vector clock (also known as a "note" or "control message") to the requester. The vector clock takes the form of a JSON object with one or more key-value pairs. The key of each pair specifies a Scuttlebutt feed identified by the @-prefixed public key of the author. The value of each pair is a signed integer encoding a replicate flag, a receive flag and a feed sequence number.
-        <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png" alt=""/>
-            <div class="response">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{
-  "@qK93G/R9R5J2fiqK+kxV72HqqPUcss+rth8rACcYr4s=.ed25519": 450,
-  "@L/g6qZQE/2FdO2UhSJ0uyDiZb5LjJLatM/d8MN+INSM=.ed25519": 12,
-  "@fGHFd8rUgoznX/qS/1U7HPF3vnirbSyfaaWlS8cCWR0=.ed25519": 1,
-  "@HEqy940T6uB+T+d9Jaa58aNfRzLx9eRWqkZljBmnkmk=.ed25519": -1
-}</code></pre>
-            </div>
-        </figure>
-        <p>The requester terminates the stream with an error if any of the received feed identifiers or encoded values are malformed. If the received vector clock is valid, the requester can proceed with decoding the values.</p>
-        <p>The value in each key-value pair of a vector clock encodes a maximum of three data points: a replicate flag, a receive flag and a sequence number. A negative value (usually -1) signals that the responder does not wish to replicate the associated feed, neither sending nor receiving messages. In this scenario, the replicate flag is set to false and both the receive flag and sequence number are irrelevant.</p>
-        <p>A positive value signals that the responder wishes to replicate the associated feed. If the value is positive it should be decoded as follows. First, the JSON number is parsed and converted to a signed integer. Then, the rightmost (lowest order) bit of the number is interpreted as a binary flag with 0 equal to true and 1 equal to false. This flag is referred to as the receive flag. Next, a sign-extending right shift (also called arithmetic right shift) by 1 bit is performed on the binary number, therefore discarding the rightmost (lowest order) bit. The remaining number is then interpreted as a sequence number for the associated feed.</p>
-        <p>If the receive flag is set to true, the peer who sent the vector clock wishes to receive messages for the associated feed. The decoded sequence number defines the latest message held by the peer for that feed.</p>
-        <p>Encoding of a vector clock value involves reversing the steps outlined above. If the peer does not wish to replicate a feed, the value is simply set to -1. Otherwise, the latest sequence number of the associated feed is stored as a signed integer and an arithmetic left shift is performed. The rightmost (lowest order) bit is then set according to the replicate flag as described previously.</p>
-        <table class="clock-values">
-            <thead>
-                <tr>
-                    <th rowspan="2">Encoded</th>
-                    <th colspan="3">Decoded</th>
-                </tr>
-                <tr>
-                    <th>Replicate flag</th>
-                    <th>Receive flag</th>
-                    <th>Sequence</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>-1</td>
-                    <td>False</td>
-                    <td>Irrelevant</td>
-                    <td>Irrelevant</td>
-                </tr>
-                <tr>
-                    <td>0</td>
-                    <td>True</td>
-                    <td>True</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>True</td>
-                    <td>False</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>True</td>
-                    <td>True</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>True</td>
-                    <td>False</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>True</td>
-                    <td>True</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>450</td>
-                    <td>True</td>
-                    <td>True</td>
-                    <td>225</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>The requester then sends their own vector clock to the responder. At this point, the initial exchange of vector clocks is complete and both peers may begin sending messages at will. Updated vector clocks may continue to be sent by both peers at any point during the session. These updated clocks may reference a subset of the feeds represented in the initial vector clock, or they may reference different feeds entirely. This provides a means for responding to state changes in the local database and follow graph.</p>
-        <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
-            <p>The same request number is used for all requests occurring between a pair of peers over the course of a single EBT session.</p>
-        </aside>
-        <figure class="request-response">
-            <div class="request">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{
-  "@fGHFd8rUgoznX/qS/1U7HPF3vnirbSyfaaWlS8cCWR0=.ed25519": 62,
-  "@qK93G/R9R5J2fiqK+kxV72HqqPUcss+rth8rACcYr4s=.ed25519": -1,
-  "@L/g6qZQE/2FdO2UhSJ0uyDiZb5LjJLatM/d8MN+INSM=.ed25519": 10
-}</code></pre>
-            </div>
-            <img class="request-arrow" src="img/arrow.png" alt=""/>
-        </figure>
-        <p>Messages are sent in exactly the same way as when responding to a <i>createHistoryStream</i> request.
-        <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png" alt=""/>
-            <div class="response">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{
-  "previous": "%GvRqbiZFY0cNyGRD4QwjeMQvnrjz9vMPBsT5JdWrcW0=.sha256",
-  "author": "@L/g6qZQE/2FdO2UhSJ0uyDiZb5LjJLatM/d8MN+INSM=.ed25519",
-  "sequence": 5,
-  "timestamp": 1698824093970,
-  "hash": "sha256",
-  "content": {
-    "type": "contact",
-    "contact": "@fGHFd8rUgoznX/qS/1U7HPF3vnirbSyfaaWlS8cCWR0=.ed25519",
-    "blocking": false,
-    "following": true
-  },
-  "signature": "8+VQ7sbv0fnD8ZnbunJ19fyvtcwSpHvhlWUakj32nU4woFNNpI
-                qpvkAJ4GMGJdYHoqc8C7asPXPa+wMzbPR1Cw==.sig.ed25519"
-}</code></pre>
-            </div>
-        </figure>
-        <h4 id="session-initiation">Session Termination</h4>
-        <p>An <i>EBT</i> session may be terminated by either peer at any point, either by sending an error response or by closing the stream. If no error has occurred, the stream is closed when a peer wishes to conclude the session (as described in the <b>Source example</b> of the <b>RPC protocol</b> section above).</p>
-        <h4 id="request-skipping">Request Skipping</h4>
-        <p><i>EBT</i> implementations rely on a mechanism known as <i>request skipping</i> to lower bandwidth overhead and increase replication efficiency. Each peer stores the vector clocks they receive from remote peers; these may be held in memory and persisted to disk to allow later retrieval. When a subsequent <i>EBT</i> session is initiated between peers, each peer first checks the stored vector clock of their remote peer before calculating an updated vector clock to be sent. If the latest locally-available sequence of a feed from the remote peer's vector clock is the same as the sequence in the saved vector clock for that peer, that feed is left out of the new vector clock in the outgoing request (hence the name <i>request skipping</i>). This provides a mechanism for limiting the total number of bytes to be sent over the wire.</p>
-        <aside>
-            <p>Approaches to tracking EBT session state may be gleaned from the JS and Go implementations.</p>
-        </aside>
-        <p>The stored vector clock for the remote peer may differ from their current vector clock. In that case, the remote peer will include the updated feed in their request and the local peer will respond by sending an additional partial vector clock including their sequence for that feed. Once both sides have exchanged their sequence for a particular feed, replication of messages in that feed may occur.</p>
-        <h4 id="vector-clock-partioning">Vector Clock Partitioning</h4>
-        <p>In order to further increase efficiency when connecting to multiple peers, feeds for which the local peer would like to receive updates are only sent to one peer at a time (in the outbound vector clock). A timeout may be used to request the feed from an alternate peer if no updates are available from the initial peer. In this way, the total set of requested feeds is spread across multiple peers.</p>
-        <h4 id="fallback-mechanisms">Fallback Mechanisms</h4>
-        <p><i>EBT</i> is the preferred means for peers to exchange messages. However, not all Scuttlebutt clients support <i>EBT</i> replication. In the case that only one of two connected peers support <i>EBT</i>, both peers may instead fallback to using <i>createHistoryStream</i> to exchange messages. There are several scenarios which may trigger initiation of <i>createHistoryStream</i> replication:</p>
-        <ul>
-            <li>If the requester attempts to initiate an <i>EBT</i> session but the session is terminated with an error by the responder</li>
-            <li>If a <i>createHistoryStream</i> request is immediately sent by the client upon successful connection</li>
-            <li>If the client doesn’t attempt to initiate an <i>EBT</i> session for a certain amount of time</li>
-        </ul>
-        <p>[1] Joao Leitao, Jose Pereira and Luis Rodrigues. 2007. Epidemic Broadcast Trees. In <i>2007 26th IEEE International Symposium on Reliable Distributed Systems (SRDS 2007)</i>, 301-310. https://doi.org/10.1109/SRDS.2007.27</p>
-        <!-- metafeeds documentation -->
-        <h2 id="metafeeds">Metafeeds</h2>
-        <div>
-        <p>A metafeed is a special kind of feed that only publishes metadata information concerning other feeds, called the <i>subfeeds</i>. A metafeed can also contain other metafeeds as subfeeds, so they form a tree structure. There can only be one <i>root metafeed</i> at the top of this tree. Using metafeeds do not break compatibility with clients that only support the classic feed format. Clients, for compatibility reasons, have a <i>main classic feed</i> alongside the root metafeed. They may support multiple additional feeds beyond that <i>main feed</i>, those additional feeds which will be organised and using a metafeed.</p>
-        <p>Metafeeds lays the necessary groundwork to implement many interesting features such as partial replication, per-application feeds, and even the co-existence of new feed formats with classic ones.</p>
-        </div>
-        <aside>
-            <p>Want to get deeper into metafeeds? Check out the <a href="https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec" target="_blank">Metafeed specification</a>.</p>
-            <p>For some example of new feed formats, check out <a href="https://github.com/AljoschaMeyer/bamboo" target="_blank">Bamboo</a> and <a href="https://github.com/ssbc/ssb-spec-drafts/blob/master/drafts/draft-ssb-core-gabbygrove/00/draft-ssb-core-gabbygrove-00.md" target="_blank">Gabbygrove</a>.
-            </p>
-        </aside>
-        <h3 id="bendy-butt">Structure</h3>
-        <p>Metafeeds uses a different format than the <a href="#structure">classic feed</a>, this new format is called <i>Bendy Butt</i>. It still is an append-only log of cryptographically signed messages, but it is not tied to JSON or V8 engine internals like the old format thus making it easier to implement in other programming languages.</p>
-        <aside>
-            <p>Dig deeper by reading the <a href="https://github.com/ssb-ngi-pointer/bendy-butt-spec" target="_blank">Bendy Butt Specification</a>.</p>
-            <p>Bendy Butt uses <a href="https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings">Binary Field Encodings (BFE)</a> to encode many of its fields.</p>
-        </aside>
-        <p>Bendy Butt encodes its messages using the well-established <a href="https://en.wikipedia.org/wiki/Bencode" target="_blank">Bencode</a> format instead of JSON. While we may display metafeed messages on this documentation as text, the encoding format uses binary delimiters instead of ascii. </p>
-        <p>A Bendy Butt Message is a Bencoded list containing a collection with the following five elements, in this specific order.</p>
-        <table class="defs">
-            <tr>
-                <td>author</td>
-                <td>BFE encoded feed ID.</td>
-            </tr>
-            <tr>
-                <td>sequence</td>
-                <td>Sequential 32-bit integer starting at 1.</td>
-            </tr>
-            <tr>
-                <td>previous</td>
-                <td>BFE encoded message ID, or BFE <i>nil</i> value for the first message.</td>
-            </tr>
-            <tr>
-                <td>timestamp</td>
-                <td>32-bit integer representing the time the message was created. Number of milliseconds since 1 January 1970 00:00 UTC, also known as UNIX epoch.</td>
-            </tr>
-            <tr>
-                <td>contentSection</td>
-                <td>If the message is not encrypted, This is a Bencoded list containing BFE encoded payload and signature. If it is BFE encrypted data, then upon decryption it becomes a Bencoded list of BFE encoded data and the signature for the payload.</td>
-            </tr>
-        </table>
-        <img src="img/metafeed-structure.png" class="pagewidth" style="height: 855px;" alt=""/>
-        <h3 id="metafeed-contentSection">The content section</h3>
-        <p>Unlike the messages on the <i>classic feed format</i>&mdash;with their flexible content section&mdash;the messages in a metafeed must conform to very specific types that deal only with metadata information about feeds.</p>
-        <p>The content section can be an encrypted text in which case it is decoded as a BFE-encoded list. If the message is not encrypted, then it is an BFE-encoded list. In both cases, the dictionary inside the list has the same fields.</p>
-        <table class="defs">
-            <tr>
-                <td>type</td>
-                <td>Is a BFE string. It can only be one of <code>metafeed/add/existing</code>, <code>metafeed/add/derived</code>, or <code>metafeed/tombstone</code>.</td>
-            </tr>
-            <tr>
-                <td>subfeed</td>
-                <td>A BFE Feed ID.</td>
-            </tr>
-            <tr>
-                <td>metafeed</td>
-                <td>A BFE Bendy Butt Feed ID.</td>
-            </tr>
-            <tr>
-                <td>feedpurpose</td>
-                <td>A BFE String. It describes the purpose of the specified feed.</td>
-            </tr>
-            <tr>
-                <td>tangles</td>
-                <td>A BFE dictionary. It conforms to the <a target="_blank" href="https://github.com/ssbc/ssb-tangle">SSB tangles specification</a> and establishes the relationship between the message and other messages on the metafeed.</td>
-            </tr>
-            <tr>
-                <td>nonce</td>
-                <td>BFE bytes. This field is only used for messages of type <code>metafeed/add</code>. The value must be 32 random bytes.</td>
-            </tr>
-        </table>
-        <h3 class="metafeed-message-types">Message Types</h3>
-        <p>Unlike other feed types which have very flexible content sections, metafeeds supports just a small collection of message types. Metafeeds are not supposed to store arbitrary messages. Messages in the metafeed deal only with metadata information about other feeds. The supported types are:</p>
-        <ul>
-            <li><code>metafeed/add/existing</code>: Adds an existing feed to the metafeed.</li>
-            <li><code>metafeed/add/derived</code>: Adds a derived feed to the metafeed.</li>
-            <li><code>metafeed/tombstone</code>: Used to flag that a feed is no longer in use.</li>
-        </ul>
 
-        <h3 id="metafeed-announcing">Announcing a metafeed</h3>
-        <p>A classic main feed can let other peers know that it supports metafeeds by announcing its own root metafeed as a message of type <i>metafeed/announce</i>.</p>
-        <pre><code>
-{
-  // ... other msg.value field ...
-  content: {
-    type: 'metafeed/announce',
-    metafeed: 'ssb:feed/bendybutt-v1/APaWWDs8g73EZFUMfW37RBULtFEjwKNbDczvdYiRXtA=',
-    tangles: {
-      metafeed: {
-        root: null,
-        previous: null
-      }
-    }
-  }
-}
-        </code></pre>
-        <p>This announcement message is ignored by existing apps that do not support metafeeds such that adding a metafeed is harmless to existing apps. Clients that support metafeeds will discover new metafeeds and subfeeds by looking for such announcements.</p>
-
-        <h3>Example Metafeed with Feeds</h3>
-        <p>The sample diagram below shows a classic main feed, a root metafeed, and the associated subfeeds.</p>
-        <img src="img/metafeed-structure-with-feeds-simplified.png" style="width:  100%;" alt=""/>
-
-        <h2 id="metafeed-use-cases">Use cases</h2>
-        <p>The usage of metafeeds unlock a series of potential use cases and features that are much harder to implement using the classic feed format. The list below shows some of these features at a glance, use the links to the side of them to dive deeper into each specification to learn more about them and how they are implemented.</p>
-
-        <h3 id="metafeed-partial-replication">Partial Replication</h3>
-        <p>Traditionally, Secure Scuttlebutt replicates feeds by fetching the whole feed starting from their initial message. This is a major friction point for onboarding new users into the platform due to the huge amount of data the client needs to download before a feed is up to date, and the associated computing cost for indexing the new data.</p>
-        <aside>
-            <p>To learn more about how partial replication works, check out the <a href="https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec" target="_blank">Partial Replication specification</a>.
-            </p>
-        </aside>
-        <p>Partial replication allows a client to selectively fetch slices of data starting from the most recent message instead. This allows the user to be able to see recent messages &mdash; without their client freezing up &mdash; as a result of smaller data transfers and with minimal indexing time.</p>
-
-        <h3 id="metafeed-network-identity">Network Identity</h3>
-        <p>Network identities are a way to decouple the key used for <a href="#handshake">Secret Handshake</a> from the <a href="#keys-and-identities">Identity key</a> being used by the user.</p>
-        <aside>
-            <p>Dive deeper by reading the <a href="https://github.com/ssb-ngi-pointer/ssb-network-identity-spec" target="_blank">Network Identity specification</a>.</p>
-        </aside>
-        <p>A user may have multiple network identities. They are stored in their own feed which is listed on the user's root metafeed. By having the identities listed in their own feed, a user can have private identities that are known only to them and those they trust.</p>
-
-        <h3 id="metafeed-fusion-identity">Fusion Identity</h3>
-        <p>Fusion Identities solve the challenge of using multiple devices with Secure Scuttlebutt. Each device still uses it's own identity, there is no avoiding that, but they can now share fusion identities with each other. These new fusion identities can be used to compute mentions and notifications taking into account all the keys that are part of the fusion. They also make it possible to send private messages to the fusion identity which are readable by all the members of the fusion identity. Replicating multiple feeds from the same user can be done by following the fusion identity.</p>
-        <aside>
-            <p>Check out the <a href="https://github.com/ssb-ngi-pointer/fusion-identity-spec" target="_blank">Fusion Identity specification</a> for more information.</p>
-        </aside>
-
-        <!-- end of metafeeds documentation -->
         <h2 id="blobs">Blobs</h2>
         <p>A blob is binary data. Blobs are referred to from Scuttlebutt messages and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
         <p>Being just a sequence of bytes, blobs can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages, which is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
@@ -1752,7 +1421,6 @@ assert_nacl_sign_verify_detached(
         <p>After joining a pub, a user may decide to follow some of its members directly, in which case the pub is no longer needed for feed visibility but is still useful for accepting TCP connections and replicating messages.</p>
 
         <h3 id="invites">Invites</h3>
-        <p><i>This section describes the original pub invitations, also referred to as the followbot system or legacy invites, not to be confused with <a href="#rooms-joining">room invites</a> or <a href="https://github.com/ssbc/ssb-peer-invites">peer invites</a></i>.
         <p>Any user can follow a pub by posting a follow message, but to get the pub to follow you back you need an invite.</p>
         <div>
             <p>How the pub hands out invites is for its operator to decide. Some pubs have a web page that anybody can visit to generate an invite code. Some pubs have a pre-generated list of invite codes that the operator distributes. Invite codes can be single-use-only, have a maximum number of uses before they expire, or keep working indefinitely. A single user can use several invites if they wish to join several different pubs.</p>
@@ -1858,135 +1526,6 @@ assert_nacl_sign_verify_detached(
   …
 }</code></pre>
         <p>These messages help peers discover new pubs where they might be able to fetch new messages from. Clients can maintain a list of pubs they have seen so that they know of alternative places to fetch messages from in case a pub goes offline.</p>
-
-        <!-- rooms documentation start -->
-
-        <h2 id="rooms">Rooms</h2>
-
-        <p>Rooms are an publicly accessible Scuttlebutt peer, but unlike <a href="#pubs">pubs</a> they don't host feed data from other peers. The main feature rooms provide is a way for peers to find each other and establish tunnelled connections among themselves as if they were on the same network. They also provide more moderation tools than a pub with multiple user-levels and different privacy modes.</p>
-        <aside>
-            <p>There are two rooms specifications. There is a legacy <a href="https://github.com/staltz/ssb-room" target="_blank">room 1.0</a> implementation but most users and room operators have moved to the new <a href="https://ssbc.github.io/rooms2/" target="_blank">rooms 2.0</a> specification, which is documented here.</p>
-        </aside>
-        <p>Rooms differ from pubs because even though they're a Scuttlebutt peer, they are not meant to aid replication by <i>diminishing the number of hops between peers</i>. Instead, they provide a simple way for peers to find and connect to each other even though these peers might not have publicly accessible connections, and thus no <i>follow</i> messages are used in the rooms workflow.</p>
-
-        <h3 id="rooms-tunnel">Tunnel</h3>
-
-        <p>A tunnel is an indirect connection between two Scuttlebutt peers that is facilitated by another peer with a stable and publicly available Internet connection. This facilitator peer, also known as the "portal" or the room, wraps the indirect connection between the other peers thus providing a tunnel for them to meet with one another as if they were on the same network.</p>
-        <aside class="impl">
-            <img class="icon" src="img/impl.png"/>
-            <h5>Implementations</h5>
-            <div class="lang">JS</div>
-            <div class="vs"><a href="https://github.com/ssbc/ssb-tunnel/blob/master/index.js">ssb-tunnel</a></div>
-            <div class="lang">Go</div>
-            <div class="vs"><a href="https://github.com/ssb-ngi-pointer/go-ssb-room/tree/master/muxrpc/handlers/tunnel/server/plugin.go">plugin.go</a></div>
-        </aside>
-        <img src="img/room_perspective.png" />
-
-        <p>To establish a tunnel, one of the peers (the "origin") calls the RPC <em>tunnel.connect</em> on the portal peer, specifying the "target" peer's ID:</p>
-        <figure class="request-response">
-            <div class="request">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{
-  "name": ["tunnel", "connect"],
-  "type": "duplex",
-  "args": [
-    {
-      "portal":"@uMYDVPuEKftL4SzpRGVyQxLdyPkOiX7njit7+qT/7IQ=.ed25519",
-      "target":"@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519"
-    }
-  ],
-}</code></pre>
-            </div>
-            <img class="request-arrow" src="img/arrow.png" alt=""/>
-        </figure>
-
-        <p>The portal receives this and recognizes it as an intention to connect with the target peer. If the portal recognizes the target peer as being online, then it also calls the RPC <em>tunnel.connect</em> on the target peer, this time also specifying the "origin" peer's ID:</p>
-        <figure class="request-response">
-            <div class="request">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">1</span>
-                    <span class="key">Body type</span><span class="value">JSON</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <pre><code>{
-  "name": ["tunnel", "connect"],
-  "type": "duplex",
-  "args": [
-    {
-      "origin":"@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
-      "portal":"@uMYDVPuEKftL4SzpRGVyQxLdyPkOiX7njit7+qT/7IQ=.ed25519",
-      "target":"@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519"
-    }
-  ],
-}</code></pre>
-            </div>
-            <img class="request-arrow" src="img/arrow.png" alt=""/>
-        </figure>
-
-        <p>From this point onward, the portal should know to forward any messages on this stream from the origin to the target, and vice-versa. In the example below, the target sends this to the portal</p>
-        <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png" alt=""/>
-            <div class="response">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Body type</span><span class="value">Binary</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <div class="binary">
-                    <span class="d3">b4</span><span class="d1">6d</span><span class="d0">1d</span><span class="d3">ee</span><span class="d1">75</span><span class="d1">53</span><span class="d1">7a</span><span class="d1">61</span><span class="d1">74</span><span class="d3">fe</span><span class="d0">01</span><span class="d0">28</span><span class="d2">82</span><span class="d1">45</span><span class="d3">e9</span><span class="d3">ea</span><span class="d1">6c</span><span class="d2">a1</span><span class="d0">3e</span><span class="d1">44</span><span class="d1">49</span><span class="d1">7f</span><span class="d3">b2</span><span class="d0">3d</span>
-                    <span class="d3">cd</span><span class="d1">7e</span><span class="d0">14</span><span class="d0">18</span><span class="d1">77</span><span class="d1">73</span><span class="d1">57</span><span class="d2">aa</span><span class="d0">33</span><span class="d3">f3</span><span class="d0">2a</span><span class="d3">f0</span><span class="d3">cd</span><span class="d1">57</span><span class="d3">d6</span><span class="d2">9a</span><span class="d2">89</span><span class="d1">55</span><span class="d3">b5</span><span class="d2">9b</span><span class="d3">c4</span><span class="d2">91</span>
-                    <span class="d0">33</span><span class="d0">0d</span><span class="d1">76</span><span class="d1">69</span><span class="d1">5f</span><span class="d0">26</span><span class="d1">7b</span><span class="d1">5e</span><span class="d1">7c</span><span class="d3">b4</span><span class="d1">63</span><span class="d0">20</span><span class="d0">0e</span><span class="d0">3c</span><span class="d0">29</span><span class="d0">16</span><span class="d3">c2</span><span class="d0">08</span>
-                </div>
-            </div>
-        </figure>
-
-        <p>And then the portal forwards it to the origin, unaltered:</p>
-        <figure class="request-response">
-            <img class="response-arrow" src="img/arrow.png" alt=""/>
-            <div class="response">
-                <div class="header">
-                    <span class="key">Request number</span><span class="value">-1</span>
-                    <span class="key">Body type</span><span class="value">Binary</span>
-                    <span class="key">Stream</span><span class="value">Yes</span>
-                    <span class="key">End/err</span><span class="value">No</span>
-                </div>
-                <div class="binary">
-                    <span class="d3">b4</span><span class="d1">6d</span><span class="d0">1d</span><span class="d3">ee</span><span class="d1">75</span><span class="d1">53</span><span class="d1">7a</span><span class="d1">61</span><span class="d1">74</span><span class="d3">fe</span><span class="d0">01</span><span class="d0">28</span><span class="d2">82</span><span class="d1">45</span><span class="d3">e9</span><span class="d3">ea</span><span class="d1">6c</span><span class="d2">a1</span><span class="d0">3e</span><span class="d1">44</span><span class="d1">49</span><span class="d1">7f</span><span class="d3">b2</span><span class="d0">3d</span>
-                    <span class="d3">cd</span><span class="d1">7e</span><span class="d0">14</span><span class="d0">18</span><span class="d1">77</span><span class="d1">73</span><span class="d1">57</span><span class="d2">aa</span><span class="d0">33</span><span class="d3">f3</span><span class="d0">2a</span><span class="d3">f0</span><span class="d3">cd</span><span class="d1">57</span><span class="d3">d6</span><span class="d2">9a</span><span class="d2">89</span><span class="d1">55</span><span class="d3">b5</span><span class="d2">9b</span><span class="d3">c4</span><span class="d2">91</span>
-                    <span class="d0">33</span><span class="d0">0d</span><span class="d1">76</span><span class="d1">69</span><span class="d1">5f</span><span class="d0">26</span><span class="d1">7b</span><span class="d1">5e</span><span class="d1">7c</span><span class="d3">b4</span><span class="d1">63</span><span class="d0">20</span><span class="d0">0e</span><span class="d0">3c</span><span class="d0">29</span><span class="d0">16</span><span class="d3">c2</span><span class="d0">08</span>
-                </div>
-            </div>
-        </figure>
-
-        <p>Notice that the payload is in binary, because it's encrypted with secret handshake and box stream between the origin peer and the target peer. This means the portal cannot know what the two peers are communicating, and it cannot tamper with the binary payload in a way that the origin and target could not detect.</p>
-
-        <p>When the origin or the target close the encrypted duplex stream, they also notify the portal with a standard stream "end" flag.</p>
-
-        <h3 id="rooms-joining">Joining</h3>
-
-        <p>Before a peer can connect to a room and see other peers, they need to become an <i>authorized user</i> of that room by joining it with an invite code.</p>
-        <p>Rooms can operate in three different modes:</p>
-        <ul>
-            <li><b>Open:</b> anyone can use an <i>open invite code</i> to join the room.</li>
-            <li><b>Community:</b> other members of the room can invite new members by generating <i>individual invite codes</i> for them.</li>
-            <li><b>Restricted:</b> only room administrators can generate <i>individual invite codes</i> and allow new users in.</li>
-        </ul>
-        <aside>
-            <p>Check out the <a href="https://ssb-ngi-pointer.github.io/ssb-http-invite-spec/" target="_blank">full SSB HTTP Invite</a> specification for a deeper understanding of how it works.</p>
-        </aside>
-        <p>Accepting a room invite code is a process that involves both <a href="#rpc-protocol">MUXRPC</a> connections and HTTP requests. The room invite is a URI specified according to the <a href="https://github.com/ssb-ngi-pointer/ssb-uri-spec" target="_blank">SSB URI specification</a>. Once the user navigates of that URI, their operating system or web browser will launch a compatible Scuttlebutt client application that will handle the rest of the workflow.</p>
-        <img src="img/room_invite_uri.png" />
-        <p>The Scuttlebutt client will extract the invite code and the submission URL from the SSB URI, and use them to claim that invite code to the room. This will involve a series of RPC calls described in the <a href="https://ssb-ngi-pointer.github.io/ssb-http-invite-spec/" target="_blank">SSB HTTP Invites specification</a>.</p>
-        <p>Once a peer is accepted as a member of the room, their client application will see other peers in the same room as if they were on the same network and allow them to gossip with each other.</p>
-
-        <!-- end of rooms documentation -->
 
         <h2 id="private-messages">Private messages</h2>
         <div>
