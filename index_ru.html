@@ -1,0 +1,1593 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Описание протокола Scuttlebutt</title>
+    <link rel="icon" href="img/favicon.png"/>
+    <link rel="stylesheet" href="css/fonts.css"/>
+    <link rel="stylesheet" href="css/guide.css"/>
+</head>
+<body>
+    <header>
+        <div class="title">
+            <a href="index.html">
+                <img src="img/logo.png" alt=""/>
+                <span>Описание протокола Scuttlebutt</span>
+            </a>
+        </div>
+        <nav>
+            <a href="https://github.com/ssbc/scuttlebutt-protocol-guide"><div>Репозиторий</div></a>
+        </nav>
+        <lang>
+          <select onchange="if (this.value) window.location.href = this.value">
+            <option value="./index.html">Английский</option>
+            <option value="./index_ru.html" selected>Русский</option>
+          </select>
+        </lang>
+    </header>
+    <main>
+        <h1>Описание протокола Scuttlebutt</h1>
+        <p class="subtitle">Как пиры Scuttlebutt находят и общаются друг с другом </p>
+        <hr/>
+        <aside class="kicker section-kicker">
+            <h2 id="toc">СОДЕРЖАНИЕ</h2>
+        </aside>
+        <div class="toc">
+            <div class="col">
+                <div><a class="s1" href="#introduction">Вступление</a></div>
+                <div><a class="s1" href="#keys-and-identities">Ключи&nbsp;и&nbsp;идентификаторы</a></div>
+                <div class="section">
+                    <div><a class="s1" href="#discovery">Развертывание</a></div>
+                    <div class="s2">
+                        <div><a href="#local-network">Локальная сеть</a></div>
+                        <div><a href="#invite-code">Код приглашения</a></div>
+                        <div><a href="#pub-message">Pub сообщение</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="section">
+                    <div><a class="s1" href="#peer-connections">Одноранговые&nbsp;соединения</a></div>
+                    <div class="s2">
+                        <div><a href="#handshake">Рукопожатие</a></div>
+                        <div><a href="#box-stream">Box поток</a></div>
+                        <div><a href="#rpc-protocol">Протокол RPC</a></div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div><a class="s1" href="#feeds">Каналы</a></div>
+                    <div class="s2">
+                        <div><a href="#structure">Структура</a></div>
+                        <div><a href="#message-format">Формат сообщения</a></div>
+                        <div><a href="#createHistoryStream">createHistoryStream</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="section">
+                    <div><a class="s1" href="#blobs">Blobs</a></div>
+                    <div class="s2">
+                        <div><a href="#fetching">Получение</a></div>
+                        <div><a href="#want-and-have">Хочу и имею</a></div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div><a class="s1" href="#following">Следование</a></div>
+                    <div class="s2">
+                        <div><a href="#follow-graph">Обход графа</a></div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div><a class="s1" href="#pubs">Пабы</a></div>
+                    <div class="s2">
+                        <div><a href="#invites">Приглашения</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="section">
+                    <div><a class="s1" href="#private-messages">Приватные сообщения</a></div>
+                    <div class="s2">
+                        <div><a href="#encrypting">Шифрование</a></div>
+                        <div><a href="#decrypting">Дешифрование</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+    
+        <p id="introduction" class="first"><a href="https://www.scuttlebutt.nz/">Scuttlebutt</a>  - это протокол для создания децентрализованных приложений, которые хорошо работают в автономном режиме и которые никто не может контролировать. Поскольку центрального сервера нет, клиенты Scuttlebutt подключаются к своим партнерам для обмена информацией. В этом руководстве описаны протоколы, используемые для связи в сети Scuttlebutt. </p>
+        <p>Scuttlebutt - это гибкий протокол, способный поддерживать множество различных типов приложений. Одно из первых его приложений было как социальная сеть. В этом руководстве небольшое внимание уделяется тому, как использовать Scuttlebutt для социальных сетей, но многие объяснения все равно будут полезны, если вы хотите использовать его для чего-то совершенно другого или вам просто интересно, как это работает.</p>
+
+        <h2 id="cryptography">Криптография</h2>
+
+        <h3 id="keys-and-identities">Ключи&nbsp;и&nbsp;идентификаторы</h3>
+        <p>Первое, что нужно пользователю для участия в Scuttlebutt, - это личность. Личность - это пара ключей Ed25519, которая обычно представляет человека, устройство, сервер или бота. Наличие нескольких личностей Scuttlebutt - это нормально.</p>
+        <p>При первом запуске клиенты Scuttlebutt автоматически сгенерируют пару ключей Ed25519 и сохранят ее в домашней папке пользователя в папке <code>.ssb/secret</code>.</p>
+        <img src="lang/ru/img/identity_keypair.png" style="height: 80px;"/>    
+        <p>Поскольку идентификаторы длинные и случайные, для создания нового идентификатора не требуется согласования или разрешения, что очень важно для конструкции сети.</p>
+        <p>Позже пользователь может выбрать себе псевдоним или аватар, чтобы было удобнее ссылаться на него. Со временем прозвища могут измениться, но личности останутся прежними. Если пользователь потеряет свой секретный ключ или его украдут, ему нужно будет сгенерировать новую личность и попросить людей использовать вместо старой новую.</p>
+        <p>Открытый ключ личности показывается пользователям и передается в некоторых частях сетевого протокола с использованием этого формата:</p>
+        <img src="lang/ru/img/format_public_key.png" style="height: 80px;" alt="@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519 где все, кроме префикса @ и суффикса .ed25519, является открытым ключом закодированным base64. " />
+        <aside style="position: relative; top: 6px;">
+            <p>Во всем протоколе все экземпляры base64 являются вариантом, в котором используются <code>+</code> и <code>/</code>. Также требуется завершающий символ <code>=</code>.</p>
+        </aside>
+        <p>Знак начала <code>@</code> означает, что он представляет собой открытый ключ, а не сообщение или большой двоичный объект, которые начинаются с <code>%</code> и <code>&amp;</code>. С каждым идентификатором связан <a href="#feeds">канал</a>, который представляет собой список всех сообщений, отправленных этим идентификатором. Вот почему идентификатор также называется <em> feed ID </em>.</p>
+
+        <h3 id="cryptographic-primitives">Криптографические примитивы</h3>
+
+        <p>Протокол Scuttlebutt основан на примитивах криптобокса NaCl/libsodium. В этом руководстве используется следующее: </p>
+
+        <dl>
+            <dt><code>nacl_scalarmult(n, p)</code></dt>
+            <dd>Это <a href="http://doc.libsodium.org/advanced/scalar_multiplication"> Функция скалярного умножения libsodium </a>, которая принимает два скаляра (обычно публичный и / или секретный ключи). Она обладает полезным свойством, которое, учитывая две пары ключей <code> (pk1, sk1) </code> и <code> (pk2, sk2) </code>, <code> nacl_scalarmult (sk1, pk2) == nacl_scalarmult ( sk2, pk1) </code>, которое позволяет общий секретный вывод между коллегами, которые знают открытые ключи друг друга. Более подробно рассмотрим позже. </dd>
+
+            <dt><code>nacl_auth(msg, key)</code> и <code>assert_nacl_auth_verify(authenticator, msg, key)</code></dt>
+            <dd> Эти функции являются <a href="https://doc.libsodium.org/public-key_cryptography/authenticated_encryption">функциями аутентификации сообщений Libsodium </a>. Первая принимает сообщение и возвращает 32-байтовый аутентификатор, который действует как отдельная подпись сообщения. Последняя проверяет, что этот аутентификатор является действительным для данного сообщения и ключа; и возвращают ошибки, если они этого не делают. </dd>
+            
+            <dt><code>nacl_secret_box(msg, nonce, key)</code> и <code>assert_nacl_secretbox_open(ciphertext, nonce, key)</code></dt>
+            <dd>Эти функции основаны на функциях <a href="https://doc.libsodium.org/secret-key_cryptography/secretbox">crypto_secretbox_easy и crypto_secretbox_open_easy в Libsodium </a>, которые используют симметричную криптографию для шифрования + аутентификации и проверки + расшифровки сообщения, используя одноразовый номер и опубликованный ключ. </dd>
+
+            <dt><code>nacl_sign_detached(msg, key)</code> и <code>assert_nacl_sign_verify_detached(sig, msg, key)</code></dt>
+            <dd>The former is computed from <a href="https://doc.libsodium.org/public-key_cryptography/public-key_signatures">Libsodium's signature functions</a>. Unlike the usual Libsodium/NaCl functions, they work with signatures in independent buffers, rather than concatenated with the msg.</dd>
+            <dd>Первичные вычисления из <a href="http://doc.libsodium.org/public-key_cryptography/publickey_signatures">Функции сигнатур libsodium </a>. В отличие от обычных функций Libsodium / NaCl, они работают с сигнатурами в независимых буферах, а не объединены с помощью MSG. </dd>
+
+            <dt><code>pk_to_curve25519(ed25519_pk)</code> и <code>sk_to_curve25519(ed25519_sk)</code></dt>
+            <dd>Эти функции преобразуют Ed25519 ключи (используемые для cryptobox) в Curve25519 (он же X25519) ключи, используемые для подписания. Они <a href="https://doc.libsodium.org/advanced/ed25519-curve25519"> реализованы libsodium как <code> crypto_sign_ed25519_pk_to_curve25519 </code> и <code> crypto_sign_ed25519_sk_to_curve25519 </code> </a> соответственно. </dd>
+        </dl>
+
+        <h2 id="discovery">Развертывание</h2>
+        <div>
+            <p>После того, как пользователь сгенерировал свою личность, ему нужно найти одноранговые узлы для подключения. Чтобы подключиться к одноранговому узлу, вам понадобится его открытый ключ и его адрес, используя любой из поддерживаемых им протоколов. Обычно для TCP/IP вам понадобятся его IP-адрес и порт, но протокол Scuttlebutt не ограничивается TCP/IP в качестве транспорта. В настоящее время протокол Scuttlebutt позволяет одноранговым узлам обнаруживать друг друга тремя способами.</p>
+
+            <h3 id="local-network">Локальная сеть</h3>
+            <p>Одноранговые узлы постоянно передают UDP-пакеты в свою локальную сеть, объявляя о своем присутствии. Тело каждого пакета - это строка, содержащая IP-адрес, порт и открытый ключ в кодировке base64 (без <code>@</code> или <code>.ed25519</code>):</p>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Реализации</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/dominictarr/broadcast-stream/blob/master/index.js">broadcast-stream</a></div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-local/blob/master/index.js">ssb-local</a></div>
+            <div class="lang">Java</div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-discovery/src/main/java/org/apache/tuweni/scuttlebutt/discovery/ScuttlebuttLocalDiscoveryService.java">LocalDiscoveryService</a></div>
+        </aside>
+
+        <div>
+            <figure class="packets">
+                <div class="packet">
+                    <div class="header">
+                        <span class="key">Исходящий&nbsp;IP</span><span class="value">192.168.1.123</span>
+                        <span class="key">Исходящий&nbsp;порт</span><span class="value">8008</span>
+                        <span class="key">Целевой&nbsp;IP</span><span class="value">255.255.255.255</span>
+                        <span class="key">Целевой&nbsp;порт</span><span class="value">8008</span>
+                    </div>
+                    <img src="lang/ru/img/format_udp_broadcast.png" style="height: 40px;" alt="net:192.168.1.123:8008:~shs:FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY="/>
+                </div>
+            </figure>
+            <p>Этим форматом сообщения может быть любой действительный <a href="https://github.com/ssb-js/multiserver#address-format">многосерверный адрес</a>. В локальных сетях это обычно <code> net </code> адрес с адресом IPv4 или IPv6. </p>
+            <p>Текущие реализации транслируют один из этих пакетов каждую секунду. Когда одноранговый узел видит широковещательный пакет другого однорангового узла, он может подключиться для обмена сообщениями. Некоторые клиенты показывают ближайших партнеров в пользовательском интерфейсе, чтобы пользователь мог видеть других людей в той же сети, что и они.</p> 
+        </div>
+        <aside>
+            <p> Для портов источника и назначения UDP задан тот же номер порта, который одноранговый узел прослушивает по TCP для одноранговых соединений (обычно 8008). </p> 
+        </aside>
+
+        <h3 id="invite-code">Код приглашения</h3>
+        <p><a href="#invites">Коды приглашения</a> помогают новым пользователям подключиться к их первому <a href="#pubs">пабу</a>, который является общедоступным узлом Scuttlebutt  через интернет. Код приглашения содержит доменное имя, порт и открытый ключ паба.</p>
+        <p>Они также содержат секретный ключ, который пользователь может <a href="#redeeming-invites">активировать</a>, чтобы паб <a href="#following">подписался</a> на него в ответ. Это позволяет новому пользователю видеть сообщения, отправленные другими участниками паба, и делиться своими собственными сообщениями. Пригласительные коды - это самый распространенный способ для новых пользователей начать работу со Scuttlebutt.</p>
+        <p>Операторы пабов могут распространять коды приглашения любым способом, который они считают нужным, например, размещая их в существующих социальных сетях. В некоторых пабах есть веб-страницы, которые любой может посетить, чтобы сгенерировать код приглашения.</p>
+
+        <h3 id="pub-message">Pub сообщение</h3>
+        <p>Пользователи могут публиковать сообщения в своем <a href="#feeds">канале</a> рекламируя pub:</p>
+        <aside class="kicker">
+            <p> Здесь пользователь <code>@FCX/ts…</code> сообщает, что он знает о pub <code>@VJM7w1…</code> вместе с доменным именем и портом паба.</p>
+        </aside>
+        <pre><code>{
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "content": {
+    "type": "pub",
+    "address": {
+      "host": "one.butt.nz",
+      "port": 8008,
+      "key": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+    }
+  },
+  …
+}</code></pre>
+        <p>Когда другие видят это сообщение, они могут отметить, что этот паб существует, и подключиться к нему в будущем.</p>
+        <p>Сообщения в пабе - полезный способ найти дополнительных пиров, если вы уже знаете некоторых из них. Очевидно, это не работает для новых пользователей, которые еще никого не знают и поэтому не могут видеть сообщения паблика.</p>
+
+        <h2 id="peer-connections">Одноранговые соединения</h2>
+        <p>Как только клиент Scuttlebutt обнаружит IP-адрес, номер порта и открытый ключ партнера, он может подключиться через TCP, чтобы запросить обновления и обменяться сообщениями.</p> 
+
+        <h3 id="handshake">Рукопожатие</h3>
+        <div>
+            <p>Подключение начинается с четырехэтапного рукопожатия для аутентификации каждого узла и настройки зашифрованного канала.</p> 
+            <img src="lang/ru/img/message_flow.png" style="height: 350px;" alt="Message 1: Client hello (sent by the client). Message 2: Server hello. Message 3: Client authenticate. Message 4: Server accept" />
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Реализации</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/protocol.js">protocol.js</a></div>
+            <div class="vs"><a href="https://github.com/auditdrivencrypto/secret-handshake/blob/master/crypto.js">crypto.js</a></div>
+            <div class="lang">Py</div>
+            <div class="vs"><a href="https://github.com/pferreir/PySecretHandshake/blob/master/secret_handshake/crypto.py">crypto.py</a></div>
+            <div class="lang">Go</div>
+            <div class="vs"><a href="https://github.com/cryptoscope/secretstream/blob/ad7542b0cbda422a1ea3de7efa62a514672a2c88/secrethandshake/state.go">state.go</a></div>
+            <div class="vs"><a href="https://github.com/cryptoscope/secretstream/blob/ad7542b0cbda422a1ea3de7efa62a514672a2c88/secrethandshake/conn.go">conn.go</a></div>
+            <div class="lang">C</div>
+            <div class="vs"><a href="https://github.com/AljoschaMeyer/shs1-c/blob/master/src/shs1.c">shs1.c</a></div>
+            <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
+            <div class="lang">Java</div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttHandshakeClient.java">HandshakeClient</a></div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttHandshakeServer.java">HandshakeServer</a></div>
+        </aside>
+        <p>При рукопожатии используется <a href="https://dominictarr.github.io/secret-handshake-paper/shs.pdf">обмен секретным ключом рукопожатия</a>, обеспечивающий следующие свойства безопасности:</p> 
+        <ul>
+            <li>После успешного рукопожатия узлы подтвердили открытые ключи друг друга.</li>
+            <li>При рукопожатии создается общий секретный ключ, который можно использовать в шифровании для массового обмена сообщениями.</li>
+            <li>Перед подключением клиент должен знать открытый ключ сервера. Сервер узнает открытый ключ клиента во время рукопожатия.</li>
+            <li>После того, как клиент подтвердит свою личность, сервер может решить, что он не хочет разговаривать с этим клиентом, и отключиться, не подтверждая свою личность.</li>
+            <li>Посредник не может узнать открытый ключ любого партнера.</li>
+            <li>Оба узла должны знать ключ, представляющий конкретную сеть Scuttlebutt, к которой они хотят подключиться, однако посредник не может узнать этот ключ из рукопожатия. Если рукопожатие прошло успешно, обе стороны подтвердили, что хотят использовать одну и ту же сеть.</li>
+            <li>Прошлые рукопожатия нельзя воспроизвести. Попытка воспроизвести рукопожатие не позволит злоумышленнику обнаружить или подтвердить предположения об открытых ключах участников.</li>
+            <li>Рукопожатия обеспечивают конфиденциальность при пересылке. Запись сетевого трафика пользователя, а затем кража его секретного ключа не позволит злоумышленнику расшифровать его прошлые рукопожатия.</li> 
+        </ul>
+        <aside>
+            <p><strong>Клиент</strong> — это компьютер, инициирующий TCP-соединение, а <strong>сервер</strong> — компьютер, который его получает. После завершения рукопожатия это различие исчезает.</p> 
+        </aside>
+
+        <h4 id="starting-keys">Стартовые ключи</h4>
+        <p>При запуске рукопожатия клиент и сервер знают эти ключи:</p>
+        <img src="lang/ru/img/starting_keys.png" style="height: 590px;" alt="Both the client and servers know: their own long term key pair, their own ephemeral key pair, and the network's (private) identifier. Additionally, the client knows the server's long term public key."/>
+
+        <h4 id="client-hello">1. Клиент hello</h4>
+        <img src="lang/ru/img/client_hello.png" style="height: 120px;" alt="The client sends their own ephemeral public key, hmac-authenticated using the network identifier"/>
+
+        <figure class="left-right code">
+            <h5 class="left">Клиент отправляет <span class="msgsize">(64 bytes)</span></h5>
+            <h5 class="right">Сервер проверяет</h5>
+            <pre class="left"><code>concat(
+  nacl_auth(
+    msg: client_ephemeral_pk,
+    key: network_identifier
+  ),
+  client_ephemeral_pk
+)</code></pre>
+            <pre class="right"><code>assert(length(msg1) == 64)
+
+client_hmac = first_32_bytes(msg1)
+client_ephemeral_pk = last_32_bytes(msg1)
+
+assert_nacl_auth_verify(
+  authenticator: client_hmac,
+  msg: client_ephemeral_pk,
+  key: network_identifier
+)</code></pre>
+        </figure>
+
+        <div>
+            <p>Сначала клиент отправляет свой <img class="inline-key" src="img/key_little_a_public.png" alt="public"/> сгенерированный эфемерный ключ. Также включен hmac, который указывает, что клиент желает использовать свой ключ с этим конкретным экземпляром сети Scuttlebutt.</p> 
+            <p>Идентификатор сети <img class="inline-key" src="img/key_big_n.png" alt=""/> – это фиксированный ключ. В основной сети Scuttlebutt это следующая 32-байтовая последовательность:</p> 
+            <div class="fixed-key binary">
+                <span>d4</span><span>a1</span><span>cb</span><span>88</span><span>a6</span><span>6f</span><span>02</span><span>f8</span><span>db</span><span>63</span><span>5c</span><span>e2</span><span>64</span><span>41</span><span>cc</span><span>5d</span>
+                <span>ac</span><span>1b</span><span>08</span><span>42</span><span>0c</span><span>ea</span><span>ac</span><span>23</span><span>08</span><span>39</span><span>b7</span><span>55</span><span>84</span><span>5a</span><span>9f</span><span>fb</span>
+            </div>
+            <p>Изменение ключа позволяет создавать отдельные сети, например частные сети или тестовые сети. Злоумышленник не может извлечь идентификатор сети непосредственно из того, что передается по сети, хотя он может подтвердить предположение, что это основная сеть Scuttlebutt, поскольку этот идентификатор общеизвестен.</p>
+            <p>Сервер сохраняет недолговечный открытый ключ клиента и использует hmac для проверки того, что клиент использует тот же сетевой идентификатор.</p>
+        </div>
+        <aside>
+            <p><strong>hmac</strong> — это функция, которая позволяет проверить, что сообщение пришло от кого-то, кто знает тот же секретный ключ, что и вы. В этом случае идентификатор сети используется в качестве секретного ключа.</p>
+            <p>И создатель сообщения, и проверяющий должны знать одно и то же сообщение и секретный ключ, чтобы проверка прошла успешно, но секретный ключ не раскрывается перехватчику. </p>
+            <p>В этом протоколе все экземпляры hmac используют HMAC-SHA-512-256 (первые 256 бит HMAC-SHA-512).</p>
+        </aside>
+
+        <h4 id="server-hello">2. Server hello</h4>
+        <img src="img/server_hello.png" style="height: 120px;" alt="The server sends their own ephemeral public key, hmac-authenticated using the network identifier"/>
+
+        <figure class="left-right code">
+            <h5 class="left">Client verifies</h5>
+            <h5 class="right">Server sends <span class="msgsize">(64 bytes)</span></h5>
+            <pre class="left"><code>assert(length(msg2) == 64)
+
+server_hmac = first_32_bytes(msg2)
+server_ephemeral_pk = last_32_bytes(msg2)
+
+assert_nacl_auth_verify(
+  authenticator: server_hmac,
+  msg: server_ephemeral_pk,
+  key: network_identifier
+)</code></pre>
+            <pre class="right"><code>concat(
+  nacl_auth(
+    msg: server_ephemeral_pk,
+    key: network_identifier
+  ),
+  server_ephemeral_pk
+)</code></pre>
+        </figure>
+
+        <p>The server responds with their own <img class="inline-key" src="img/key_little_b_public.png" alt="public"/> ephemeral public key and hmac. The client stores the key and verifies that they are also using the same network identifier.</p>
+
+        <h4 id="shared-secret-derivation-1">Shared secret derivation</h4>
+        <img src="img/shared_secret_derivation_1.png" style="height: 220px;" alt="Each derivation uses one public key (their peer's) and one secret key (their own). The resultting shared secrets are identical between server and client."/>
+
+        <figure class="left-right code">
+            <h5 class="left">Client computes</h5>
+            <h5 class="right">Server computes</h5>
+            <pre class="left"><code>shared_secret_ab = nacl_scalarmult(
+  client_ephemeral_sk,
+  server_ephemeral_pk
+)
+
+shared_secret_aB = nacl_scalarmult(
+  client_ephemeral_sk,
+  pk_to_curve25519(server_longterm_pk)
+)</code></pre>
+            <pre class="right"><code>shared_secret_ab = nacl_scalarmult(
+  server_ephemeral_sk,
+  client_ephemeral_pk
+)
+
+shared_secret_aB = nacl_scalarmult(
+  sk_to_curve25519(server_longterm_sk),
+  client_ephemeral_pk
+)</code></pre>
+        </figure>
+
+        <div>
+            <p>Now that ephemeral keys have been exchanged, both ends use them to derive a shared secret <img class="inline-key" src="img/key_little_a_little_b.png" alt=""/> using scalar multiplication.</p>
+            <p>The client and server each combine their own ephemeral secret key with the other’s ephemeral public key to produce the same shared secret on both ends. An eavesdropper doesn’t know either secret key so they can’t generate the shared secret. A man-in-the-middle could swap out the ephemeral keys in Messages 1 and 2 for their own keys, so the shared secret <img class="inline-key" src="img/key_little_a_little_b.png" alt=""/> alone is not enough for the client and server to know that they are talking to each other and not a man-in-the-middle.</p>
+            <p>Because the client already knows the <img class="inline-key" src="img/key_big_b_public.png" alt=""/> server’s long term public key, both ends derive a second secret <img class="inline-key" src="img/key_little_a_big_b.png" alt="using the client's ephemeral key pair (either the public or the secret key) and the server's permanent key pair (respectively either the secret or private key)"/> that will allow the client to send a message that only the real server can read and not a man-in-the-middle.</p>
+        </div>
+        <aside>
+            <p><strong>Scalar multiplication</strong> is a function for deriving shared secrets from a pair of secret and public Curve25519 keys.</p>
+            <p>The order of arguments matters. In the NaCl API the secret key is provided first.</p>
+            <p>Note that long term keys are Ed25519 and must first be converted to Curve25519.</p>
+        </aside>
+
+        <h4 id="client-accept">3. Client authenticate</h4>
+        <img src="img/client_authenticate.png" style="height: 330px;" alt="The client computes a detached signature of the network identifier, the server's long-term public key, and a hash of the shared secret; signed with its permanent secret key. They add their permanent public key, and encrypt both so that they can only be opened by someone knowing the network identifier and both shared secrets; then send the cyphertext to the server." />
+
+        <figure class="left-right code">
+            <h5 class="left">Client computes</h5>
+            <h5 class="right">Server verifies</h5>
+            <pre class="left"><code>detached_signature_A = nacl_sign_detached(
+  msg: concat(
+    network_identifier,
+    server_longterm_pk,
+    sha256(shared_secret_ab)
+  ),
+  key: client_longterm_sk
+)</code></pre>
+            <pre class="right" style="grid-row: span 3;"><code>msg3_plaintext = assert_nacl_secretbox_open(
+  ciphertext: msg3,
+  nonce: 24_bytes_of_zeros,
+  key: sha256(
+    concat(
+      network_identifier,
+      shared_secret_ab,
+      shared_secret_aB
+    )
+  )
+)
+
+assert(length(msg3_plaintext) == 96)
+
+detached_signature_A = first_64_bytes(msg3_plaintext)
+client_longterm_pk = last_32_bytes(msg3_plaintext)
+
+assert_nacl_sign_verify_detached(
+  sig: detached_signature_A,
+  msg: concat(
+    network_identifier,
+    server_longterm_pk,
+    sha256(shared_secret_ab)
+  ),
+  key: client_longterm_pk
+)</code></pre>
+            <h5 class="left">Client sends <span class="msgsize">(112 bytes)</span></h5>
+            <pre class="left"><code>nacl_secret_box(
+  msg: concat(
+    detached_signature_A,
+    client_longterm_pk
+  ),
+  nonce: 24_bytes_of_zeros,
+  key: sha256(
+    concat(
+      network_identifier,
+      shared_secret_ab,
+      shared_secret_aB
+    )
+  )
+)</code></pre>
+        </figure>
+
+        <div>
+            <p>The client reveals their identity to the server by sending their <img class="inline-key" src="img/key_big_a_public.png" alt=""/> long term public key. The client also makes a signature using their <img class="inline-key" src="img/key_big_a_secret.png" alt=""/> long term secret key. By signing the keys used earlier in the handshake the client proves their identity and confirms that they do indeed wish to be part of this handshake.</p>
+            <p>The client’s message is enclosed in a secret box to ensure that only the server can read it. Upon receiving it, the server opens the box, stores the client’s long term public key and verifies the signature.</p>
+            <p>An all-zero nonce is used for the secret box. The secret box construction requires that all secret boxes using a particular key must use different nonces. It’s important to get this detail right because reusing a nonce will allow an attacker to recover the key and encrypt or decrypt any secret boxes using that key. Using a zero nonce is allowed here because this is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.png" alt=""/>, <img class="inline-key" src="img/key_little_a_little_b.png" alt=""/>, <img class="inline-key" src="img/key_little_a_big_b.png" alt=""/>))</span>.</p>
+        </div>
+        <aside>
+            <p><strong>Detached signatures</strong> do not contain a copy of the message that was signed, only a tag that allows verifying the signature if you already know the message.</p>
+            <p>Here it is okay because the server knows all the information needed to reconstruct the message that the client signed.</p>
+        </aside>
+
+        <h4 id="shared-secret-derivation-2">Shared secret derivation</h4>
+        <img src="img/shared_secret_derivation_2.png" style="height: 220px;" alt="The client computes a new shared secret from their permanent secret key and the server's ephemeral public key. The server computes the same shared secret from the client's permanent public key and their own ephemeral secret key."/>
+
+        <figure class="left-right code">
+            <h5 class="left">Client computes</h5>
+            <h5 class="right">Server computes</h5>
+            <pre class="left"><code>shared_secret_Ab = nacl_scalarmult(
+  sk_to_curve25519(client_longterm_sk),
+  server_ephemeral_pk
+)</code></pre>
+            <pre class="right"><code>shared_secret_Ab = nacl_scalarmult(
+  server_ephemeral_sk,
+  pk_to_curve25519(client_longterm_pk)
+)</code></pre>
+        </figure>
+
+        <p>Now that the server knows the <img class="inline-key" src="img/key_big_a_public.png" alt=""/> client’s long term public key, another shared secret <img class="inline-key" src="img/key_big_a_little_b.png" alt=""/> is derived by both ends. The server uses this shared secret to send a message that only the real client can read and not a man-in-the-middle.</p>
+
+        <h4 id="server-accept">4. Server accept</h4>
+        <img src="img/server_accept.png" style="height: 400px;" alt="The server signs the network identifier, the previous detached signature, the client's permanent secret key, and the hash of the first shared secret, with their permanent secret key, as a new detached signature. They encrypt it so that they can only be opened by someone knowing the network identifier and all three shared secrets; then send the cyphertext to the client." />
+
+        <figure class="left-right code">
+            <h5 class="left">Client verifies</h5>
+            <h5 class="right">Server computes</h5>
+            <pre class="left" style="grid-row: span 3;"><code>detached_signature_B = assert_nacl_secretbox_open(
+  ciphertext: msg4,
+  nonce: 24_bytes_of_zeros,
+  key: sha256(
+    concat(
+      network_identifier,
+      shared_secret_ab,
+      shared_secret_aB,
+      shared_secret_Ab
+    )
+  )
+)
+
+assert_nacl_sign_verify_detached(
+  sig: detached_signature_B,
+  msg: concat(
+    network_identifier,
+    detached_signature_A,
+    client_longterm_pk,
+    sha256(shared_secret_ab)
+  ),
+  key: server_longterm_pk
+)</code></pre>
+            <pre class="right"><code>detached_signature_B = nacl_sign_detached(
+  msg: concat(
+    network_identifier,
+    detached_signature_A,
+    client_longterm_pk,
+    sha256(shared_secret_ab)
+  ),
+  key: server_longterm_sk
+)</code></pre>
+            <h5 class="right">Server sends <span class="msgsize">(80 bytes)</span></h5>
+            <pre class="right"><code>nacl_secret_box(
+  msg: detached_signature_B,
+  nonce: 24_bytes_of_zeros,
+  key: sha256(
+    concat(
+      network_identifier,
+      shared_secret_ab,
+      shared_secret_aB,
+      shared_secret_Ab
+    )
+  )
+)</code></pre>
+        </figure>
+        <p>The server accepts the handshake by signing a message using their <img class="inline-key" src="img/key_big_b_secret.png" alt=""/> long term secret key. It includes a copy of the client’s previous signature. The server’s signature is enclosed in a secret box using all of the shared secrets.</p>
+        <p>Upon receiving it, the client opens the box and verifies the server’s signature.</p>
+        <p>Similarly to the previous message, this secret box also uses an all-zero nonce because it is the only secret box that ever uses the key <span class="key-formula">sha256(concat( <img class="inline-key" src="img/key_big_n.png"/>, <img class="inline-key" src="img/key_little_a_little_b.png" alt=""/>, <img class="inline-key" src="img/key_little_a_big_b.png" alt=""/>, <img class="inline-key" src="img/key_big_a_little_b.png" alt=""/>))</span>.</p>
+
+        <h4 id="handshake-complete">Handshake complete</h4>
+        <img src="img/final_shared_secret.png" style="height: 40px;" alt="" />
+        <p>At this point the handshake has succeeded. The client and server have proven their identities to each other.</p>
+        <p>The shared secrets established during the handshake are used to set up a pair of box streams for securely exchanging further messages.</p>
+
+        <h3 id="box-stream">Box stream</h3>
+        <div>
+            <p>Box stream is the bulk encryption protocol used to exchange messages following the handshake until the connection ends. It is designed to protect messages from being read or modified by a man-in-the-middle.</p>
+            <p>Each message in a box stream has a header and body. The header is always 34 bytes long and says how long the body will be.</p>
+            <img src="img/box_stream_overview.png" style="height: 140px;" alt="A stream is made of alternating headers (34 bytes) and bodies (1 to 4096 bytes); ending with a body followed by a 34-bytes 'goodbye' header"/>
+
+            <h4 id="sending">Sending</h4>
+            <p>Sending a message involves encrypting the body of the message and preparing a header for it. Two secret boxes are used; one to protect the header and another to protect the body.</p>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/dominictarr/pull-box-stream/blob/master/index.js">pull-box-stream</a></div>
+            <div class="lang">Py</div>
+            <div class="vs"><a href="https://github.com/pferreir/PySecretHandshake/blob/master/secret_handshake/boxstream.py">boxstream.py</a></div>
+            <div class="lang">Go</div>
+            <div class="vs"><a href="https://github.com/cryptoscope/secretstream/blob/ad7542b0cbda422a1ea3de7efa62a514672a2c88/boxstream/box.go">box.go</a></div>
+            <div class="vs"><a href="https://github.com/cryptoscope/secretstream/blob/ad7542b0cbda422a1ea3de7efa62a514672a2c88/boxstream/unbox.go">unbox.go</a></div>
+            <div class="lang">C</div>
+            <div class="vs"><a href="https://github.com/AljoschaMeyer/box-stream-c/blob/master/src/box-stream.c">box-stream.c</a></div>
+            <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
+            <div class="lang">Java</div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-handshake/src/main/java/org/apache/tuweni/scuttlebutt/handshake/SecureScuttlebuttStream.java">Stream</a></div>
+        </aside>
+
+        <img src="img/box_stream_send.png" class="pagewidth" style="height: 670px;" alt="The plaintext message body is enclosed in a secret box using the key and nonce shown below. Secret boxes put a 16-byte tag onto the front of messages so that tampering can be detected when the box is opened. This tag is sliced off the body and put inside the header. A temporary header is made of the body length (a two-bytes big-endian integer) and th previous tag. This temporary header is then encrypted too, including its own (16-bytes) authentication tag, producing a 16+2+16 bytes header."/>
+
+        <h4 id="receiving">Receiving</h4>
+        <p>Receiving a message involves reading the header to find out how long the body is then reassembling and opening the body secret box.</p>
+        <img src="img/box_stream_receive.png" class="pagewidth" style="height: 560px;" alt="Read the first 34 bytes. This is the secret box containing the header. Open this box, extract the body length and body authentication tag. Read the number of bytes specified in the header. Join the body authentication tag and encrypted body back together, open it, and read the secret text."/>
+
+        <h4 id="goodbye">Goodbye</h4>
+        <p>The stream ends with a special “goodbye” header. Because the goodbye header is authenticated it allows a receiver to tell the difference between the connection genuinely being finished and a man-in-the-middle forcibly resetting the underlying TCP connection.</p>
+        <img src="img/box_stream_goodbye.png" class="pagewidth" style="height: 230px;" alt="The 'goodbye' header is made of 18 bytes of zero, encrypted in a secret box (with a header authenticated tag like other headers)."/>
+        <p>When a receiver opens a header and finds that it contains all zeros then they will know that the connection is finished.</p>
+
+        <h4 id="keys-and-nonces">Keys and nonces</h4>
+        <p>Two box streams are used at the same time when Scuttlebutt peers communicate. One is for client-to-server messages and the other is for server-to-client messages. The two streams use different keys and starting nonces for their secret boxes.</p>
+        <img src="img/box_stream_params.png" class="pagewidth" style="height: 400px;" alt="The secret box key is made of a double-sha256 hash of the network identifier and three shared secrets, followed by either the server's permanent public key (for Client to Server) or the client's permanent public key (for Server to Client), both hashed again with sha256. The starting nonces are respectively the first 24 bytes of server's or the client's ephemeral public key, hmac-authenticated with the network identifier."/>
+        <p>The starting nonce is used for the first header in the stream (“secret box 1” in the above figures), then incremented for the first body (“secret box 2”), then incremented for the next header and so on.</p>
+
+        <h3 id="rpc-protocol">RPC protocol</h3>
+        <aside class="impl kicker">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div><a href="https://github.com/ssbc/packet-stream-codec/blob/master/index.js">packet-stream-codec</a></div>
+            <div class="lang">Py</div>
+            <div class="vs"><a href="https://github.com/pferreir/pyssb/blob/master/ssb/packet_stream.py">packet_stream.py</a></div>
+            <div class="vs"><a href="https://github.com/pferreir/pyssb/blob/master/ssb/muxrpc.py">muxrpc.py</a></div>
+            <div class="lang">Go</div>
+            <div class="vs"><a href="https://github.com/cryptoscope/go-muxrpc/tree/601b7be81ee6b2bd6f32b1247e4688537f696794/codec">codec</a></div>
+            <div class="vs"><a href="https://github.com/cryptoscope/go-muxrpc/blob/601b7be81ee6b2bd6f32b1247e4688537f696794/rpc.go">rpc.go</a></div>
+            <div class="lang">C</div>
+            <div class="vs"><a href="https://git.scuttlebot.io/%25133ulDgs%2FoC1DXjoK04vDFy6DgVBB%2FZok15YJmuhD5Q%3D.sha256/blob/fd953a1e72b4b16e6e5a74bcf2f893dbf1407ce4/sbotc.c">sbotc.c</a></div>
+            <div class="lang">Java</div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt-rpc/src/main/java/org/apache/tuweni/scuttlebutt/rpc/RPCCodec.java">RPCCodec</a></div>
+        </aside>
+        <div>
+            <p>Scuttlebutt peers make requests to each other using an RPC protocol. Typical requests include asking for the latest messages in a particular feed or requesting a blob.</p>
+            <p>The RPC protocol can interleave multiple requests so that a slow request doesn’t block following ones. It also handles long-running asynchronous requests for notifying when an event occurs and streams that deliver multiple responses over time.</p>
+            <p>Similar to the box stream protocol, the RPC protocol consists of 9-bytes headers followed by variable-length bodies. There is also a 9-bytes goodbye message which is just a zeroed out header.</p>
+            <img src="img/rpc_overview.png" style="height: 155px;" alt=""/>
+        </div>
+        <aside>
+            <p><strong>Remote procedure calls</strong> are where a computer exposes a set of procedures that another computer can call over the network.</p>
+            <p>The requester tells the responder the name of the procedure they wish to call along with any arguments. The responder performs the action and returns a value back to the requester.</p>
+        </aside>
+        <p>Both peers make requests to each other at the same time using the pair of box streams that have been established. The box streams protect the RPC protocol from eavesdropping and tampering.</p>
+        <img src="img/rpc_alignment.png" style="height: 230px;" alt=""/>
+        <aside style="position: relative; top: 36px;">
+            <p>RPC messages are not necessarily aligned to box stream boxes.</p>
+            <p>Multiple RPC messages may be put inside one box or a single RPC message may be split over several boxes.</p>
+        </aside>
+
+        <h4 id="header-structure">Header structure</h4>
+        <p>RPC headers contain a set of flags to say what type of message it is, a field specifying its length and a request number which allows matching requests with their responses when there are several active at the same time.</p>
+        <img src="img/rpc_header.png" style="height: 750px;" alt="Headers are made of (in network order): 4 zero bits, a stream bit (1 = 'message is part of a stream'), a end/error bit (1 = 'message is the last in its stream or an error), and a 2-bits body type (00 = binary, 01 = UTF-8 string, 10 = JSON), the body length (4 bytes unsigned big-endian), and the request number (4 bytes signed big-endial)."/>
+
+        <h4 id="request-format">Request format</h4>
+        <p>To make an RPC request, send a JSON message containing the name of the procedure you wish to call, the type of procedure and any arguments.</p>
+        <p>The name is a list of strings. For a top-level procedure like <em>createHistoryStream</em> the list only has one element: <code>["createHistoryStream"]</code>. Procedures relating to blobs are grouped in the blobs namespace, for example to use <em>blobs.get</em> send the list: <code>["blobs", "get"]</code>.</p>
+        <div>
+            <p>There are two types of procedure used when Scuttlebutt peers talk to each other:</p>
+            <ul>
+                <li><em>Source</em> procedures return multiple responses over time and are used for streaming data or continually notifying when new events occur. When making one of these requests, the stream flag in the RPC header must be set.</li>
+                <li><em>Async</em> procedures return a single response. Async responses can arrive quickly or arrive much later in response to a one-off event.</li>
+            </ul>
+            <p>For each procedure in the RPC protocol you must already know whether it is source or async and correctly specify this in the request body.</p>
+        </div>
+        <aside>
+            <p>The reference Scuttlebot implementation also has other internal procedures and procedure types which are used by graphical user interfaces like Patchwork.</p>
+            <p>This guide only covers the procedures that are publicly available to other Scuttlebutt peers.</p>
+        </aside>
+
+        <h4 id="source-example">Source example</h4>
+        <p>This RPC message shows an example of a <em>createHistoryStream</em> request:</p>
+
+        <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
+            <p>JSON messages don’t have indentation or whitespace when sent over the wire.</p>
+        </aside>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["createHistoryStream"],
+  "type": "source",
+  "args": [{"id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"}]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <div>
+            <p><em>createHistoryStream</em> is how Scuttlebutt peers ask each other for a list of messages posted by a particular feed. It has one argument that is a JSON dictionary specifying more options about the request. <em>id</em> is the only required option and says which feed you are interested in.</p>
+            <p>Because this is the first RPC request, the request number is 1. The next request made by this peer will be numbered 2. The other peer will also use request number 1 for their first request, but the peers can tell these apart because they know whether they sent or received each request.</p>
+        </div>
+        <p>Now the responder begins streaming back responses:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "key": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+  "value": {
+    "previous": null,
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 1,
+    "timestamp": 1514517067954,
+    "hash": "sha256",
+    "content": {
+      "type": "post",
+      "text": "This is the first post!"
+    },
+    "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                  Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+  },
+  "timestamp": 1514517067956
+}</code></pre>
+            </div>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "key": "%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256",
+  "value": {
+    "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 2,
+    "timestamp": 1514517078157,
+    "hash": "sha256",
+    "content": {
+      "type": "post",
+      "text": "Second post!"
+    },
+    "signature": "z7W1ERg9UYZjNfE72ZwEuJF79khG+eOHWFp6iF+KLuSrw8Lqa6
+                  IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
+  },
+  "timestamp": 1514517078160
+}</code></pre>
+            </div>
+        </figure>
+        <aside style="align-self: start; position: relative; top: 29px;">
+            <p>Because the responses are part of a stream, their RPC headers have the stream flag set.</p>
+            <p>All responses use the same request number as the original request but negative.</p>
+        </aside>
+
+        <p>Each message posted by the feed is sent back in its own response. This feed only contains two messages.</p>
+        <p>To close the stream the responder sends an RPC message with both the stream and end/err flags set and a JSON body of <code>true</code>. When the requester sees that the stream is being closed they send a final message to close their own end of it (source type requests must always be closed by both ends).</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p>Alternatively, to abort a stream before it is finished the requester can send their closing message early, at which point the responder closes their own end.</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+        </figure>
+
+        <h4 id="async-example">Async example</h4>
+        <p>One of the few public async procedures is <em>blobs.has</em>, which peers use to ask each other whether they have a particular blob.</p>
+        <p>In this example the requester is asking the responder if they have blob <code>&amp;WWw4tQJ6…</code>:</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["blobs", "has"],
+  "type": "async",
+  "args": ["&amp;WWw4tQJ6ZrM7o3gA8lOEAcO4zmyqXqb/3bmIKTLQepo=.sha256"]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p>The responder does in fact have this blob so they respond with <code>true</code>. Because this is an async procedure and not a stream, there is only one response and no need to close the stream afterwards:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png alt="""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+        </figure>
+
+        <h4 id="error-example">Error example</h4>
+
+        <p>Let’s take the previous example and introduce a programming mistake to see how the RPC protocol handles errors:</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">3</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["blobs", "has"],
+  "type": "async",
+  "args": ["<strong>this was a mistake</strong>"]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-3</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>{
+  "name": "Error",
+  "message": "invalid hash:this was a mistake",
+  "stack": "…"
+}</code></pre>
+            </div>
+        </figure>
+
+        <p>Most importantly, the response has the end/err flag set to indicate that an error occurred. The reference Scuttlebot implementation also includes an error message and a JavaScript stack trace.</p>
+        <p>For source type procedures an error will also end the stream because the end/err flag has the dual purpose of ending streams and indicating that an error occurred.</p>
+
+        <h2 id="feeds">Feeds</h2>
+        <p>A Scuttlebutt feed is a list of all the messages posted by a particular identity. When a user writes a message in a Scuttlebutt client and posts it, that message is put onto the end of their feed.</p>
+
+        <h3 id="structure">Structure</h3>
+        <p>The messages in a feed form an append-only log, meaning that once a message is posted it cannot be modified. Each message (except the first one) references the ID of the previous message, allowing a chain to be constructed back to the first message in the feed.</p>
+        <img src="img/sigchain.png" class="pagewidth" style="height: 855px;" alt=""/>
+
+        <h3 id="message-format">Message format</h3>
+        <p>To create a message to post in a feed, start by filling out these fields:</p>
+        <pre><code>{
+  "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "sequence": 2,
+  "timestamp": 1514517078157,
+  "hash": "sha256",
+  "content": {
+    "type": "post",
+    "text": "Second post!"
+  }
+}
+</code></pre>
+        <table class="defs">
+            <tr>
+                <td>previous</td>
+                <td>Message ID of the latest message posted in the feed. If this is the very first message then use <code>null</code>. See below for how to compute a message’s ID.</td>
+            </tr>
+            <tr>
+                <td>author</td>
+                <td>Public key of the feed that the message will be posted in.</td>
+            </tr>
+            <tr>
+                <td>sequence</td>
+                <td>1 for the first message in a feed, 2 for the second and so on.</td>
+            </tr>
+            <tr>
+                <td>timestamp</td>
+                <td>Time the message was created. Number of milliseconds since 1 January 1970 00:00 UTC.</td>
+            </tr>
+            <tr>
+                <td>hash</td>
+                <td>The fixed string <code>sha256</code>, which is the hash function used to compute the message ID.</td>
+            </tr>
+            <tr>
+                <td>content</td>
+                <td>If the message is not encrypted, This is a dictionary containing free-form data for applications to interpret, plus a mandatory <em>type</em> field. The <em>type</em> field allows applications to filter out message types they don’t understand and must be a UTF-16 string between 3 and 52 code units long (inclusive). If the message is encrypted, then this is a base64 encoded string, followed by a suffix of <code>.box</code>; we will describe private messages later in this document.</td>
+            </tr>
+        </table>
+        <aside style="align-self: start; position: relative; top: 19px;">
+            <p>Only these fields are allowed and they all must be present.</p>
+            <p>Fields must appear in this order (although <em>author</em> and <em>sequence</em> can be swapped for legacy reasons, but please don’t do this for new messages).</p>
+            <p>Fields within <em>content</em> can appear in any order but the order must be remembered for later.</p>
+        </aside>
+
+        <h4 id="signature">Signature</h4>
+        <div>
+            <p>All messages in a feed are signed by that feed’s long-term secret key. This enables recipients to verify that a message was really posted by a particular identity and not tampered with as it gets gossiped and replicated throughout the Scuttlebutt network.</p>
+            <p>Before signing a message it must be serialized according to a specific canonical JSON format. This means for any given message there is exactly one way to serialize it as a sequence of bytes, which is necessary for signature verification to work. The reference implementation verifies that all messages it receives are in the canonical format and rejects messages that aren’t.</p>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png"/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-feed/blob/master/validator.js">ssb-feed/validator.js</a></div>
+            <div class="lang">Py</div>
+            <div class="vs"><a href="https://github.com/pferreir/pyssb/blob/master/ssb/feed/models.py">models.py</a></div>
+        </aside>
+        <p>The canonical format is defined by the <em>ECMA-262 6<sup>th</sup> Edition</em> section <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-json.stringify">JSON.stringify</a></em>. For an example, see how the above message is formatted.</p>
+        <p>In brief, the rules are:</p>
+        <ul>
+            <li>Two spaces for indentation.</li>
+            <li>Dictionary entries and list elements each on their own line.</li>
+            <li>Newlines use the line feed character <code>\n</code>.</li>
+            <li>No trailing newline.</li>
+            <li>One space after the colon <code>:</code> for dictionary keys.</li>
+            <li>Empty dictionaries appear as <code>{}</code> and empty lists appear as <code>[]</code>.</li>
+            <li>Strings and numbers formatted according to the sections <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-quotejsonstring">QuoteJSONString</a></em> and <em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-tostring-applied-to-the-number-type">ToString Applied to the Number Type</a></em>.
+        </ul>
+        <p>Then sign the message by computing:</p>
+        <pre><code>signature = nacl_sign_detached(
+  msg: formatted_json_message,
+  key: authors_longterm_sk
+)</code></pre>
+        <p>Base64 encode the signature and put <code>.sig.ed25519</code> on the end. Finally, add the signature to the message itself. It must be the last entry in the dictionary:</p>
+        <pre><code>{
+  "previous": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "sequence": 2,
+  "timestamp": 1514517078157,
+  "hash": "sha256",
+  "content": {
+    "type": "post",
+    "text": "Second post!"
+  },
+  "<strong>signature</strong>": "z7W1ERg9UYZjNfE72ZwEuJF79khG+eOHWFp6iF+KLuSrw8Lqa6
+                IousK4cCn9T5qFa8E14GVek4cAMmMbjqDnAg==.sig.ed25519"
+}</code></pre>
+
+        <p>To verify the signature, first remove the signature field from the message. Make sure the remaining message is formatted as JSON using the same formatting rules. Here the order of dictionary entries within <em>content</em> matters; they must be in the same order that you received them.</p>
+        <p>Then remove the <code>.sig.ed25519</code> suffix from the signature, base64 decode it and verify with:</p>
+        <pre><code>nacl_sign_verify_detached(
+  sig: signature,
+  msg: formatted_json_message,
+  key: authors_longterm_pk
+)</code></pre>
+
+        <h4 id="message-id">Message ID</h4>
+        <p>A message ID is a hash of the message including signature. Messages can refer to other messages by their ID.</p>
+        <p>To compute a message’s ID, first format it as JSON using the formatting rules. Like with signatures, dictionary keys must appear in the same order that you received them. The <em>signature</em> key must appear last as shown above (but without wrapping the line).</p>
+        <p>The ID of the above message is:</p>
+        <img src="img/format_message_id.png" style="height: 80px;" alt="%R7lJEkz27lNijPhYNDzYoPjM0Fp+bFWzwX0SmNJB/ZE=.sha256 where everything between % and .sha256 is the base64-encoding of the sha256 hash of the formatted message including signature" />
+        <p>Currently all IDs are computed using sha256. However the protocol includes the name of the hash function in message IDs and the messages themselves to allow migrating to a different one if needed in the future.</p>
+
+        <h3 id="createHistoryStream">createHistoryStream</h3>
+        <p>Scuttlebutt clients maintain a set of feeds that they are interested in. These could be feeds that the user has followed, bookmarked or subscribed to. When peers connect, one of the first things they do is ask each other whether the feeds they are interested in have any new messages.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-db/blob/master/indexes/clock.js">clock.js</a></div>
+        </aside>
+        <p>The RPC procedure <em>createHistoryStream</em> is how peers ask each other for a list of messages in a particular feed.</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["createHistoryStream"],
+  "type": "source",
+  "args": [
+    {
+      "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "sequence": 2,
+      "limit": 1,
+      "live": false,
+      "old": true,
+      "keys": true
+    }
+  ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p><em>createHistoryStream</em> takes one argument which is a dictionary of additional options that controls how the feed is returned. Valid options are:</p>
+        <table class="defs">
+            <tr>
+                <td>id</td>
+                <td>Public key of the feed to return messages from. Required.</td>
+            </tr>
+            <tr>
+                <td>seq</td>
+                <td>Only return messages later than this sequence number. If not specified then start from the very beginning of the feed.</td>
+            </tr>
+            <tr>
+                <td>limit</td>
+                <td>Maximum number of messages to return. If the limit is exceeded only the earliest messages are returned. Default: unlimited.</td>
+            </tr>
+            <tr>
+                <td>live</td>
+                <td>If true, keep the stream alive and send new messages as they are posted. If false, end the stream after messages are sent and don’t wait for new ones. Default: false.</td>
+            </tr>
+            <tr>
+                <td>old</td>
+                <td>Used together with <em>live</em>. If true, start by sending existing messages already posted by this feed. If false, don’t send existing messages posted by this feed, only send new messages as they arrive. Default: true.</td>
+            </tr>
+            <tr>
+                <td>keys</td>
+                <td>If true, also include message IDs and timestamps of when each message was received by this peer. If false, just send the messages themselves. Default: true.</td>
+            </tr>
+        </table>
+
+        <p>Here is a comparison of <em>createHistoryStream</em> responses with <em>keys</em> set to true and false:</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["createHistoryStream"],
+  "type": "source",
+  "args": [
+    {
+      "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "keys": <strong>true</strong>
+    }
+  ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "<strong>key</strong>": "%XphMUkWQtomKjXQvFGfsGYpt69sgEY7Y4Vou9cEuJho=.sha256",
+  "value": {
+    "previous": null,
+    "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "sequence": 1,
+    "timestamp": 1514517067954,
+    "hash": "sha256",
+    "content": {
+      "type": "post",
+      "text": "This is the first post!"
+    },
+    "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                  Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+  },
+  "<strong>timestamp</strong>": 1514517067956
+}</code></pre>
+            </div>
+            <hr class="mini"/>
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["createHistoryStream"],
+  "type": "source",
+  "args": [
+    {
+      "id": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "keys": <strong>false</strong>
+    }
+  ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "previous": null,
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "sequence": 1,
+  "timestamp": 1514517067954,
+  "hash": "sha256",
+  "content": {
+    "type": "post",
+    "text": "This is the first post!"
+  },
+  "signature": "QYOR/zU9dxE1aKBaxc3C0DJ4gRyZtlMfPLt+CGJcY73sv5abKK
+                Kxr1SqhOvnm8TY784VHE8kZHCD8RdzFl1tBA==.sig.ed25519"
+}</code></pre>
+            </div>
+        </figure>
+
+        <h2 id="blobs">Blobs</h2>
+        <p>A blob is binary data. Blobs are referred to from Scuttlebutt messages and stored by peers in the network. When a user attaches an image to their post, that image is stored as a blob and the message contains a link to it.</p>
+        <p>Being just a sequence of bytes, blobs can contain any data, unlike feeds and messages which have a specific structure. Blobs can handle much larger amounts of data than feeds or messages, which is why they are stored separately. However, clients may decide to not replicate blobs larger than a chosen size, which defaults to 5 megabytes in current implementations.</p>
+        <p>Blobs are referred to by their blob ID:</p>
+        <img src="img/format_blob_id.png" style="height: 80px;" alt="&uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256 where everything between & and .sha256 is the base64-encoding of the sha256 hash of the blob"/>
+        <p>Blobs are immutable because their ID contains a hash of their contents. This allows peers to fetch blobs from anyone in the network and know they haven’t been tampered with.</p>
+        <p>When a Scuttlebutt implementation receives a new message and sees that it references a blob, it might be a good time to fetch that blob so that the complete message will be available to show the user.</p>
+
+        <h3 id="fetching">Fetching</h3>
+        <p>There are two RPC methods for fetching blobs. To get an entire blob use <em>blobs.get</em>, or for only part of the blob use <em>blobs.getSlice</em>.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/multiblob/blob/master/index.js">multiblob</a></div>
+        </aside>
+
+        <h4 id="blobs.get">blobs.get</h4>
+        <p><em>blobs.get</em> asks a peer to send you the contents of a blob. There is one argument which is the blob ID:</p>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["blobs", "get"],
+  "type": "source",
+  "args": ["&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256"]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p>Now the responder begins streaming back the contents of the blob. Each response has a body type of binary and contains a piece of the blob, starting from the beginning.</p>
+        <p>This particular blob is 161,699 bytes long and the responder has decided to send it in pieces of 65,536 bytes each. That means two full pieces of 65,536 bytes will be sent and a final piece with the remaining 30,627 bytes.</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <span class="d3">ff</span><span class="d3">d8</span><span class="d3">ff</span><span class="d3">e0</span><span class="d0">00</span><span class="d0">10</span><span class="d1">4a</span><span class="d1">46</span><span class="d1">49</span><span class="d1">46</span><span class="d0">00</span><span class="d0">01</span><span class="d0">02</span><span class="d0">00</span><span class="d0">00</span><span class="d0">01</span><span class="d0">00</span><span class="d0">01</span><span class="d0">00</span><span class="d0">00</span><span class="d3">ff</span><span class="d3">db</span><span class="d0">00</span><span class="d1">43</span>
+                    <span class="d0">00</span><span class="d0">08</span><span class="d0">06</span><span class="d0">06</span><span class="d0">07</span><span class="d0">06</span><span class="d0">05</span><span class="d0">08</span><span class="d0">07</span><span class="d0">07</span><span class="d0">07</span><span class="d0">09</span><span class="d0">09</span><span class="d0">08</span><span class="d0">0a</span><span class="d0">0c</span><span class="d0">14</span><span class="d0">0d</span><span class="d0">0c</span><span class="d0">0b</span><span class="d0">0b</span><span class="d0">0c</span><span class="d0">19</span><span class="d0">12</span>
+                    <span class="d0">13</span><span class="d0">0f</span><span class="d0">14</span><span class="d0">1d</span><span class="d0">1a</span><span class="d0">1f</span><span class="d0">1e</span><span class="d0">1d</span><span class="d0">1a</span><span class="d0">1c</span><span class="d0">1c</span><span class="d0">20</span><span class="d0">24</span><span class="d0">2e</span><span class="d0">27</span><span class="d0">20</span><span class="d0">22</span><span class="d0">2c</span><span class="d0">23</span><span class="d0">1c</span><span class="d0">1c</span><span class="d0">28</span><span class="d0">37</span><span class="d0">29</span>
+                    <span class="d0">2c</span><span class="d0">30</span><span class="d0">31</span><span class="d0">34</span><span class="d0">34</span><span class="d0">34</span><span class="d0">1f</span><span class="d0">27</span><span class="d0">39</span><span class="d0">3d</span><span class="d0">38</span><span class="d0">32</span><span class="d0">3c</span><span class="d0">2e</span><span class="d0">33</span><span class="d0">34</span><span class="d0">32</span><span class="d3">ff</span><span class="d3">db</span>
+                    <div class="fadeout">…65536 bytes total</div>
+                </div>
+            </div>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <span class="d2">ba</span><span class="d3">e4</span><span class="d2">92</span><span class="d0">31</span><span class="d3">ce</span><span class="d1">68</span><span class="d1">74</span><span class="d3">d0</span><span class="d3">d4</span><span class="d2">99</span><span class="d2">9e</span><span class="d1">66</span><span class="d2">b9</span><span class="d3">f3</span><span class="d0">17</span><span class="d3">ef</span><span class="d0">2b</span><span class="d0">20</span><span class="d3">dc</span><span class="d0">07</span><span class="d2">a8</span><span class="d3">ef</span><span class="d2">8a</span><span class="d3">d3</span>
+                    <span class="d2">b5</span><span class="d2">b9</span><span class="d0">33</span><span class="d0">0f</span><span class="d0">34</span><span class="d2">90</span><span class="d1">57</span><span class="d2">a7</span><span class="d0">23</span><span class="d2">a9</span><span class="d3">f6</span><span class="d0">35</span><span class="d2">93</span><span class="d0">29</span><span class="d2">b8</span><span class="d2">92</span><span class="d1">52</span><span class="d3">d2</span><span class="d1">61</span><span class="d1">49</span><span class="d0">18</span><span class="d1">55</span><span class="d0">1d</span><span class="d0">3e</span>
+                    <span class="d2">b4</span><span class="d2">91</span><span class="d1">5b</span><span class="d2">b2</span><span class="d2">a1</span><span class="d0">2c</span><span class="d3">e1</span><span class="d1">46</span><span class="d1">7b</span><span class="d1">77</span><span class="d0">35</span><span class="d0">1e</span><span class="d3">ca</span><span class="d3">c5</span><span class="d3">f3</span><span class="d3">dc</span><span class="d3">e8</span><span class="d0">16</span><span class="d1">5b</span><span class="d1">69</span><span class="d0">07</span><span class="d3">cf</span><span class="d0">31</span><span class="d0">0d</span>
+                    <span class="d3">e8</span><span class="d3">d8</span><span class="d0">35</span><span class="d0">19</span><span class="d2">b5</span><span class="d2">8d</span><span class="d0">1c</span><span class="d3">c8</span><span class="d0">1f</span><span class="d1">73</span><span class="d0">11</span><span class="d2">83</span><span class="d2">8c</span><span class="d1">67</span><span class="d3">f2</span><span class="d2">ac</span><span class="d0">29</span><span class="d0">1d</span><span class="d3">c6</span>
+                    <div class="fadeout">…65536 bytes total</div>
+                </div>
+            </div>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <span class="d3">ca</span><span class="d3">f5</span><span class="d0">07</span><span class="d2">ad</span><span class="d0">37</span><span class="d1">63</span><span class="d1">64</span><span class="d2">af</span><span class="d3">ca</span><span class="d1">7d</span><span class="d3">f3</span><span class="d3">c5</span><span class="d1">58</span><span class="d3">e4</span><span class="d2">8e</span><span class="d0">07</span><span class="d3">cb</span><span class="d3">e9</span><span class="d3">d6</span><span class="d2">80</span><span class="d1">47</span><span class="d3">f7</span><span class="d1">78</span><span class="d3">f6</span>
+                    <span class="d2">a0</span><span class="d1">57</span><span class="d0">22</span><span class="d0">0a</span><span class="d0">36</span><span class="d3">e0</span><span class="d2">8c</span><span class="d0">1a</span><span class="d1">79</span><span class="d2">88</span><span class="d0">14</span><span class="d0">38</span><span class="d3">ed</span><span class="d3">e9</span><span class="d1">4e</span><span class="d3">c8</span><span class="d0">3d</span><span class="d0">07</span><span class="d1">4a</span><span class="d1">70</span><span class="d1">51</span><span class="d2">9c</span><span class="d2">83</span><span class="d1">45</span>
+                    <span class="d2">83</span><span class="d2">98</span><span class="d2">85</span><span class="d2">a2</span><span class="d1">5e</span><span class="d0">31</span><span class="d3">cd</span><span class="d0">39</span><span class="d1">53</span><span class="d1">6a</span><span class="d2">ae</span><span class="d1">57</span><span class="d0">3d</span><span class="d3">c7</span><span class="d2">a5</span><span class="d1">4b</span><span class="d2">9c</span><span class="d0">1e</span><span class="d0">33</span><span class="d2">9a</span><span class="d1">72</span><span class="d1">4a</span><span class="d3">c8</span><span class="d2">b2</span>
+                    <span class="d0">05</span><span class="d0">1c</span><span class="d1">48</span><span class="d0">30</span><span class="d1">72</span><span class="d0">07</span><span class="d1">4c</span><span class="d3">fe</span><span class="d2">94</span><span class="d1">58</span><span class="d1">7c</span><span class="d3">c3</span><span class="d0">14</span><span class="d2">8e</span><span class="d2">ad</span><span class="d3">d7</span><span class="d0">3e</span><span class="d2">94</span><span class="d0">38</span>
+                    <div class="fadeout">…30627 bytes total</div>
+                </div>
+            </div>
+        </figure>
+
+        <p>Finally, the stream is closed with a JSON message of <code>true</code> with the end/err flag set. The requester sees that the stream is being closed and closes their end of the stream too:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p>Upon receiving the blob the requester should check that what they received matches the sha256 checksum they asked for.</p>
+
+        <p><em>blobs.get</em> has an alternate form where the first argument is a JSON dictionary of options:</p>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">2</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["blobs", "get"],
+  "type": "source",
+  "args": [
+    {
+      "hash": "&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256",
+      "size": 161699,
+      "max": 200000
+    }
+  ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p>Valid options are:</p>
+        <table class="defs">
+            <tr>
+                <td>hash</td>
+                <td>ID of the blob. Required.</td>
+            </tr>
+            <tr>
+                <td>size</td>
+                <td>Expected size of the blob in bytes. If the blob is not exactly this size then reject the request. Optional.</td>
+            </tr>
+            <tr>
+                <td>max</td>
+                <td>Maximum size of the blob in bytes. If the blob is larger then reject the request. Only makes sense to specify <em>max</em> if you don’t already know <em>size</em>. Optional.</td>
+            </tr>
+        </table>
+        <p>This form allows the responder to reject the request if the blob is not the expected size or too large. When a request is rejected the responder sends back a single message with the end/err flag set containing a JSON error message.</p>
+
+        <h4 id="blobs.getSlice">blobs.getSlice</h4>
+        <p><em>blobs.getSlice</em> works like <em>blobs.get</em> but rather than receiving the entire blob, the requester specifies a start and end point and the responder only sends back bytes within that range.</p>
+        <p>Reasons for using <em>blobs.getSlice</em> could be to download a blob in pieces from many peers at once, to resume a partially-completed download or to fetch the first part of a video to show a preview. Though beware that if you only fetch part of a blob you cannot be sure that it hasn’t been tampered with. You need the whole blob to verify its integrity.</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["blobs", "getSlice"],
+  "type": "source",
+  "args": [
+    {
+      "hash": "&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256",
+      "start": 65536,
+      "end": 65584
+    }
+  ]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">Binary</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <div class="binary">
+                    <span class="d2">ba</span><span class="d3">e4</span><span class="d2">92</span><span class="d0">31</span><span class="d3">ce</span><span class="d1">68</span><span class="d1">74</span><span class="d3">d0</span><span class="d3">d4</span><span class="d2">99</span><span class="d2">9e</span><span class="d1">66</span><span class="d2">b9</span><span class="d3">f3</span><span class="d0">17</span><span class="d3">ef</span><span class="d0">2b</span><span class="d0">20</span><span class="d3">dc</span><span class="d0">07</span><span class="d2">a8</span><span class="d3">ef</span><span class="d2">8a</span><span class="d3">d3</span>
+                    <span class="d2">b5</span><span class="d2">b9</span><span class="d0">33</span><span class="d0">0f</span><span class="d0">34</span><span class="d2">90</span><span class="d1">57</span><span class="d2">a7</span><span class="d0">23</span><span class="d2">a9</span><span class="d3">f6</span><span class="d0">35</span><span class="d2">93</span><span class="d0">29</span><span class="d2">b8</span><span class="d2">92</span><span class="d1">52</span><span class="d3">d2</span><span class="d1">61</span><span class="d1">49</span><span class="d0">18</span><span class="d1">55</span><span class="d0">1d</span><span class="d0">3e</span>
+                </div>
+            </div>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">Yes</span>
+                </div>
+                <pre><code>true</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+
+        <p><em>Start</em> and <em>end</em> are byte offsets from the start of the blob and form a half-open interval, meaning the end byte is not included.</p>
+        <img src="img/blobs_get_slice.png" style="height: 110px;" alt="For example, start=4 and end=10 returns six bytes: bytes 4, 5, 6, 7, 8, and 9; but not byte 10. (Bytes are numbered so that the first byte is byte 0)"/>
+        <p>Specifying <em>start</em> = 0 means start from the beginning of the blob. Specifying <em>end</em> = <em>size of the blob</em> means keep going all the way to the end of the blob.</p>
+        <p><em>blobs.getSlice</em> also accepts the <em>size</em> and <em>max</em> options, which work the same as in <em>blobs.get</em>. These two options refer to the size of the entire blob, not the range requested.</p>
+
+        <h3 id="want-and-have">Want and have</h3>
+        <p>Peers signal to each other which blobs they want and have. This lets peers know who they can fetch a particular blob from. It also allows requests for blobs to propagate through the network until a peer that has the blob is found.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-blobs/blob/master/inject.js">inject.js</a></div>
+        </aside>
+        <p>Upon connecting, peers typically invoke the RPC method <em>blobs.createWants</em> on each other. <em>blobs.createWants</em> asks a peer to tell you which blobs they want, and also allows the peer to tell you which blobs they have.</p>
+
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["blobs", "createWants"],
+  "type": "source",
+  "args": []
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{}</code></pre>
+            </div>
+        </figure>
+
+        <p>Responding with an empty dictionary <code>{}</code> means they don’t currently want any blobs. Later, when they want a particular blob the responder will send another response back:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{"&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256": -1}</code></pre>
+            </div>
+        </figure>
+        <aside style="align-self: start; position: relative; top: 19px;">
+            <p>Only one blob is allowed per response. Send multiple responses if you want more than one blob.</p>
+        </aside>
+
+        <p>The <code>-1</code> means the responder wants this blob themselves. <code>-2</code> means they know someone who wants the blob. <code>-3</code> means they know someone who knows someone who wants the blob, and so on.</p>
+        <p>If a peer tells you that they want a blob and you don’t have it yourself then you can forward the want to other peers you are connected to. When forwarding a request, remember to subtract one from the number so that the request does not keep propagating through the network in an infinite loop.</p>
+        <p>Implementations can pick a limit and ignore blob requests that come from further out than their threshold. The reference implementation forwards requests with <code>-1</code> or <code>-2</code>, but does not forward requests with <code>-3</code> or further out.</p>
+        <p>If the responder does in fact have the blob, they can respond with its size in bytes:</p>
+
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">Yes</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{"&amp;uaGieSQDJcHfUp6hjIcIq55GoZh4Ug7tNmgaohoxrpw=.sha256": 161699}</code></pre>
+            </div>
+        </figure>
+        <aside style="align-self: start; position: relative; top: 18px;">
+            <p><em>Have</em> and <em>want</em> messages can be distinguished because <em>have</em> messages use a positive number whereas <em>want</em> messages use a negative number.</p>
+        </aside>
+
+        <p>Now the requester knows they can retrieve the blob from this peer with <em>blobs.get</em> or <em>blobs.getSlice</em>.
+        <aside class="kicker" style="position: relative; top: 48px;">
+            <p>By fetching blobs on behalf of one another, Scuttlebutt peers can reach blobs beyond who they are immediately connected to.</p>
+        </aside>
+        <img src="img/blobs_fetch.png" style="height: 385px;" alt="Peer A tells Peer B: 'Want: &uaGie: -1'. Peer B tells Peer C: 'Want: &uaGie: -2'. Peer C has it, so it answers: 'Have: &uaGie: 161699'. Peer B then requests 'Get: &uaGie' and Peer C returns the content of the blob. Peer B then tells Peer A: 'Have: &uaGie'. Peer A hen requests 'Get: &uaGie' from B, and B answers with the blob."/>
+
+        <h2 id="following">Following</h2>
+        <p>Feeds can follow other feeds. Following is a way of saying “I am interested in the messages posted by this feed”.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-friends/blob/master/index.js">ssb-friends</a></div>
+        </aside>
+        <p>Following is an optional part of Scuttlebutt, however current clients do implement it because it enables interesting social dynamics, such as introducing people that otherwise wouldn’t have found each other and allowing trust to be built within human networks. Following is what enables Scuttlebutt to be a social network rather than a group messenger.</p>
+
+        <p>When a user wants to follow another feed their client will post a message to their own feed that looks like:</p>
+        <aside class="kicker">
+            <p>In this message <code>@FCX/ts…</code> is saying that they are following <code>@sxlUkN…</code>.</p>
+        </aside>
+        <pre><code>{
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "content": {
+    "type": "contact",
+    "contact": "@sxlUkN7dW/qZ23Wid6J1IAnqWEJ3V13dT6TaFtn5LTc=.ed25519",
+    "following": true
+  },
+  …
+}</code></pre>
+        <p>Later, if the user decides to unfollow this feed, their client can post another message with <em>following</em> set to <code>false</code>.</p>
+        <p>When two feeds follow each other current user interfaces will call them “friends”, however this is just a cosmetic touch and for everything else they are still treated as individual follows in each direction.</p>
+
+        <h3 id="follow-graph">Follow graph</h3>
+        <p>Because each feed publicly announces which feeds it is following, clients can arrange feeds into a graph of who follows who:</p>
+        <img src="img/follow_graph.png" class="pagewidth" style="height: 700px;" alt="The follow graph seen by a user is a directed graph, 'rooted' in the user. It can be seen as concentric circles, with the user in the center, and feeds arranged by proximity to the user according to the number of hops. First, feeds directly followed by the user. Then feeds not directly followed by visible in the user interface (2 hops or more). Then feeds not visible, whose content is fetched by the client nontheless. Then feeds the client has need mentioned but chosen not to fetch."/>
+        <p>Clients may want to use the follow graph to decide which feeds to display to the user and which to replicate. If the user explicitly follows a feed that is a strong signal that the user wants to see messages posted by that feed.</p>
+        <p>One implementation, Patchwork, shows messages up to 2 hops out by default. Messages from feeds 3 hops out are replicated to help keep them available for others, but not directly shown in the user interface. A benefit of replicating at a greater range is that for discussion threads with lots of participants it’s more likely that the client will be able to fill in gaps where someone posted who was further than 2 hops out.</p>
+        <p>Clients could also let users configure how far the visibility and replication ranges are, or a client could use an entirely different method of deciding which feeds to show and replicate that is not based on follow range.</p>
+
+        <h2 id="pubs">Pubs</h2>
+        <p>A pub is a publicly-accessible Scuttlebutt peer. Pubs have a social and a technical purpose:</p>
+        <ul>
+            <li>Pubs serve as a gathering point for new users to find other people and for existing users to welcome people who have just joined.</li>
+            <li>Pubs have a stable IP address and allow incoming TCP connections, which enables users to connect even if their internet service provider lacks dedicated IP addresses or refuses incoming connections.</li>
+        </ul>
+        <p>Pubs speak the same protocol as regular peers and behave like regular peers except that they are normally run on servers so that they are always online.</p>
+        <p>Joining a pub means following it and having it follow you back. After a new user joins a pub they will be able to see posts by the pub’s other members, and crucially the other members will be able to see the new member. This works because everyone is now within 2 hops of each other:</p>
+        <img src="img/follow_perspective.png" class="pagewidth" style="height: 365px;" alt="From a new user perspective, the pub will be 1 hop from them, and existing users will be 2 hops from them. From the pub's perspective, all users who are members of the pub are 1 hop from it. From existing users' perspective, the pub is 1 hop from them, and both the new user and other existing users are 2 hops away."/>
+        <p>After joining a pub, a user may decide to follow some of its members directly, in which case the pub is no longer needed for feed visibility but is still useful for accepting TCP connections and replicating messages.</p>
+
+        <h3 id="invites">Invites</h3>
+        <p>Any user can follow a pub by posting a follow message, but to get the pub to follow you back you need an invite.</p>
+        <div>
+            <p>How the pub hands out invites is for its operator to decide. Some pubs have a web page that anybody can visit to generate an invite code. Some pubs have a pre-generated list of invite codes that the operator distributes. Invite codes can be single-use-only, have a maximum number of uses before they expire, or keep working indefinitely. A single user can use several invites if they wish to join several different pubs.</p>
+            <p>Invite codes use this format:</p>
+        </div>
+        <aside>
+            <p>If you want to run a pub that caters to an existing community, you could generate invite codes and give them out to current members. That way everyone who joins will be able to see the other members.</p>
+        </aside>
+        <img src="img/format_invite.png" style="height: 139px;" alt="one.butt.nz:8008:@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519~r4hIBk7KC7a9Gknj6Qiuuo4+Et/TS2rjgl6gYgw3OIM=. the parts are: a domain name or IP address of the pub, a colon, the port, a colon, the pub's public key (prefixed with an @ and suffixed with .ed25519 as usual), a tilde, then the base64-encoded invite secret key."/>
+        <p>To make a new invite code, a pub generates a new Ed25519 key pair. The seed for the key pair (derived from the secret key) goes into the invite code, which is given to either a new user or the pub operator to distribute. The public key is remembered by the pub along with any extra conditions such as the number of remaining uses or expiry date.</p>
+
+        <h4 id="redeeming-invites">Redeeming invites</h4>
+        <p>To redeem an invite, a user enters the invite code into their Scuttlebutt client. The client opens a new TCP connection to the domain and port contained in the invite and proceeds to set up a peer connection, starting with the handshake.</p>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/scuttlebot/blob/master/plugins/invite.js">invite.js</a></div>
+            <div class="lang">Java</div>
+            <div class="vs"><a href="https://github.com/apache/incubator-tuweni/blob/master/scuttlebutt/src/main/java/org/apache/tuweni/scuttlebutt/Invite.java">Invite</a></div>
+        </aside>
+        <p>However, unlike a regular handshake, the client uses the secret key in the invite as their <img class="inline-key" src="img/key_big_a_secret.png" alt=""/> long term secret key. Because the invite only contains the secret key but not the public key, the client will need to calculate the public key from the secret key. Some cryptographic libraries call this “seeding” an Ed25519 key pair.</p>
+        <p>Handshaking with the invite key allows the client to call a special RPC method <em>invite.use</em>:</p>
+
+        <aside class="kicker" style="align-self: start; position: relative; top: 58px;">
+            <p><em>invite.use</em> has a single argument which is the feed ID of the user who wants to join the pub.</p>
+        </aside>
+        <figure class="request-response">
+            <div class="request">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "name": ["invite", "use"],
+  "type": "async",
+  "args": [{"feed": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519"}]
+}</code></pre>
+            </div>
+            <img class="request-arrow" src="img/arrow.png" alt=""/>
+        </figure>
+        <p>The pub checks the key used in the handshake against its list of unredeemed invites. If the invite code is valid and has not expired, the pub follows the feed ID specified by the requester and responds with its new follow message:</p>
+        <figure class="request-response">
+            <img class="response-arrow" src="img/arrow.png" alt=""/>
+            <div class="response">
+                <div class="header">
+                    <span class="key">Request number</span><span class="value">-1</span>
+                    <span class="key">Body type</span><span class="value">JSON</span>
+                    <span class="key">Stream</span><span class="value">No</span>
+                    <span class="key">End/err</span><span class="value">No</span>
+                </div>
+                <pre><code>{
+  "key": "%+7u6Fa0s1cE6tS9BtKUijDV3QBYQEINH7gLSIkDqRMM=.sha256",
+  "value": {
+    "previous": "%S1v8a0gQkaNNzNOrWuQUomZvFrDO+XARfd6z35OmCb4=.sha256",
+    "author": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519",
+    "sequence": 14,
+    "timestamp": 1516094092985,
+    "hash": "sha256",
+    "content": {
+      "type": "contact",
+      "contact": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+      "following": true,
+      <strong>"pub": true</strong>
+    },
+    "signature":"zckFCb4XAJxNVy4tcm38o2GoFIWj25ZKa6EOaBYQA7DH/zNeWp
+                 hHuJBCCEWK6XRl4VENZWXHxPNHEBCBXDq6CA==.sig.ed25519"
+  }
+}</code></pre>
+            </div>
+        </figure>
+        <aside style="align-self: start; position: relative; top: 215px;">
+            <p>This message contains <code>"pub": true</code> to distinguish it from a normal follow.</p>
+        </aside>
+
+        <p>Because this a pub, it is probably connected to a few other peers already. The pub will notify its peers of its new follow message using the normal <em>createHistoryStream</em> mechanism, at which point other users of the pub may decide that they are now interested in this new user’s feed and fetch it.</p>
+        <p>Now that the pub has followed the new user, the new user should reciprocate by following the pub back. Clients automatically handle this on behalf of the user when they enter an invite code. The client posts a message to the user’s feed that follows the pub back:</p>
+        <pre><code>{
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "content": {
+    "type": "contact",
+    "contact": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519",
+    "following": true
+  },
+  …
+}</code></pre>
+        <aside>
+            <p>This message doesn’t contain <code>"pub": true</code>.</p>
+        </aside>
+        <p>The client also posts a message of type <em>pub</em> to the user’s feed:</p>
+        <pre><code>{
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "content": {
+    "type": "pub",
+    "address": {
+      "host": "one.butt.nz",
+      "port": 8008,
+      "key": "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+    }
+  },
+  …
+}</code></pre>
+        <p>These messages help peers discover new pubs where they might be able to fetch new messages from. Clients can maintain a list of pubs they have seen so that they know of alternative places to fetch messages from in case a pub goes offline.</p>
+
+        <h2 id="private-messages">Private messages</h2>
+        <div>
+            <p>Private messages are encrypted so that only certain recipients can read them. They are posted to the sender’s Scuttlebutt feed like normal messages.</p>
+            <p>Anyone can see the fact that a feed posted a private message, who sent it (the feed that posted it), when it was sent and its size. However the list of recipients, number of recipients and message body is concealed.</p>
+        </div>
+        <aside class="impl">
+            <img class="icon" src="img/impl.png" alt=""/>
+            <h5>Implementations</h5>
+            <div class="lang">JS</div>
+            <div class="vs"><a href="https://github.com/ssbc/ssb-keys/blob/master/index.js">ssb-keys</a></div>
+            <div class="vs"><a href="https://github.com/auditdrivencrypto/private-box/blob/master/index.js">private-box</a></div>
+        </aside>
+        <p>Given the user wants to post these message contents:</p>
+        <pre><code>{
+  "type": "post",
+  "text": "Don’t tell anybody about this one weird trick…",
+  "recps": [
+    "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+    "@VJM7w1W19ZsKmG2KnfaoKIM66BRoreEkzaVm/J//wl8=.ed25519"
+  ]
+}</code></pre>
+        <aside>
+            <p>Private messages don’t reveal to recipients who the other recipients are. If you want them to know the full list of recipients then include it in the message (<em>recps</em>) as shown here.</p>
+        </aside>
+
+        <p>This is how it would appear as a private message when posted to the user’s feed:</p>
+        <pre><code>{
+  "previous": "%+7u6Fa0s1cE6tS9BtKUijDV3QBYQEINH7gLSIkDqRMM=.sha256",
+  "author": "@FCX/tsDLpubCPKKfIrw4gc+SQkHcaD17s7GI6i/ziWY=.ed25519",
+  "sequence": 15,
+  "timestamp": 1516222868742,
+  "hash": "sha256",
+
+  "content": "ilDLCLIPRruIQPuqOq1uKnkMh0VNmxD8q+DXKCbgThoAR4XvotMSbMYnodhEkgUQuEEbxjR/MHTa77
+              DQKY5QiGbFusUU564iDx1g/tP0qNqwir6eB0LGEna+K5QDj4CtNsHwnmDv7C0p/9n8lq/WtXlKptrO
+              /A6riL+8EfhIWck1KCQGIZNxZz84DtpDXdN1z88rvslDNoPPzQoeGIgkt/RrGsoysuMZoJyN8LZb3X
+              uczoSn+FhS0nWKIYnCy+CtmNiqw+9lATZgXM4+FOY8N3+L+j25hQQI191NNIdFVyMwoxkPL81byqLx
+              ABJDLpMDSOXnWjvyzCJ68UOUwciS16/QdXE647xJ4NSC7u6uMreFIdtHTkQcP556PlZyBFwArJXbwx
+              TUq84f5rTUt3uoG3fOllxFjRs/PPLkIcD1ihxJoSmoTTbFePclRYAV5FptRTJVHg==.box",
+
+  "signature": "6EQTBQbBhAxeE3w7kyg/7xWHUR8tXP7jUl7bWnEQVz8RxbCYgb
+                TRUnfX/2v68xfSG5xyLAqDJ1Dh3+d+pmRvAw==.sig.ed25519"
+}</code></pre>
+
+        <p>When a client sees a message where the content is a string ending in <code>.box</code> it will know that it is a private message. Because clients can’t see who the message is addressed to, they will attempt to decrypt every private message they come across in case it is for them.</p>
+
+        <h3 id="encrypting">Encrypting</h3>
+        <p>To encrypt a private message, the sender starts with these keys:</p>
+        <img src="img/private_message_starting_keys.png" style="height: 290px;" alt="A generated Curve25519 key pair used to encrypt the message header, call the 'header key'; a generated 32-byte secret key used to encrypt the message body called the 'body key'; and the public long-term key of each recipient (max 7)."/>
+        <p>Next, the sender uses scalar multiplication to derive a shared secret for each recipient:</p>
+        <img src="img/private_message_secret_derivation.png" style="height: 210px;" alt="by computing the product of the secret key they just generated and that recipient's public long-term key."/>
+        <p>The sender constructs the encrypted message by first enclosing the message content in a secret box, then enclosing the key needed to open it into a series of additional secret boxes, one to each recipient:</p>
+        <img src="img/private_message_encrypt.png" class="pagewidth" style="height: 915px;" alt="The plaintext message content is enclosed in a secret box using the public 'body key' and a random 24-byte nonce; this box is 16 bytes (the auth tag) plus the original length of the message. The sender prepares a temporary header, made of the number of recipients (1 byte) and the secret body key (32 bytes). This temporary header is then enclosed as many times as there are recipients, in as many secret boxes (the 'encrypted headers', 16 + 33 bytes each, as they each include their own auth tag). The final message is made of: the 24 bytes nonce (defined above), the public header key (32 bytes), all the encrypted headers (49 bytes each), and finally the encrypted message content (at least 16 + 1 bytes)."/>
+
+        <h3 id="decrypting">Decrypting</h3>
+        <p>Decrypting a private message involves scanning through the series of header secret boxes to see if any of them open using your long-term secret key. Then, if one of them opens, taking out the body secret key and using it to open the secret box holding the message content:</p>
+        <img src="img/private_message_decrypt.png" class="pagewidth" style="height: 980px;" alt="base64-decode the message, extract the nonce and the public header key at the beginning. Then use the secret long-term key and the header public key to compute the shared secret. Read the first 49 bytes of the encrypted headers and try to open it as a secret box. If that fails, try the next 49 bytes. Keep trying up to 7 times. If the shared secret opens a secret box, then this message is intended for you. Read the number of recipients and body secret key. Now that you know how many recipients there are, skip forward 49 bytes for each remaining header. Finally open the secret box using the body secret key and read the content."/>
+    </main>
+    <footer>
+        <p>Thanks for reading the protocol guide!</p>
+        <p class="small"><a href="#top">Table of contents</a></p>
+    </footer>
+</body>
+</html>
